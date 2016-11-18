@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_h9AkoKyyEeaQ3qoB9a4D5Q" name="projet_oop" URI="">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_06a3kKy3EeamKahMxmwztw">
+    <importedPackage xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_TFaBwKyzEeaQ3qoB9a4D5Q" name="Restaurants" visibility="protected">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_bpZCwKy4EeamKahMxmwztw" name="name" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_BCdfEKzGEeaAHo1LDO5dlA" name="counter" visibility="private" isStatic="true">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_BZ2rYKzGEeaAHo1LDO5dlA" name="Adress" visibility="private" type="_uj_CsKzzEeaUoPrJADMYcA"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_CJNrwKzGEeaAHo1LDO5dlA" name="username" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_ChwuoKzGEeaAHo1LDO5dlA" name="discountFactor" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_DGsnsKzGEeaAHo1LDO5dlA" name="specDiscFact" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_13bfIKzHEeaAHo1LDO5dlA" name="menu" visibility="private" type="_-spLsK0cEeaEdvKfCkuJrg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XT6OcKzzEeaUoPrJADMYcA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XUcZ8KzzEeaUoPrJADMYcA" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_f9ONoKzzEeaUoPrJADMYcA" name="id" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_jhUmgKzzEeaUoPrJADMYcA" name="listOfMeal" visibility="private" type="_4k-f8KzGEeaAHo1LDO5dlA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rn8IUKzzEeaUoPrJADMYcA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_roHHcKzzEeaUoPrJADMYcA" value="*"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_hFt00Kz1EeaUoPrJADMYcA" name="addDish" visibility="public">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_5wNYoKz1EeaUoPrJADMYcA" name="Dish" type="_422TEKzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_jKdTwKz1EeaUoPrJADMYcA" name="removeDish">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_EQzpkKz2EeaUoPrJADMYcA" name="menu" type="_422TEKzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Fo1zgKz2EeaUoPrJADMYcA" name="addMeal">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_OVI1QKz2EeaUoPrJADMYcA" name="meal" type="_422TEKzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_GC7HcKz2EeaUoPrJADMYcA" name="removeMeal">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_SVuV0Kz2EeaUoPrJADMYcA" name="meal " type="_422TEKzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_VoCbIKz2EeaUoPrJADMYcA" name="setDiscFac" concurrency="concurrent">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_eivFQKz2EeaUoPrJADMYcA" name="discFac">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_WHHj0Kz2EeaUoPrJADMYcA" name="setSpecDiscFac" visibility="public" concurrency="concurrent">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_lqYdYKz2EeaUoPrJADMYcA" name="specDiscFac">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedParameter>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_nCp34Kz2EeaUoPrJADMYcA" name="getPrice" visibility="public" concurrency="concurrent">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_t6ui8Kz2EeaUoPrJADMYcA" name="Menu" type="_4k-f8KzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_4k-f8KzGEeaAHo1LDO5dlA" name="Meal" visibility="package" isAbstract="true">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_UBoCUKzHEeaAHo1LDO5dlA" name="name" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_UoE-UKzHEeaAHo1LDO5dlA" name="listOfMeal" visibility="private" type="_422TEKzGEeaAHo1LDO5dlA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bCjDYKzzEeaUoPrJADMYcA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bCmGsKzzEeaUoPrJADMYcA" value="*"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ABnP0Kz3EeaUoPrJADMYcA" name="getPrice"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_422TEKzGEeaAHo1LDO5dlA" name="Dish">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_osDC8KzHEeaAHo1LDO5dlA" name="name" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_o88lsKzHEeaAHo1LDO5dlA" name="price" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_paDYcKzHEeaAHo1LDO5dlA" name="type" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_DFdFMK0AEeaUoPrJADMYcA" name="getPrice"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_uj_CsKzzEeaUoPrJADMYcA" name="Adress">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_xtzTUKzzEeaUoPrJADMYcA" name="xCoordinate" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_yF9UoKzzEeaUoPrJADMYcA" name="yCoordinate" visibility="private">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_S8vuAK0AEeaUoPrJADMYcA" name="MenuFactory" visibility="public">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ZUECIK0QEeaEdvKfCkuJrg" name="createMenu" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGTxAK0REeaEdvKfCkuJrg" name="starter" type="_422TEKzGEeaAHo1LDO5dlA"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_3JeWMK0REeaEdvKfCkuJrg" name="main " type="_422TEKzGEeaAHo1LDO5dlA"/>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_66o6sK0REeaEdvKfCkuJrg" name="dessert" type="_422TEKzGEeaAHo1LDO5dlA"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_PQwfQK0SEeaEdvKfCkuJrg" name="DishFactory">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_X7YGAK0SEeaEdvKfCkuJrg" name="createMeal" isStatic="true">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_m7jgoK0SEeaEdvKfCkuJrg" name="name">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_pack8K0SEeaEdvKfCkuJrg" name="price">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+      </ownedParameter>
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_snUwoK0SEeaEdvKfCkuJrg" name="type">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedParameter>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Kgq-8K0TEeaEdvKfCkuJrg" name="FullMeal" visibility="public"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_mn3TIK0TEeaEdvKfCkuJrg" name="Starter"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_9WCUMK0TEeaEdvKfCkuJrg" name="MainDish"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_9twQoK0TEeaEdvKfCkuJrg" name="Dessert"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_GtnHkK0UEeaEdvKfCkuJrg" name="HalfMeal"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_-spLsK0cEeaEdvKfCkuJrg" name="Menu" visibility="public">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_HuIaUK0dEeaEdvKfCkuJrg" name="listOfStarter" visibility="private" type="_mn3TIK0TEeaEdvKfCkuJrg"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_KDH7wK0dEeaEdvKfCkuJrg" name="listOfMain" visibility="private" type="_9WCUMK0TEeaEdvKfCkuJrg"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Lh-fYK0dEeaEdvKfCkuJrg" name="listOfDessert" visibility="private"/>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_zosOsK0fEeaUPvNtD-JeHQ" name="addStarter">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_ALlukK0gEeaUPvNtD-JeHQ" name="Starter" type="_mn3TIK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_z8DPkK0fEeaUPvNtD-JeHQ" name="addMainDish">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_GB0iIK0gEeaUPvNtD-JeHQ" name="MainDish" type="_9WCUMK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_0O56IK0fEeaUPvNtD-JeHQ" name="addDessert">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_MtoS0K0gEeaUPvNtD-JeHQ" name="Dessert" type="_9twQoK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_NZGRsK0gEeaUPvNtD-JeHQ" name="removeStarter">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_SPVn4K0gEeaUPvNtD-JeHQ" name="Starter" type="_mn3TIK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_Nn_CQK0gEeaUPvNtD-JeHQ" name="removeMainDish">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_W0gcMK0gEeaUPvNtD-JeHQ" name="MainDish" type="_9WCUMK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_N4gxkK0gEeaUPvNtD-JeHQ" name="removeDessert">
+      <ownedParameter xmi:type="uml:Parameter" xmi:id="_bwRyoK0gEeaUPvNtD-JeHQ" name="Dessert" type="_9twQoK0TEeaEdvKfCkuJrg"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Abstraction" xmi:id="_SpLOwK0hEeaUPvNtD-JeHQ" client="_4k-f8KzGEeaAHo1LDO5dlA" supplier="_GtnHkK0UEeaEdvKfCkuJrg"/>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_SAf14Ky4EeamKahMxmwztw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_SAnKoKy4EeamKahMxmwztw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/PapyrusJava/1#/"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
+  </profileApplication>
+</uml:Model>
