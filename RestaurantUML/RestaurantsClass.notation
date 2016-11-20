@@ -328,7 +328,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mt9UEq0TEeaEdvKfCkuJrg"/>
       </children>
       <element xmi:type="uml:Class" href="RestaurantsClass.uml#_mn3TIK0TEeaEdvKfCkuJrg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mqzSYK0TEeaEdvKfCkuJrg" x="428" y="383"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mqzSYK0TEeaEdvKfCkuJrg" x="421" y="344"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_9XbbUK0TEeaEdvKfCkuJrg" type="Class_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_9XiwEK0TEeaEdvKfCkuJrg" type="Class_NameLabel"/>
@@ -354,7 +354,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9XlMU60TEeaEdvKfCkuJrg"/>
       </children>
       <element xmi:type="uml:Class" href="RestaurantsClass.uml#_9WCUMK0TEeaEdvKfCkuJrg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9Xd3kK0TEeaEdvKfCkuJrg" x="550" y="384" height="178"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9Xd3kK0TEeaEdvKfCkuJrg" x="550" y="346" height="178"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_9tz7AK0TEeaEdvKfCkuJrg" type="Class_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_9t0iEK0TEeaEdvKfCkuJrg" type="Class_NameLabel"/>
@@ -380,7 +380,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9t4zhK0TEeaEdvKfCkuJrg"/>
       </children>
       <element xmi:type="uml:Class" href="RestaurantsClass.uml#_9twQoK0TEeaEdvKfCkuJrg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9tz7Aa0TEeaEdvKfCkuJrg" x="689" y="382" height="181"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9tz7Aa0TEeaEdvKfCkuJrg" x="673" y="343" height="181"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_GvvOgK0UEeaEdvKfCkuJrg" type="Class_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_Gv8p4K0UEeaEdvKfCkuJrg" type="Class_NameLabel"/>
@@ -406,7 +406,7 @@
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gv-fFK0UEeaEdvKfCkuJrg"/>
       </children>
       <element xmi:type="uml:Class" href="RestaurantsClass.uml#_GtnHkK0UEeaEdvKfCkuJrg"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gv0uEK0UEeaEdvKfCkuJrg" x="325" y="345" height="118"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Gv0uEK0UEeaEdvKfCkuJrg" x="314" y="344" height="118"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_-udJkK0cEeaEdvKfCkuJrg" type="Class_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_-vN-kK0cEeaEdvKfCkuJrg" type="Class_NameLabel"/>

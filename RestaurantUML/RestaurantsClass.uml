@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_h9AkoKyyEeaQ3qoB9a4D5Q" name="projet_oop" URI="">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_h9AkoKyyEeaQ3qoB9a4D5Q" name="projet_oop" visibility="public" URI="">
   <packageImport xmi:type="uml:PackageImport" xmi:id="_06a3kKy3EeamKahMxmwztw">
     <importedPackage xmi:type="uml:Profile" href="pathmap://PapyrusJava_PROFILES/PapyrusJava.profile.uml#_j9REUByGEduN1bTiWJ0lyw"/>
   </packageImport>
@@ -57,7 +57,7 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_t6ui8Kz2EeaUoPrJADMYcA" name="Menu" type="_4k-f8KzGEeaAHo1LDO5dlA"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_4k-f8KzGEeaAHo1LDO5dlA" name="Meal" visibility="package" isAbstract="true">
+  <packagedElement xmi:type="uml:Class" xmi:id="_4k-f8KzGEeaAHo1LDO5dlA" name="Meal" visibility="public" isAbstract="true">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_UBoCUKzHEeaAHo1LDO5dlA" name="name" visibility="private">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
@@ -87,8 +87,8 @@
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_S8vuAK0AEeaUoPrJADMYcA" name="MenuFactory" visibility="public">
-    <ownedOperation xmi:type="uml:Operation" xmi:id="_ZUECIK0QEeaEdvKfCkuJrg" name="createMenu" isStatic="true">
+  <packagedElement xmi:type="uml:Class" xmi:id="_S8vuAK0AEeaUoPrJADMYcA" name="MealFactory" visibility="public">
+    <ownedOperation xmi:type="uml:Operation" xmi:id="_ZUECIK0QEeaEdvKfCkuJrg" name="createMeal" isStatic="true">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_vGTxAK0REeaEdvKfCkuJrg" name="starter" type="_422TEKzGEeaAHo1LDO5dlA"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_3JeWMK0REeaEdvKfCkuJrg" name="main " type="_422TEKzGEeaAHo1LDO5dlA"/>
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_66o6sK0REeaEdvKfCkuJrg" name="dessert" type="_422TEKzGEeaAHo1LDO5dlA"/>
@@ -115,7 +115,7 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_-spLsK0cEeaEdvKfCkuJrg" name="Menu" visibility="public">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_HuIaUK0dEeaEdvKfCkuJrg" name="listOfStarter" visibility="private" type="_mn3TIK0TEeaEdvKfCkuJrg"/>
     <ownedAttribute xmi:type="uml:Property" xmi:id="_KDH7wK0dEeaEdvKfCkuJrg" name="listOfMain" visibility="private" type="_9WCUMK0TEeaEdvKfCkuJrg"/>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_Lh-fYK0dEeaEdvKfCkuJrg" name="listOfDessert" visibility="private"/>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Lh-fYK0dEeaEdvKfCkuJrg" name="listOfDessert" visibility="private" type="_9twQoK0TEeaEdvKfCkuJrg"/>
     <ownedOperation xmi:type="uml:Operation" xmi:id="_zosOsK0fEeaUPvNtD-JeHQ" name="addStarter">
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_ALlukK0gEeaUPvNtD-JeHQ" name="Starter" type="_mn3TIK0TEeaEdvKfCkuJrg"/>
     </ownedOperation>
