@@ -19,14 +19,14 @@ import java.util.List;
  * 
  */
 
-class Restaurants {
+class Restaurant {
 	
 	private String name;
 	private static int counter;
 	private Address Adress;
 	private String username;
-	private int discountFactor;
-	private int specDiscFact;
+	private double discountFactor;
+	private double specDiscFact;
 	private Menu menu;
 	private int id;
 	private List<Meal> listOfMeal;
@@ -36,14 +36,19 @@ class Restaurants {
 	
 	/**
 	 * 
-	 * @param name = name of restaurant, address = address of restaurant, username = log-in name of restaurant, discountFactor = in %/ Factor
-	 * @param by which the price of a meal is cheaper than the sum of its single dishes, specDiscFact = > discountFactor/ applied only
-	 * @param for one meal, menu = menu of restaurant that includes all dishes, listOfMeal = list of all the meals offered by the restaurant
+	 * @param name = name of restaurant
+	 * @param address = address of restaurant
+	 * @param username = log-in name of restaurant
+	 * @param discountFactor = in %/ Factor
+	 * @param by which the price of a meal is cheaper than the sum of its single dishes
+	 * @param specDiscFact = > discountFactor/ applied only
+	 * @param for one meal, menu = menu of restaurant that includes all dishes
+	 * @param listOfMeal = list of all the meals offered by the restaurant
 	 * 
 	 * Constructor where all attributes are taken as input
 	 *  
 	 */
-	public Restaurants(String name, Address adress, String username, int discountFactor, int specDiscFact,
+	public Restaurant(String name, Address adress, String username, double discountFactor, double specDiscFact,
 			Menu menu, List<Meal> listOfMeal) {
 		super();
 		this.id = (counter++);
@@ -57,14 +62,19 @@ class Restaurants {
 	}
 	
 	/**
-	 * @param name = name of restaurant, address = address of restaurant, username = log-in name of restaurant, discountFactor = in %/ Factor
-	 * @param by which the price of a meal is cheaper than the sum of its single dishes, specDiscFact = > discountFactor/ applied only
-	 * @param for one meal, menu = menu of restaurant that includes all dishes, listOfMeal = list of all the meals offered by the restaurant
-	 * 
+	 * @param name = name of restaurant
+	 * @param address = address of restaurant
+	 * @param username = log-in name of restaurant
+	 * @param discountFactor = in %/ Factor
+	 * @param by which the price of a meal is cheaper than the sum of its single dishes
+	 * @param specDiscFact = > discountFactor/ applied only
+	 * @param for one meal, menu = menu of restaurant that includes all dishes
+	 * @param listOfMeal = list of all the meals offered by the restaurant
+	 *   
 	 * Constructor where a new menu is created
 	 * 
 	 */
-	public Restaurants(String name, Address adress, String username, int discountFactor, int specDiscFact,
+	public Restaurant(String name, Address adress, String username, double discountFactor, double specDiscFact,
 			List<Meal> listOfMeal) {
 		super();
 		this.id = (counter++);
@@ -78,14 +88,18 @@ class Restaurants {
 	}
 	
 	/**
-	 * @param name = name of restaurant, address = address of restaurant, username = log-in name of restaurant, discountFactor = in %/ Factor
-	 * @param by which the price of a meal is cheaper than the sum of its single dishes, specDiscFact = > discountFactor/ applied only
-	 * @param for one meal, menu = menu of restaurant that includes all dishes, listOfMeal = list of all the meals offered by the restaurant
-	 *
+	 * @param name = name of restaurant
+	 * @param address = address of restaurant
+	 * @param username = log-in name of restaurant
+	 * @param discountFactor = in %/ Factor
+	 * @param by which the price of a meal is cheaper than the sum of its single dishes
+	 * @param specDiscFact = > discountFactor/ applied only
+	 * @param for one meal, menu = menu of restaurant that includes all dishes
+	 * @param listOfMeal = list of all the meals offered by the restaurant
 	 * Constructor where a new listOfMeal is created
 	 * 
 	 */
-	public Restaurants(String name, Address adress, String username, int discountFactor, int specDiscFact,
+	public Restaurant(String name, Address adress, String username, double discountFactor, double specDiscFact,
 			Menu menu) {
 		super();
 		this.id = (counter++);
@@ -100,14 +114,19 @@ class Restaurants {
 	
 	
 	/**
-	 * @param name = name of restaurant, address = address of restaurant, username = log-in name of restaurant, discountFactor = in %/ Factor
-	 * @param by which the price of a meal is cheaper than the sum of its single dishes, specDiscFact = > discountFactor/ applied only
-	 * @param for one meal, menu = menu of restaurant that includes all dishes, listOfMeal = list of all the meals offered by the restaurant
-	 *
+	 * @param name = name of restaurant
+	 * @param address = address of restaurant
+	 * @param username = log-in name of restaurant
+	 * @param discountFactor = in %/ Factor
+	 * @param by which the price of a meal is cheaper than the sum of its single dishes
+	 * @param specDiscFact = > discountFactor/ applied only
+	 * @param for one meal, menu = menu of restaurant that includes all dishes
+	 * @param listOfMeal = list of all the meals offered by the restaurant
+	 * 
 	 *  Constructor where a new listOfMeal and a new Menu is created
 	 *  
 	 */
-	public Restaurants(String name, Address adress, String username, int discountFactor, int specDiscFact) {
+	public Restaurant(String name, Address adress, String username, double discountFactor, double specDiscFact) {
 		super();
 		this.id = (counter++);
 		this.name = name;
@@ -147,7 +166,7 @@ class Restaurants {
 		this.username = username;
 	}
 
-	public int getDiscountFactor() {
+	public double getDiscountFactor() {
 		return discountFactor;
 	}
 
@@ -155,7 +174,7 @@ class Restaurants {
 		this.discountFactor = discountFactor;
 	}
 
-	public int getSpecDiscFact() {
+	public double getSpecDiscFact() {
 		return specDiscFact;
 	}
 
@@ -233,7 +252,7 @@ class Restaurants {
 	 * @param meal is either HalfMeal or FullMeal
 	 * @return the price of a meal is returned as an int
 	 */
-	public int getPrice(Meal meal) {
+	public double getPrice(Meal meal) {
 		//TODO complete function
 		return discountFactor;
 	}

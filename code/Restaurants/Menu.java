@@ -25,7 +25,8 @@ public class Menu {
 	private List<Dessert> listOfDessert;
 	
 	/**
-	 * @param listOfStarter = all dishes of type "Starter", listOfMainDish = all dishes of type "MainDish", 
+	 * @param listOfStarter = all dishes of type "Starter"
+	 * @param listOfMainDish = all dishes of type "MainDish", 
 	 * @param listOfDessert = all dishes of type "Dessert"
 	 * Constructor where all attributes are created and thus empty
 	 *  
@@ -39,7 +40,8 @@ public class Menu {
 	
 	
 	/**
-	 * @param listOfStarter = all dishes of type "Starter", listOfMainDish = all dishes of type "MainDish", 
+	 * @param listOfStarter = all dishes of type "Starter"
+	 * @param listOfMainDish = all dishes of type "MainDish", 
 	 * @param listOfDessert = all dishes of type "Dessert"
 	 * Constructor where all attributes are transfered via an input
 	 *  

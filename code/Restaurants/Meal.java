@@ -11,7 +11,10 @@ import projet_oop.Dish;
 
 /************************************************************/
 /**
+ * Meal creates objects representing a either a halfMeal or a FullMeal
+ * Meal is being inherited by halfMeal and FullMeal
  * 
+ * @author Patrick 
  */
 public abstract class Meal {
 	
@@ -20,22 +23,28 @@ public abstract class Meal {
 	private String type;
 	
 
+	/**
+	 * @param name = name of the meal f.e. "Lucky Luke" 
+	 * 
+	 * the constructor is protected so that a class of type Dish can not be created from the outside but only by its subclasses
+	 */
 	protected Meal(String name) {
 		this.name = name;
 		listOfDish = new ArrayList<Dish>();
 	}
 	
+	
+	/************************************************************
+	 * Getters and Setters 
+	 */
+	
 	public String getName() {
 		return name;
 	}
 
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	
 
 	public String getType() {
 		return type;
@@ -49,13 +58,20 @@ public abstract class Meal {
 		return listOfDish;
 	}
 
-
-
 	public void setListOfDish(List<Dish> listOfDish) {
 		this.listOfDish = listOfDish;
 	}
 	
-	public void getPrice() {
+	/************************************************************/
+	
+	/**
+	 * @return returns the price of the meal (adds up the prices of all its elements)
+	 */
+	public int getPrice() {
+		
+		//TODO complete function
+		
+		return 0;
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 
 package projet_oop;
 
-import projet_oop.Meal;
+
 
 /************************************************************/
 /**
@@ -14,7 +14,14 @@ public class FullMeal extends Meal{
 	
 	
 	/**
+	 * @param name = name of the meal f.e. "Lucky Luke" 
+	 * @param starter = starting dish of the meal
+	 * @param mainDish = main dish of the meal
+	 * @param dessert = dessert of the meal
+	 * @param all three dishes have to be inserted in the order "starter - main dish - dessert" if not an error pops up
 	 * 
+	 * the constructor checks whether the added dishes are of they same type and names the meal either standard (different types)
+	 * or of a type 
 	 */
 	public FullMeal(String name, Dish starter, Dish mainDish, Dish dessert) {
 		super(name);
@@ -26,22 +33,29 @@ public class FullMeal extends Meal{
 			getListOfDish().add(star);
 		}
 		
+		else{
 		//TODO implement "else" for case that starter is not of type "Starter"
-		
+		}	
+			
 		if(mainDish instanceof MainDish) {
 			MainDish main = (MainDish) mainDish;
 			getListOfDish().add(main);
 		}
 		
+		else{
 		//TODO implement "else" for case that mainDish is not of type "MainDish"
+		}
 		
 		if(dessert instanceof Dessert) {
 			Dessert des = (Dessert) dessert;
 			getListOfDish().add(des);
 		}
 		
-		//TODO implement "else" for case that dessert is not of type "Dessert"
 		
+		else{
+		//TODO implement "else" for case that dessert is not of type "Dessert"
+		}
+			
 		if((starter.getType() == mainDish.getType()) && (mainDish.getType()==dessert.getType()))
 			type = mainDish.getType();
 		

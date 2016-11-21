@@ -13,15 +13,17 @@ package projet_oop;
 public class Dish {
 	
 	private String name;
-	private int price;
+	private double price;
 	private String type;
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti", price = price of the dish, type = each dish can have a different type f.e. "vegetarian"
+	 * @param name = name of the dish f.e. "spaghetti"
+	 * @param price = price of the dish
+	 * @param type = each dish can have a different type f.e. "vegetarian"
 	 * 
 	 * the constructor is protected so that a class of type Dish can not be created from the outside but only by its subclasses
 	 */
-	protected Dish(String name, int price, String type) {
+	protected Dish(String name, double price, String type) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -56,13 +58,13 @@ public class Dish {
 
 
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
 
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 

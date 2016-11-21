@@ -6,15 +6,30 @@ package projet_oop;
 
 /************************************************************/
 /**
- * 
+ * Dessert is a Dish and takes over all functionality of Dash
+ * @author Patrick
  */
+
 public class Dessert extends Dish {
 	
-	public Dessert(String name, int price, String type) {
+	/**
+	 * @param name = name of the dish f.e. "spaghetti"
+	 * @param price = price of the dish
+	 * @param type = each dish can have a different type f.e. "vegetarian"
+	 * 
+	 * the constructor is for a dish that has a special type f.e. "vegetarian".
+	 */
+	public Dessert(String name, double price, String type) {
 		super(name, price, type);
 	}
 	
-	public Dessert(String name, int price) {
+	/**
+	 * @param name = name of the dish f.e. "spaghetti"
+	 * @param price = price of the dish, type = each dish can have a different type f.e. "vegetarian"
+	 * 
+	 * the constructor is for a dish that has no special type and thus will be named "standard".
+	 */
+	public Dessert(String name, double price) {
 		super(name, price, "standard");
 	}
 	

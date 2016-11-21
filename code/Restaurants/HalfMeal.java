@@ -11,7 +11,14 @@ package projet_oop;
 public class HalfMeal extends Meal {
 	
 	/**
+	 * @param name = name of the meal f.e. "Lucky Luke" 
+	 * @param mainDish = main dish of the meal
+	 * @param secChoice = dessert or starter of the meal
+	 * @param all three dishes have to be inserted either in the order "starter - main dish" or 
+	 * main dish - dessert. if not, an error pops up
 	 * 
+	 * the constructor checks whether the added dishes are of they same type and names the meal either standard (different types)
+	 * or of a type 
 	 */
 	public HalfMeal(String name, Dish mainDish, Dish secChoice) {
 		super(name);

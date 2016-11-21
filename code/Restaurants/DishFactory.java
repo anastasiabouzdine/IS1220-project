@@ -6,16 +6,24 @@ package projet_oop;
 
 /************************************************************/
 /**
+ * DishFactory is there to create objects of type Dish (starter, mainDish, dessert)
  * 
+ * @author Patrick
  */
 public class DishFactory {
 
-	/**
-	 * 
-	 * @param name 
-	 * @param price 
-	 * @param type 
-	 */
-	public static void createMeal(String name, int price, String type) {
+	
+	public DishFactory(){
+		super();
 	}
+	
+	//TODO
+//	/**
+//	 * 
+//	 * @param name 
+//	 * @param price 
+//	 * @param type 
+//	 */
+//	public static void createMeal(String name, int price, String type) {
+//	}
 };

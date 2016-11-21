@@ -4,20 +4,27 @@
 
 package projet_oop;
 
-import projet_oop.Dish;
 
 /************************************************************/
 /**
+ * MealFactory is there to create objects of type Meal (FullMeal or HalfMeal)
  * 
+ * @author Patrick
  */
 public class MealFactory {
 
-	/**
-	 * 
-	 * @param starter 
-	 * @param main  
-	 * @param dessert 
-	 */
-	public static void createMeal(Dish starter, Dish main, Dish dessert) {
+	public MealFactory(){
+		super();
 	}
-};
+	
+	
+	//TODO
+//	/**
+//	 * 
+//	 * @param starter 
+//	 * @param main  
+//	 * @param dessert 
+//	 */
+//	public static void createMeal(Dish starter, Dish main, Dish dessert) {
+//	}
+}
