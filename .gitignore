@@ -16,8 +16,8 @@
 *.asv
 *.db
 *.lb
-auxFile/*
-report.pdf
+report/auxFile/*
+report/report.pdf
 
 #biblatex
 *.bbl
