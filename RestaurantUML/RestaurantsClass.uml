@@ -57,7 +57,7 @@
       <ownedParameter xmi:type="uml:Parameter" xmi:id="_t6ui8Kz2EeaUoPrJADMYcA" name="Menu" type="_4k-f8KzGEeaAHo1LDO5dlA"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_4k-f8KzGEeaAHo1LDO5dlA" name="Meal" visibility="public" isAbstract="true">
+  <packagedElement xmi:type="uml:Class" xmi:id="_4k-f8KzGEeaAHo1LDO5dlA" name="Meal" visibility="public">
     <ownedAttribute xmi:type="uml:Property" xmi:id="_UBoCUKzHEeaAHo1LDO5dlA" name="name" visibility="private">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
