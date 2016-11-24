@@ -1,4 +1,4 @@
-package projet_oop;
+package restaurants;
 
 
 
@@ -15,7 +15,7 @@ public class Starter extends Dish {
 	 * 
 	 * the constructor is for a dish that has a special type f.e. "vegetarian".
 	 */
-	public Starter(String name, int price, String type) {
+	public Starter(String name, double price, String type) {
 		super(name, price, type);
 	}
 	
@@ -26,7 +26,7 @@ public class Starter extends Dish {
 	 * 
 	 * the constructor is for a dish that has no special type and thus will be named "standard".
 	 */
-	public Starter(String name, int price) {
+	public Starter(String name, double price) {
 		super(name, price, "standard");
 	}
 
