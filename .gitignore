@@ -16,6 +16,8 @@
 *.asv
 *.db
 *.lb
+*.metadata
+
 report/auxFile/*
 report/report.pdf
 
