@@ -8,7 +8,8 @@ package restaurants;
 /**
  * class that represent a dish/ class is inherited by other classes (starter, mainDish, dessert)
  * 
- * @author Patrick
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 public class Dish {
 	
@@ -38,31 +39,21 @@ public class Dish {
 		return name;
 	}
 
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public String getType() {
 		return type;
 	}
 
-
-
 	public void setType(String type) {
 		this.type = type;
 	}
 
-
-
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
-
 
 	public double getPrice() {
 		return price;
@@ -77,10 +68,10 @@ public class Dish {
 	
 	@Override
 	public boolean equals(Object obj) {
-		
 		if(obj instanceof Dish){
 			Dish dish = (Dish) obj;
-			if(dish.getName().equals(name) && dish.getType().equals(type) && dish.getPrice() == price){
+			if(dish.getName().equalsIgnoreCase(name)
+					&& dish.getType().equalsIgnoreCase(type) && dish.getPrice() == price){
 				return true;
 			}
 			return false;

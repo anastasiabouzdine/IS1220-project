@@ -28,7 +28,7 @@ class Restaurant {
 	private double discountFactor; // discount factor is set by default to 5%
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
-	private Meal specMeal =null;
+	private Meal specialMeal;
 	
 	private int id;
 	private List<Meal> listOfMeal; //TODO consider doing a HashMap instead of ArrayList so that Meal can be found by name
@@ -123,11 +123,11 @@ class Restaurant {
 	}
 	
 	public Meal getSpecMeal() {
-		return specMeal;
+		return specialMeal;
 	}
 
 	public void setSpecMeal(Meal specMeal) {
-		this.specMeal = specMeal;
+		this.specialMeal = specMeal;
 	}
 	
 	/************************************************************/
@@ -146,6 +146,10 @@ class Restaurant {
 			Dessert ddish = (Dessert) dish;
 			menu.addDessert(ddish);
 		}
+	}
+	
+	public void removeStarter(Starter starter){
+		menu.removeStarter(starter);
 	}
 
 	/**
@@ -205,7 +209,7 @@ class Restaurant {
 			throw new NullPointerException();
 		}
 		
-		if(meal.equals(specMeal)){
+		if(meal.equals(specialMeal)){
 			return meal.getPrice()*(1-getSpecDiscFact());
 		} else {
 			return meal.getPrice()*(1-getDiscountFactor());

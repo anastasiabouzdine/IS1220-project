@@ -22,6 +22,11 @@ public abstract class Meal {
 	private List<Dish> listOfDish;
 	private String type;
 	
+	
+	public Meal(){
+		super();
+	}
+	
 
 	/**
 	 * @param name = name of the meal f.e. "Lucky Luke" 

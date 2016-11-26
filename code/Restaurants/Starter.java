@@ -9,25 +9,30 @@ package restaurants;
 public class Starter extends Dish {
 
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish
-	 * @param type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a Starter with given type.
 	 * 
-	 * the constructor is for a dish that has a special type f.e. "vegetarian".
+	 * @param name = name of the Starter f.e. "Brushetta"
+	 * @param price = price of the Starter
+	 * @param type = type of the Starter (ie. standard/vegetarian/glutenfree)
+	 * 
 	 */
 	public Starter(String name, double price, String type) {
 		super(name, price, type);
 	}
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish
-	 * @param type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a Starter with given type.
 	 * 
-	 * the constructor is for a dish that has no special type and thus will be named "standard".
+	 * @param name = name of the Starter f.e. "Brushetta"
+	 * @param price = price of the Starter
+	 * 
 	 */
 	public Starter(String name, double price) {
 		super(name, price, "standard");
 	}
 
+	@Override
+	public String toString() {
+		return "Starter [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
+	}
 }

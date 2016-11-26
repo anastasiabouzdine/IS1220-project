@@ -8,30 +8,38 @@ package restaurants;
 
 /**
  * MainDish is a Dish and takes over all functionality of Dash
- * @author Patrick
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 
 public class MainDish extends Dish {
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish
-	 * @param type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a MainDish with given type.
 	 * 
-	 * the constructor is for a dish that has a special type f.e. "vegetarian".
+	 * @param name = name of the MainDish f.e. "spaghetti"
+	 * @param price = price of the MainDish
+	 * @param type = type of the MainDish (ie. standard/vegetarian/glutenfree)
+	 * 
 	 */
 	public MainDish(String name, double price, String type) {
 		super(name, price, type);
 	}
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish, type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a MainDish that has no special type and thus will be named "standard".
 	 * 
-	 * the constructor is for a dish that has no special type and thus will be named "standard".
+	 * @param name = name of the dish f.e. "spaghetti"
+	 * @param price = price of the dish
+	 * 
 	 */
 	public MainDish(String name, double price) {
 		super(name, price, "standard");
+	}
+	
+	@Override
+	public String toString() {
+		return "MainDish [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
 	}
 
 };

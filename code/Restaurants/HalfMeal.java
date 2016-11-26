@@ -10,6 +10,10 @@ package restaurants;
  */
 public class HalfMeal extends Meal {
 	
+	public HalfMeal(){
+		super();
+	}
+	
 	/**
 	 * @param name = name of the meal f.e. "Lucky Luke" 
 	 * @param mainDish = main dish of the meal
@@ -86,11 +90,5 @@ public class HalfMeal extends Meal {
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 };

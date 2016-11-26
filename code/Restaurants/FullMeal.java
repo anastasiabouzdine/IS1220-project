@@ -12,6 +12,10 @@ package restaurants;
  */
 public class FullMeal extends Meal{
 	
+	public FullMeal(){
+		super();
+	}
+	
 	
 	/**
 	 * @param name = name of the meal f.e. "Lucky Luke" 

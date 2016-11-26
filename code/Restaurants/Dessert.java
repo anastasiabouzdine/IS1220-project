@@ -7,30 +7,42 @@ package restaurants;
 /************************************************************/
 /**
  * Dessert is a Dish and takes over all functionality of Dash
- * @author Patrick
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 
 public class Dessert extends Dish {
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish
-	 * @param type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a dessert with given type.
 	 * 
-	 * the constructor is for a dish that has a special type f.e. "vegetarian".
+	 * @param name = name of the Dessert f.e. "watermelon"
+	 * @param price = price of the Dessert
+	 * @param type = type of the Dessert (ie. standard/vegetarian/glutenfree)
+	 * 
 	 */
 	public Dessert(String name, double price, String type) {
 		super(name, price, type);
 	}
 	
 	/**
-	 * @param name = name of the dish f.e. "spaghetti"
-	 * @param price = price of the dish, type = each dish can have a different type f.e. "vegetarian"
+	 * Constructor for a dessert that has no special type and thus will be named "standard".
 	 * 
-	 * the constructor is for a dish that has no special type and thus will be named "standard".
+	 * @param name = name of the Dessert f.e. "watermelon"
+	 * @param price = price of the Dessert
+	 * 
 	 */
 	public Dessert(String name, double price) {
 		super(name, price, "standard");
 	}
+
+	@Override
+	public String toString() {
+		return "Dessert [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
+	}
+	
+	
+	
+	
 	
 };
