@@ -67,27 +67,29 @@ public class HalfMeal extends Meal {
 	public HalfMeal(String name, Dish mainDish, Dish secChoice) {
 		super(name);
 		
-		try{
 		String type = "standard";
 		
-		MainDish main = (MainDish) mainDish;
-		getListOfDish().add(main);
+		if (mainDish instanceof MainDish){
+			MainDish main = (MainDish) mainDish;
+			getListOfDish().add(main);
+		} else {
+			throw new Error(new ClassCastException());
+		}
 		
-		Dessert des = (Dessert) secChoice;
-		getListOfDish().add(des);
-		
-		Starter star = (Starter) secChoice;
-		getListOfDish().add(star);
+		if(secChoice instanceof Dessert){
+			Dessert des = (Dessert) secChoice;
+			getListOfDish().add(des);
+		} else if (secChoice instanceof Starter){
+			Starter star = (Starter) secChoice;
+			getListOfDish().add(star);
+		} else { 
+			throw new Error(new ClassCastException());
+		}
 		
 		if(mainDish.getType()==secChoice.getType())
 			type = mainDish.getType();
 		
 		setType(type);
-		
-		} catch(ClassCastException e) {
-			System.err.println("mainDish has to be of type 'MainDish', secChoice has to be either of type 'Dessert' or of type 'Starter': " + e.getMessage());
-			throw new Error(e);
-		}
 		
 	}
 	

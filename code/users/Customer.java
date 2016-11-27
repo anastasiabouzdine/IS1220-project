@@ -27,6 +27,10 @@ public class Customer {
 	private String username;
 	private static int counter;
 	private boolean beNotified = true;
+	
+	public Customer(){
+		super();
+	}
 		
 	public Customer(String name, String surname, Address address, String phoneNumber,
 			String email, String username){
