@@ -1,4 +1,4 @@
-package restaurants;
+package restaurantSetUp;
 
 /**
  * The class <code>DishFactory</code> produces a concrete dish factory.

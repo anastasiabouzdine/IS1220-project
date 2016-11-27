@@ -4,7 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import restaurants.Address;
+import restaurantSetUp.Address;
+import restaurantSetUp.FidCardPlan;
+import restaurantSetUp.FidCardPlanBasic;
+import restaurantSetUp.FidCardPlanLottery;
+import restaurantSetUp.FidCardPlanPoints;
 
 public class CustomerTest {
 
@@ -28,4 +32,29 @@ public class CustomerTest {
 		assertTrue(cust1.getID() != cust2.getID());
 	}
 
+	@Test
+	public void verifySetFidCardPlanBasicSame(){
+		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
+		FidCardPlan fidCardPlan1 = new FidCardPlanBasic();
+		cust1.setFidCardPlan(fidCardPlan1);
+		assertTrue(cust1.getFidCardPlan() != fidCardPlan1);
+	}
+	
+	@Test
+	public void verifySetFidCardPlanPointsDifferent(){
+		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
+		FidCardPlan fidCardPlan1 = new FidCardPlanPoints();
+		cust1.setFidCardPlan(fidCardPlan1);
+		assertTrue(cust1.getFidCardPlan() == fidCardPlan1);
+	}
+	
+	@Test
+	public void verifySetFidCardPlanLotterybetween0and1(){
+		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
+		FidCardPlan fidCardPlan1 = new FidCardPlanLottery();
+		cust1.setFidCardPlan(fidCardPlan1);
+		assertTrue(0 <= fidCardPlan1.applyReduction());
+	}
+	
+	
 }

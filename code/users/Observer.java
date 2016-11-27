@@ -1,7 +1,6 @@
 package users;
 
-import restaurants.Meal;
-import restaurants.Restaurant;
+import restaurantSetUp.Meal;
 
 /**
  * The interface <code>Observer</code> allows to implement the <b>Strategy Pattern</b>.

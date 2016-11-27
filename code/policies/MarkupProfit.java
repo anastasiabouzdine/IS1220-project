@@ -4,7 +4,7 @@ public class MarkupProfit implements TargetProfitPolicy {
 
 	@Override
 	public int howToTargetProfit() {
-		// TODO Auto-generated method stub
+		//TODO fill out function
 		return -1;
 	}
 

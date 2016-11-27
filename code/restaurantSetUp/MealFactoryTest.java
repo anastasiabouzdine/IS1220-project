@@ -1,4 +1,4 @@
-package restaurants;
+package restaurantSetUp;
 
 import static org.junit.Assert.*;
 

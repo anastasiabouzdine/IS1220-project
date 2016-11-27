@@ -1,14 +1,22 @@
-package restaurants;
+package users;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import restaurantSetUp.Address;
+import restaurantSetUp.Dessert;
+import restaurantSetUp.Dish;
+import restaurantSetUp.FullMeal;
+import restaurantSetUp.MainDish;
+import restaurantSetUp.Meal;
+import restaurantSetUp.Starter;
+
 public class RestaurantTest {
 	
 	// public Restaurant(String name, Address adress, String username, double discountFactor, double specDiscFact) 
 	
-	private static Address address1 = null;
+	private static Address address1 = new Address(3,2);
 	private static Restaurant r1 = null;
 	private static Restaurant r2 = null;
 	
@@ -51,19 +59,6 @@ public class RestaurantTest {
 			
 		assertEquals(a, r2.getPrice(meal1), 0.01);
 	}
-
-	@Test
-	public void createDish(){
-		Dish dish1 = new Dish("Spaghetti", 6.99, "vegeterian");
-		assertEquals(6.99, dish1.getPrice(), 0);
-		//TODO Why is it possible to create with a protected constructor???
-		
-		Dish dish2 = new MainDish("Spaghetti", 6.99, "vegeterian");
-		assertEquals(6.99, dish2.getPrice(), 0);
-	}
-	
-
-	
 	
 	@Test
 	public void createFullMeal(){

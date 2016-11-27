@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import restaurants.Address;
+import restaurantSetUp.Address;
 import users.Customer;
 
 /**

@@ -1,4 +1,4 @@
-package restaurants;
+package restaurantSetUp;
 
 /**
  * The class <code>MealFactory</code> produces a concrete meal factory.

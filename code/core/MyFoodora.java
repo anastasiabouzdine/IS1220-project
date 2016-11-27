@@ -3,7 +3,7 @@ package core;
 import java.util.ArrayList;
 
 import policies.*;
-import restaurants.*;
+import restaurantSetUp.*;
 import users.*;
 
 /**

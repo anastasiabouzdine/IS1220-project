@@ -1,6 +1,6 @@
 package users;
 
-import restaurants.Address;
+import restaurantSetUp.Address;
 
 /**
  * The class <code>Courier</code> allows to create a Courier which will be able to

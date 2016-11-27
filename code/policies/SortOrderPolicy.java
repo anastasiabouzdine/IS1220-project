@@ -1,7 +1,7 @@
 package policies;
 
 /**
- * The interface <code>SortOrderPolicy</code> allow restaurants and managers
+ * The interface <code>SortOrderPolicy</code> allow restaurantSetUp and managers
  * to sort the shipped orders according to different criteria.
  * 
  * The classes implementing this interface are

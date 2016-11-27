@@ -2,10 +2,12 @@ package core;
 
 import java.util.ArrayList;
 
-import restaurants.Dish;
-import restaurants.Meal;
-import restaurants.Restaurant;
+import restaurantSetUp.Dish;
+import restaurantSetUp.FidCardPlanBasic;
+import restaurantSetUp.Meal;
+import users.Courier;
 import users.Customer;
+import users.Restaurant;
 
 /**
  * The class <code>Order</code> allows to create an Order which
@@ -18,14 +20,19 @@ import users.Customer;
  */
 
 public class Order {
+	private int ID;
+	private static int counter;
 	private Customer customer;
 	private Restaurant restaurant;
 	private ArrayList<Meal> meals;
 	private ArrayList<Dish> dishes;
-	// quantity.get(i) gives the quantity of meals.get(i) or dishes.get(i)
-	private ArrayList<Integer> quantity; 
+	// quantity.get(i) gives the quantity of meals.get(i) or dishes.get(i) 
+	// customer can either choose multiple dishes or multiple meals
+	private ArrayList<Integer> quantity;
+	private Courier courier; 
 	
 	public Order(Customer customer, Restaurant restaurant){
+		this.ID = (++counter);
 		this.customer = customer;
 		this.restaurant = restaurant;
 		meals = new ArrayList<Meal>();
@@ -43,8 +50,14 @@ public class Order {
 		quantity.add(q);
 	}
 	
+	
+
 	/*********************************************************************/
-	/* Getters and Setter */
+	/* Getters and Setter */ //no set ID!
+	
+	public int getID() {
+		return ID;
+	}
 
 	public Customer getCustomer() {
 		return customer;
@@ -84,6 +97,70 @@ public class Order {
 
 	public void setDishes(ArrayList<Dish> dishes) {
 		this.dishes = dishes;
+	}
+
+	public Courier getCourier() {
+		return courier;
+	}
+
+	public void setCourier(Courier courier) {
+		this.courier = courier;
+	}
+	
+	/*********************************************************************/
+	
+	public boolean isFidCardPlanBasic() {
+		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
+	}
+	
+	/**
+	 * The method <code>Order.getPrice</code> calculates the price of the <code>Order</code> depending on 
+	 * 
+	 * <ul>
+	 * 	<li>whether the customer ordered multiple <code>Meal</code> or multiple <code>Deal</code></li>
+	 *  <li>whether the customer has a <code>FidCardPlanBasic</code>
+	 *  ,a <code>FidCardPlanPoints</code> or a <code>FidCardPlanLottery</code></li>
+	 * </ul>
+	 * 
+	 * @return	price	of the order is returned as a double
+	 */
+	public double getPrice(){
+		double price = 0;
+		
+		//TODO write a round function for all double equations
+		
+		if(isFidCardPlanBasic()) {
+			if(!meals.isEmpty()) {
+				
+				for(int i = 0; i < meals.size(); i++) {
+					if(restaurant.isMealSpecial(meals.get(i))) {
+						price += quantity.get(i)*meals.get(i).getPrice()*(1-restaurant.getSpecDiscFact());
+						// price += quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
+					} else {
+						price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+						} 
+				} 
+			} else {
+				for(int i = 0; i < dishes.size(); i++) {
+					price += quantity.get(i)*dishes.get(i).getPrice();
+				}
+			}
+					
+			
+		} else {
+			
+			if(!meals.isEmpty()) {
+				for(int i = 0; i < meals.size(); i++) {
+					price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+				}
+			} else {
+				for(int i = 0; i < dishes.size(); i++) {
+					price += quantity.get(i)*dishes.get(i).getPrice();
+				}
+			}
+		}
+		
+		return price*customer.getFidCardPlan().applyReduction();
 	}
 
 }

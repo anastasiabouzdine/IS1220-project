@@ -1,4 +1,4 @@
-package restaurants;
+package restaurantSetUp;
 
 /**
  * The abstract class <code>AbstractFactory</code> is used to get <code>DishFactory</code>

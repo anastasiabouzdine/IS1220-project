@@ -1,8 +1,9 @@
 package users;
 
-import restaurants.Address;
-import restaurants.Meal;
-import restaurants.Restaurant;
+import restaurantSetUp.Address;
+import restaurantSetUp.FidCardPlan;
+import restaurantSetUp.FidCardPlanBasic;
+import restaurantSetUp.Meal;
 
 /**
  * The class <code>Customer</code> allows to create a Customer which will be able to
@@ -28,10 +29,8 @@ public class Customer {
 	private static int counter;
 	private boolean beNotified = true;
 	
-	public Customer(){
-		super();
-	}
-		
+	private FidCardPlan fidCardPlan;
+	
 	public Customer(String name, String surname, Address address, String phoneNumber,
 			String email, String username){
 		this.name = name;
@@ -41,6 +40,7 @@ public class Customer {
 		this.email = email;
 		this.username = username;
 		this.ID = ++counter;
+		this.fidCardPlan = new FidCardPlanBasic();
 	}
 	
 	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
@@ -105,6 +105,21 @@ public class Customer {
 	public void setBeNotified(boolean beNotified) {
 		this.beNotified = beNotified;
 	}
+	
+	public FidCardPlan getFidCardPlan() {
+		return fidCardPlan;
+	}
+
+	/**
+	 *this functions checks whether the class of new fidCardPlan is the same as the old one. If so, nothing will be changed.
+	 */
+	public void setFidCardPlan(FidCardPlan fidCardPlan) {
+		
+		if(!(fidCardPlan.getClass().equals(this.fidCardPlan.getClass())))
+			this.fidCardPlan = fidCardPlan;
+	}
+	
+	/*********************************************************************/
 
 	@Override
 	public String toString() {
@@ -113,5 +128,6 @@ public class Customer {
 //				+ email + ", phoneNumber=" + phoneNumber + ", username=" + username + ", beNotified=" + beNotified
 //				+ "]";
 	}
+
 	
 };
