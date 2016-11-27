@@ -8,7 +8,7 @@ import restaurants.Restaurant;
  * The class <code>Customer</code> allows to create a Customer which will be able to
  * <ul>
  * 	<li>place an <code>Order</code></li>
- *  <li>un-/register from/to a <code>FidelityCardPlan</code></li>
+ *  <li>register/unregister to/from a <code>FidelityCardPlan</code></li>
  *  <li>access information related to their account</li>
  *  <li>give/remove consensus to be notified of a new special offer set by any <code>Restaurant</code></li>
  * </ul>
@@ -51,7 +51,7 @@ public class Customer {
 
 	
 	/*********************************************************************/
-	/* Getters and Setter */
+	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
 
 	public String getName() {
 		return name;
@@ -67,9 +67,6 @@ public class Customer {
 	}
 	public int getID() {
 		return ID;
-	}
-	public void setID(int iD) {
-		ID = iD;
 	}
 	public Address getAddress() {
 		return address;
@@ -98,9 +95,6 @@ public class Customer {
 	public static int getCounter() {
 		return counter;
 	}
-	public static void setCounter(int counter) {
-		Customer.counter = counter;
-	}
 	public boolean isBeNotified() {
 		return beNotified;
 	}
@@ -108,5 +102,12 @@ public class Customer {
 		this.beNotified = beNotified;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [name=" + name + ", surname=" + surname + ", username=" + username + "]";
+//		return "Customer [name=" + name + ", surname=" + surname + ", ID=" + ID + ", address=" + address + ", email="
+//				+ email + ", phoneNumber=" + phoneNumber + ", username=" + username + ", beNotified=" + beNotified
+//				+ "]";
+	}
 	
 };

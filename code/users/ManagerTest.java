@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import restaurants.Address;
-
 public class ManagerTest {
 
 	private String name = "Chief";
@@ -19,7 +17,7 @@ public class ManagerTest {
 	}
 	
 	@Test
-	public void verifyTwoCustomersHaveDifferentIds(){
+	public void verifyTwoManagersHaveDifferentIds(){
 		Manager man1 = new Manager(name, surname, username);
 		Manager man2 = new Manager("Roland", "Stat", "rStat2");
 		assertTrue(man1.getID() != man2.getID());
