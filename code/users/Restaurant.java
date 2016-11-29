@@ -66,6 +66,10 @@ public class Restaurant {
 		this.menu = new Menu();
 		this.listOfMeal = new ArrayList<Meal>();
 	}
+	
+	public Restaurant(){
+		super();
+	}
 		
 	/************************************************************
 	 * Getters and Setters 
@@ -145,86 +149,55 @@ public class Restaurant {
 	
 	/************************************************************/
 
-	//TODO fill out description
+
 	/**
-	 * @param  
+	 * @param	starter	will be added to the restaurant's menu 
 	 */
 	public void addStarter(Starter starter){
 		menu.addStarter(starter);
 	}
 	
 	
-	//TODO fill out description
 		/**
-		 * @param  
+		 * @param	mainDish	will be added to the restaurant's menu  
 		 */
 	public void addMainDish(MainDish mainDish){
 		menu.addMainDish(mainDish);
 	}
 	
-	//TODO fill out description
+	
 		/**
-		 * @param  
+		 * @param	Dessert	will be added to the restaurant's menu
 		 */
 	public void addDessert(Dessert dessert){
 		menu.addDessert(dessert);
 	}
 	
-//	/**
-//	 * @param dish is either starter, mainDish or dessert and will be added to the Menu 
-//	 */
-//	public void addDish(Dish dish) {
-//		if (dish instanceof Starter){
-//			Starter sdish = (Starter) dish;
-//			menu.addStarter(sdish);
-//		} else if (dish instanceof MainDish){
-//			MainDish mdish = (MainDish) dish;
-//			menu.addMainDish(mdish);
-//		} else if (dish instanceof Dessert){
-//			Dessert ddish = (Dessert) dish;
-//			menu.addDessert(ddish);
-//		}
-//	}
+
 	
-	//TODO fill out description
+
 		/**
-		 * @param  
+		 * @param	starter	will be removed from the restaurant's menu 
 		 */
 	public void removeStarter(Starter starter){
 		menu.removeStarter(starter);
 	}
 	
-	//TODO fill out description
+
 		/**
-		 * @param  
+		 * @param	mainDish	will be removed from the restaurant's menu  
 		 */
 	public void removeMainDish(MainDish mainDish){
 		menu.removeMainDish(mainDish);
 	}
 	
-	//TODO fill out description
+
 		/**
-		 * @param  
+		 * @param Dessert	will be removed from the restaurant's menu
 		 */
 	public void removeDessert(Dessert dessert){
 		menu.removeDessert(dessert);
 	}
-
-//	/**
-//	 * @param dish is either starter, mainDish or dessert and will be removed from the Menu
-//	 */
-//	public void removeDish(Dish dish) {
-//		if (dish instanceof Starter){
-//			Starter sdish = (Starter) dish;
-//			menu.removeStarter(sdish);
-//		} else if (dish instanceof MainDish){
-//			MainDish mdish = (MainDish) dish;
-//			menu.removeMainDish(mdish);
-//		} else if (dish instanceof Dessert){
-//			Dessert ddish = (Dessert) dish;
-//			menu.removeDessert(ddish);
-//		}
-//	}
 
 	/**
 	 * @param meal is either HalfMeal or FullMeal will be added to the listOfMeal 
@@ -242,19 +215,6 @@ public class Restaurant {
 		listOfMeal.remove(meal);
 	}
 
-	//TODO decide whether the following two functions are necessary or whether the setters and getters are enough
-	
-//	/**
-//	 * @param discFac 
-//	 */
-//	public void setDiscFac(int discFac) {
-//	}
-//
-//	/**
-//	 * @param specDiscFac 
-//	 */
-//	public void setSpecDiscFac(int specDiscFac) {
-//	}
 
 	/**
 	 * @param	meal	is a Meal 
@@ -270,12 +230,28 @@ public class Restaurant {
 			return meal.getPrice()*(1-getDiscountFactor());
 	}
 	
+	/**
+	 * @param	meal	is a Meal 
+	 * @return 	true or false depending on whether the meal is the special meal of the week
+	 */
 	public boolean isMealSpecial(Meal meal) {
+	
+	if(!(listOfMeal.contains(meal))) {
+		System.out.println("Restaurant does not offer this meal");
+		throw new NullPointerException();
+	}
+	
 	if(meal.equals(specialMeal)){
 		return true;
 	} 
 		return false;		
 	}
+	
+	/**
+	 * @param	meal	is a Meal 
+	 * @return 	true or false depending on whether the meal is the special meal of the week
+	 */
+	
 
 	@Override
 	public String toString() {

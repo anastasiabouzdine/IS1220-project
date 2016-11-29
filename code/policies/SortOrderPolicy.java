@@ -16,6 +16,8 @@ package policies;
 
 public interface SortOrderPolicy {
 	
-	public int howToSortOrder();
+	//TODO think about whether this class is necessary
+	
+	public boolean howToSortOrder(boolean order);
 
 }

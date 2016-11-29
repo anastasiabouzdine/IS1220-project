@@ -78,6 +78,7 @@ public class OrderTest {
 		assertTrue(order1.getPrice() == a);
 	}
 	
+	//TODO round 
 	@Test 
 	public void getPriceOfOrderWithSpecialMeal() {
 		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
