@@ -14,6 +14,7 @@ public class CourierTest {
 	private Address address = new Address(6,9);
 	private String phoneNb = "+3333333";
 	
+	
 	@Test
 	public void createCourier(){
 		Courier man1 = new Courier(name, surname, address, phoneNb, username);

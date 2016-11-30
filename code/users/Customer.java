@@ -43,6 +43,9 @@ public class Customer {
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
 	
+	/**
+	 * // TODO
+	 */
 	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
 		if (beNotified){
 			double mealPrice = specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact();
@@ -51,6 +54,13 @@ public class Customer {
 					+ specialMealOfTheWeek.getName() + " at a price of " 
 					+ mealPrice);
 		}
+	}
+	
+	/**
+	 * // TODO discuss with John
+	 */
+	public void update(String message){
+		System.out.println(message);
 	}
 
 	

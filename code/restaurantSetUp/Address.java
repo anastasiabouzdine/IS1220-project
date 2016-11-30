@@ -52,6 +52,11 @@ public class Address {
 	public void setyCoordinate(int yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
+	/*************************************************************/
+
+	public double calculateDistance(Address address){
+		return Math.sqrt(Math.pow((this.xCoordinate-address.xCoordinate),2) + Math.pow((this.yCoordinate-address.yCoordinate),2));
+	}
 
 	/************************************************************
 	 * Overriden methods
@@ -59,7 +64,7 @@ public class Address {
 	 */
 	@Override
 	public String toString() {
-		return "Adress [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
+		return "Address [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
 	}
 
 

@@ -106,6 +106,7 @@ public class Order {
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
+ 
 	
 	/*********************************************************************/
 	
@@ -162,5 +163,7 @@ public class Order {
 		
 		return price*customer.getFidCardPlan().applyReduction();
 	}
+
+	
 
 }

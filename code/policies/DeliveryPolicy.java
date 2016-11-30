@@ -1,5 +1,10 @@
 package policies;
 
+import java.util.ArrayList;
+
+
+import users.Courier;
+
 /**
  * The interface <code>DeliveryPolicy</code> allows the MyFoodora system
  * to choose the policy for allocating a courier to an order to be delivered.
@@ -16,6 +21,6 @@ package policies;
 
 public interface DeliveryPolicy {
 	
-	public int howToDeliver(); 
+	public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g); 
 
 }

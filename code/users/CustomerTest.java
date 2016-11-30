@@ -18,6 +18,7 @@ public class CustomerTest {
 	private String phoneNumber = "+123 456 789";
 	private String email = "john@doe.com";
 	private String username = "johnDoe42";
+
 	
 	@Test
 	public void createCustomer(){

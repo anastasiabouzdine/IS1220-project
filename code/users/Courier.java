@@ -1,5 +1,9 @@
 package users;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import core.Order;
 import restaurantSetUp.Address;
 
 /**
@@ -17,6 +21,7 @@ import restaurantSetUp.Address;
 
 public class Courier {
 	
+	
 	private String name;
 	private String surname;
 	private int ID;
@@ -25,7 +30,23 @@ public class Courier {
 	private int nbOfDeliveredOrders;
 	private String username;
 	private static int counter;
-		
+	private boolean state; //true = on duty; false = off duty
+	
+	private LinkedList<Order> listOfReceivedOrders; //TODO Design --> to discuss with John
+	
+	
+	/**
+	 * Constructor 
+	 * 
+	 * @param	name 	of courier
+	 * @param	surname	of courier
+	 * @param	position	of courier
+	 * @param	phonenumber	of courier 
+	 * @param	username	of courier to log into the system
+	 * @param	id	unique id of courier
+	 * @param	nbOfDeliveredOrders	amount of orders delivered by courier
+	 * @param	state	states whether courier is on duty (true = yes)
+	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username){
 		this.name = name;
 		this.surname = surname;
@@ -33,6 +54,9 @@ public class Courier {
 		this.phoneNumber = phoneNumber;
 		this.username = username;
 		this.ID = ++counter;
+		this.nbOfDeliveredOrders = 0;
+		this.state = true;
+		listOfReceivedOrders = new LinkedList<Order>();
 	}
 	
 	/*********************************************************************/
@@ -77,5 +101,80 @@ public class Courier {
 	public static int getCounter() {
 		return counter;
 	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
+	}
+
+	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
+		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
+	}
+	
+	
+	public List<Order> getListOfReceivedOrders() {
+		return listOfReceivedOrders;
+	}
+
+	public void setListOfReceivedOrders(LinkedList<Order> listOfReceivedOrders) {
+		this.listOfReceivedOrders = listOfReceivedOrders;
+	}
+
+	/*********************************************************************/
+	/* Notifying Courier of new order */
+	// TODO
+	
+//	public Order acceptOrder(Order order){
+//		order.setCourier(this);
+//		//TODO Design --> to discuss with John
+//		return order; 
+//	}
+//	
+//	public Order declineOrder(Order order){
+//		order.setCourier(null);
+//		//TODO Design --> to discuss with John
+//		return order; 
+//	}
+//	
+//	public Order replyRand(Order order){
+//		if(Math.random() <= 0.7)
+//			return acceptOrder(order);
+//		else
+//			return declineOrder(order);
+//	}
+	
+	/* Notifying Courier of new order */
+	// TODO
+	
+	public Order acceptOrder(){
+		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
+		order.setCourier(this);
+		//TODO Design --> to discuss with John
+		return order; 
+	}
+	
+	public Order declineOrder(){
+		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
+		order.setCourier(null);
+		//TODO Design --> to discuss with John
+		return order; 
+	}
+	
+	public Order replyRand(){
+		if(Math.random() <= 0.7)
+			return acceptOrder();
+		else
+			return declineOrder();
+	}
+
+	@Override
+	public String toString() {
+		return "Courier [name=" + name + ", surname=" + surname + ", position=" + position + "]";
+	}
+	
+	
 	
 }

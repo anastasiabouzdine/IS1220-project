@@ -83,11 +83,11 @@ public class Restaurant {
 		this.name = name;
 	}
 
-	public Address getAdress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAdress(Address address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
@@ -247,10 +247,8 @@ public class Restaurant {
 		return false;		
 	}
 	
-	/**
-	 * @param	meal	is a Meal 
-	 * @return 	true or false depending on whether the meal is the special meal of the week
-	 */
+	/* Notifying Restaurant of new order */
+	// TODO
 	
 
 	@Override
