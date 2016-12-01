@@ -313,6 +313,9 @@ public class Core{
 	/* Notifying core of new order */
 	// TODO
 	
+	/**
+	 * @param	TODO
+	 */
 	public void treatNewOrders(){
 		Order order = this.receivedOrders.removeFirst();
 		ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierListActive,order.getRestaurant().getAddress());
@@ -320,24 +323,34 @@ public class Core{
 		while(order.getCourier() != null || currentList.isEmpty()) {
 			Courier courier = currentList.get(0);
 			courier.getListOfReceivedOrders().add(order);
+			courier.update("You have received a new order. Please respond whether you can carry out the order or not,");
 			order = courier.replyRand();
 			currentList.remove(0);
 		}
 			if(currentList.isEmpty()) {
 				order.getCustomer().update("All courriers are occupied. Your order could not be treated. Please try again later.");
-			}
-			else{
+				
+			} else{
+				
 				savedOrders.push(order);
-				if(order.getDishes().isEmpty()){
+				order.getCourier().setNbOfDeliveredOrders(order.getCourier().getNbOfDeliveredOrders() + 1);
+				if(order.getMeals().isEmpty()){
+					
 					for(int i=0; i < order.getMeals().size(); i++)
 						addMealCount(order.getMeals().get(i), order.getQuantity().get(i), order.getRestaurant());
+					order.getRestaurant().update("Please prepare the meal(s): " + order.getMeals() + "to be picked up shortly by: " + order.getCourier().getName() + ".");
+				
 				} else{	
+					
 					for(int i=0; i < order.getDishes().size(); i++)
 						addDishCount(order.getDishes().get(i), order.getQuantity().get(i), order.getRestaurant());
+					order.getRestaurant().update("Please prepare the dish(es): " + order.getDishes() + "to be picked up shortly by: " + order.getCourier().getName() + ".");
 				}
-				// TODO
+				order.getCustomer().update("Your order has been accepted and will be carried out as soon as possible.");
 			}
 	}
+	/* Implementing an update function */
+	// TODO
 	
 	
 	/* Notifying users of special offers */

@@ -1,9 +1,10 @@
-package core;
-
-
+package policies;
 
 import restaurantSetUp.Dish;
 import users.Restaurant;
+
+
+//TODO give description of this class
 
 public class DishSort extends Sort{
 	
@@ -18,11 +19,9 @@ public class DishSort extends Sort{
 		this.dish = dish;
 	}
 	
-
 	public Dish getDish() {
 		return dish;
 	}
-
 
 	public void setDish(Dish dish) {
 		this.dish = dish;

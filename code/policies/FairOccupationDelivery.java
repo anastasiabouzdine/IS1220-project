@@ -6,11 +6,35 @@ import java.util.ArrayList;
 import users.Courier;
 
 
-
+/**
+ * The class <code>FairOccupationDelivery</code> allows to create a delivery policy that 
+ * influences the way the system chooses the courier that will execute the order of the clients.
+ * This policy makes sure that the system chooses the courier that has fulfilled the least orders 
+ * so far as its first choice to execute the order
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class FairOccupationDelivery implements DeliveryPolicy {
 	
 	private ArrayList<Courier> listCourier;
+	
+	
+	/**
+	 * Constructor
+	 */
+	public FairOccupationDelivery() {
+		super();
+		listCourier = new ArrayList<Courier>();
+	}
 
+
+
+	/**
+	 * @param	list	is of type ArrayList<Courier> and get all active Couriers as an input
+	 * @param	g	is in this class not used
+	 * @return	listCourier	is of type ArrayList<Courier> and is the sorted list according to the policy
+	 */
 	@Override
 	public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g) {
 		listCourier = list;

@@ -1,6 +1,7 @@
 package users;
 
 import restaurantSetUp.Address;
+
 import restaurantSetUp.FidCardPlan;
 import restaurantSetUp.FidCardPlanBasic;
 import restaurantSetUp.Meal;
@@ -17,7 +18,9 @@ import restaurantSetUp.Meal;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Customer {
+public class Customer implements Observer{
+	
+	//TODO discuss with John whether a static attribute of the core is a good idea or not
 
 	private String name;
 	private String surname;
@@ -43,26 +46,6 @@ public class Customer {
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
 	
-	/**
-	 * // TODO
-	 */
-	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
-		if (beNotified){
-			double mealPrice = specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact();
-			System.out.println(name + " " + surname + " has been notified"
-					+ " that " + restaurant.getName() + " has put the meal "
-					+ specialMealOfTheWeek.getName() + " at a price of " 
-					+ mealPrice);
-		}
-	}
-	
-	/**
-	 * // TODO discuss with John
-	 */
-	public void update(String message){
-		System.out.println(message);
-	}
-
 	
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
@@ -130,6 +113,28 @@ public class Customer {
 	}
 	
 	/*********************************************************************/
+	
+	/**
+	 * // TODO
+	 */
+	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
+		if (beNotified){
+			double mealPrice = specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact();
+			System.out.println(name + " " + surname + " has been notified"
+					+ " that " + restaurant.getName() + " has put the meal "
+					+ specialMealOfTheWeek.getName() + " at a price of " 
+					+ mealPrice);
+		}
+	}
+	
+	/**
+	 * @param	message	of which this user is going to be notified
+	 */
+	public void update(String message){
+		System.out.println(message);
+	}
+
+	
 
 	@Override
 	public String toString() {

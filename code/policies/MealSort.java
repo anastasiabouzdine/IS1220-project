@@ -1,7 +1,11 @@
-package core;
+package policies;
 
 import restaurantSetUp.Meal;
 import users.Restaurant;
+
+
+//TODO give description of this class
+
 
 public class MealSort extends Sort {
 	
@@ -17,11 +21,9 @@ public class MealSort extends Sort {
 		super();
 	}
 
-
 	public Meal getMeal() {
 		return meal;
 	}
-
 
 	public void setMeal(Meal meal) {
 		this.meal = meal;

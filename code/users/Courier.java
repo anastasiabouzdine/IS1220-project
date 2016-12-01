@@ -21,6 +21,7 @@ import restaurantSetUp.Address;
 
 public class Courier {
 	
+	//TODO discuss with John whether a static attribute of the core is a good idea or not
 	
 	private String name;
 	private String surname;
@@ -32,7 +33,7 @@ public class Courier {
 	private static int counter;
 	private boolean state; //true = on duty; false = off duty
 	
-	private LinkedList<Order> listOfReceivedOrders; //TODO Design --> to discuss with John
+	private LinkedList<Order> listOfReceivedOrders; 
 	
 	
 	/**
@@ -124,31 +125,12 @@ public class Courier {
 	}
 
 	/*********************************************************************/
-	/* Notifying Courier of new order */
-	// TODO
 	
-//	public Order acceptOrder(Order order){
-//		order.setCourier(this);
-//		//TODO Design --> to discuss with John
-//		return order; 
-//	}
-//	
-//	public Order declineOrder(Order order){
-//		order.setCourier(null);
-//		//TODO Design --> to discuss with John
-//		return order; 
-//	}
-//	
-//	public Order replyRand(Order order){
-//		if(Math.random() <= 0.7)
-//			return acceptOrder(order);
-//		else
-//			return declineOrder(order);
-//	}
-	
-	/* Notifying Courier of new order */
-	// TODO
-	
+	/**
+	 * the function <code>acceptOrder</code> accepts the order by 
+	 * setting the courier of that order to this courier
+	 * @return	order	that was given to the courier
+	 */
 	public Order acceptOrder(){
 		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
 		order.setCourier(this);
@@ -156,6 +138,11 @@ public class Courier {
 		return order; 
 	}
 	
+	/**
+	 * the function <code>declineOrder</code> accepts the order by 
+	 * setting the courier of that order null
+	 * @return	order	that was given to the courier
+	 */
 	public Order declineOrder(){
 		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
 		order.setCourier(null);
@@ -163,11 +150,22 @@ public class Courier {
 		return order; 
 	}
 	
+	/**
+	 * the function <code>replyRand</code> randomly either accepts or declines an order
+	 * @return	order	that was given to the courier
+	 */
 	public Order replyRand(){
 		if(Math.random() <= 0.7)
 			return acceptOrder();
 		else
 			return declineOrder();
+	}
+	
+	/**
+	 * @param	message	of which this user is going to be notified
+	 */
+	public void update(String message) {
+		System.out.println(message);
 	}
 
 	@Override

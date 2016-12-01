@@ -20,6 +20,8 @@ package users;
 
 public class Manager {
 	
+	//TODO discuss with John whether a static attribute of the core is a good idea or not
+	
 	private String name;
 	private String surname;
 	private int ID;

@@ -1,4 +1,4 @@
-package core;
+package policies;
 
 import users.Restaurant;
 
@@ -27,39 +27,28 @@ public abstract class Sort implements Comparable<Sort> {
 		this.rest = rest;
 	}
 
-
 	protected Sort() {
 		super();
 	}
-
-
-	public abstract boolean howToSortOrder(boolean order);
-
 
 	public int getCount() {
 		return count;
 	}
 
-
-
-
 	public void setCount(int count) {
 		this.count = count;
 	}
-
-
-
 
 	public Restaurant getRest() {
 		return rest;
 	}
 
-
-
-
 	public void setRest(Restaurant rest) {
 		this.rest = rest;
 	}
+	
+	
+	public abstract boolean howToSortOrder(boolean order);
 	
 	@Override
 	public int compareTo(Sort o) {

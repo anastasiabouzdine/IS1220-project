@@ -30,6 +30,8 @@ import restaurantSetUp.Starter;
 
 public class Restaurant {
 	
+	//TODO discuss with John whether a static attribute of the core is a good idea or not
+	
 	private String name;
 	private static int counter = 0;
 	private Address address;
@@ -236,19 +238,24 @@ public class Restaurant {
 	 */
 	public boolean isMealSpecial(Meal meal) {
 	
-	if(!(listOfMeal.contains(meal))) {
-		System.out.println("Restaurant does not offer this meal");
-		throw new NullPointerException();
-	}
-	
-	if(meal.equals(specialMeal)){
-		return true;
-	} 
+		if(!(listOfMeal.contains(meal))) {
+			System.out.println("Restaurant does not offer this meal");
+			throw new NullPointerException();
+		}
+		
+		if(meal.equals(specialMeal)){
+			return true;
+		} 
+		
 		return false;		
 	}
 	
-	/* Notifying Restaurant of new order */
-	// TODO
+	/**
+	 * @param	message	of which this user is going to be notified
+	 */
+	public void update(String message) {
+		System.out.println(message);
+	}
 	
 
 	@Override
@@ -257,6 +264,8 @@ public class Restaurant {
 				+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", id=" + id + ", listOfMeal="
 				+ listOfMeal + "]";
 	}
+
+	
 
 	
 	

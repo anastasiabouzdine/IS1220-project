@@ -12,7 +12,7 @@ import users.Courier;
 import users.Customer;
 import users.Restaurant;
 
-public class FastestDeliveryTest {
+public class DeliveryPolicyTest {
 	
 	private static Address address1 = new Address(11,11);
 	private static Restaurant r1 = new Restaurant("Chez Andre", address1, "andre");
@@ -37,11 +37,11 @@ public class FastestDeliveryTest {
 	
 	private String name2 = "John";
 	private String surname2 = "Doe";
-	private Address address = new Address(3, 3);
+	private Address address7 = new Address(3, 3);
 	private String phoneNumber = "+123 456 789";
 	private String email = "john@doe.com";
 	private String username2 = "johnDoe42";
-	private Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
+	private Customer cust1 = new Customer(name2, surname2, address7, phoneNumber, email, username2);
 	
 	Order order1 = new Order(cust1, r1);
 	
