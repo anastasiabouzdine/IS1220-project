@@ -30,6 +30,8 @@ public class CoreTest {
 	Restaurant rest1 = new Restaurant();
 	Restaurant rest2 = new Restaurant();
 	
+	Order order1 = new Order(cust1, r1);
+	
 
 	@Test
 	public void addAndPrintListOfMealsByCount() {

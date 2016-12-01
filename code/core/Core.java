@@ -60,7 +60,7 @@ public class Core{
 	
 	/* Orders */
 	private LinkedList<Order> receivedOrders;
-	private Stack<Order> savedOrders;
+	private ArrayList<Order> savedOrders;
 	
 	
 	
@@ -97,7 +97,7 @@ public class Core{
 		this.dishRestHeap = new TreeSet<Sort>();
 		
 		this.receivedOrders = new LinkedList<Order>();
-		this.savedOrders = new Stack<Order>();
+		this.savedOrders = new ArrayList<Order>();
 
 	}
 
@@ -319,32 +319,33 @@ public class Core{
 	public void treatNewOrders(){
 		Order order = this.receivedOrders.removeFirst();
 		ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierListActive,order.getRestaurant().getAddress());
-		
-		while(order.getCourier() != null || currentList.isEmpty()) {
-			Courier courier = currentList.get(0);
+		Courier courier = null;
+		while(order.getCourier() == null || currentList.isEmpty()) {
+			courier = currentList.get(0);
 			courier.getListOfReceivedOrders().add(order);
-			courier.update("You have received a new order. Please respond whether you can carry out the order or not,");
-			order = courier.replyRand();
+			courier.update("You have received a new order. Please respond whether you can carry out the order or not.");
+			courier.replyRandom();
 			currentList.remove(0);
 		}
-			if(currentList.isEmpty()) {
+		
+		if(currentList.isEmpty()) {
 				order.getCustomer().update("All courriers are occupied. Your order could not be treated. Please try again later.");
-				
-			} else{
-				
-				savedOrders.push(order);
-				order.getCourier().setNbOfDeliveredOrders(order.getCourier().getNbOfDeliveredOrders() + 1);
-				if(order.getMeals().isEmpty()){
+		} else {
+				savedOrders.add(order);
+				Restaurant order_restaurant = order.getRestaurant();
+				List<Meal> order_meals = order.getMeals();
+				List<Dish> order_dishes = order.getDishes();
+				if(!order_meals.isEmpty()){
 					
-					for(int i=0; i < order.getMeals().size(); i++)
-						addMealCount(order.getMeals().get(i), order.getQuantity().get(i), order.getRestaurant());
-					order.getRestaurant().update("Please prepare the meal(s): " + order.getMeals() + "to be picked up shortly by: " + order.getCourier().getName() + ".");
+					for(int i=0; i < order_meals.size(); i++)
+						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
+					order_restaurant.update("Please prepare the meal(s): " + order_meals + "to be picked up shortly by: " + courier.getName() + ".");
 				
 				} else{	
 					
-					for(int i=0; i < order.getDishes().size(); i++)
-						addDishCount(order.getDishes().get(i), order.getQuantity().get(i), order.getRestaurant());
-					order.getRestaurant().update("Please prepare the dish(es): " + order.getDishes() + "to be picked up shortly by: " + order.getCourier().getName() + ".");
+					for(int i=0; i < order_dishes.size(); i++)
+						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
+					order_restaurant.update("Please prepare the dish(es): " + order_dishes + "to be picked up shortly by: " + courier.getName() + ".");
 				}
 				order.getCustomer().update("Your order has been accepted and will be carried out as soon as possible.");
 			}

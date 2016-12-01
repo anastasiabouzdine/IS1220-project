@@ -3,6 +3,7 @@ package users;
 import java.util.LinkedList;
 import java.util.List;
 
+import core.Core;
 import core.Order;
 import restaurantSetUp.Address;
 
@@ -131,11 +132,11 @@ public class Courier {
 	 * setting the courier of that order to this courier
 	 * @return	order	that was given to the courier
 	 */
-	public Order acceptOrder(){
+	public void acceptOrder(){
 		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
 		order.setCourier(this);
+		nbOfDeliveredOrders++;
 		//TODO Design --> to discuss with John
-		return order; 
 	}
 	
 	/**
@@ -143,22 +144,20 @@ public class Courier {
 	 * setting the courier of that order null
 	 * @return	order	that was given to the courier
 	 */
-	public Order declineOrder(){
+	public void declineOrder(){
 		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
-		order.setCourier(null);
 		//TODO Design --> to discuss with John
-		return order; 
 	}
 	
 	/**
 	 * the function <code>replyRand</code> randomly either accepts or declines an order
 	 * @return	order	that was given to the courier
 	 */
-	public Order replyRand(){
+	public void replyRandom(){
 		if(Math.random() <= 0.7)
-			return acceptOrder();
+			acceptOrder();
 		else
-			return declineOrder();
+			declineOrder();
 	}
 	
 	/**

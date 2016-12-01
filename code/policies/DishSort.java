@@ -10,15 +10,25 @@ public class DishSort extends Sort{
 	
 	private Dish dish;
 	
-	public DishSort(){
-		super();
-	}
-	
+	/**
+	 *@param	count	is the number of times the respective choice was taken
+	 *@param	rest	is the restaurant where the choice was ordered from
+	 *@param	dish	is the dish that was ordered
+	 */
 	public DishSort(Dish dish, int count, Restaurant rest) {
 		super(count, rest);
 		this.dish = dish;
 	}
 	
+	/**
+	 * is there because core needs an attributeless Sort to save as policy
+	 */
+	public DishSort(){
+		super();
+	}
+	
+	/*********************************************************************/
+	/* Getters and Setter */ 
 	public Dish getDish() {
 		return dish;
 	}
@@ -26,12 +36,19 @@ public class DishSort extends Sort{
 	public void setDish(Dish dish) {
 		this.dish = dish;
 	}
+	/*********************************************************************/
 	
+	
+	/**
+	 *the abstract function to implement
+	 *@param	order	is a boolean that states whether the list will be displayed 
+	 *in ascending or descending order 
+	 *@return	return	order	boolean
+	 */
 	@Override
 	public boolean howToSortOrder(boolean order) {
 		return order;
 	}
-
 
 	@Override
 	public String toString() {
