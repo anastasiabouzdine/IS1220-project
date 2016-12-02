@@ -1,0 +1,25 @@
+-------
+rice
+8.30
+vegetarian
+-------
+nudels
+6.35
+vegetarian
+-------
+steak
+16.85
+standard
+-------
+avocado salad with chicken
+13.90
+glutenfree
+-------
+potato
+9.60
+vegetarian
+-------
+hamburger
+15.80
+standard
+

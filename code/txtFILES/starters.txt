@@ -1,0 +1,25 @@
+-------
+salade
+4.30
+vegetarian
+-------
+tomate
+2.35
+vegetarian
+-------
+capaccio
+6.85
+standard
+-------
+soup
+3.90
+glutenfree
+-------
+bruschetta
+7.60
+vegetarian
+-------
+salade des pates jambon
+5.80
+standard
+

@@ -16,6 +16,8 @@ import users.Restaurant;
 
 public class CoreTest {
 	
+	//TODO
+	
 	Core mf1 = new Core("MyFoodera");
 	HalfMeal hm1 = new HalfMeal("1steak ice", new MainDish("steak", 7.0), new Dessert("iceeam", 4.0));
 	HalfMeal hm2 = new HalfMeal("2steak and ice", new MainDish("eak", 4.0), new Dessert("icecream", 4.3));

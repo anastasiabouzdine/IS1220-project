@@ -2,36 +2,35 @@ package users;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
-import restaurantSetUp.Address;
+import Parser.ParseCouriers;
+
 
 public class CourierTest {
 
-	private String name = "Chief";
-	private String surname = "Foo";
-	private String username = "iAmTheBoss";
-	private Address address = new Address(6,9);
-	private String phoneNb = "+3333333";
+	private ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	
 	
 	@Test
 	public void createCourier(){
-		Courier man1 = new Courier(name, surname, address, phoneNb, username);
+		Courier man1 = list_courier.get(0);
 		assertTrue(man1 != null);
 	}
 	
 	@Test
 	public void verifyNewCourierHasNbOfDeliveredOrderCounterEqualZero(){
-		Courier man1 = new Courier(name, surname, address, phoneNb, username);
+		Courier man1 = list_courier.get(0);
 		assertTrue(man1.getNbOfDeliveredOrders() == 0);
 	}
 	
 	@Test
 	public void verifyTwoCouriersHaveDifferentIds(){
-		Courier cour1 = new Courier(name, surname, address, phoneNb, username);
-		Courier cour2 = new Courier("Sabine", "Dof", address, "+22222", "sabine34");
-		assertTrue(cour1.getID() != cour2.getID());
+		Courier man1 = list_courier.get(0);
+		Courier man2 = list_courier.get(1);
+		assertTrue(man1.getID() != man2.getID());
 	}
 
 }

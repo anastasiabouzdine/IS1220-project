@@ -2,9 +2,15 @@ package core;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
-import restaurantSetUp.Address;
+import Parser.ParseCustomers;
+import Parser.ParseDishes;
+import Parser.ParseMeals;
+import Parser.ParseOrders;
+import Parser.ParseRestaurants;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
@@ -16,29 +22,26 @@ import users.Restaurant;
 
 public class OrderTest {
 	
-	private String name = "John";
-	private String surname = "Doe";
-	private Address address = new Address(2, 3);
-	private String phoneNumber = "+123 456 789";
-	private String email = "john@doe.com";
-	private String username = "johnDoe42";
-	
-	private Address address1 = new Address(3,2);
-	private Restaurant r1 = new Restaurant("Chez Andre", address1, "andre");
+	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
+	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
+	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
+	ArrayList<MainDish> list_mainDish = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
+	ArrayList<Dessert> list_dessert = ParseDishes.parseDessert("src/txtFILES/dessert.txt");
+	ArrayList<Restaurant> list_restaurant = ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt");
+	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/courierList.txt");
+	ArrayList<Order> list_order = ParseOrders.parseOrders();
 
 	@Test
 	public void createOrder() {
-		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
-		Order order1 = new Order(cust1, r1);
+		Order order1 = list_order.get(0);
 		assertTrue(order1 != null);
 	}
 	
 	@Test 
 	public void addMealToOrder() {
-		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
-		Order order1 = new Order(cust1, r1);
+		Order order1 = list_order.get(0);
 		assertTrue(order1 != null);
-		HalfMeal hm1 = new HalfMeal("steak and ice", new MainDish("steak", 7.0), new Dessert("icecream", 4.0)); 
+		HalfMeal hm1 = list_hmeal.get(0);
 		order1.addMeal(hm1,3);
 		assertTrue(order1.getMeals().size() == 1);
 		assertTrue(order1.getDishes().size() == 0);
@@ -47,10 +50,9 @@ public class OrderTest {
 	
 	@Test 
 	public void addDishToOrder() {
-		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
-		Order order1 = new Order(cust1, r1);
+		Order order1 = list_order.get(0);
 		assertTrue(order1 != null);
-		Dish d1 = new Starter("Tuna salad", 4.0); 
+		Dish d1 = list_starter.get(0);
 		order1.addDish(d1,2);
 		assertTrue(order1.getMeals().size() == 0);
 		assertTrue(order1.getDishes().size() == 1);
@@ -59,13 +61,13 @@ public class OrderTest {
 	
 	@Test 
 	public void getPriceOfOrder() {
-		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
-		Order order1 = new Order(cust1, r1);
+		Order order1 = list_order.get(0);
 		
 		assertTrue(order1 != null);
 		
-		FullMeal fm1 = new FullMeal("salad and steak and ice",new Starter("salad", 4.30), new MainDish("steak", 7.0), new Dessert("icecream", 4.0)); 
-		HalfMeal hm1 = new HalfMeal("steak and ice", new MainDish("steak", 7.0), new Dessert("icecream", 4.0)); 
+		FullMeal fm1 = list_fmeal.get(0);
+		HalfMeal hm1 = list_hmeal.get(0);
+		Restaurant r1 = order1.getRestaurant();
 		
 		r1.addMeal(hm1);
 		r1.addMeal(fm1);
@@ -73,7 +75,9 @@ public class OrderTest {
 		order1.addMeal(hm1,3);
 		order1.addMeal(fm1,3);
 		
-		double a = 3*(4.3 + 7 + 4)*0.95 + 3*(7 + 4)*0.95;
+		System.out.println(order1);
+		
+		double a = 3*(4.3 + 8.3 + 4.3)*0.95 + 3*(8.3 + 4.3)*0.95;
 		
 		assertTrue(order1.getPrice() == a);
 	}
@@ -81,13 +85,13 @@ public class OrderTest {
 	//TODO round 
 	@Test 
 	public void getPriceOfOrderWithSpecialMeal() {
-		Customer cust1 = new Customer(name, surname, address, phoneNumber, email, username);
-		Order order1 = new Order(cust1, r1);
+		Order order1 = list_order.get(0);
 		
 		assertTrue(order1 != null);
 		
-		FullMeal fm1 = new FullMeal("salad and steak and ice",new Starter("salad", 4.30), new MainDish("steak", 7.0), new Dessert("icecream", 4.0)); 
-		HalfMeal hm1 = new HalfMeal("steak and ice", new MainDish("steak", 7.0), new Dessert("icecream", 4.0)); 
+		FullMeal fm1 = list_fmeal.get(0);
+		HalfMeal hm1 = list_hmeal.get(0);
+		Restaurant r1 = order1.getRestaurant();
 		
 		r1.addMeal(hm1);
 		r1.addMeal(fm1);
@@ -99,7 +103,7 @@ public class OrderTest {
 		order1.addMeal(hm1,3);
 		order1.addMeal(fm1,3);
 		
-		double a = Math.round(3*(4.3 + 7 + 4)*90 + 3*(7 + 4)*95)/100.0;
+		double a = Math.round(3*(4.3 + 8.3 + 4.3)*90 + 3*(8.3 + 4.3)*95)/100.0;
 		
 		System.out.println(a);
 		System.out.println(order1.getPrice());
