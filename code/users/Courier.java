@@ -19,18 +19,14 @@ import restaurantSetUp.Address;
  * @author Patrick von Platen
  */
 
-public class Courier {
+public class Courier extends User {
 	
 	//TODO discuss with John whether a static attribute of the core is a good idea or not
 	
-	private String name;
 	private String surname;
-	private int ID;
 	private Address position;
 	private String phoneNumber;
 	private int nbOfDeliveredOrders;
-	private String username;
-	private static int counter;
 	private boolean state; //true = on duty; false = off duty
 	
 	private LinkedList<Order> listOfReceivedOrders; 
@@ -49,80 +45,15 @@ public class Courier {
 	 * @param	state	states whether courier is on duty (true = yes)
 	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username){
-		this.name = name;
+		super(name, username);
 		this.surname = surname;
 		this.position = position;
 		this.phoneNumber = phoneNumber;
-		this.username = username;
-		this.ID = ++counter;
 		this.nbOfDeliveredOrders = 0;
 		this.state = true;
 		listOfReceivedOrders = new LinkedList<Order>();
 	}
 	
-	/*********************************************************************/
-	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSurname() {
-		return surname;
-	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	public Address getPosition() {
-		return position;
-	}
-	public void setPosition(Address position) {
-		this.position = position;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public int getID() {
-		return ID;
-	}
-	public int getNbOfDeliveredOrders() {
-		return nbOfDeliveredOrders;
-	}
-	public static int getCounter() {
-		return counter;
-	}
-
-	public boolean isState() {
-		return state;
-	}
-
-	public void setState(boolean state) {
-		this.state = state;
-	}
-
-	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
-		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
-	}
-	
-	
-	public List<Order> getListOfReceivedOrders() {
-		return listOfReceivedOrders;
-	}
-
-	public void setListOfReceivedOrders(LinkedList<Order> listOfReceivedOrders) {
-		this.listOfReceivedOrders = listOfReceivedOrders;
-	}
 
 	/*********************************************************************/
 	
@@ -168,12 +99,60 @@ public class Courier {
 	 * @param	message	of which this user is going to be notified
 	 */
 	public void update(String message) {
-		System.out.println(message);
+		System.out.println("[Courier UPDATE] " + message);
 	}
 
 	@Override
 	public String toString() {
-		return "Courier [name=" + name + ", surname=" + surname + ", position=" + position + "]";
+		return "Courier [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
+	}
+
+
+	/*********************************************************************/
+	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
+
+	public String getSurname() {
+		return surname;
+	}
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	public Address getPosition() {
+		return position;
+	}
+	public void setPosition(Address position) {
+		this.position = position;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	public int getNbOfDeliveredOrders() {
+		return nbOfDeliveredOrders;
+	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
+	}
+
+	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
+		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
+	}
+	
+	
+	public List<Order> getListOfReceivedOrders() {
+		return listOfReceivedOrders;
+	}
+
+	public void setListOfReceivedOrders(LinkedList<Order> listOfReceivedOrders) {
+		this.listOfReceivedOrders = listOfReceivedOrders;
 	}
 	
 	

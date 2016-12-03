@@ -18,31 +18,25 @@ import restaurantSetUp.Meal;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Customer implements Observer{
+public class Customer extends User implements Observer{
 	
 	//TODO discuss with John whether a static attribute of the core is a good idea or not
 
-	private String name;
 	private String surname;
-	private int ID;
 	private Address address;
 	private String email;
 	private String phoneNumber;
-	private String username;
-	private static int counter;
 	private boolean beNotified = true;
 	
 	private FidCardPlan fidCardPlan;
 	
 	public Customer(String name, String surname, Address address, String phoneNumber,
 			String email, String username){
-		this.name = name;
+		super(name, username);
 		this.surname = surname;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
-		this.username = username;
-		this.ID = ++counter;
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
 	
@@ -50,21 +44,13 @@ public class Customer implements Observer{
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getSurname() {
 		return surname;
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public int getID() {
-		return ID;
-	}
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -82,15 +68,6 @@ public class Customer implements Observer{
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public static int getCounter() {
-		return counter;
 	}
 	public boolean isBeNotified() {
 		return beNotified;
@@ -120,7 +97,7 @@ public class Customer implements Observer{
 	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
 		if (beNotified){
 			double mealPrice = specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact();
-			System.out.println(name + " " + surname + " has been notified"
+			System.out.println("[Customer UPDATE] " + getName() + " " + surname + " has been notified"
 					+ " that " + restaurant.getName() + " has put the meal "
 					+ specialMealOfTheWeek.getName() + " at a price of " 
 					+ mealPrice);
@@ -138,7 +115,7 @@ public class Customer implements Observer{
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", surname=" + surname + ", username=" + username + "]";
+		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + "]";
 //		return "Customer [name=" + name + ", surname=" + surname + ", ID=" + ID + ", address=" + address + ", email="
 //				+ email + ", phoneNumber=" + phoneNumber + ", username=" + username + ", beNotified=" + beNotified
 //				+ "]";

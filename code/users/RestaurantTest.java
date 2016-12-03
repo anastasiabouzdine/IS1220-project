@@ -42,7 +42,7 @@ public class RestaurantTest {
 	public void checkIfIDFunctionWorks(){
 		Restaurant r1 = list_restaurant.get(0);
 		Restaurant r2 = list_restaurant.get(1);
-		assertTrue(r1.getId() != r2.getId());
+		assertTrue(r1.getID() != r2.getID());
 	}
  
 	@Test

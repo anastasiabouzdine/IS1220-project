@@ -28,20 +28,16 @@ import restaurantSetUp.Starter;
  * @author Patrick von Platen
  */
 
-public class Restaurant {
+public class Restaurant extends User {
 	
 	//TODO discuss with John whether a static attribute of the core is a good idea or not
 	
-	private String name;
-	private static int counter = 0;
 	private Address address;
-	private String username;
 	private double discountFactor; // discount factor is set by default to 5%
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
 	private Meal specialMeal;
-	
-	private int id;
+	private int ID;
 	private List<Meal> listOfMeal; 
 
 	
@@ -58,99 +54,15 @@ public class Restaurant {
 	 * 		  for one meal, menu = menu of restaurant that includes all dishes
 	 */
 	public Restaurant(String name, Address address, String username) {
-		super();
-		this.id = (++counter);
-		this.name = name;
+		super(name, username);
 		this.address = address;
-		this.username = username;
 		this.discountFactor = 0.05;
 		this.specDiscFact = 0.1;
 		this.menu = new Menu();
 		this.listOfMeal = new ArrayList<Meal>();
 	}
-	
-	public Restaurant(){
-		super();
-	}
 		
-	/************************************************************
-	 * Getters and Setters 
-	 */
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public double getDiscountFactor() {
-		return discountFactor;
-	}
-
-	public void setDiscountFactor(double discountFactor) {
-		this.discountFactor = discountFactor;
-	}
-
-	public double getSpecDiscFact() {
-		return specDiscFact;
-	}
-
-	public void setSpecDiscFact(double specDiscFact) {
-		this.specDiscFact = specDiscFact;
-	}
-
-	public Menu getMenu() {
-		return menu;
-	}
-
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-
-	public List<Meal> getListOfMeal() {
-		return listOfMeal;
-	}
-
-	public void setListOfMeal(List<Meal> listOfMeal) {
-		this.listOfMeal = listOfMeal;
-	}
-
-	public int getId() {
-		return id;
-	}
-	
-	public Meal getSpecMeal() {
-		return specialMeal;
-	}
-
-	public void setSpecMeal(Meal specMeal) {
-		if(!(listOfMeal.contains(specMeal))) {
-			System.out.println("Restaurant does not offer this meal");
-			throw new NullPointerException();
-		}
-		this.specialMeal = specMeal;
-	}
-	
 	/************************************************************/
-
 
 	/**
 	 * @param	starter	will be added to the restaurant's menu 
@@ -254,17 +166,77 @@ public class Restaurant {
 	 * @param	message	of which this user is going to be notified
 	 */
 	public void update(String message) {
-		System.out.println(message);
+		System.out.println("[Restaurant UPDATE] " + message);
 	}
 	
 
 	@Override
 	public String toString() {
-		return "Restaurants [name=" + name + ", Adress=" + address + ", username=" + username + ", discountFactor="
-				+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", id=" + id + ", listOfMeal="
+		return "Restaurants [name=" + getName() + ", Adress=" + address + ", username=" + getUsername() + ", discountFactor="
+				+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", ID=" + ID + ", listOfMeal="
 				+ listOfMeal + "]";
 	}
 
+	
+	/************************************************************
+	 * Getters and Setters 
+	 */
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public double getDiscountFactor() {
+		return discountFactor;
+	}
+
+	public void setDiscountFactor(double discountFactor) {
+		this.discountFactor = discountFactor;
+	}
+
+	public double getSpecDiscFact() {
+		return specDiscFact;
+	}
+
+	public void setSpecDiscFact(double specDiscFact) {
+		this.specDiscFact = specDiscFact;
+	}
+
+	public Menu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
+
+	public List<Meal> getListOfMeal() {
+		return listOfMeal;
+	}
+
+	public void setListOfMeal(List<Meal> listOfMeal) {
+		this.listOfMeal = listOfMeal;
+	}
+
+	public int getId() {
+		return ID;
+	}
+	
+	public Meal getSpecMeal() {
+		return specialMeal;
+	}
+
+	public void setSpecMeal(Meal specMeal) {
+		if(!(listOfMeal.contains(specMeal))) {
+			System.out.println("Restaurant does not offer this meal");
+			throw new NullPointerException();
+		}
+		this.specialMeal = specMeal;
+	}
 	
 
 	

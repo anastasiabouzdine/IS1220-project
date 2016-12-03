@@ -25,7 +25,7 @@ public class CoreTest {
 	
 	//TODO
 	
-	Core mf1 = new Core("MyFoodera");
+	Core mf1 = new Core("MyFoodora");
 	
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
@@ -37,6 +37,13 @@ public class CoreTest {
 	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
 
+	
+	@Test
+	public void addUsers() {
+		mf1.addCourier(list_courier.get(0));
+		mf1.addCustomer(list_customer.get(0));
+		mf1.addRestaurant(list_restaurant.get(0));
+	}
 	
 	@Test
 	public void addAndPrintListOfMealsByCount() {
@@ -69,8 +76,6 @@ public class CoreTest {
 		mf1.addDishCount(d5, 9, rest2);
 		mf1.addDishCount(d5, 9, rest1);
 		
-		
-		
 		assertTrue(7 == mf1.getSortedList(true).first().getCount());
 		assertTrue(3 == mf1.getSortedList(rest2, true).first().getCount());
 		assertTrue(1 == mf1.getSortedList(rest2, false).first().getCount());
@@ -83,8 +88,6 @@ public class CoreTest {
 	
 	@Test
 	public void testTreatOrder() {
-		
-		
 		mf1.setCourierList(list_courier);
 		
 		Restaurant r1 = list_restaurant.get(0);

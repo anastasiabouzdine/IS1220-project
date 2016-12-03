@@ -18,49 +18,35 @@ package users;
  * @author Patrick von Platen
  */
 
-public class Manager {
+public class Manager extends User {
 	
 	//TODO discuss with John whether a static attribute of the core is a good idea or not
 	
-	private String name;
+	//private String name;
 	private String surname;
-	private int ID;
-	private String username;
-	private static int counter;
 		
 	public Manager(String name, String surname, String username){
-		this.name = name;
+		super(name, username);
 		this.surname = surname;
-		this.username = username;
-		this.ID = ++counter;
 	}
 	
 	/*********************************************************************/
-	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
+	/* Getters and Setter */
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getSurname() {
 		return surname;
 	}
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public int getID() {
-		return ID;
+
+	@Override
+	public String toString() {
+		return "Manager [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public static int getCounter() {
-		return counter;
-	}
+	
+	
+	
+	
 
 }
