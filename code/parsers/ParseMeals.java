@@ -19,7 +19,7 @@ public class ParseMeals {
 		ArrayList<Starter> starter_list = ParseDishes.parseStarter("src/txtFILES/starters.txt");
 		ArrayList<MainDish> mainDish_list = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
 		ArrayList<Dessert> dessert_list = ParseDishes.parseDessert("src/txtFILES/dessert.txt");
-		
+		int l = Math.min(Math.min(starter_list.size(), mainDish_list.size()), dessert_list.size());
 		ArrayList<FullMeal> fullMeals_list = new ArrayList<FullMeal>();
 		
 		String name;
@@ -29,7 +29,7 @@ public class ParseMeals {
 		Scanner scan = null;
 		try{
 			scan = new Scanner(file);
-			while (scan.hasNextLine() && scan.nextLine().equals("-------")){
+			while (scan.hasNextLine() && scan.nextLine().equals("-------") && i < l){
 				name = scan.nextLine();
 				fullMeals_list.add(new FullMeal(name, starter_list.get(i), mainDish_list.get(i), dessert_list.get(i)));
 				i++;
@@ -47,6 +47,8 @@ public static ArrayList<HalfMeal> parseHalfMeals(String fileName){
 		ArrayList<Starter> starter_list = ParseDishes.parseStarter("src/txtFILES/starters.txt");
 		ArrayList<MainDish> mainDish_list = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
 		
+		int l = Math.min(starter_list.size(), mainDish_list.size());
+
 		
 		ArrayList<HalfMeal> halfMeals_list = new ArrayList<HalfMeal>();
 		
@@ -57,7 +59,7 @@ public static ArrayList<HalfMeal> parseHalfMeals(String fileName){
 		Scanner scan = null;
 		try{
 			scan = new Scanner(file);
-			while (scan.hasNextLine() && scan.nextLine().equals("-------")){
+			while (scan.hasNextLine() && scan.nextLine().equals("-------") && i<l){
 				name = scan.nextLine();
 				halfMeals_list.add(new HalfMeal(name, mainDish_list.get(i), starter_list.get(i)));
 				i++;

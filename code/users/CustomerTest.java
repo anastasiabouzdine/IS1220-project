@@ -14,7 +14,7 @@ import restaurantSetUp.FidCardPlanPoints;
 
 public class CustomerTest {
 
-	private ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/courierlist_customer.txt");
+	private ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
 
 	
 	@Test
