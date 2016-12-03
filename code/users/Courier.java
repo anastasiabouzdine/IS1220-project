@@ -3,7 +3,6 @@ package users;
 import java.util.LinkedList;
 import java.util.List;
 
-import core.Core;
 import core.Order;
 import restaurantSetUp.Address;
 
@@ -133,10 +132,9 @@ public class Courier {
 	 * @return	order	that was given to the courier
 	 */
 	public void acceptOrder(){
-		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
+		Order order = this.listOfReceivedOrders.remove(); // rm first element of linkedlist
 		order.setCourier(this);
 		nbOfDeliveredOrders++;
-		//TODO Design --> to discuss with John
 	}
 	
 	/**
@@ -145,8 +143,7 @@ public class Courier {
 	 * @return	order	that was given to the courier
 	 */
 	public void declineOrder(){
-		Order order = this.listOfReceivedOrders.remove(); // get first element of queue
-		//TODO Design --> to discuss with John
+		this.listOfReceivedOrders.remove();  // rm first element of linkedlist
 	}
 	
 	/**
