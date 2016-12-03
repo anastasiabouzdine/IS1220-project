@@ -1,6 +1,9 @@
 package core;
 
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import restaurantSetUp.Dish;
 import restaurantSetUp.FidCardPlanBasic;
@@ -30,6 +33,10 @@ public class Order {
 	// customer can either choose multiple dishes or multiple meals
 	private ArrayList<Integer> quantity;
 	private Courier courier; 
+	private double profitFinal;
+	private double priceInter;
+	private double priceFinal;
+	private final Calendar date;
 	
 	public Order(Customer customer, Restaurant restaurant){
 		this.ID = (++counter);
@@ -38,6 +45,7 @@ public class Order {
 		meals = new ArrayList<Meal>();
 		dishes = new ArrayList<Dish>();
 		quantity = new ArrayList<Integer>();
+		this.date = Calendar.getInstance();
 	}
 	
 	public void addMeal(Meal m, int q){
@@ -53,7 +61,27 @@ public class Order {
 	
 
 	/*********************************************************************/
-	/* Getters and Setter */ //no set ID!
+	/* Getters and Setter */ //no set ID! no set Date!
+	
+	public Calendar getDate() {
+		return date;
+	}
+	
+	public double getPriceFinal() {
+		return priceFinal;
+	}
+
+	public void setPriceFinal(double priceFinal) {
+		this.priceFinal = priceFinal;
+	}
+
+	public double getProfitFinal() {
+		return profitFinal;
+	}
+
+	public void setProfitFinal(double priceFinal) {
+		this.profitFinal = priceFinal;
+	}
 	
 	public int getID() {
 		return ID;
@@ -106,8 +134,11 @@ public class Order {
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
- 
 	
+	public double getPriceInter() {
+		return priceInter;
+	}
+ 	
 	/*********************************************************************/
 	
 	public boolean isFidCardPlanBasic() {
@@ -161,8 +192,18 @@ public class Order {
 			}
 		}
 		
-		return price*customer.getFidCardPlan().applyReduction();
+		price *= customer.getFidCardPlan().applyReduction();
+		this.priceInter = price;
+		return price;
 	}
+
+	@Override
+	public String toString() {
+		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant + "]";
+	}
+
+	
+	
 
 	
 

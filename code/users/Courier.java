@@ -161,6 +161,13 @@ public class Courier {
 	}
 	
 	/**
+	 * @param	order	that is to be added to the list of received orders
+	 */
+	public void addNewOrder(Order order) {
+		this.listOfReceivedOrders.add(order);
+	}
+	
+	/**
 	 * @param	message	of which this user is going to be notified
 	 */
 	public void update(String message) {

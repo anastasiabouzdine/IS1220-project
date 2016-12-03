@@ -1,7 +1,9 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,8 +35,9 @@ import users.*;
 
 public class Core{
 	
+	/* Basic attributes */
 	private String name;
-	
+	     
 	/* Policies */
 	private DeliveryPolicy dPolicy;
 	private TargetProfitPolicy tpPolicy;
@@ -49,13 +52,13 @@ public class Core{
 	private DishSort dishSort;
 
 	/* Users */
-	private ArrayList<Courier> courierListActive;
+	private ArrayList<Courier> courierList;
 	private ArrayList<Courier> courierListInactive;
-	private ArrayList<Customer> customerListActive;
+	private ArrayList<Customer> customerList;
 	private ArrayList<Customer> customerListInactive;
-	private ArrayList<Manager> managerListActive;
+	private ArrayList<Manager> managerList;
 	private ArrayList<Manager> managerListInactive;
-	private ArrayList<Restaurant> restaurantListActive;
+	private ArrayList<Restaurant> restaurantList;
 	private ArrayList<Restaurant> restaurantListInactive;
 	
 	/* Orders */
@@ -69,6 +72,10 @@ public class Core{
 	private double markupPercentage;
 	private double deliveryCost;
 	
+	/* PlaceHolder */
+	private Calendar dateAfter;
+	private Calendar dateBefore;
+	
 	
 	/**
 	 * Core constructor.
@@ -81,10 +88,10 @@ public class Core{
 		this.tpPolicy = new MarkupProfit();
 		this.sortPolicy = new MealSort();
 		
-		this.courierListActive = new ArrayList<Courier>();
-		this.customerListActive = new ArrayList<Customer>();
-		this.managerListActive = new ArrayList<Manager>();
-		this.restaurantListActive = new ArrayList<Restaurant>();
+		this.courierList = new ArrayList<Courier>();
+		this.customerList = new ArrayList<Customer>();
+		this.managerList = new ArrayList<Manager>();
+		this.restaurantList = new ArrayList<Restaurant>();
 		
 		this.courierListInactive = new ArrayList<Courier>();
 		this.customerListInactive = new ArrayList<Customer>();
@@ -99,6 +106,12 @@ public class Core{
 		this.receivedOrders = new LinkedList<Order>();
 		this.savedOrders = new ArrayList<Order>();
 
+		this.dateAfter = Calendar.getInstance();
+		this.dateBefore = Calendar.getInstance();
+		
+		this.serviceFee = 2.50;
+		this.markupPercentage = 0.05;
+		this.deliveryCost = 4;
 	}
 
 	/*********************************************************************/
@@ -173,7 +186,6 @@ public class Core{
 		this.dishRestHeap = dishRestHeap;
 	}
 
-
 	public DishSort getDishSort() {
 		return dishSort;
 	}
@@ -182,12 +194,49 @@ public class Core{
 		this.dishSort = dishSort;
 	}
 	
+	public ArrayList<Courier> getCourierList() {
+		return courierList;
+	}
+
+	public void setCourierList(ArrayList<Courier> courierList) {
+		this.courierList = courierList;
+	}
+	
+	public LinkedList<Order> getReceivedOrders() {
+		return receivedOrders;
+	}
+
+	public void setReceivedOrders(LinkedList<Order> receivedOrders) {
+		this.receivedOrders = receivedOrders;
+	}
+	
+	public Calendar getDateAfter() {
+		return dateAfter;
+	}
+
+	public void setDateAfter(int year, int month, int date) {
+		dateAfter.clear();
+		dateAfter.set(year, month, date);
+	}
+
+	public Calendar getDateBefore() {
+		return dateBefore;
+	}
+
+	public void setDateBefore(int year, int month, int date) {
+		dateBefore.clear();
+		dateBefore.set(year, month, date);
+	}
+	
 	/*********************************************************************/
 	/* methods for the sorting policy */
 	 
 	
+	
+
 	/**
-	 * // TODO
+	 * @param rest is of type <code>Restaurant</code>
+	 * @return mealRestHeap	is a TreeSet of all the orders of meals of a specific restaurant
 	 */
 	public TreeSet<Sort> getMealRestHeap(Restaurant rest) {
 	
@@ -201,8 +250,10 @@ public class Core{
 		return mealRestHeap;
 	}
 	
+
 	/**
-	 * // TODO
+	 * @param rest is of type <code>Restaurant</code>
+	 * @return mealRestHeap	is a TreeSet of all the orders of dishes of a specific restaurant
 	 */
 	public TreeSet<Sort> getDishRestHeap(Restaurant rest) {
 		
@@ -217,7 +268,9 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * @param meal	is of type <code>Meal</code>
+	 * @return	mCount.getCount() or 0: either the Meal was already ordered then its count is returned
+	 * or the Meal has not been ordered yet then its count is 0
 	 */
 	public int getMealSort(Meal meal){
 		
@@ -231,7 +284,12 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * this function adds a new meal count each time a meal was ordered 
+	 * and delivered 
+	 * 
+	 * @param	meal	is of type Meal
+	 * @param	count	is the amount meal has already been ordered
+	 * @param	rest	is of type restaurant
 	 */
 	public void addMealCount(Meal meal, int count, Restaurant rest){
 		
@@ -244,7 +302,9 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * @param dish	is of type <code>Dish</code>
+	 * @return	dCount.getCount() or 0: either the Dish was already ordered then its count is returned
+	 * or the Dish has not been ordered yet then its count is 0
 	 */
 	public int getDishSort(Dish dish){
 		
@@ -258,7 +318,12 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * this function adds a new dish count each time a dish was ordered 
+	 * and delivered 
+	 * 
+	 * @param	dish	is of type Dish
+	 * @param	count	is the amount dish has already been ordered
+	 * @param	rest	is of type restaurant
 	 */
 	public void addDishCount(Dish dish, int count, Restaurant rest){
 		
@@ -271,7 +336,9 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * @param order	is either true or false (true = descending order)
+	 * @return	MealHeap or DishHeap according to the current policy established by the
+	 * managers. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<Sort> getSortedList(boolean order){
 		if(this.sortPolicy instanceof MealSort){
@@ -290,7 +357,10 @@ public class Core{
 	}
 	
 	/**
-	 * // TODO
+	 * @param rest	is of type restaurant
+	 * @param order	is either true or false (true = descending order)
+	 * @return	MealHeap or DishHeap according to the current policy established by the
+	 * managers for the chosen restaurant. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<Sort> getSortedList(Restaurant rest, boolean order){
 		if(this.sortPolicy instanceof MealSort) {
@@ -314,51 +384,118 @@ public class Core{
 	// TODO
 	
 	/**
-	 * @param	TODO
+	 *	this is one of the most important functions in the core:
+	 *	it treats new orders that were received by the system:
+	 *	1) it takes the latest order from the queue (LIFO principle)
+	 *	2) according to its policy a list of the given couriers is given
+	 *	3) a loop is implemented that waits until a courier accepts or declines the order (the courier 
+	 *	does that randomly in our case) 
+	 *	4) either no courier has been found (then the order is disregarded) 
+	 *	5) or the courier accepts and all the data is saved and updated respectively
 	 */
 	public void treatNewOrders(){
 		Order order = this.receivedOrders.removeFirst();
-		ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierListActive,order.getRestaurant().getAddress());
+		ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierList,order.getRestaurant().getAddress()); //get ordered list of couriers according to the chosen policy
 		Courier courier = null;
-		while(order.getCourier() == null || currentList.isEmpty()) {
+		while(order.getCourier() == null && !currentList.isEmpty()) { // while no courier has been found yet or until there are couriers
 			courier = currentList.get(0);
-			courier.getListOfReceivedOrders().add(order);
+			courier.addNewOrder(order); // courier receives order
 			courier.update("You have received a new order. Please respond whether you can carry out the order or not.");
-			courier.replyRandom();
+//			courier.declineOrder();
+			courier.replyRandom(); // courier decides randomly if he accepts or declines
 			currentList.remove(0);
 		}
 		
 		if(currentList.isEmpty()) {
 				order.getCustomer().update("All courriers are occupied. Your order could not be treated. Please try again later.");
 		} else {
-				savedOrders.add(order);
+				order.setProfitFinal(order.getPrice()*this.markupPercentage + this.serviceFee - this.deliveryCost); // profit was saved
+				order.setPriceFinal(order.getPriceInter() + this.serviceFee + this.deliveryCost); // total cost was saved
+				savedOrders.add(order); // order is saved
+
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
 				List<Dish> order_dishes = order.getDishes();
 				if(!order_meals.isEmpty()){
 					
-					for(int i=0; i < order_meals.size(); i++)
+					for(int i=0; i < order_meals.size(); i++) // count of meals is updated
 						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
 					order_restaurant.update("Please prepare the meal(s): " + order_meals + "to be picked up shortly by: " + courier.getName() + ".");
 				
 				} else{	
 					
-					for(int i=0; i < order_dishes.size(); i++)
+					for(int i=0; i < order_dishes.size(); i++) // count of dishes is updated
 						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
 					order_restaurant.update("Please prepare the dish(es): " + order_dishes + "to be picked up shortly by: " + courier.getName() + ".");
 				}
 				order.getCustomer().update("Your order has been accepted and will be carried out as soon as possible.");
 			}
 	}
+	
+	/*********************************************************************/
+	/*methods for a new order */
+	
+	/**
+	 * creates a new order
+	 * @param	cust	as type of Customer	
+	 * @param	rest	as type of Restaurant
+	 * @return	new Order
+	 */
+	public Order createNewOrder(Customer cust, Restaurant rest){
+		return new Order(cust, rest);
+	}
+	
+	/**
+	 * places a new order in the queue of new orders
+	 * @param	order	of type order
+	 */
+	public void placeNewOrder(Order order){
+		this.receivedOrders.add(order);
+		order.getCustomer().update("Your order has succesfully been placed.");
+	}
+	
+	
 	/* Implementing an update function */
 	// TODO
 	
 	
 	/* Notifying users of special offers */
 	// TODO
+	 
 	
-	/* Computing the total income and total profit of the system */ 
-	// TODO
+	/*********************************************************************/
+	/*profit related methods */
+	
+	/**
+	 * @see dateBefore and dateAfter have to be set 
+	 * before calling this function
+	 * 
+	 * @return	sum	which is the total income over a given Period of time 
+	 */
+	public double calcTotalIncome(){
+		double sum = 0;
+		for(Order order : this.savedOrders)
+			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+				sum += order.getPriceFinal();
+		return sum;
+	}
+	
+	/**
+	 * @see dateBefore and dateAfter have to be set 
+	 * before calling this function
+	 * 
+	 * @return	sum	which is the total profit over a given Period of time 
+	 */
+	public double calcTotalProfit(){
+		double sum = 0;
+		for(Order order : this.savedOrders)
+			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+				sum += order.getProfitFinal();
+		return sum;
+	}
+
+
+	
 	
 	/* Choose target policy */
 	// TODO
