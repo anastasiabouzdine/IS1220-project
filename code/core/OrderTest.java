@@ -6,11 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import Parser.ParseCustomers;
-import Parser.ParseDishes;
-import Parser.ParseMeals;
-import Parser.ParseOrders;
-import Parser.ParseRestaurants;
+import parsers.*;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;

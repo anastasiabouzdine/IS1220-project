@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import Parser.ParseCustomers;
+import parsers.ParseCustomers;
 import restaurantSetUp.FidCardPlan;
 import restaurantSetUp.FidCardPlanBasic;
 import restaurantSetUp.FidCardPlanLottery;

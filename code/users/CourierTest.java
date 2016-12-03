@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import Parser.ParseCouriers;
+import parsers.ParseCouriers;
 
 
 public class CourierTest {

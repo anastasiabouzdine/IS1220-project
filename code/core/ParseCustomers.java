@@ -1,4 +1,4 @@
-package parsers;
+package core;
 
 import java.io.File;
 import java.io.IOException;

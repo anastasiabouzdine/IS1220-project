@@ -1,4 +1,4 @@
-package Parser;
+package parsers;
 
 public class ParseManagers {
 
