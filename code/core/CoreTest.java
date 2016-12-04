@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import parsers.*;
@@ -37,17 +38,39 @@ public class CoreTest {
 	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
 
+	@Before
+	public void setUserLists() {
+		mf1.setCourierList(list_courier);
+		mf1.setCustomerList(list_customer);
+		mf1.setRestaurantList(list_restaurant);
+	}
 	
 	@Test
-	public void addUsers() {
-		mf1.addCourier(list_courier.get(0));
-		mf1.addCustomer(list_customer.get(0));
-		mf1.addRestaurant(list_restaurant.get(0));
+	public void logInWithUnknownUser() {
+		assertTrue(mf1.logIn("unknown user 42") == null);
+		System.out.println("TEST logInWithUnknownUser : DONE\n");
+	}
+	
+	@Test
+	public void logInWithKnownCustomer() {
+		assertTrue(mf1.getCurrent_customer() == null);
+		assertTrue(mf1.logIn(list_customer.get(0).getUsername()) != null);
+		assertTrue(mf1.getCurrent_customer() != null);
+		System.out.println("TEST logInWithKnownCustomer : DONE\n");
+	}
+	
+	@Test
+	public void logInAndThenLogOut() {
+		assertTrue(mf1.getCurrent_user() == null);
+		mf1.logIn(list_customer.get(0).getUsername());
+		assertTrue(mf1.getCurrent_user() != null);
+		mf1.logOut();
+		assertTrue(mf1.getCurrent_user() == null);
+		System.out.println("TEST logInAndThenLogOut : DONE\n");
 	}
 	
 	@Test
 	public void addAndPrintListOfMealsByCount() {
-		
 		HalfMeal hm1 = list_hmeal.get(0);
 		HalfMeal hm2 = list_hmeal.get(1);
 		HalfMeal hm3 = list_hmeal.get(2);
@@ -60,9 +83,7 @@ public class CoreTest {
 		
 		Restaurant rest1 = list_restaurant.get(0);
 		Restaurant rest2 = list_restaurant.get(1);
-		
-//		Order order1 = list_orders.get(0);
-		
+				
 		mf1.addMealCount(hm3, 4, rest1);
 		mf1.addMealCount(hm2, 1, rest2);
 		mf1.addMealCount(hm1, 4, rest1);
@@ -83,13 +104,11 @@ public class CoreTest {
 		mf1.setSort(mf1.getDishSort());
 		
 		System.out.println(mf1.getSortedList(true));
-		
+		System.out.println("TEST addAndPrintListOfMealsByCount : DONE\n");
 	}
 	
 	@Test
-	public void testTreatOrder() {
-		mf1.setCourierList(list_courier);
-		
+	public void treatOrder() {		
 		Restaurant r1 = list_restaurant.get(0);
 		
 		r1.addMeal(list_hmeal.get(0));
@@ -107,6 +126,8 @@ public class CoreTest {
 		order2.addMeal(list_hmeal.get(0), 3);
 		mf1.placeNewOrder(order2);
 		mf1.treatNewOrders();
+		
+		System.out.println("TEST treatOrder : DONE\n");
 	}
 
 }

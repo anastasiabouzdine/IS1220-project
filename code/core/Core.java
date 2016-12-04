@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,6 +62,13 @@ public class Core{
 	private ArrayList<Restaurant> restaurantList;
 	private ArrayList<Restaurant> restaurantListInactive;
 	
+	private HashMap<String,User> users = new HashMap<String, User>();
+	private User current_user;
+	private Courier current_courier;
+	private Customer current_customer;
+	private Manager current_manager;
+	private Restaurant current_restaurant;
+	
 	/* Two users can't have the same USERNAME,
 	 * so we need an HashMap mapping each USERNAME
 	 * to its corresponding user.
@@ -69,8 +77,6 @@ public class Core{
 	/* Orders */
 	private LinkedList<Order> receivedOrders;
 	private ArrayList<Order> savedOrders;
-	
-	
 	
 	/* Profit-related information */
 	private double serviceFee;
@@ -118,33 +124,76 @@ public class Core{
 		this.markupPercentage = 0.05;
 		this.deliveryCost = 4;
 	}
+	
+	
 
 	/*********************************************************************/
-	/* Add and remove users */
+	/* Log in */
+	public String logIn(String username){
+		if (users.containsKey(username)){
+			current_user = users.get(username);
+			if (current_user instanceof Courier){
+				current_courier = (Courier) current_user;
+				return "Successfully logged in as a Courier !";
+			} else if (current_user instanceof Customer){
+				current_customer = (Customer) current_user;
+				return "Successfully logged in as a Customer !";
+			} else if (current_user instanceof Manager){
+				current_manager = (Manager) current_user;
+				return "Successfully logged in as a Manager !";
+			} else if (current_user instanceof Restaurant){
+				current_restaurant = (Restaurant) current_user;
+				return "Successfully logged in as a Restaurant !";
+			}
+		}
+		return null;
+	}
+	public void logOut(){
+		current_user = null;
+		current_courier = null;
+		current_customer = null;
+		current_manager = null;
+		current_restaurant = null;
+	}
 	
+	/* Add and remove users */
+	public void addUser(User e){
+		users.put(e.getUsername(), e);
+	}
+	public void removeUser(User e){
+		users.remove(e.getUsername(), e);
+	}
 	public void addCourier(Courier e){
 		this.courierList.add(e);
+		addUser(e);
 	}
 	public void addCustomer(Customer e){
 		this.customerList.add(e);
+		addUser(e);
 	}
 	public void addManager(Manager e){
 		this.managerList.add(e);
+		addUser(e);
 	}
 	public void addRestaurant(Restaurant e){
 		this.restaurantList.add(e);
+		addUser(e);
 	}
 	public void removeCourier(Courier e){
 		this.courierList.remove(e);
+		removeUser(e);
 	}
 	public void removeCustomer(Customer e){
 		this.customerList.remove(e);
+		removeUser(e);
 	}
 	public void removeManager(Manager e){
 		this.managerList.remove(e);
+		removeUser(e);
 	}
 	public void removeRestaurant(Restaurant e){
 		this.restaurantList.remove(e);
+		removeUser(e);
 	}
 	
 	/*********************************************************************/
@@ -160,7 +209,6 @@ public class Core{
 	 * @return mealRestHeap	is a TreeSet of all the orders of meals of a specific restaurant
 	 */
 	public TreeSet<Sort> getMealRestHeap(Restaurant rest) {
-	
 		if(!mealRestHeap.isEmpty())
 		mealRestHeap.clear();
 	
@@ -501,20 +549,15 @@ public class Core{
 		this.dishSort = dishSort;
 	}
 	
-	public ArrayList<Courier> getCourierList() {
-		return courierList;
-	}
-
-	public void setCourierList(ArrayList<Courier> courierList) {
-		this.courierList = courierList;
-	}
-	
 	public LinkedList<Order> getReceivedOrders() {
 		return receivedOrders;
 	}
 
 	public void setReceivedOrders(LinkedList<Order> receivedOrders) {
 		this.receivedOrders = receivedOrders;
+	}
+	public void setMarkupPercentage(double markupPercentage) {
+		this.markupPercentage = markupPercentage;
 	}
 	
 	/* Getters and setters date */ 
@@ -536,4 +579,79 @@ public class Core{
 		dateBefore.set(year, month, date);
 	}
 	
+	/* Getters and Setter for user lists */
+	public HashMap<String, User> getUsers() {
+		return users;
+	}
+	public void setUsers(HashMap<String, User> users) {
+		this.users = users;
+	}
+	public ArrayList<Courier> getCourierList() {
+		return courierList;
+	}
+	public void setCourierList(ArrayList<Courier> courierList) {
+		for (Courier e : courierList){
+			addUser(e);
+		}
+		this.courierList = courierList;
+	}
+	public ArrayList<Customer> getCustomerList() {
+		return customerList;
+	}
+	public void setCustomerList(ArrayList<Customer> customerList) {
+		for (Customer e : customerList){
+			addUser(e);
+		}
+		this.customerList = customerList;
+	}
+	public ArrayList<Manager> getManagerList() {
+		return managerList;
+	}
+	public void setManagerList(ArrayList<Manager> managerList) {
+		for (Manager e : managerList){
+			addUser(e);
+		}
+		this.managerList = managerList;
+	}
+	public ArrayList<Restaurant> getRestaurantList() {
+		return restaurantList;
+	}
+	public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
+		for (Restaurant e : restaurantList){
+			addUser(e);
+		}
+		this.restaurantList = restaurantList;
+	}
+	/* Getters and Setter for users */
+	public User getCurrent_user() {
+		return current_user;
+	}
+	public void setCurrent_user(User current_user) {
+		this.current_user = current_user;
+	}
+	public Courier getCurrent_courier() {
+		return current_courier;
+	}
+	public void setCurrent_courier(Courier current_courier) {
+		this.current_courier = current_courier;
+	}
+	public Customer getCurrent_customer() {
+		return current_customer;
+	}
+	public void setCurrent_customer(Customer current_customer) {
+		this.current_customer = current_customer;
+	}
+	public Manager getCurrent_manager() {
+		return current_manager;
+	}
+	public void setCurrent_manager(Manager current_manager) {
+		this.current_manager = current_manager;
+	}
+	public Restaurant getCurrent_restaurant() {
+		return current_restaurant;
+	}
+	public void setCurrent_restaurant(Restaurant current_restaurant) {
+		this.current_restaurant = current_restaurant;
+	}
+
 }
