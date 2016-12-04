@@ -5,7 +5,10 @@ whose functionality are similar to that of nowadays food delivery systems.
 The project consists of two parts, the **core** and the **interface**.
 
 ## To do
-- [ ] Decide if functions should be restricted to users in the `Core` or in the `GUI`.
+- [ ] decide if functions should be restricted to users in the `Core` or in the `GUI`
+- [ ] eventually divide CoreTest file into multiple more specific test files
+- [ ] make `treatNewOrders` work for multiple orders
+- [ ] number of `preparedOrders` for a `Restaurant` ? 
 
 #### Managers
 - [x] add/remove users
@@ -14,8 +17,8 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] income over period
 - [ ] income per `Customer`
 - [ ] target profit policy
-- [ ] most selling `Restaurant`
-- [ ] most active `Courier`
+- [x] most selling `Restaurant`
+- [x] most active `Courier`
 - [x] setting delivery policy
 
 #### Restaurants

@@ -55,13 +55,9 @@ public class Core{
 
 	/* Users */
 	private ArrayList<Courier> courierList;
-	private ArrayList<Courier> courierListInactive;
 	private ArrayList<Customer> customerList;
-	private ArrayList<Customer> customerListInactive;
 	private ArrayList<Manager> managerList;
-	private ArrayList<Manager> managerListInactive;
 	private ArrayList<Restaurant> restaurantList;
-	private ArrayList<Restaurant> restaurantListInactive;
 	
 	private HashMap<String,User> users = new HashMap<String, User>();
 	private User current_user;
@@ -90,12 +86,11 @@ public class Core{
 	
 	
 	/**
-	 * Core constructor.
+	 * Class constructor.
 	 */
-	public Core(String name){
-		super();
-		this.name = name;
-		 
+	public Core(){
+		this.name = "MyFoodora";
+		
 		this.dPolicy = new FastestDelivery();
 		this.tpPolicy = new MarkupProfit();
 		this.sortPolicy = new MealSort();
@@ -104,11 +99,6 @@ public class Core{
 		this.customerList = new ArrayList<Customer>();
 		this.managerList = new ArrayList<Manager>();
 		this.restaurantList = new ArrayList<Restaurant>();
-		
-		this.courierListInactive = new ArrayList<Courier>();
-		this.customerListInactive = new ArrayList<Customer>();
-		this.managerListInactive = new ArrayList<Manager>();
-		this.restaurantListInactive = new ArrayList<Restaurant>();
 		
 		this.mealHeap = new TreeSet<Sort>();
 		this.mealRestHeap = new TreeSet<Sort>();
@@ -122,6 +112,14 @@ public class Core{
 		this.dateBefore = Calendar.getInstance();
 	}
 	
+	/**
+	 * Class constructor specifying the name of the core system.
+	 * @param name	a <code>String</code> containing the name of the core system
+	 */
+	public Core(String name){
+		this();
+		this.name = name;
+	}
 	
 
 	/*********************************************************************/
@@ -364,23 +362,28 @@ public class Core{
 	 *	5) or the courier accepts and all the data is saved and updated respectively
 	 */
 	public void treatNewOrders(){
-		Order order = this.receivedOrders.removeFirst();
-		ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierList,order.getRestaurant().getAddress()); //get ordered list of couriers according to the chosen policy
-		Courier courier = null;
-		while(order.getCourier() == null && !currentList.isEmpty()) { // while no courier has been found yet or until there are couriers
-			courier = currentList.get(0);
-			courier.addNewOrder(order); // courier receives order
-			courier.update("You have received a new order. Please respond whether you can carry out the order or not.");
-//			courier.declineOrder();
-			courier.replyRandom(); // courier decides randomly if he accepts or declines
-			currentList.remove(0);
-		}
-		
-		if(currentList.isEmpty()) {
-				order.getCustomer().update("All courriers are occupied. Your order could not be treated. Please try again later.");
-		} else {
-				order.setProfitFinal(order.getPrice()*this.markupPercentage + this.serviceFee - this.deliveryCost); // profit was saved
-				order.setPriceFinal(order.getPriceInter() + this.serviceFee + this.deliveryCost); // total cost was saved
+		while (receivedOrders.size() != 0){
+			Order order = this.receivedOrders.removeFirst();
+			//get ordered list of couriers according to the chosen policy
+			ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierList,order.getRestaurant().getAddress());
+			Courier courier = null;
+			// while no courier has been found yet or until there are couriers
+			while(order.getCourier() == null && !currentList.isEmpty()) { 
+				courier = currentList.get(0);
+				courier.addNewOrder(order); // courier receives order
+				courier.update("You have received a new order. "
+						+ "Please respond whether you can carry out the order or not.");
+				// courier decides randomly if he accepts or declines
+				courier.replyRandom(); 
+				currentList.remove(0);
+			}
+
+			if(currentList.isEmpty()) {
+				order.getCustomer().update("All courriers are occupied. "
+						+ "Your order could not be treated. Please try again later.");
+			} else {
+				order.setProfitFinal(order.getPrice()*this.markupPercentage + this.serviceFee - this.deliveryCost);
+				order.setPriceFinal(order.getPriceInter() + this.serviceFee + this.deliveryCost);
 				savedOrders.add(order); // order is saved
 
 				Restaurant order_restaurant = order.getRestaurant();
@@ -389,15 +392,19 @@ public class Core{
 				if(!order_meals.isEmpty()){
 					for(int i=0; i < order_meals.size(); i++) // count of meals is updated
 						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
-					order_restaurant.update("Please prepare the meal(s): " + order_meals + "to be picked up shortly by: " + courier.getName() + ".");
-				
+					order_restaurant.update("Please prepare the meal(s): " + order_meals 
+							+ " to be picked up shortly by: " + courier.getName() + ".");
+
 				} else{	
 					for(int i=0; i < order_dishes.size(); i++) // count of dishes is updated
 						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
-					order_restaurant.update("Please prepare the dish(es): " + order_dishes + "to be picked up shortly by: " + courier.getName() + ".");
+					order_restaurant.update("Please prepare the dish(es): " + order_dishes 
+							+ "to be picked up shortly by: " + courier.getName() + ".");
 				}
-				order.getCustomer().update("Your order has been accepted and will be carried out as soon as possible.");
+				order.getCustomer().update("Your order has been accepted "
+						+ "and will be carried out as soon as possible.");
 			}
+		}
 	}
 	
 	/*********************************************************************/
@@ -467,10 +474,71 @@ public class Core{
 	
 	/* Choose target policy */
 	// TODO
+	
+	/*********************************************************************/
+	/* Most/least selling restaurant and active courier */
+	
+	/**
+	 * Returns the most or least selling <code>Restaurant</code> in terms of number of <code>Order</code>.
+	 * @param 	most	a <code>boolean</code> whose value is true to get the most selling Restaurant,
+	 * 					false to get the least selling one
+	 * @return	the <code>Restaurant</code> following the criteria of the argument
+	 */
+	public Restaurant getMostOrLeastSellingRestaurant(boolean most){
+		int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID()];
+		int max = 0; int min = savedOrders.size();
+		Restaurant best_seller = null; 
+		Restaurant least_seller = null;
+		Restaurant current_r;
+		for(Order o : savedOrders){
+			current_r = o.getRestaurant();
+			nbOrders[current_r.getID()]++;
+			if (most && nbOrders[current_r.getID()] > max){
+				max = nbOrders[current_r.getID()];
+				best_seller = current_r;
+			}
+		}
+		if (!most){
+			for(Order o : savedOrders){
+				current_r = o.getRestaurant();
+				if (nbOrders[current_r.getID()] < min){
+					min = nbOrders[current_r.getID()];
+					least_seller = current_r;
+				}
+			}
+		}
+		return (most ? best_seller : least_seller);
+	}
+	
+	/**
+	 * Returns the most or least active <code>Courier</code> in terms of number of <code>Order</code>.
+	 * Note that this method has a random factor in it (the courier accepting or not to deliver
+	 * an offer) and isn't thus guaranteed to give the same output for the same argument.
+	 * 
+	 * @param 	most	a <code>boolean</code> whose value is true to get the most active Courier,
+	 * 					false to get the least active one
+	 * @return	the <code>Courier</code> following the criteria of the argument
+	 */
+	public Courier getMostOrLeastActiveCourier(boolean most){
+		Courier most_active = null;
+		Courier least_active = null;
+		int max = 0; int min = savedOrders.size();
+		for(Courier c : courierList){
+			if (most && c.getNbOfDeliveredOrders() > max){
+				max = c.getNbOfDeliveredOrders();
+				most_active = c;
+			}
+			if (!most && c.getNbOfDeliveredOrders() > 0 && c.getNbOfDeliveredOrders() < min){
+				min = c.getNbOfDeliveredOrders();
+				least_active = c;
+			}
+			
+		}
+		return (most ? most_active : least_active);
+	}
 
 	/*********************************************************************/
-	/* Getters and Setter policies */ 
-	
+	/* Getters and Setter for policies */ 
 	public Sort getSoPolicy() {
 		return sortPolicy;
 	}
@@ -653,5 +721,13 @@ public class Core{
 	public void setCurrent_restaurant(Restaurant current_restaurant) {
 		this.current_restaurant = current_restaurant;
 	}
+	
+	/* MISC Getters and Setters */ 
+	public ArrayList<Order> getSavedOrders() {
+		return savedOrders;
+	}
+	public void setSavedOrders(ArrayList<Order> savedOrders) {
+		this.savedOrders = savedOrders;
+	}	
 
 }
