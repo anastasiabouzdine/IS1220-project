@@ -5,7 +5,7 @@ whose functionality are similar to that of nowadays food delivery systems.
 The project consists of two parts, the **core** and the **interface**.
 
 ## To do
--[ ] Decide if functions should be restricted to users in the `Core` or in the `GUI`.
+- [ ] Decide if functions should be restricted to users in the `Core` or in the `GUI`.
 
 #### Managers
 - [x] add/remove users

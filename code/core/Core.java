@@ -13,6 +13,7 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import exceptions.AlreadyUsedUsernameException;
 import policies.*;
 import restaurantSetUp.*;
 import users.*;
@@ -79,9 +80,9 @@ public class Core{
 	private ArrayList<Order> savedOrders;
 	
 	/* Profit-related information */
-	private double serviceFee;
-	private double markupPercentage;
-	private double deliveryCost;
+	private double serviceFee = 2.50;
+	private double markupPercentage = 0.05;
+	private double deliveryCost = 4;
 	
 	/* PlaceHolder */
 	private Calendar dateAfter;
@@ -119,10 +120,6 @@ public class Core{
 
 		this.dateAfter = Calendar.getInstance();
 		this.dateBefore = Calendar.getInstance();
-		
-		this.serviceFee = 2.50;
-		this.markupPercentage = 0.05;
-		this.deliveryCost = 4;
 	}
 	
 	
@@ -157,43 +154,46 @@ public class Core{
 	}
 	
 	/* Add and remove users */
-	public void addUser(User e){
+	public void activateUser(User e){
 		users.put(e.getUsername(), e);
 	}
-	public void removeUser(User e){
+	public void disactivateUser(User e){
 		users.remove(e.getUsername(), e);
 	}
-	public void addCourier(Courier e){
-		this.courierList.add(e);
-		addUser(e);
+	public void addUser(User e) throws AlreadyUsedUsernameException {
+		if (users.containsKey(e.getUsername())){
+			throw new AlreadyUsedUsernameException();
+		}
+		activateUser(e);
+		if (e instanceof Courier){
+			Courier courier_e = (Courier) e;
+			this.courierList.add(courier_e);
+		} else if (e instanceof Customer){
+			Customer customer_e = (Customer) e;
+			this.customerList.add(customer_e);
+		} else if (current_user instanceof Manager){
+			Manager manager_e = (Manager) e;
+			this.managerList.add(manager_e);
+		} else if (current_user instanceof Restaurant){
+			Restaurant restaurant_e = (Restaurant) e;
+			this.restaurantList.add(restaurant_e);
+		}	
 	}
-	public void addCustomer(Customer e){
-		this.customerList.add(e);
-		addUser(e);
-	}
-	public void addManager(Manager e){
-		this.managerList.add(e);
-		addUser(e);
-	}
-	public void addRestaurant(Restaurant e){
-		this.restaurantList.add(e);
-		addUser(e);
-	}
-	public void removeCourier(Courier e){
-		this.courierList.remove(e);
-		removeUser(e);
-	}
-	public void removeCustomer(Customer e){
-		this.customerList.remove(e);
-		removeUser(e);
-	}
-	public void removeManager(Manager e){
-		this.managerList.remove(e);
-		removeUser(e);
-	}
-	public void removeRestaurant(Restaurant e){
-		this.restaurantList.remove(e);
-		removeUser(e);
+	public void removeUser(User e){
+		disactivateUser(e);
+		if (e instanceof Courier){
+			Courier courier_e = (Courier) e;
+			this.courierList.remove(courier_e);
+		} else if (e instanceof Customer){
+			Customer customer_e = (Customer) e;
+			this.customerList.remove(customer_e);
+		} else if (current_user instanceof Manager){
+			Manager manager_e = (Manager) e;
+			this.managerList.remove(manager_e);
+		} else if (current_user instanceof Restaurant){
+			Restaurant restaurant_e = (Restaurant) e;
+			this.restaurantList.remove(restaurant_e);
+		}	
 	}
 	
 	/*********************************************************************/
@@ -315,7 +315,6 @@ public class Core{
 		if(this.sortPolicy instanceof MealSort){
 			if(this.sortPolicy.howToSortOrder(order))
 				return getMealHeap();
-		
 			else 
 				return (TreeSet<Sort>) getMealHeap().descendingSet();
 		
@@ -453,7 +452,7 @@ public class Core{
 	 * @see dateBefore and dateAfter have to be set 
 	 * before calling this function
 	 * 
-	 * @return	sum	which is the total profit over a given Period of time 
+	 * @return	sum		which is the total profit over a given Period of time 
 	 */
 	public double calcTotalProfit(){
 		double sum = 0;
@@ -488,7 +487,7 @@ public class Core{
 		this.dPolicy = dPolicy;
 	}
 
-	/* Getters and setters for the profit-related attributes */
+	/* Getters and setters for the profit-related attributes (for the managers) */
 	public double getServiceFee() {
 		return serviceFee;
 	}
@@ -512,7 +511,8 @@ public class Core{
 	public void setDeliveryCost(double deliveryCost) {
 		this.deliveryCost = deliveryCost;
 	}
-
+	
+	/* Getters and setters for the meal- and dish- sorting structures */
 	public TreeSet<Sort> getMealHeap() {
 		return mealHeap;
 	}
@@ -591,7 +591,7 @@ public class Core{
 	}
 	public void setCourierList(ArrayList<Courier> courierList) {
 		for (Courier e : courierList){
-			addUser(e);
+			activateUser(e);
 		}
 		this.courierList = courierList;
 	}
@@ -600,7 +600,7 @@ public class Core{
 	}
 	public void setCustomerList(ArrayList<Customer> customerList) {
 		for (Customer e : customerList){
-			addUser(e);
+			activateUser(e);
 		}
 		this.customerList = customerList;
 	}
@@ -609,7 +609,7 @@ public class Core{
 	}
 	public void setManagerList(ArrayList<Manager> managerList) {
 		for (Manager e : managerList){
-			addUser(e);
+			activateUser(e);
 		}
 		this.managerList = managerList;
 	}
@@ -618,7 +618,7 @@ public class Core{
 	}
 	public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
 		for (Restaurant e : restaurantList){
-			addUser(e);
+			activateUser(e);
 		}
 		this.restaurantList = restaurantList;
 	}

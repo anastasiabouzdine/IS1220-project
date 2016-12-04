@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
 import policies.ALaCarteSorted;
 import policies.DeliveryPolicy;
@@ -43,6 +44,27 @@ public class CoreTest {
 		mf1.setCourierList(list_courier);
 		mf1.setCustomerList(list_customer);
 		mf1.setRestaurantList(list_restaurant);
+	}
+	
+	@Test
+	public void removeAndAddUser() {
+		Courier e = list_courier.get(0);
+		assertTrue(mf1.logIn(e.getUsername()) != null);
+		mf1.removeUser(e);
+		assertTrue(mf1.logIn(e.getUsername()) == null);
+		assertTrue(!mf1.getCourierList().contains(e));
+		try {
+			mf1.addUser(e);
+		} catch (AlreadyUsedUsernameException e1) {
+			e1.printStackTrace();
+		}
+		assertTrue(mf1.logIn(e.getUsername()) != null);
+		assertTrue(mf1.getCourierList().contains(e));
+	}
+	
+	@Test(expected=AlreadyUsedUsernameException.class)
+	public void addAlreadyUsedUsername() throws AlreadyUsedUsernameException  {
+		mf1.addUser(list_restaurant.get(0));
 	}
 	
 	@Test
