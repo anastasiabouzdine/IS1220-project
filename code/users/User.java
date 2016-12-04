@@ -1,5 +1,15 @@
 package users;
 
+/**
+ * The class <code>User</code> allows to create different users
+ * for the MyFoodora system.
+ * It can be used by any user needing a <code>name</code>,
+ * a <code>username</code> and an <code>ID</code>.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
+
 public class User {
 
 	private String name;
@@ -34,10 +44,6 @@ public class User {
 
 	public static int getCounter() {
 		return counter;
-	}
-
-	public static void setCounter(int counter) {
-		User.counter = counter;
 	}
 
 	public int getID() {
