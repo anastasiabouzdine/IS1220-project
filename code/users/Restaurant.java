@@ -172,9 +172,10 @@ public class Restaurant extends User {
 
 	@Override
 	public String toString() {
-		return "Restaurants [name=" + getName() + ", Adress=" + address + ", username=" + getUsername() + ", discountFactor="
-				+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", ID=" + ID + ", listOfMeal="
-				+ listOfMeal + "]";
+		return "Restaurant [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
+		// return "Restaurant [name=" + getName() + ", Adress=" + address + ", username=" + getUsername() + ", discountFactor="
+		//		+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", ID=" + ID + ", listOfMeal="
+		//		+ listOfMeal + "]";
 	}
 
 	
