@@ -108,7 +108,7 @@ public class Customer extends User implements Observer{
 	 * @param	message	of which this user is going to be notified
 	 */
 	public void update(String message){
-		System.out.println(message);
+		System.out.println("[Customer UPDATE] " + message);
 	}
 
 	

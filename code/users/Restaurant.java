@@ -37,7 +37,6 @@ public class Restaurant extends User {
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
 	private Meal specialMeal;
-	private int ID;
 	private List<Meal> listOfMeal; 
 
 	
@@ -169,6 +168,8 @@ public class Restaurant extends User {
 		System.out.println("[Restaurant UPDATE] " + message);
 	}
 	
+	
+	
 
 	@Override
 	public String toString() {
@@ -222,11 +223,6 @@ public class Restaurant extends User {
 	public void setListOfMeal(List<Meal> listOfMeal) {
 		this.listOfMeal = listOfMeal;
 	}
-
-	public int getId() {
-		return ID;
-	}
-	
 	public Meal getSpecMeal() {
 		return specialMeal;
 	}
@@ -238,9 +234,6 @@ public class Restaurant extends User {
 		}
 		this.specialMeal = specMeal;
 	}
-	
-
-	
 	
 	
 };

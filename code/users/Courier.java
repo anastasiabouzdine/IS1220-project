@@ -141,11 +141,9 @@ public class Courier extends User {
 	public void setState(boolean state) {
 		this.state = state;
 	}
-
 	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
 		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
 	}
-	
 	
 	public List<Order> getListOfReceivedOrders() {
 		return listOfReceivedOrders;
