@@ -2,6 +2,8 @@
 
 \usepackage{./custom}
 
+\lstset{language=Java}
+
 % \usepackage[backend=biber]{biblatex}
 % \addbibresource{./biblio.bib}
 
@@ -20,10 +22,32 @@
 \end{center}
 % title (end)
 
-% {\hypersetup{linkcolor=black} \tableofcontents}
-% \newpage
+{\hypersetup{linkcolor=black} \tableofcontents}
+\newpage
 
-42 
+\part{Body report}
+\input{./src/1-intro.tex} 
+\newpage
+\input{./src/2-background.tex} 
+\newpage
+\input{./src/3-design.tex} 
+\newpage
+\input{./src/4-implementation.tex} 
+\newpage
+\input{./src/5-testing.tex} 
+\newpage
+\input{./src/6-results.tex} 
+\newpage
+\input{./src/7-conclusion.tex}
+\newpage
+
+\part{Annexes}
+\appendix
+\input{./app/test_results.tex}
+\newpage
+\input{./app/code_listing.tex}
+\newpage
+\input{./app/UML_diagrams.tex}
 
 %\addcontentsline{toc}{section}{Bibliographie}
 %\nocite{*}
