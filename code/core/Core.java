@@ -372,7 +372,7 @@ public class Core{
 						+ "Your order could not be treated. Please try again later.");
 			} else {
 				order.setProfitFinal(order.getPrice()*this.markupPercentage + this.serviceFee - this.deliveryCost);
-				order.setPriceFinal(order.getPriceInter() + this.serviceFee + this.deliveryCost);
+				order.setPriceFinal(order.getPriceInter() + this.serviceFee);
 				savedOrders.add(order); // order is saved
 
 				Restaurant order_restaurant = order.getRestaurant();
@@ -438,9 +438,10 @@ public class Core{
 	public double calcTotalIncome(){
 		double sum = 0;
 		for(Order order : this.savedOrders)
-			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+			if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 				sum += order.getPriceFinal();
-		return sum;
+			}
+		return Order.round2(sum);
 	}
 	
 	/**
@@ -454,7 +455,7 @@ public class Core{
 		for(Order order : this.savedOrders)
 			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
 				sum += order.getProfitFinal();
-		return sum;
+		return Order.round2(sum);
 	}
 	
 	/**
@@ -468,10 +469,17 @@ public class Core{
 	 * @return	average income per customer over a given period of time 
 	 */
 	public double calcAverageProfit(){
-		int sum = 0;
-
-		
-		return sum;
+		int nb_customers_who_ordered = 0;
+		int temp_id = 0;
+		boolean[] ordered_at_least_once = new boolean[customerList.get(customerList.size()-1).getID() + 1];
+		for(Order o : savedOrders){
+			temp_id = o.getCustomer().getID();
+			if (!ordered_at_least_once[temp_id]){
+				ordered_at_least_once[temp_id] = true;
+				nb_customers_who_ordered++;
+			}
+		}
+		return Order.round2(calcTotalProfit()/(double)nb_customers_who_ordered);
 	}
 	
 	/*********************************************************************/
@@ -484,7 +492,7 @@ public class Core{
 	 * @return	the <code>Restaurant</code> following the criteria of the argument
 	 */
 	public Restaurant getMostOrLeastSellingRestaurant(boolean most){
-		int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID()];
+		int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID() + 1];
 		int max = 0; int min = savedOrders.size();
 		Restaurant best_seller = null; 
 		Restaurant least_seller = null;
@@ -638,6 +646,9 @@ public class Core{
 	public void setDateAfter(int year, int month, int date) {
 		dateAfter.clear();
 		dateAfter.set(year, month, date);
+	}
+	public void autoSetDateAfter(){
+		dateAfter = Calendar.getInstance();
 	}
 
 	public Calendar getDateBefore() {

@@ -9,6 +9,8 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] eventually divide CoreTest file into multiple more specific test files
 - [ ] make `treatNewOrders` work for multiple orders
 - [ ] number of `preparedOrders` for a `Restaurant` ? 
+- [ ] handling of the `dateAfter` as the current date ?
+- [ ] name of `priceInter` unappropriate
 
 #### Managers
 - [x] add/remove users

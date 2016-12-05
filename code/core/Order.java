@@ -58,9 +58,62 @@ public class Order {
 		quantity.add(q);
 	}
 	
+ 	
+	/*********************************************************************/
 	
+	public boolean isFidCardPlanBasic() {
+		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
+	}
+	
+	/**
+	 * The method <code>Order.getPrice</code> calculates the price of the <code>Order</code> depending on 
+	 * 
+	 * <ul>
+	 * 	<li>whether the customer ordered multiple <code>Meal</code> or multiple <code>Deal</code></li>
+	 *  <li>whether the customer has a <code>FidCardPlanBasic</code>
+	 *  ,a <code>FidCardPlanPoints</code> or a <code>FidCardPlanLottery</code></li>
+	 * </ul>
+	 * 
+	 * @return	price	of the order is returned as a double
+	 */
+	public double getPrice(){
+		double price = 0.0;
+		
+		if(isFidCardPlanBasic()) {
+			for(int i = 0; i < meals.size(); i++) {
+				if(restaurant.isMealSpecial(meals.get(i))) {
+					price += quantity.get(i)*meals.get(i).getPrice()*(1-restaurant.getSpecDiscFact());
+					// price += quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
+				} else {
+					price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+				}
+			}
+		} else {
+			for(int i = 0; i < meals.size(); i++) {
+				price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+			}
+		}
+		for(int i = 0; i < dishes.size(); i++) {
+			price += quantity.get(i)*dishes.get(i).getPrice();
+		}
+		price *= customer.getFidCardPlan().applyReduction();
+		price = round2(price);
+		this.priceInter = price;
+		return price;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant 
+				+ ", courier=" + courier + "]";
+	}
 
 	/*********************************************************************/
+	/* Round function */
+	
+	public static double round2(double n){
+		return Math.round(n * 100.0) / 100.0;
+	}
 	/* Getters and Setter */ //no set ID! no set Date!
 	
 	public Calendar getDate() {
@@ -72,7 +125,7 @@ public class Order {
 	}
 
 	public void setPriceFinal(double priceFinal) {
-		this.priceFinal = priceFinal;
+		this.priceFinal = round2(priceFinal);
 	}
 
 	public double getProfitFinal() {
@@ -80,7 +133,7 @@ public class Order {
 	}
 
 	public void setProfitFinal(double priceFinal) {
-		this.profitFinal = priceFinal;
+		this.profitFinal = round2(priceFinal);
 	}
 	
 	public int getID() {
@@ -138,74 +191,5 @@ public class Order {
 	public double getPriceInter() {
 		return priceInter;
 	}
- 	
-	/*********************************************************************/
-	
-	public boolean isFidCardPlanBasic() {
-		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
-	}
-	
-	/**
-	 * The method <code>Order.getPrice</code> calculates the price of the <code>Order</code> depending on 
-	 * 
-	 * <ul>
-	 * 	<li>whether the customer ordered multiple <code>Meal</code> or multiple <code>Deal</code></li>
-	 *  <li>whether the customer has a <code>FidCardPlanBasic</code>
-	 *  ,a <code>FidCardPlanPoints</code> or a <code>FidCardPlanLottery</code></li>
-	 * </ul>
-	 * 
-	 * @return	price	of the order is returned as a double
-	 */
-	public double getPrice(){
-		double price = 0;
-		
-		//TODO write a round function for all double equations
-		
-		if(isFidCardPlanBasic()) {
-			if(!meals.isEmpty()) {
-				
-				for(int i = 0; i < meals.size(); i++) {
-					if(restaurant.isMealSpecial(meals.get(i))) {
-						price += quantity.get(i)*meals.get(i).getPrice()*(1-restaurant.getSpecDiscFact());
-						// price += quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
-					} else {
-						price += quantity.get(i)*restaurant.getPrice(meals.get(i));
-						} 
-				} 
-			} else {
-				for(int i = 0; i < dishes.size(); i++) {
-					price += quantity.get(i)*dishes.get(i).getPrice();
-				}
-			}
-					
-			
-		} else {
-			
-			if(!meals.isEmpty()) {
-				for(int i = 0; i < meals.size(); i++) {
-					price += quantity.get(i)*restaurant.getPrice(meals.get(i));
-				}
-			} else {
-				for(int i = 0; i < dishes.size(); i++) {
-					price += quantity.get(i)*dishes.get(i).getPrice();
-				}
-			}
-		}
-		
-		price *= customer.getFidCardPlan().applyReduction();
-		this.priceInter = price;
-		return price;
-	}
-
-	@Override
-	public String toString() {
-		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant 
-				+ ", courier=" + courier + "]";
-	}
-
-	
-	
-
-	
 
 }

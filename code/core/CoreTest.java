@@ -161,22 +161,76 @@ public class CoreTest {
 	}
 	
 	/*********************************************************************/
+	/* Computing profit, income and average profit */ 
+	
+	@Test
+	public void chekcIfCalcTotalIncomeWorks() {
+		make3orders();
+		mf1.autoSetDateAfter();
+		double totalIn = mf1.calcTotalIncome();
+		//   3xdish1 : 3x8.3 = 24.9
+		// + 2xdish2 : 2x6.35 = 12.7
+		// + 1xdish3 : 1x16.85 = 16.85
+		// + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
+		// ------------------------------------------------------
+		// = 61.95
+		assertTrue(totalIn == 61.95);
+		System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
+	}
+	
+	@Test
+	public void chekcIfCalcTotalProfitWorks() {
+		make3orders();
+		mf1.autoSetDateAfter();
+		double totalProfit = mf1.calcTotalProfit();
+		//   markup : 0.05*(54.45) = 2.72
+		// + 3xserviceFee : 3x2.5 = 7.5
+		// - 3xdeliveryCost : 3x4 = 12
+		// ------------------------------------------------------
+		// = -1.78
+		double trueTotalProfit = Order.round2((-1.78));
+		assertTrue(totalProfit == trueTotalProfit);
+		
+		System.out.println("TEST chekcIfCalcTotalProfitWorks : DONE\n");
+	}
+	
+	@Test
+	public void chekcIfCalcAverageProfitWorks() {
+		make3orders();
+		mf1.autoSetDateAfter();
+		double avgProfit = mf1.calcAverageProfit();
+		// = -1.78 /3
+		double trueAvg = Order.round2((-1.78D)/3D);
+		assertTrue(avgProfit == trueAvg);
+		
+		System.out.println("TEST chekcIfCalcAverageProfitWorks : DONE\n");
+	}
+	
+	
+	/*********************************************************************/
 	/* Most/least selling restaurants and active couriers */ 
 	
 	public void make3orders() {
+		System.out.println("Making 3 orders...");
+		/* Make sure that all parameters are in accordance with tests */
+		mf1.setMarkup_percentage(0.05);
+		mf1.setDeliveryCost(4.0);
+		mf1.setServiceFee(2.5);
+
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
 		order1.addDish(list_mainDish.get(0), 3);
 		mf1.placeNewOrder(order1);
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest3);
-		order1.addDish(list_mainDish.get(1), 2);
+		order2.addDish(list_mainDish.get(1), 2);
 		mf1.placeNewOrder(order2);
 
 		Order order3 = mf1.createNewOrder(list_customer.get(4), rest1);
-		order1.addDish(list_mainDish.get(2), 1);
+		order3.addDish(list_mainDish.get(2), 1);
 		mf1.placeNewOrder(order3);
 		// Treat the three placed orders : two for rest1 and one for rest2
 		mf1.treatNewOrders();
+		System.out.println("Done with the 3 orders !");
 	}
 	
 	@Test
