@@ -7,7 +7,7 @@ import users.Restaurant;
 //TODO give description of this class
 
 
-public class MealSort extends Sort {
+public class MealSort extends SortPolicy {
 	
 	private Meal meal;
 	

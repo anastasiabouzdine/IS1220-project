@@ -9,8 +9,10 @@ import org.junit.Test;
 
 import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
+import policies.DeliveryCostProfit;
 import policies.DeliveryPolicy;
 import policies.FairOccupationDelivery;
+import policies.ServiceFeeProfit;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
@@ -164,7 +166,7 @@ public class CoreTest {
 	/* Computing profit, income and average profit */ 
 	
 	@Test
-	public void chekcIfCalcTotalIncomeWorks() {
+	public void checkIfCalcTotalIncomeWorks() {
 		make3orders();
 		mf1.autoSetDateAfter();
 		double totalIn = mf1.calcTotalIncome();
@@ -267,7 +269,94 @@ public class CoreTest {
 		System.out.println("TEST mostOrLeastActiveCourier : DONE\n");
 	}
 	
+	/*********************************************************************/
+	/* calculate Target profit quantities */ 
 	
+	@Test
+	public void simulateMarkupPerc() {
+		make3orders();
+		
+		double serviceFee = 5;
+		double deliveryFee = 3;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			System.out.println(order.getPriceInter());
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit - 3*serviceFee + 3*deliveryFee;
+		
+		assertTrue(Order.round4(placeHolder/sum)==mf1.simulateProfit(profit, deliveryFee, serviceFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
 	
-
+	@Test
+	public void simulateDeliveryCost() {
+		make3orders();
+		
+		mf1.setTpPolicy(new DeliveryCostProfit());
+		
+		double serviceFee = 5;
+		double markupProfit = 0.05;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			System.out.println(order.getPriceInter());
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit - 3*serviceFee - sum*markupProfit;
+		
+//		System.out.println(-placeHolder/3);
+//		System.out.println(mf1.simulateProfit(profit, markupProfit, serviceFee));
+		
+		assertTrue(Order.round2(-placeHolder/3)==mf1.simulateProfit(profit, markupProfit, serviceFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
+	
+	@Test
+	public void simulateServiceFee() {
+		make3orders();
+		
+		mf1.setTpPolicy(new ServiceFeeProfit());
+		
+		double deliveryFee = 5;
+		double markupProfit = 0.05;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			System.out.println(order.getPriceInter());
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit + 3*deliveryFee - sum*markupProfit;
+		
+		System.out.println(placeHolder/3);
+		System.out.println(mf1.simulateProfit(profit, markupProfit, deliveryFee));
+		
+		assertTrue(Order.round2(placeHolder/3)==mf1.simulateProfit(profit, markupProfit, deliveryFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
 }

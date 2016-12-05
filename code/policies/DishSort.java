@@ -6,7 +6,7 @@ import users.Restaurant;
 
 //TODO give description of this class
 
-public class DishSort extends Sort{
+public class DishSort extends SortPolicy{
 	
 	private Dish dish;
 	
@@ -21,7 +21,7 @@ public class DishSort extends Sort{
 	}
 	
 	/**
-	 * is there because core needs an attributeless Sort to save as policy
+	 * is there because core needs an attributeless SortPolicy to save as policy
 	 */
 	public DishSort(){
 		super();

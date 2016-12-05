@@ -32,14 +32,14 @@ public class Core{
 	/* Policies */
 	private DeliveryPolicy dPolicy;
 	private TargetProfitPolicy tpPolicy;
-	private Sort sortPolicy;
+	private SortPolicy sortPolicy;
 	
 	/* Meals and Dishes */
-	private TreeSet<Sort> mealHeap;
-	private TreeSet<Sort> mealRestHeap;
+	private TreeSet<SortPolicy> mealHeap;
+	private TreeSet<SortPolicy> mealRestHeap;
 	private MealSort mealSort;
-	private TreeSet<Sort> dishHeap;
-	private TreeSet<Sort> dishRestHeap;
+	private TreeSet<SortPolicy> dishHeap;
+	private TreeSet<SortPolicy> dishRestHeap;
 	private DishSort dishSort;
 
 	/* Users */
@@ -89,10 +89,10 @@ public class Core{
 		this.managerList = new ArrayList<Manager>();
 		this.restaurantList = new ArrayList<Restaurant>();
 		
-		this.mealHeap = new TreeSet<Sort>();
-		this.mealRestHeap = new TreeSet<Sort>();
-		this.dishHeap = new TreeSet<Sort>();
-		this.dishRestHeap = new TreeSet<Sort>();
+		this.mealHeap = new TreeSet<SortPolicy>();
+		this.mealRestHeap = new TreeSet<SortPolicy>();
+		this.dishHeap = new TreeSet<SortPolicy>();
+		this.dishRestHeap = new TreeSet<SortPolicy>();
 		
 		this.receivedOrders = new LinkedList<Order>();
 		this.savedOrders = new ArrayList<Order>();
@@ -195,11 +195,11 @@ public class Core{
 	 * @param rest is of type <code>Restaurant</code>
 	 * @return mealRestHeap	is a TreeSet of all the orders of meals of a specific restaurant
 	 */
-	public TreeSet<Sort> getMealRestHeap(Restaurant rest) {
+	public TreeSet<SortPolicy> getMealRestHeap(Restaurant rest) {
 		if(!mealRestHeap.isEmpty())
 		mealRestHeap.clear();
 	
-		for(Sort mCount : mealHeap)
+		for(SortPolicy mCount : mealHeap)
 			if(mCount.getRest().equals(rest)) 
 				mealRestHeap.add(mCount);
 		
@@ -211,12 +211,12 @@ public class Core{
 	 * @param rest is of type <code>Restaurant</code>
 	 * @return mealRestHeap	is a TreeSet of all the orders of dishes of a specific restaurant
 	 */
-	public TreeSet<Sort> getDishRestHeap(Restaurant rest) {
+	public TreeSet<SortPolicy> getDishRestHeap(Restaurant rest) {
 		
 		if(!dishRestHeap.isEmpty())
 			dishRestHeap.clear();
 		
-			for(Sort dCount : dishHeap)
+			for(SortPolicy dCount : dishHeap)
 				if(dCount.getRest().equals(rest)) 
 					dishRestHeap.add(dCount);
 			
@@ -230,7 +230,7 @@ public class Core{
 	 */
 	public int getMealSort(Meal meal){
 		
-		for(Sort mCount : mealHeap)
+		for(SortPolicy mCount : mealHeap)
 			if(((MealSort) mCount).getMeal().equals(meal)) {
 				setMealSort((MealSort) mCount);
 				return mCount.getCount();
@@ -265,7 +265,7 @@ public class Core{
 	 */
 	public int getDishSort(Dish dish){
 		
-		for(Sort dCount : dishHeap)
+		for(SortPolicy dCount : dishHeap)
 			if(((DishSort) dCount).getDish().equals(dish)) {
 				setDishSort((DishSort) dCount);
 				return dCount.getCount();
@@ -298,18 +298,18 @@ public class Core{
 	 * @return	MealHeap or DishHeap according to the current policy established by the
 	 * managers. returned Heap can be in ascending or descending order according to the input
 	 */
-	public TreeSet<Sort> getSortedList(boolean order){
+	public TreeSet<SortPolicy> getSortedList(boolean order){
 		if(this.sortPolicy instanceof MealSort){
 			if(this.sortPolicy.howToSortOrder(order))
 				return getMealHeap();
 			else 
-				return (TreeSet<Sort>) getMealHeap().descendingSet();
+				return (TreeSet<SortPolicy>) getMealHeap().descendingSet();
 		
 		} else {
 			if(this.sortPolicy.howToSortOrder(order))
 				return getDishHeap();
 			else
-				return (TreeSet<Sort>) getDishHeap().descendingSet();
+				return (TreeSet<SortPolicy>) getDishHeap().descendingSet();
 		}
 	}
 	
@@ -319,18 +319,18 @@ public class Core{
 	 * @return	MealHeap or DishHeap according to the current policy established by the
 	 * managers for the chosen restaurant. returned Heap can be in ascending or descending order according to the input
 	 */
-	public TreeSet<Sort> getSortedList(Restaurant rest, boolean order){
+	public TreeSet<SortPolicy> getSortedList(Restaurant rest, boolean order){
 		if(this.sortPolicy instanceof MealSort) {
 			if(this.sortPolicy.howToSortOrder(order))
 				return getMealRestHeap(rest);
 			else
-				return (TreeSet<Sort>) getMealRestHeap(rest).descendingSet();
+				return (TreeSet<SortPolicy>) getMealRestHeap(rest).descendingSet();
 		
 		} else {
 			if(this.sortPolicy.howToSortOrder(order))
 				return getDishRestHeap(rest);
 			else
-				return (TreeSet<Sort>) getDishRestHeap(rest).descendingSet();
+				return (TreeSet<SortPolicy>) getDishRestHeap(rest).descendingSet();
 		}
 	}
 	
@@ -422,8 +422,49 @@ public class Core{
 	/* Notifying users of special offers */
 	// TODO
 	
-	/* Choose target policy */
-	// TODO
+	/*********************************************************************/
+	/* simulate profit related indicators*/
+	
+	/**
+	 * Depending on the chosen tpPolicy a certain profit related quantity is calculated:
+	 * @param	profit	wanted profit 
+	 * @param	input1	depending on the Case (see below)
+	 * @param	input2	depending on the Case (see below)
+	 * 
+	 *  <ul>
+	 * 	<li> Case 1: tpPolicy = DeliveryCostProfit
+	 * 
+	 *  <ul>
+	 * 	<li> @param	input1	markup percentage </li>
+	 *  <li> @param	input2	service fee </li>
+	 *  <li> @return delivery cost needed to achieve profit </li>
+	 * </ul>
+	 * 
+	 * </li> <li> Case 2: tpPolicy = ServiceFeeProfit
+	 *  
+	 *  <ul>
+	 * 	<li> @param	input1	markup percentage </li>
+	 *  <li> @param	input2	delivery cost </li>
+	 *  <li> @return service fee needed to achieve profit </li>
+	 * </ul>
+	 * 
+	 *  </li> <li> Case 3: tpPolicy = MarkupProfit
+	 * 
+	 *  <ul>
+	 * 	<li> @param	input1	delivery cost </li>
+	 *  <li> @param	input2	service fee </li>
+	 *  <li> @return markup percentage needed to achieve profit </li>
+	 * </ul>
+	 * 
+	 * </ul>
+	 * 
+	 */
+	public double simulateProfit(double profit, double input1, double input2){
+		this.autoSetDateAfter();
+		this.autoSetDateBeforeOneMonthAgo();
+		return this.tpPolicy.howToTargetProfit(input1, input2, profit, this.savedOrders, this.dateBefore, this.dateAfter);
+	}
+	
 	 
 	
 	/*********************************************************************/
@@ -543,26 +584,59 @@ public class Core{
 		}
 		return (most ? most_active : least_active);
 	}
+	
+	/*********************************************************************/
+	/* policy setters to respective policies */
+	
+	public void setDeliveryPolicyToFastDeliv(){
+		this.dPolicy = new FastestDelivery();
+	}
+	
+	public void setDeliveryPolicyToFairOcc(){
+		this.dPolicy = new FairOccupationDelivery();
+	}
+	
+	public void setTargetProfitPolicyToMarkup(){
+		this.tpPolicy = new MarkupProfit();
+	}
+	
+	public void setTargetProfitPolicyToDelivCostProf(){
+		this.tpPolicy = new DeliveryCostProfit();
+	}
+	
+	public void setTargetProfitPolicyToSerFeeProf(){
+		this.tpPolicy = new ServiceFeeProfit();
+	}
+	
+	public void setSortPolicyToMealSort(){
+		this.sortPolicy = new MealSort();
+	}
+	
+	public void setSortPolicyToDishSort(){
+		this.sortPolicy = new DishSort();
+	}
 
 	/*********************************************************************/
-	/* Getters and Setter for policies */ 
-	public Sort getSoPolicy() {
+	/* Getters and Setter */
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	/* Getters for policies */ 
+	public SortPolicy getSoPolicy() {
 		return sortPolicy;
 	}
-	public void setSort(Sort sortPolicy) {
-		this.sortPolicy = sortPolicy;
-	}
+
 	public DeliveryPolicy getdPolicy() {
 		return dPolicy;
 	}
-	public void setdPolicy(DeliveryPolicy dPolicy) {
-		this.dPolicy = dPolicy;
-	}
+
 	public TargetProfitPolicy getTpPolicy() {
 		return tpPolicy;
-	}
-	public void setTpPolicy(TargetProfitPolicy tpPolicy) {
-		this.tpPolicy = tpPolicy;
 	}
 
 	/* Getters and setters for the profit-related attributes (for the managers) */
@@ -591,11 +665,11 @@ public class Core{
 	}
 	
 	/* Getters and setters for the meal- and dish- sorting structures */
-	public TreeSet<Sort> getMealHeap() {
+	public TreeSet<SortPolicy> getMealHeap() {
 		return mealHeap;
 	}
 	
-	public void setMealHeap(TreeSet<Sort> mealHeap) {
+	public void setMealHeap(TreeSet<SortPolicy> mealHeap) {
 		this.mealHeap = mealHeap;
 	}
 	
@@ -607,15 +681,15 @@ public class Core{
 		this.mealSort = mealSort;
 	}
 	
-	public TreeSet<Sort> getDishHeap() {
+	public TreeSet<SortPolicy> getDishHeap() {
 		return dishHeap;
 	}
 	
-	public void setDishHeap(TreeSet<Sort> dishHeap) {
+	public void setDishHeap(TreeSet<SortPolicy> dishHeap) {
 		this.dishHeap = dishHeap;
 	}
 
-	public void setDishRestHeap(TreeSet<Sort> dishRestHeap) {
+	public void setDishRestHeap(TreeSet<SortPolicy> dishRestHeap) {
 		this.dishRestHeap = dishRestHeap;
 	}
 
@@ -650,6 +724,13 @@ public class Core{
 	public void autoSetDateAfter(){
 		dateAfter = Calendar.getInstance();
 	}
+	
+	public void autoSetDateBeforeOneMonthAgo(){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		dateBefore = cal;
+	}
+	
 
 	public Calendar getDateBefore() {
 		return dateBefore;

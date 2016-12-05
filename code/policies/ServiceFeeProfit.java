@@ -56,7 +56,7 @@ public class ServiceFeeProfit implements TargetProfitPolicy {
 			
 			serviceFee = (profit - sum) / amountOrders;
 
-			return serviceFee;
+			return Order.round2(serviceFee);
 		}
 
 }

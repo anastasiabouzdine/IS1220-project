@@ -56,7 +56,7 @@ public class DeliveryCostProfit implements TargetProfitPolicy {
 		
 		deliveryFee = (sum - profit) / amountOrders;
 
-		return deliveryFee;
+		return Order.round2(deliveryFee);
 	}
 
 	

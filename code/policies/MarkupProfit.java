@@ -55,7 +55,7 @@ public class MarkupProfit implements TargetProfitPolicy {
 		
 		markupFee = (profit - input2*amountOrders + input1*amountOrders)/sum;
 
-		return markupFee;
+		return Order.round4(markupFee);
 	}
 
 

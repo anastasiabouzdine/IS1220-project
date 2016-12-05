@@ -114,6 +114,11 @@ public class Order {
 	public static double round2(double n){
 		return Math.round(n * 100.0) / 100.0;
 	}
+	
+	public static double round4(double n){
+		return Math.round(n * 10000.0) / 10000.0;
+	}
+	
 	/* Getters and Setter */ //no set ID! no set Date!
 	
 	public Calendar getDate() {
