@@ -5,15 +5,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
-import policies.ALaCarteSorted;
 import policies.DeliveryPolicy;
 import policies.FairOccupationDelivery;
-import restaurantSetUp.Address;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;

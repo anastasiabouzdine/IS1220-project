@@ -1,5 +1,10 @@
 package policies;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import core.Order;
+
 /**
  * The interface <code>TargetProfitPolicy</code> allow managers 
  * for reasoning about different ways of meeting a given target profit.
@@ -17,6 +22,6 @@ package policies;
 
 public interface TargetProfitPolicy {
 	
-	public int howToTargetProfit();
+	public double howToTargetProfit(double input1, double input2, double profit, ArrayList<Order> orders, Calendar dateBefore, Calendar dateAfter);
 
 }

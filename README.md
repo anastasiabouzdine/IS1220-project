@@ -22,6 +22,7 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] setting delivery policy
 
 #### Restaurants
+- [ ] add/remove meal of the week special offer
 
 #### Customers
 - [ ] place orders

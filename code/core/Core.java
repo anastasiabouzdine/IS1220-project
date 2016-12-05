@@ -1,17 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import exceptions.AlreadyUsedUsernameException;
 import policies.*;
@@ -430,18 +419,17 @@ public class Core{
 	}
 	
 	
-	/* Implementing an update function */
+	/* Notifying users of special offers */
 	// TODO
 	
-	
-	/* Notifying users of special offers */
+	/* Choose target policy */
 	// TODO
 	 
 	
 	/*********************************************************************/
 	/* Profit related methods */
 	
-	/**
+	/** 
 	 * @see dateBefore and dateAfter have to be set 
 	 * before calling this function
 	 * 
@@ -468,12 +456,23 @@ public class Core{
 				sum += order.getProfitFinal();
 		return sum;
 	}
-
-
 	
-	
-	/* Choose target policy */
-	// TODO
+	/**
+	 * @see dateBefore and dateAfter have to be set 
+	 * before calling this function
+	 * 
+	 * //TODO @john --> look whether you think the function is good
+	 * I thought a hashMap is good in this case because we don't have to use the function 
+	 * contains all the time
+	 * 
+	 * @return	average income per customer over a given period of time 
+	 */
+	public double calcAverageProfit(){
+		int sum = 0;
+
+		
+		return sum;
+	}
 	
 	/*********************************************************************/
 	/* Most/least selling restaurant and active courier */
@@ -542,17 +541,20 @@ public class Core{
 	public Sort getSoPolicy() {
 		return sortPolicy;
 	}
-
 	public void setSort(Sort sortPolicy) {
 		this.sortPolicy = sortPolicy;
 	}
-
 	public DeliveryPolicy getdPolicy() {
 		return dPolicy;
 	}
-
 	public void setdPolicy(DeliveryPolicy dPolicy) {
 		this.dPolicy = dPolicy;
+	}
+	public TargetProfitPolicy getTpPolicy() {
+		return tpPolicy;
+	}
+	public void setTpPolicy(TargetProfitPolicy tpPolicy) {
+		this.tpPolicy = tpPolicy;
 	}
 
 	/* Getters and setters for the profit-related attributes (for the managers) */
