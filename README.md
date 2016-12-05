@@ -9,8 +9,8 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] eventually divide CoreTest file into multiple more specific test files
 - [x] make `treatNewOrders` work for multiple orders
 - [x] number of `preparedOrders` for a `Restaurant` ? 
-- [ ] handling of the `dateAfter` as the current date ?
-- [ ] name of `priceInter` unappropriate
+- [x] handling of the `dateAfter` as the current date ?
+
 
 #### Managers
 - [x] add/remove users
@@ -18,7 +18,7 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] profit related attribute
 - [x] income over period
 - [x] income per `Customer`
-- [ ] target profit policy
+- [x] target profit policy
 - [x] most selling `Restaurant`
 - [x] most active `Courier`
 - [x] setting delivery policy
@@ -37,14 +37,14 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] give/rm consensus for notification
 
 #### Couriers
-- [ ] register/unregister their account 
-– [ ] set their state
-– [ ] change their position
-– [x] accept/refuse to a delivery call
+- [ ] register/unregister their account
+- [ ] set their state
+- [ ] change their position
+- [x] accept/refuse to a delivery call
 
 #### Core system
 - [x] setting of the 3 profit related values
 - [x] allocation of a courier to an order placed by a customer
 - [ ] notify users of special offers
 - [x] compute total income
-- [ ] choose target policy
+- [x] choose target policy
