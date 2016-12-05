@@ -1,11 +1,11 @@
 \documentclass[12pt,oneside,a4paper]{article}
 
-\usepackage{./custom}
+\usepackage{./top/custom}
 
 \lstset{language=Java}
 
-% \usepackage[backend=biber]{biblatex}
-% \addbibresource{./biblio.bib}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{./top/biblio.bib}
 
 \begin{document}
 % title (fold)
@@ -48,11 +48,12 @@
 \input{./app/code_listing.tex}
 \newpage
 \input{./app/UML_diagrams.tex}
+\newpage
 
-%\addcontentsline{toc}{section}{Bibliographie}
-%\nocite{*}
-%\hypersetup{urlcolor=black}
-%\printbibliography
+\addcontentsline{toc}{part}{Bibliographie}
+\nocite{*}
+\hypersetup{urlcolor=black}
+\printbibliography
 %\newpage
 
 \end{document}

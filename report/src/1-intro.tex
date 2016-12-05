@@ -1,4 +1,57 @@
 \section{Introduction} % (fold)
 \label{sec:introduction}
+Nowadays, more and more software programs are needed and designed every day.
+These play an important role in everyday life and more specifically
+in domains like ``\textit{manufacturing, banking, travel, communications,
+defense, medicine, research, government, education, entertainement,
+law, etc.}''\cite[p.6]{long2008critical}.
+The goal of this project is to develop a software solution,
+called \lstinline|MyFoodora|, whose functions are similar to those
+of today food delivery systems\footnote{Such as \url{https://www.foodora.fr/}
+and \url{https://deliveroo.fr/}.}.
+
+The aim of this project was not only to have a solution that \emph{worked},
+meaning it gives the expected output for a given input,
+but that was \emph{resusable} and easily \emph{extendable} to new functionnalities.
+For this to be achieved, we apply \emph{design patterns} in order
+to follow the well-known \emph{open/close principle}.
+This is why we thourougly thought and discussed which patterns to follow
+and implement before effectively beginning to code.
+This brainstorming approach allowed us
+\begin{enumerate}
+  \item to keep a global overview of what was needed at which point and why,
+  \item to acquire a good comprehension of the pros and cons of each
+  design patterns.
+\end{enumerate}
+
+The implementation of the solution has not been without done without \emph{difficulty}.
+Simply said, the fact of deciding up to which level we needed to apply the
+open/close principle and how to connect all components to the core system
+have been the main difficulties.
+Applying the relevant principle indeed requires to write more code than 
+what you could if you just wanted to be ``locally efficient'' (with no 
+intention to modify the code) and also often requires more data structures
+to be created to assure good transition of information between classes.
+With an exterior point of view, we can now say that those difficulties
+led us to a lot of discoveries in the~\textsc{Java} programming language.
+This can be especially be seen in programming where you really learn
+by trying to code something, eventually observing something is wrong
+and finally making it work.
+
+As the project is divided in two parts, the first being the \emph{core}
+and the second the \emph{interface} of the \lstinline|MyFoodora| system,
+this report present the guidelines of this part's implementation.
+A brief summary of the project \emph{background} and \emph{requirements} will
+be detailed in section~\ref{sec:background}.
+Next, in section~\ref{sec:analysis_and_design}, will first be presented a general \emph{overview} 
+and \emph{analysis} of our solution, second a detailed explanation of how and why
+the various design patterns are implemented.
+The most interesting parts and functions of our \emph{code} will then be
+thoroughly detailed in section~\ref{sec:implementation}.
+The different \emph{tests} we used all along the implementation
+and the \emph{results} obtained by our solution will respectively
+be shown in sections~\ref{sec:testing} and~\ref{sec:results}.
+Finally, section~\ref{sec:conclusion} will allow us to draw 
+a \emph{conclusion} and consider \emph{further work}.
 
 % section introduction (end)
