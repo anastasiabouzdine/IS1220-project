@@ -95,12 +95,12 @@ public class Courier extends User {
 		this.listOfReceivedOrders.add(order);
 	}
 	
-	/**
-	 * @param	message	of which this user is going to be notified
-	 */
-	public void update(String message) {
-		System.out.println("[Courier UPDATE] " + message);
-	}
+//	/**
+//	 * @param	message	of which this user is going to be notified
+//	 */
+//	public void update(String message) {
+//		System.out.println("[Courier UPDATE] " + message);
+//	}
 
 	@Override
 	public String toString() {

@@ -129,9 +129,11 @@ public class Core{
 				current_restaurant = (Restaurant) current_user;
 				return "Successfully logged in as a Restaurant !";
 			}
+			current_user.checkMessages(); //TODO check out the function @John
 		}
 		return null;
 	}
+	
 	public void logOut(){
 		current_user = null;
 		current_courier = null;
@@ -141,50 +143,84 @@ public class Core{
 	}
 	
 	/* Add and remove users */
-	public void activateUser(User e){
-		users.put(e.getUsername(), e);
-	}
-	public void disactivateUser(User e){
-		users.remove(e.getUsername(), e);
-	}
-	public void addUser(User e) throws AlreadyUsedUsernameException {
-		if (users.containsKey(e.getUsername())){
-			throw new AlreadyUsedUsernameException();
+	public void activateUser(User user){
+		if(current_manager != null){
+			users.put(user.getUsername(), user);
+		}else{
+			unauthorizedCommand();
 		}
-		activateUser(e);
-		if (e instanceof Courier){
-			Courier courier_e = (Courier) e;
-			this.courierList.add(courier_e);
-		} else if (e instanceof Customer){
-			Customer customer_e = (Customer) e;
-			this.customerList.add(customer_e);
-		} else if (current_user instanceof Manager){
-			Manager manager_e = (Manager) e;
-			this.managerList.add(manager_e);
-		} else if (current_user instanceof Restaurant){
-			Restaurant restaurant_e = (Restaurant) e;
-			this.restaurantList.add(restaurant_e);
-		}	
+	}
+	public void disactivateUser(User user){
+		if(current_manager != null){
+			users.remove(user.getUsername(), user);
+		}else{
+			unauthorizedCommand();
+		}
+	}
+	public void addUser(User user) throws AlreadyUsedUsernameException {
+		
+			if (users.containsKey(user.getUsername())){
+				throw new AlreadyUsedUsernameException();
+			}
+			activateUser(user);
+			if (user instanceof Courier){
+				if(current_manager != null || current_courier != null){
+					Courier courier_user = (Courier) user;
+					this.courierList.add(courier_user);
+				}else{
+					unauthorizedCommand();
+				}
+			} else if (user instanceof Customer){
+				if(current_manager != null || current_customer != null){
+					Customer customer_user = (Customer) user;
+					this.customerList.add(customer_user);
+				}else{
+					unauthorizedCommand();
+				}
+			} else if (current_user instanceof Manager){
+				if(current_manager != null){
+					Manager manager_user = (Manager) user;
+					this.managerList.add(manager_user);
+				}else{
+					unauthorizedCommand();
+				}
+			} else if (current_user instanceof Restaurant){
+				if(current_manager != null || current_restaurant != null){
+					Restaurant restaurant_user = (Restaurant) user;
+					this.restaurantList.add(restaurant_user);
+				}else{
+					unauthorizedCommand();
+				}
+			}
 	}
 	public void removeUser(User e){
-		disactivateUser(e);
-		if (e instanceof Courier){
-			Courier courier_e = (Courier) e;
-			this.courierList.remove(courier_e);
-		} else if (e instanceof Customer){
-			Customer customer_e = (Customer) e;
-			this.customerList.remove(customer_e);
-		} else if (current_user instanceof Manager){
-			Manager manager_e = (Manager) e;
-			this.managerList.remove(manager_e);
-		} else if (current_user instanceof Restaurant){
-			Restaurant restaurant_e = (Restaurant) e;
-			this.restaurantList.remove(restaurant_e);
-		}	
+		if(current_manager != null){
+			if (users.containsKey(e.getUsername())){
+			disactivateUser(e);
+				if (e instanceof Courier){
+					Courier courier_e = (Courier) e;
+					this.courierList.remove(courier_e);
+				} else if (e instanceof Customer){
+					Customer customer_e = (Customer) e;
+					this.customerList.remove(customer_e);
+				} else if (current_user instanceof Manager){
+					Manager manager_e = (Manager) e;
+					this.managerList.remove(manager_e);
+				} else if (current_user instanceof Restaurant){
+					Restaurant restaurant_e = (Restaurant) e;
+					this.restaurantList.remove(restaurant_e);
+				}	
+			}
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	/*********************************************************************/
 	/* Restaurant functions */
+	
+	/* Notifying users of special offers */
+	// TODO
 	
 	
 	
@@ -195,15 +231,15 @@ public class Core{
 	 * @param rest is of type <code>Restaurant</code>
 	 * @return mealRestHeap	is a TreeSet of all the orders of meals of a specific restaurant
 	 */
-	public TreeSet<SortPolicy> getMealRestHeap(Restaurant rest) {
-		if(!mealRestHeap.isEmpty())
-		mealRestHeap.clear();
-	
-		for(SortPolicy mCount : mealHeap)
-			if(mCount.getRest().equals(rest)) 
-				mealRestHeap.add(mCount);
+	private TreeSet<SortPolicy> getMealRestHeap(Restaurant rest) {
+			if(!mealRestHeap.isEmpty())
+			mealRestHeap.clear();
 		
-		return mealRestHeap;
+			for(SortPolicy mCount : mealHeap)
+				if(mCount.getRest().equals(rest)) 
+					mealRestHeap.add(mCount);
+			
+			return mealRestHeap;
 	}
 	
 
@@ -211,35 +247,38 @@ public class Core{
 	 * @param rest is of type <code>Restaurant</code>
 	 * @return mealRestHeap	is a TreeSet of all the orders of dishes of a specific restaurant
 	 */
-	public TreeSet<SortPolicy> getDishRestHeap(Restaurant rest) {
+	private TreeSet<SortPolicy> getDishRestHeap(Restaurant rest) {
 		
-		if(!dishRestHeap.isEmpty())
-			dishRestHeap.clear();
-		
-			for(SortPolicy dCount : dishHeap)
-				if(dCount.getRest().equals(rest)) 
-					dishRestHeap.add(dCount);
+			if(!dishRestHeap.isEmpty())
+				dishRestHeap.clear();
 			
-			return dishRestHeap;
+				for(SortPolicy dCount : dishHeap)
+					if(dCount.getRest().equals(rest)) 
+						dishRestHeap.add(dCount);
+				
+				return dishRestHeap;
 	}
 	
 	/**
+	 *  This function is exclusively used by the core (=private).
+	 * 
 	 * @param meal	is of type <code>Meal</code>
 	 * @return	mCount.getCount() or 0: either the Meal was already ordered then its count is returned
 	 * or the Meal has not been ordered yet then its count is 0
 	 */
-	public int getMealSort(Meal meal){
+	private int getMealSort(Meal meal){
 		
 		for(SortPolicy mCount : mealHeap)
 			if(((MealSort) mCount).getMeal().equals(meal)) {
 				setMealSort((MealSort) mCount);
 				return mCount.getCount();
 			}
-			
 		return 0;
 	}
 	
 	/**
+	 * This function is exclusively used by the core (=private).
+	 * 
 	 * This function adds a new meal count each time a meal was ordered 
 	 * and delivered. It is only used by the function <code>treatNewOrders</code>
 	 * once meals have been well ordered. 
@@ -248,22 +287,22 @@ public class Core{
 	 * @param	count	is the amount meal has already been ordered
 	 * @param	rest	is of type restaurant
 	 */
-	public void addMealCount(Meal meal, int count, Restaurant rest){
+	private void addMealCount(Meal meal, int count, Restaurant rest){
 		
 		int holder = getMealSort(meal);
-		
 		if(holder != 0)
-			mealHeap.remove(mealSort);
-			
+			mealHeap.remove(mealSort);	
 		mealHeap.add(new MealSort(meal, count+holder, rest));
 	}
 	
 	/**
+	 * This function is exclusively used by the core (=private).
+	 * 
 	 * @param dish	is of type <code>Dish</code>
 	 * @return	dCount.getCount() or 0: either the Dish was already ordered then its count is returned
 	 * or the Dish has not been ordered yet then its count is 0
 	 */
-	public int getDishSort(Dish dish){
+	private int getDishSort(Dish dish){
 		
 		for(SortPolicy dCount : dishHeap)
 			if(((DishSort) dCount).getDish().equals(dish)) {
@@ -275,6 +314,8 @@ public class Core{
 	}
 	
 	/**
+	 * This function is exclusively used by the core (=private).
+	 * 
 	 * This function adds a new dish count each time a dish was ordered 
 	 * and delivered. It is only used by the function <code>treatNewOrders</code>
 	 * once dishes have been well ordered.
@@ -283,7 +324,7 @@ public class Core{
 	 * @param	count	is the amount dish has already been ordered
 	 * @param	rest	is of type restaurant
 	 */
-	public void addDishCount(Dish dish, int count, Restaurant rest){
+	private void addDishCount(Dish dish, int count, Restaurant rest){
 		
 		int holder = getDishSort(dish);
 		
@@ -299,17 +340,22 @@ public class Core{
 	 * managers. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<SortPolicy> getSortedList(boolean order){
-		if(this.sortPolicy instanceof MealSort){
-			if(this.sortPolicy.howToSortOrder(order))
-				return getMealHeap();
-			else 
-				return (TreeSet<SortPolicy>) getMealHeap().descendingSet();
-		
-		} else {
-			if(this.sortPolicy.howToSortOrder(order))
-				return getDishHeap();
-			else
-				return (TreeSet<SortPolicy>) getDishHeap().descendingSet();
+		if(current_manager != null){
+			if(this.sortPolicy instanceof MealSort){
+				if(this.sortPolicy.howToSortOrder(order))
+					return getMealHeap();
+				else 
+					return (TreeSet<SortPolicy>) getMealHeap().descendingSet();
+			
+			} else {
+				if(this.sortPolicy.howToSortOrder(order))
+					return getDishHeap();
+				else
+					return (TreeSet<SortPolicy>) getDishHeap().descendingSet();
+			}
+		}else{
+			unauthorizedCommand();
+			return null;
 		}
 	}
 	
@@ -320,26 +366,60 @@ public class Core{
 	 * managers for the chosen restaurant. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<SortPolicy> getSortedList(Restaurant rest, boolean order){
-		if(this.sortPolicy instanceof MealSort) {
-			if(this.sortPolicy.howToSortOrder(order))
-				return getMealRestHeap(rest);
-			else
-				return (TreeSet<SortPolicy>) getMealRestHeap(rest).descendingSet();
-		
-		} else {
-			if(this.sortPolicy.howToSortOrder(order))
-				return getDishRestHeap(rest);
-			else
-				return (TreeSet<SortPolicy>) getDishRestHeap(rest).descendingSet();
+		if(current_manager != null){
+			if(this.sortPolicy instanceof MealSort) {
+				if(this.sortPolicy.howToSortOrder(order))
+					return getMealRestHeap(rest);
+				else
+					return (TreeSet<SortPolicy>) getMealRestHeap(rest).descendingSet();
+			
+			} else {
+				if(this.sortPolicy.howToSortOrder(order))
+					return getDishRestHeap(rest);
+				else
+					return (TreeSet<SortPolicy>) getDishRestHeap(rest).descendingSet();
+			}
+		}else{
+			unauthorizedCommand();
+			return null;
 		}
 	}
 	
 	/*********************************************************************/
-	/* Methods for the delivery policy */
+	/* update functions */
 	
-	/* Notifying core of new order */
-	// TODO
 	
+	/**
+	 * This function allows to leave a message for the system.
+	 * If the current user is a manager, the message will be displayed 
+	 * directly
+	 * 
+	 * @param message	message that is to be transfered to the system
+	 */
+	private void updateSystem(String message){
+		if(this.current_user instanceof Manager)
+			System.out.println(message);
+		else
+			for(Manager manager : this.managerList)
+				manager.update(message);
+	}
+	
+	/**
+	 * This function allows to leave a message for a user.
+	 * If the current user is the destination of the message, the message will be displayed 
+	 * directly
+	 * 
+	 * @param	user	the user who is going to receive the message
+	 * @param	message	message that is to be transfered to the user
+	 */
+	private void update(User user, String message){
+		if(this.current_user.equals(user))
+			System.out.println(message);
+		else
+			user.update(message);
+	}
+	
+
 	/**
 	 *	this is one of the most important functions in the core:
 	 *	it treats new orders that were received by the system:
@@ -349,7 +429,7 @@ public class Core{
 	 *	does that randomly in our case) 
 	 *	4) either no courier has been found (then the order is disregarded) 
 	 *	5) or the courier accepts and all the data is saved and updated respectively
-	 */
+	 */ //TODO as soon as a order is placed the treatNewOrders() starts??
 	public void treatNewOrders(){
 		while (receivedOrders.size() != 0){
 			Order order = this.receivedOrders.removeFirst();
@@ -360,7 +440,7 @@ public class Core{
 			while(order.getCourier() == null && !currentList.isEmpty()) { 
 				courier = currentList.get(0);
 				courier.addNewOrder(order); // courier receives order
-				courier.update("You have received a new order. "
+				update(courier, "You have received a new order. "
 						+ "Please respond whether you can carry out the order or not.");
 				// courier decides randomly if he accepts or declines
 				courier.replyRandom(); 
@@ -368,12 +448,14 @@ public class Core{
 			}
 
 			if(currentList.isEmpty()) {
-				order.getCustomer().update("All courriers are occupied. "
+				update(order.getCustomer(), "All courriers are occupied. "
 						+ "Your order could not be treated. Please try again later.");
+				updateSystem("No courier was available. Order has been deleted.");
 			} else {
 				order.setProfitFinal(order.getPrice()*this.markupPercentage + this.serviceFee - this.deliveryCost);
 				order.setPriceFinal(order.getPriceInter() + this.serviceFee);
 				savedOrders.add(order); // order is saved
+				updateSystem("The courier: " + courier + " will proceed with the order. Order has been saved.");
 
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
@@ -381,16 +463,16 @@ public class Core{
 				if(!order_meals.isEmpty()){
 					for(int i=0; i < order_meals.size(); i++) // count of meals is updated
 						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
-					order_restaurant.update("Please prepare the meal(s): " + order_meals 
+					update(order_restaurant,"Please prepare the meal(s): " + order_meals 
 							+ " to be picked up shortly by: " + courier.getName() + ".");
 
 				} else{	
 					for(int i=0; i < order_dishes.size(); i++) // count of dishes is updated
 						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
-					order_restaurant.update("Please prepare the dish(es): " + order_dishes 
+					update(order_restaurant,"Please prepare the dish(es): " + order_dishes 
 							+ "to be picked up shortly by: " + courier.getName() + ".");
 				}
-				order.getCustomer().update("Your order has been accepted "
+				update(order.getCustomer(),"Your order has been accepted "
 						+ "and will be carried out as soon as possible.");
 			}
 		}
@@ -398,6 +480,9 @@ public class Core{
 	
 	/*********************************************************************/
 	/* Methods for a new order */
+	/* Methods for customers */
+	
+	//TODO get history for customers
 	
 	/**
 	 * creates a new order
@@ -419,8 +504,7 @@ public class Core{
 	}
 	
 	
-	/* Notifying users of special offers */
-	// TODO
+	
 	
 	/*********************************************************************/
 	/* simulate profit related indicators*/
@@ -460,9 +544,14 @@ public class Core{
 	 * 
 	 */
 	public double simulateProfit(double profit, double input1, double input2){
-		this.autoSetDateAfter();
-		this.autoSetDateBeforeOneMonthAgo();
-		return this.tpPolicy.howToTargetProfit(input1, input2, profit, this.savedOrders, this.dateBefore, this.dateAfter);
+		if(current_manager != null){
+			this.autoSetDateAfter();
+			this.autoSetDateBeforeOneMonthAgo();
+			return this.tpPolicy.howToTargetProfit(input1, input2, profit, this.savedOrders, this.dateBefore, this.dateAfter);
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
 	}
 	
 	 
@@ -477,12 +566,18 @@ public class Core{
 	 * @return	sum	which is the total income over a given Period of time 
 	 */
 	public double calcTotalIncome(){
-		double sum = 0;
-		for(Order order : this.savedOrders)
-			if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
-				sum += order.getPriceFinal();
-			}
-		return Order.round2(sum);
+		if(current_manager != null){
+			double sum = 0;
+			for(Order order : this.savedOrders)
+				if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
+					sum += order.getPriceFinal();
+				}
+			return Order.round2(sum);
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
+		
 	}
 	
 	/**
@@ -492,35 +587,44 @@ public class Core{
 	 * @return	sum		which is the total profit over a given Period of time 
 	 */
 	public double calcTotalProfit(){
-		double sum = 0;
-		for(Order order : this.savedOrders)
-			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
-				sum += order.getProfitFinal();
-		return Order.round2(sum);
+		if(current_manager != null){
+			double sum = 0;
+			for(Order order : this.savedOrders)
+				if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+					sum += order.getProfitFinal();
+			return Order.round2(sum);
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
 	}
 	
 	/**
 	 * @see dateBefore and dateAfter have to be set 
 	 * before calling this function
 	 * 
-	 * //TODO @john --> look whether you think the function is good
 	 * I thought a hashMap is good in this case because we don't have to use the function 
 	 * contains all the time
 	 * 
 	 * @return	average income per customer over a given period of time 
 	 */
 	public double calcAverageProfit(){
-		int nb_customers_who_ordered = 0;
-		int temp_id = 0;
-		boolean[] ordered_at_least_once = new boolean[customerList.get(customerList.size()-1).getID() + 1];
-		for(Order o : savedOrders){
-			temp_id = o.getCustomer().getID();
-			if (!ordered_at_least_once[temp_id]){
-				ordered_at_least_once[temp_id] = true;
-				nb_customers_who_ordered++;
+		if(current_manager != null){
+			int nb_customers_who_ordered = 0;
+			int temp_id = 0;
+			boolean[] ordered_at_least_once = new boolean[customerList.get(customerList.size()-1).getID() + 1];
+			for(Order o : savedOrders){
+				temp_id = o.getCustomer().getID();
+				if (!ordered_at_least_once[temp_id]){
+					ordered_at_least_once[temp_id] = true;
+					nb_customers_who_ordered++;
+				}
 			}
+			return Order.round2(calcTotalProfit()/(double)nb_customers_who_ordered);
+		}else{
+			unauthorizedCommand();
+			return 0;
 		}
-		return Order.round2(calcTotalProfit()/(double)nb_customers_who_ordered);
 	}
 	
 	/*********************************************************************/
@@ -533,29 +637,34 @@ public class Core{
 	 * @return	the <code>Restaurant</code> following the criteria of the argument
 	 */
 	public Restaurant getMostOrLeastSellingRestaurant(boolean most){
-		int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID() + 1];
-		int max = 0; int min = savedOrders.size();
-		Restaurant best_seller = null; 
-		Restaurant least_seller = null;
-		Restaurant current_r;
-		for(Order o : savedOrders){
-			current_r = o.getRestaurant();
-			nbOrders[current_r.getID()]++;
-			if (most && nbOrders[current_r.getID()] > max){
-				max = nbOrders[current_r.getID()];
-				best_seller = current_r;
-			}
-		}
-		if (!most){
+		if(current_manager != null){
+			int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID() + 1];
+			int max = 0; int min = savedOrders.size();
+			Restaurant best_seller = null; 
+			Restaurant least_seller = null;
+			Restaurant current_r;
 			for(Order o : savedOrders){
 				current_r = o.getRestaurant();
-				if (nbOrders[current_r.getID()] < min){
-					min = nbOrders[current_r.getID()];
-					least_seller = current_r;
+				nbOrders[current_r.getID()]++;
+				if (most && nbOrders[current_r.getID()] > max){
+					max = nbOrders[current_r.getID()];
+					best_seller = current_r;
 				}
 			}
+			if (!most){
+				for(Order o : savedOrders){
+					current_r = o.getRestaurant();
+					if (nbOrders[current_r.getID()] < min){
+						min = nbOrders[current_r.getID()];
+						least_seller = current_r;
+					}
+				}
+			}
+			return (most ? best_seller : least_seller);
+		}else{
+			unauthorizedCommand();
+			return null;
 		}
-		return (most ? best_seller : least_seller);
 	}
 	
 	/**
@@ -568,67 +677,114 @@ public class Core{
 	 * @return	the <code>Courier</code> following the criteria of the argument
 	 */
 	public Courier getMostOrLeastActiveCourier(boolean most){
-		Courier most_active = null;
-		Courier least_active = null;
-		int max = 0; int min = savedOrders.size();
-		for(Courier c : courierList){
-			if (most && c.getNbOfDeliveredOrders() > max){
-				max = c.getNbOfDeliveredOrders();
-				most_active = c;
+		if(current_manager != null){
+			Courier most_active = null;
+			Courier least_active = null;
+			int max = 0; int min = savedOrders.size();
+			for(Courier c : courierList){
+				if (most && c.getNbOfDeliveredOrders() > max){
+					max = c.getNbOfDeliveredOrders();
+					most_active = c;
+				}
+				if (!most && c.getNbOfDeliveredOrders() > 0 && c.getNbOfDeliveredOrders() < min){
+					min = c.getNbOfDeliveredOrders();
+					least_active = c;
+				}
+				
 			}
-			if (!most && c.getNbOfDeliveredOrders() > 0 && c.getNbOfDeliveredOrders() < min){
-				min = c.getNbOfDeliveredOrders();
-				least_active = c;
-			}
-			
+			return (most ? most_active : least_active);
+		}else{
+			unauthorizedCommand();
+			return null;
 		}
-		return (most ? most_active : least_active);
 	}
 	
 	/*********************************************************************/
 	/* policy setters to respective policies */
 	
 	public void setDeliveryPolicyToFastDeliv(){
-		this.dPolicy = new FastestDelivery();
+		if(current_manager != null){
+			this.dPolicy = new FastestDelivery();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setDeliveryPolicyToFairOcc(){
-		this.dPolicy = new FairOccupationDelivery();
+		if(current_manager != null){
+			this.dPolicy = new FairOccupationDelivery();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setTargetProfitPolicyToMarkup(){
-		this.tpPolicy = new MarkupProfit();
+		if(current_manager != null){
+			this.tpPolicy = new MarkupProfit();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setTargetProfitPolicyToDelivCostProf(){
-		this.tpPolicy = new DeliveryCostProfit();
+		if(current_manager != null){
+			this.tpPolicy = new DeliveryCostProfit();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setTargetProfitPolicyToSerFeeProf(){
-		this.tpPolicy = new ServiceFeeProfit();
+		if(current_manager != null){
+			this.tpPolicy = new ServiceFeeProfit();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setSortPolicyToMealSort(){
-		this.sortPolicy = new MealSort();
+		if(current_manager != null){
+			this.sortPolicy = new MealSort();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public void setSortPolicyToDishSort(){
-		this.sortPolicy = new DishSort();
+		if(current_manager != null){
+			this.sortPolicy = new DishSort();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 
 	/*********************************************************************/
 	/* Getters and Setter */
 	public String getName() {
-		return name;
+		if(current_manager != null){
+			return name;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if(current_manager != null){
+			this.name = name;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	/* Getters for policies */ 
 	public SortPolicy getSoPolicy() {
-		return sortPolicy;
+		if(current_manager != null){
+			return sortPolicy;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 
 	public DeliveryPolicy getdPolicy() {
@@ -641,91 +797,144 @@ public class Core{
 
 	/* Getters and setters for the profit-related attributes (for the managers) */
 	public double getServiceFee() {
-		return serviceFee;
+		if(current_manager != null){
+			return serviceFee;
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
 	}
 	
 	public void setServiceFee(double service_fee) {
-		this.serviceFee = service_fee;
+		if(current_manager != null){
+			this.serviceFee = service_fee;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public double getMarkupPercentage() {
-		return markupPercentage;
+		if(current_manager != null){
+			return markupPercentage;
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
 	}
 	
 	public void setMarkup_percentage(double markupPercentage) {
-		this.markupPercentage = markupPercentage;
+		if(current_manager != null){
+			this.markupPercentage = markupPercentage;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	public double getDeliveryCost() {
-		return deliveryCost;
+		if(current_manager != null){
+			return deliveryCost;
+		}else{
+			unauthorizedCommand();
+			return 0;
+		}
 	}
 	
 	public void setDeliveryCost(double deliveryCost) {
-		this.deliveryCost = deliveryCost;
+		if(current_manager != null){
+			this.deliveryCost = deliveryCost;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	/* Getters and setters for the meal- and dish- sorting structures */
-	public TreeSet<SortPolicy> getMealHeap() {
+	private TreeSet<SortPolicy> getMealHeap() {
 		return mealHeap;
 	}
 	
-	public void setMealHeap(TreeSet<SortPolicy> mealHeap) {
-		this.mealHeap = mealHeap;
-	}
+//	public void setMealHeap(TreeSet<SortPolicy> mealHeap) {
+//		this.mealHeap = mealHeap;
+//	}
 	
-	public MealSort getMealSort() {
-		return mealSort;
-	}
+//	public MealSort getMealSort() {
+//		return mealSort;
+//	}
 
-	public void setMealSort(MealSort mealSort) {
+	private void setMealSort(MealSort mealSort) {
 		this.mealSort = mealSort;
 	}
 	
-	public TreeSet<SortPolicy> getDishHeap() {
+	private TreeSet<SortPolicy> getDishHeap() {
 		return dishHeap;
 	}
 	
-	public void setDishHeap(TreeSet<SortPolicy> dishHeap) {
-		this.dishHeap = dishHeap;
-	}
+//	public void setDishHeap(TreeSet<SortPolicy> dishHeap) {
+//		this.dishHeap = dishHeap;
+//	}
 
-	public void setDishRestHeap(TreeSet<SortPolicy> dishRestHeap) {
-		this.dishRestHeap = dishRestHeap;
-	}
+//	private void setDishRestHeap(TreeSet<SortPolicy> dishRestHeap) {
+//		this.dishRestHeap = dishRestHeap;
+//	}
 
-	public DishSort getDishSort() {
-		return dishSort;
-	}
+//	public DishSort getDishSort() {
+//		return dishSort;
+//	}
 
-	public void setDishSort(DishSort dishSort) {
+	private void setDishSort(DishSort dishSort) {
 		this.dishSort = dishSort;
 	}
 	
 	public LinkedList<Order> getReceivedOrders() {
-		return receivedOrders;
+		if(current_manager != null){
+			return receivedOrders;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 
 	public void setReceivedOrders(LinkedList<Order> receivedOrders) {
-		this.receivedOrders = receivedOrders;
+		if(current_manager != null){
+			this.receivedOrders = receivedOrders;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	public void setMarkupPercentage(double markupPercentage) {
-		this.markupPercentage = markupPercentage;
+		if(current_manager != null){
+			this.markupPercentage = markupPercentage;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
 	/* Getters and setters date */ 
 	public Calendar getDateAfter() {
-		return dateAfter;
+		if(current_manager != null){
+			return dateAfter;
+		}else{
+			unauthorizedCommand();
+			return null;
+	}
 	}
 
 	public void setDateAfter(int year, int month, int date) {
-		dateAfter.clear();
-		dateAfter.set(year, month, date);
+		if(current_manager != null){
+			dateAfter.clear();
+			dateAfter.set(year, month, date);
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	public void autoSetDateAfter(){
+		if(current_manager != null){
 		dateAfter = Calendar.getInstance();
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	
-	public void autoSetDateBeforeOneMonthAgo(){
+	private void autoSetDateBeforeOneMonthAgo(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		dateBefore = cal;
@@ -733,7 +942,12 @@ public class Core{
 	
 
 	public Calendar getDateBefore() {
-		return dateBefore;
+		if(current_manager != null){
+			return dateBefore;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 
 	public void setDateBefore(int year, int month, int date) {
@@ -743,85 +957,146 @@ public class Core{
 	
 	/* Getters and Setter for user lists */
 	public HashMap<String, User> getUsers() {
-		return users;
+		if(current_manager != null){
+			return users;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	public void setUsers(HashMap<String, User> users) {
-		this.users = users;
+		if(current_manager != null){
+			this.users = users;
+		}else{
+			unauthorizedCommand();
+		}
 	}
 	public ArrayList<Courier> getCourierList() {
-		return courierList;
+		if(current_manager != null){
+			return courierList;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	public void setCourierList(ArrayList<Courier> courierList) {
-		for (Courier e : courierList){
-			activateUser(e);
+		if(current_manager != null){
+			for (Courier courier : courierList){
+				activateUser(courier);
+			}
+			this.courierList = courierList;
+		}else{
+			unauthorizedCommand();
 		}
-		this.courierList = courierList;
 	}
 	public ArrayList<Customer> getCustomerList() {
-		return customerList;
+		if(current_manager != null){
+			return customerList;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	public void setCustomerList(ArrayList<Customer> customerList) {
-		for (Customer e : customerList){
-			activateUser(e);
+		if(current_manager != null){
+			for (Customer cust : customerList){
+				activateUser(cust);
+			}
+			this.customerList = customerList;
+		}else{
+			unauthorizedCommand();
 		}
-		this.customerList = customerList;
 	}
 	public ArrayList<Manager> getManagerList() {
-		return managerList;
+		if(current_manager != null){
+			return managerList;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	public void setManagerList(ArrayList<Manager> managerList) {
-		for (Manager e : managerList){
-			activateUser(e);
+		if(current_manager != null){
+			for (Manager manag : managerList){
+				activateUser(manag);
+			}
+			this.managerList = managerList;
+		}else{
+			unauthorizedCommand();
 		}
-		this.managerList = managerList;
 	}
 	public ArrayList<Restaurant> getRestaurantList() {
-		return restaurantList;
+		if(current_manager != null){
+			return restaurantList;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
-		for (Restaurant e : restaurantList){
-			activateUser(e);
+		if(current_manager != null){
+			for (Restaurant rest : restaurantList){
+				activateUser(rest);
+			}
+			this.restaurantList = restaurantList;
+		}else{
+			unauthorizedCommand();
 		}
-		this.restaurantList = restaurantList;
 	}
 	/* Getters and Setter for users */
 	public User getCurrent_user() {
 		return current_user;
 	}
-	public void setCurrent_user(User current_user) {
-		this.current_user = current_user;
-	}
+	
 	public Courier getCurrent_courier() {
-		return current_courier;
+		if(current_courier != null){
+			return current_courier;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
-	public void setCurrent_courier(Courier current_courier) {
-		this.current_courier = current_courier;
-	}
+	
 	public Customer getCurrent_customer() {
-		return current_customer;
+		if(current_customer != null){
+			return current_customer;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
-	public void setCurrent_customer(Customer current_customer) {
-		this.current_customer = current_customer;
-	}
+	
 	public Manager getCurrent_manager() {
-		return current_manager;
+		if(current_manager != null){
+			return current_manager;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
-	public void setCurrent_manager(Manager current_manager) {
-		this.current_manager = current_manager;
-	}
+	
 	public Restaurant getCurrent_restaurant() {
-		return current_restaurant;
-	}
-	public void setCurrent_restaurant(Restaurant current_restaurant) {
-		this.current_restaurant = current_restaurant;
+		if(current_restaurant != null){
+			return current_restaurant;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
 	
 	/* MISC Getters and Setters */ 
 	public ArrayList<Order> getSavedOrders() {
-		return savedOrders;
+		if(current_manager != null){
+			return savedOrders;
+		}else{
+			unauthorizedCommand();
+			return null;
+		}
 	}
-	public void setSavedOrders(ArrayList<Order> savedOrders) {
-		this.savedOrders = savedOrders;
-	}	
-
+	
+	/* static methods */
+	private static void unauthorizedCommand(){
+		System.out.println("This command is not valid! Please try again");
+	}
+	
 }

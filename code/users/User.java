@@ -1,5 +1,7 @@
 package users;
 
+import java.util.Stack;
+
 /**
  * The class <code>User</code> allows to create different users
  * for the MyFoodora system.
@@ -16,11 +18,33 @@ public class User {
 	private String username;
 	private int ID;
 	private static int counter;
+	private Stack<String> messageBox = new Stack<String>(); //TODO check out the function @John
 	
 	public User(String name, String username){
 		this.name = name;
 		this.username = username;
 		this.ID = ++counter;
+	}
+	
+	/**
+	 * This function pushes a new message to the message box
+	 * @param	message	new message
+	 *  
+	 */
+	public void update(String message){ //TODO check out the function @John
+		messageBox.push(message);
+	}
+	
+	/**
+	 * This function allows to read new messages as soon as the user is logged in
+	 *  
+	 */
+	public void checkMessages(){ //TODO check out the function @John
+		int amount = messageBox.size();
+		while(!messageBox.isEmpty()){
+			String message = messageBox.pop();
+			System.out.println(amount - messageBox.size() + ". message: " + message);
+		}
 	}
 	
 	@Override
@@ -76,6 +100,14 @@ public class User {
 
 	public int getID() {
 		return ID;
+	}
+
+	public Stack<String> getMessageBox() {
+		return messageBox;
+	}
+
+	public void setMessageBox(Stack<String> messageBox) {
+		this.messageBox = messageBox;
 	}
 		
 }

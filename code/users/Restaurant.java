@@ -161,12 +161,12 @@ public class Restaurant extends User {
 		return false;		
 	}
 	
-	/**
-	 * @param	message	of which this user is going to be notified
-	 */
-	public void update(String message) {
-		System.out.println("[Restaurant UPDATE] " + message);
-	}
+//	/**
+//	 * @param	message	of which this user is going to be notified
+//	 */
+//	public void update(String message) {
+//		System.out.println("[Restaurant UPDATE] " + message);
+//	}
 	
 	
 	

@@ -21,11 +21,12 @@ import restaurantSetUp.MainDish;
 import restaurantSetUp.Starter;
 import users.Courier;
 import users.Customer;
+import users.Manager;
 import users.Restaurant;
 
 public class CoreTest {
 	
-	//TODO
+	//TODO update CoreTest so that it will be accessible
 	
 	Core mf1 = new Core("MyFoodora");
 	
@@ -49,32 +50,37 @@ public class CoreTest {
 
 	@Before
 	public void setUserLists() {
+		//TODO create Manager Parser 
+		//TODO add Manager
+		//TODO log in with Manager
 		mf1.setCourierList(list_courier);
 		mf1.setCustomerList(list_customer);
 		mf1.setRestaurantList(list_restaurant);
 		
-		HalfMeal hm1 = list_hmeal.get(0);
-		HalfMeal hm2 = list_hmeal.get(1);
-		HalfMeal hm3 = list_hmeal.get(2);
-		HalfMeal hm4 = list_hmeal.get(3);
-		Dish d1 = list_starter.get(0);
-		Dish d2 = list_starter.get(1);
-		Dish d3 = list_starter.get(2);
-		Dish d4 = list_starter.get(3);
-		Dish d5 = list_starter.get(4);
-				
-		mf1.addMealCount(hm3, 4, rest1);
-		mf1.addMealCount(hm2, 1, rest2);
-		mf1.addMealCount(hm1, 4, rest1);
-		mf1.addMealCount(hm1, 3, rest1);
-		mf1.addMealCount(hm4, 3, rest2);
+		//TODO can probably be deleted 
 		
-		mf1.addDishCount(d1, 4, rest1);
-		mf1.addDishCount(d2, 1, rest2);
-		mf1.addDishCount(d3, 4, rest1);
-		mf1.addDishCount(d4, 5, rest1);
-		mf1.addDishCount(d5, 9, rest2);
-		mf1.addDishCount(d5, 9, rest1);
+//		HalfMeal hm1 = list_hmeal.get(0);
+//		HalfMeal hm2 = list_hmeal.get(1);
+//		HalfMeal hm3 = list_hmeal.get(2);
+//		HalfMeal hm4 = list_hmeal.get(3);
+//		Dish d1 = list_starter.get(0);
+//		Dish d2 = list_starter.get(1);
+//		Dish d3 = list_starter.get(2);
+//		Dish d4 = list_starter.get(3);
+//		Dish d5 = list_starter.get(4);
+//				
+//		mf1.addMealCount(hm3, 4, rest1);
+//		mf1.addMealCount(hm2, 1, rest2);
+//		mf1.addMealCount(hm1, 4, rest1);
+//		mf1.addMealCount(hm1, 3, rest1);
+//		mf1.addMealCount(hm4, 3, rest2);
+//		
+//		mf1.addDishCount(d1, 4, rest1);
+//		mf1.addDishCount(d2, 1, rest2);
+//		mf1.addDishCount(d3, 4, rest1);
+//		mf1.addDishCount(d4, 5, rest1);
+//		mf1.addDishCount(d5, 9, rest2);
+//		mf1.addDishCount(d5, 9, rest1);
 	}
 	
 	/*********************************************************************/
@@ -133,7 +139,7 @@ public class CoreTest {
 		assertTrue(3 == mf1.getSortedList(rest2, true).first().getCount());
 		assertTrue(1 == mf1.getSortedList(rest2, false).first().getCount());
 		
-		mf1.setSort(mf1.getDishSort());
+		mf1.setSortPolicyToDishSort();;
 		
 		System.out.println(mf1.getSortedList(true));
 		System.out.println("TEST addAndPrintListOfMealsByCount : DONE\n");
@@ -152,8 +158,8 @@ public class CoreTest {
 		mf1.placeNewOrder(order1);
 		mf1.treatNewOrders();
 		
-		DeliveryPolicy fPolicy = new FairOccupationDelivery();
-		mf1.setdPolicy(fPolicy);
+		
+		mf1.setDeliveryPolicyToFairOcc();
 		Order order2 = mf1.createNewOrder(list_customer.get(0), list_restaurant.get(0));
 		order2.addMeal(list_hmeal.get(0), 3);
 		mf1.placeNewOrder(order2);
@@ -235,6 +241,74 @@ public class CoreTest {
 		System.out.println("Done with the 3 orders !");
 	}
 	
+	public void make2orders5HalfMeals() {
+		
+		HalfMeal hm1 = list_hmeal.get(0);
+		HalfMeal hm2 = list_hmeal.get(1);
+		HalfMeal hm3 = list_hmeal.get(2);
+		HalfMeal hm4 = list_hmeal.get(3);
+		
+		System.out.println("Making 2 orders...");
+		/* Make sure that all parameters are in accordance with tests */
+		mf1.setMarkup_percentage(0.05);
+		mf1.setDeliveryCost(4.0);
+		mf1.setServiceFee(2.5);
+
+		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
+		order1.addMeal(hm3, 4);
+		order1.addMeal(hm1, 4);
+		order1.addMeal(hm1, 3);
+		mf1.placeNewOrder(order1);
+
+		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
+		order2.addMeal(hm2, 1);
+		order2.addMeal(hm4, 3);
+		mf1.placeNewOrder(order2);
+
+		// Treat the three placed orders : two for rest1 and one for rest2
+		mf1.treatNewOrders();
+		System.out.println("Done with the 3 orders !");
+	}
+	
+public void make2orders6Dishes() {
+		
+		//TODO
+	
+		mf1.addDishCount(d1, 4, rest1);
+		mf1.addDishCount(d2, 1, rest2);
+		mf1.addDishCount(d3, 4, rest1);
+		mf1.addDishCount(d4, 5, rest1);
+		mf1.addDishCount(d5, 9, rest2);
+		mf1.addDishCount(d5, 9, rest1);
+		
+		Dish d1 = list_starter.get(0);
+		Dish d2 = list_starter.get(1);
+		Dish d3 = list_starter.get(2);
+		Dish d4 = list_starter.get(3);
+		Dish d5 = list_starter.get(4);
+		
+		System.out.println("Making 2 orders...");
+		/* Make sure that all parameters are in accordance with tests */
+		mf1.setMarkup_percentage(0.05);
+		mf1.setDeliveryCost(4.0);
+		mf1.setServiceFee(2.5);
+
+		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
+		order1.addMeal(hm3, 4);
+		order1.addMeal(hm1, 4);
+		order1.addMeal(hm1, 3);
+		mf1.placeNewOrder(order1);
+
+		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
+		order2.addMeal(hm2, 1);
+		order2.addMeal(hm4, 3);
+		mf1.placeNewOrder(order2);
+
+		// Treat the three placed orders : two for rest1 and one for rest2
+		mf1.treatNewOrders();
+		System.out.println("Done with the 3 orders !");
+	}
+	
 	@Test
 	public void mostAndLeastSellingRestaurant() {
 		make3orders();
@@ -302,7 +376,7 @@ public class CoreTest {
 	public void simulateDeliveryCost() {
 		make3orders();
 		
-		mf1.setTpPolicy(new DeliveryCostProfit());
+		mf1.setTargetProfitPolicyToDelivCostProf();;
 		
 		double serviceFee = 5;
 		double markupProfit = 0.05;
@@ -333,7 +407,7 @@ public class CoreTest {
 	public void simulateServiceFee() {
 		make3orders();
 		
-		mf1.setTpPolicy(new ServiceFeeProfit());
+		mf1.setTargetProfitPolicyToSerFeeProf();
 		
 		double deliveryFee = 5;
 		double markupProfit = 0.05;
