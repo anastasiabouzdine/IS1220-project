@@ -1,4 +1,111 @@
 \section{Analysis and design} % (fold)
 \label{sec:analysis_and_design}
+This section will describe the design of our solution and how
+it implements the given requirements presented in section~\ref{sec:background}.
+The first part will mainly present the different \emph{design patterns}
+used throughout the code.
+These patterns are useful as they allow
+\begin{enumerate}
+  \item to avoid redesigning,
+  \item to follow guidelines so that the solution is extensible,
+  \item to isolate part of the code that might undergo changes.
+\end{enumerate}
+% TODO add description of second part (rest of patterns)
 
+\subsection{Factory pattern for \texttt{Dish} and \texttt{Meal} classes} % (fold)
+\label{sub:factory_pattern_for_the_texttt_dish_and_texttt_meal_classes}
+When going through the different requirements for those classes, a first thought
+might be to implement two factory patterns, one for each.
+This lead us to the first type of factory pattern known as \emph{parametric factory pattern}.
+But the latter is not easily extendable to new features, such as
+a \Drink~class to handle all type of drinks, especially if
+those belong to different families (as \Dish, \Meal~and \Drink).
+Therefore, the \emph{abstract factory pattern} seems to be the
+most appropriate to respect the open/close principle.
+
+This type of factory pattern allows us to separe the \Dish~and \Meal~creation from their use.
+The listing~\ref{lst:factory} illustrates how it can be applied and why it is powerful.
+We have the same \lstinline|AbstractFactory| object that is able to produce
+two types of dishes (ie. a \Starter~and a \MainDish).
+
+\begin{lstlisting}[caption=Factory pattern for \Dish~and \Meal.,
+label=lst:factory]
+AbstractFactory dishF = FactoryProducer.getFactory("Dish");
+
+Dish d1 = dishF.getDish("starter", "avocado", 6.5);
+d1.setType("vegetarian");
+
+Dish d2 = dishF.getDish("maindish", "ham with salad", 12.5);
+
+double price = d1.getPrice() + d2.getPrice();
+\end{lstlisting}
+
+% subsection factory_pattern_for_the_texttt_dish_and_texttt_meal_classes (end)
+
+\subsection{Observer pattern for \texttt{Customer} and \texttt{Core} class} % (fold)
+\label{sub:observer_pattern_for}
+The second use of a design pattern appears when we want to \emph{notify
+the customers} that a special meal of the week offer has been updated.
+This can be formulated as different \emph{subscribers} interested in the state
+changes of a \emph{publisher} and the relation with the project
+is described in table~\ref{tab:observer}.
+
+It is important to note here that the publisher is not the \Restaurant.
+This might seem counter-intuitive at first sight but it is here the \Core~object
+that
+\begin{itemize}
+  \item keeps track of the registered customers,
+  \item notifies all the latter that gave their consensus,
+  \item knows when a \Restaurant~changes his meal of the week.
+\end{itemize}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Observer pattern} & \textbf{Applied to \MyFoodora}\\
+    \hline
+          Suscribers &             \Customer \\
+          Publisher &              \Core\\
+          Change of state &        \Meal~of the week updated \\
+    \hline
+  \end{tabular}
+  \caption{Relationship between Observer pattern in theory and applied to \MyFoodora.}
+  \label{tab:observer}
+\end{table}
+
+The basic idea of the implementation of this pattern is given
+in listing~\ref{lst:observer}. We notice the use of a \lstinline|beNotified|
+boolean attribute to the \Customer.
+The use of the latter attribute is a design choice that seems more
+efficient than keeping a list of ``I accept to be notified users''
+for two reasons.
+First, we won't need to have one more list in the \Core~containing
+references to already used objects (ie. users), and second,
+no add or remove from a list is needed when a \Customer~wants to
+change its notification system, just a primitive assignment.
+
+\begin{lstlisting}[caption=Observer pattern for \Customer~and \Meal.,
+label=lst:observer]
+public interface Observer {
+  public void update(Meal specMeal, Restaurant r);
+}
+
+public class Customer extends User implements Observer {
+  private boolean beNotified = true;
+  public void update(Meal specMeal, Restaurant r){
+    if (beNotified){
+       System.out.println("[Customer UPDATE] " + ...);
+    }
+  }
+}  
+\end{lstlisting}
+
+
+% subsection observer_pattern_for (end)
+
+\subsection{Strategy pattern for the \texttt{MyFoodora} policies} % (fold)
+\label{sub:strategy_pattern_for_the_texttt_myfoodora_policies}
+
+% subsection strategy_pattern_for_the_texttt_myfoodora_policies (end)
 % section analysis_and_design (end)
