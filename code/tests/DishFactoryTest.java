@@ -1,8 +1,14 @@
-package restaurantSetUp;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import restaurantSetUp.Dessert;
+import restaurantSetUp.Dish;
+import restaurantSetUp.DishFactory;
+import restaurantSetUp.MainDish;
+import restaurantSetUp.Starter;
 
 public class DishFactoryTest {
 

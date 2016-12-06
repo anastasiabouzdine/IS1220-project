@@ -1,8 +1,11 @@
-package restaurantSetUp;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import restaurantSetUp.AbstractFactory;
+import restaurantSetUp.FactoryProducer;
 
 public class FactoryProducerTest {
 

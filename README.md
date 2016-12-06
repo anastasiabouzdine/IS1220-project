@@ -24,11 +24,11 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] setting delivery policy
 
 #### Restaurants
-- [ ] edit the menu (add/remove `Dish`)
-- [ ] add/remove `Meal`
-- [ ] add/remove meal of the week special offer
-- [ ] set generic and special `discountFactors`
-- [ ] sort of shipped orders according policy
+- [x] edit the menu (add/remove `Dish`)
+- [x] add/remove `Meal`
+- [x] add/remove meal of the week special offer
+- [x] set generic and special `discountFactors`
+- [x] sort of shipped orders according policy
 
 #### Customers
 - [ ] place orders
@@ -37,9 +37,9 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] give/rm consensus for notification
 
 #### Couriers
-- [ ] register/unregister their account
-- [ ] set their state
-- [ ] change their position
+- [x] register/unregister their account
+- [x] set their state
+- [x] change their position
 - [x] accept/refuse to a delivery call
 
 #### Core system

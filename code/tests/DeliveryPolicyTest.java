@@ -1,4 +1,4 @@
-package policies;
+package tests;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import parsers.*;
+import policies.DeliveryPolicy;
+import policies.FairOccupationDelivery;
+import policies.FastestDelivery;
 import core.Order;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.FullMeal;

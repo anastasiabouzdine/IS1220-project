@@ -1,8 +1,10 @@
-package users;
+package tests;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import users.Manager;
 
 public class ManagerTest {
 

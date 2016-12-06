@@ -1,6 +1,8 @@
-package restaurantSetUp;
+package tests;
 
 import org.junit.Test;
+
+import restaurantSetUp.MainDish;
 
 public class MainDishTest {
 

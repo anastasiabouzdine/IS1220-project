@@ -1,4 +1,4 @@
-package users;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,7 @@ import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
+import users.Restaurant;
 
 public class RestaurantTest {
 	

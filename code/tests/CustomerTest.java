@@ -1,4 +1,4 @@
-package users;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,7 @@ import restaurantSetUp.FidCardPlan;
 import restaurantSetUp.FidCardPlanBasic;
 import restaurantSetUp.FidCardPlanLottery;
 import restaurantSetUp.FidCardPlanPoints;
+import users.Customer;
 
 public class CustomerTest {
 

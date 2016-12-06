@@ -10,7 +10,7 @@ import restaurantSetUp.Address;
  * The class <code>Courier</code> allows to create a Courier which will be able to
  * <ul>
  * 	<li>register/unregister their Account to the MyFoodora system</li>
- *  <li>set their state as on-duty or off-duty</li>
+ *  <li>set their available as on-duty or off-duty</li>
  *  <li>change their position</li>
  *  <li>accept/refuse a delivery call (received from the MyFoodora system)</li>
  * </ul>
@@ -27,7 +27,7 @@ public class Courier extends User {
 	private Address position;
 	private String phoneNumber;
 	private int nbOfDeliveredOrders;
-	private boolean state; //true = on duty; false = off duty
+	private boolean available; //true = on duty; false = off duty
 	
 	private LinkedList<Order> listOfReceivedOrders; 
 	
@@ -42,7 +42,7 @@ public class Courier extends User {
 	 * @param	username	of courier to log into the system
 	 * @param	id	unique id of courier
 	 * @param	nbOfDeliveredOrders	amount of orders delivered by courier
-	 * @param	state	states whether courier is on duty (true = yes)
+	 * @param	available	states whether courier is on duty (true = yes)
 	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username){
 		super(name, username);
@@ -50,7 +50,7 @@ public class Courier extends User {
 		this.position = position;
 		this.phoneNumber = phoneNumber;
 		this.nbOfDeliveredOrders = 0;
-		this.state = true;
+		this.available = true;
 		listOfReceivedOrders = new LinkedList<Order>();
 	}
 	
@@ -134,12 +134,12 @@ public class Courier extends User {
 		return nbOfDeliveredOrders;
 	}
 
-	public boolean isState() {
-		return state;
+	public boolean isAvailable() {
+		return available;
 	}
 
-	public void setState(boolean state) {
-		this.state = state;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
 		this.nbOfDeliveredOrders = nbOfDeliveredOrders;

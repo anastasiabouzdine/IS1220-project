@@ -1,4 +1,4 @@
-package core;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import core.Core;
+import core.Order;
+import core.ParseCustomers;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
-import policies.DeliveryCostProfit;
-import policies.DeliveryPolicy;
-import policies.FairOccupationDelivery;
-import policies.ServiceFeeProfit;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
@@ -39,6 +38,7 @@ public class CoreTest {
 	ArrayList<Order> list_orders = ParseOrders.parseOrders();
 	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
+	ArrayList<Manager> list_manager = ParseManagers.parseManagers("src/txtFILES/managersList.txt");
 	
 	Restaurant rest1 = list_restaurant.get(0);
 	Restaurant rest2 = list_restaurant.get(1);
@@ -49,45 +49,22 @@ public class CoreTest {
 	Courier cour3 = list_courier.get(2);
 
 	@Before
-	public void setUserLists() {
-		//TODO create Manager Parser 
-		//TODO add Manager
-		//TODO log in with Manager
-		mf1.setCourierList(list_courier);
+	public void setUserLists() throws AlreadyUsedUsernameException {
+		mf1.register(list_manager.get(0));
+		mf1.logIn("johnBoss");
+		
 		mf1.setCustomerList(list_customer);
 		mf1.setRestaurantList(list_restaurant);
-		
-		//TODO can probably be deleted 
-		
-//		HalfMeal hm1 = list_hmeal.get(0);
-//		HalfMeal hm2 = list_hmeal.get(1);
-//		HalfMeal hm3 = list_hmeal.get(2);
-//		HalfMeal hm4 = list_hmeal.get(3);
-//		Dish d1 = list_starter.get(0);
-//		Dish d2 = list_starter.get(1);
-//		Dish d3 = list_starter.get(2);
-//		Dish d4 = list_starter.get(3);
-//		Dish d5 = list_starter.get(4);
-//				
-//		mf1.addMealCount(hm3, 4, rest1);
-//		mf1.addMealCount(hm2, 1, rest2);
-//		mf1.addMealCount(hm1, 4, rest1);
-//		mf1.addMealCount(hm1, 3, rest1);
-//		mf1.addMealCount(hm4, 3, rest2);
-//		
-//		mf1.addDishCount(d1, 4, rest1);
-//		mf1.addDishCount(d2, 1, rest2);
-//		mf1.addDishCount(d3, 4, rest1);
-//		mf1.addDishCount(d4, 5, rest1);
-//		mf1.addDishCount(d5, 9, rest2);
-//		mf1.addDishCount(d5, 9, rest1);
+	
 	}
 	
-	/*********************************************************************/
+	/**
+	 * @throws AlreadyUsedUsernameException *******************************************************************/
 	/* Add, remove, log in, log out users */ 
 	@Test
-	public void removeAndAddUser() {
+	public void removeAndAddUser() throws AlreadyUsedUsernameException {
 		Courier e = list_courier.get(0);
+		mf1.addUser(e);
 		assertTrue(mf1.logIn(e.getUsername()) != null);
 		mf1.removeUser(e);
 		assertTrue(mf1.logIn(e.getUsername()) == null);
@@ -105,7 +82,7 @@ public class CoreTest {
 	public void addAlreadyUsedUsername() throws AlreadyUsedUsernameException  {
 		mf1.addUser(list_restaurant.get(0));
 	}
-	
+
 	@Test
 	public void logInWithUnknownUser() {
 		assertTrue(mf1.logIn("unknown user 42") == null);
@@ -114,6 +91,7 @@ public class CoreTest {
 	
 	@Test
 	public void logInWithKnownCustomer() {
+		mf1.logOut();
 		assertTrue(mf1.getCurrent_customer() == null);
 		assertTrue(mf1.logIn(list_customer.get(0).getUsername()) != null);
 		assertTrue(mf1.getCurrent_customer() != null);
@@ -122,6 +100,7 @@ public class CoreTest {
 	
 	@Test
 	public void logInAndThenLogOut() {
+		mf1.logOut();
 		assertTrue(mf1.getCurrent_user() == null);
 		mf1.logIn(list_customer.get(0).getUsername());
 		assertTrue(mf1.getCurrent_user() != null);
@@ -134,19 +113,28 @@ public class CoreTest {
 	/* Counting meals and treating orders */ 
 	
 	@Test
-	public void addAndPrintListOfMealsByCount() {		
+	public void addAndPrintListOfMealsByCount() {
+		mf1.setCourierList(list_courier);
+		make2orders5HalfMeals();
 		assertTrue(7 == mf1.getSortedList(true).first().getCount());
 		assertTrue(3 == mf1.getSortedList(rest2, true).first().getCount());
 		assertTrue(1 == mf1.getSortedList(rest2, false).first().getCount());
 		
-		mf1.setSortPolicyToDishSort();;
+		mf1.setSortPolicyToDishSort();
 		
-		System.out.println(mf1.getSortedList(true));
+		make2orders6Dishes();
+			
+		assertTrue(18 == mf1.getSortedList(true).first().getCount());
+		assertTrue(9 == mf1.getSortedList(rest1, true).first().getCount());
+		assertTrue(4 == mf1.getSortedList(rest1, false).first().getCount());
+		
 		System.out.println("TEST addAndPrintListOfMealsByCount : DONE\n");
 	}
 	
+	
 	@Test
-	public void treatOrder() {		
+	public void treatOrder() {
+		mf1.setCourierList(list_courier);
 		Restaurant rest1 = list_restaurant.get(0);
 		
 		rest1.addMeal(list_hmeal.get(0));
@@ -173,6 +161,7 @@ public class CoreTest {
 	
 	@Test
 	public void checkIfCalcTotalIncomeWorks() {
+		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double totalIn = mf1.calcTotalIncome();
@@ -182,12 +171,14 @@ public class CoreTest {
 		// + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
 		// ------------------------------------------------------
 		// = 61.95
+		
 		assertTrue(totalIn == 61.95);
 		System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
 	}
 	
 	@Test
 	public void chekcIfCalcTotalProfitWorks() {
+		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double totalProfit = mf1.calcTotalProfit();
@@ -204,6 +195,7 @@ public class CoreTest {
 	
 	@Test
 	public void chekcIfCalcAverageProfitWorks() {
+		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double avgProfit = mf1.calcAverageProfit();
@@ -215,8 +207,140 @@ public class CoreTest {
 	}
 	
 	
+//	/*********************************************************************/
+//	/* Most/least selling restaurants and active couriers */ 
+	
+	
+	@Test
+	public void mostAndLeastSellingRestaurant() {
+		mf1.setCourierList(list_courier);
+		make3orders();
+		Restaurant temp_restaurant;
+		System.out.println(mf1.getMostOrLeastSellingRestaurant(true));
+		// Most selling
+		temp_restaurant = mf1.getMostOrLeastSellingRestaurant(true);
+		assertTrue(temp_restaurant.equals(rest1));
+		// Least selling
+		temp_restaurant = mf1.getMostOrLeastSellingRestaurant(false);
+		assertTrue(temp_restaurant.equals(rest3));
+		
+		System.out.println("TEST mostAndLeastSellingRestaurant : DONE\n");
+	}
+	
+	/* /!\ Note that we can only test if the most/least active
+	 * courier method works but not if the returned courier is the
+	 * good one as there is a random factor that plays when the 
+	 * courier decides to accept an offer or not. */
+	@Test
+	public void mostOrLeastActiveCourier() {
+		mf1.setCourierList(list_courier);
+		make3orders();
+		
+		Courier temp_courier;
+		// Most active
+		temp_courier = mf1.getMostOrLeastActiveCourier(true);
+		assertTrue(temp_courier != null);
+		// Least active
+		temp_courier = mf1.getMostOrLeastActiveCourier(false);
+		assertTrue(temp_courier != null);
+
+		System.out.println("TEST mostOrLeastActiveCourier : DONE\n");
+	}
+	
 	/*********************************************************************/
-	/* Most/least selling restaurants and active couriers */ 
+	/* calculate Target profit quantities */ 
+	
+	@Test
+	public void simulateMarkupPerc() {
+		mf1.setCourierList(list_courier);
+		make3orders();
+		
+		double serviceFee = 5;
+		double deliveryFee = 3;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit - 3*serviceFee + 3*deliveryFee;
+		
+		assertTrue(Order.round4(placeHolder/sum)==mf1.simulateProfit(profit, deliveryFee, serviceFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
+	
+	@Test
+	public void simulateDeliveryCost() {
+		mf1.setCourierList(list_courier);
+		make3orders();
+		
+		mf1.setTargetProfitPolicyToDelivCostProf();;
+		
+		double serviceFee = 5;
+		double markupProfit = 0.05;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit - 3*serviceFee - sum*markupProfit;
+		
+//		System.out.println(-placeHolder/3);
+//		System.out.println(mf1.simulateProfit(profit, markupProfit, serviceFee));
+		
+		assertTrue(Order.round2(-placeHolder/3)==mf1.simulateProfit(profit, markupProfit, serviceFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
+	
+	@Test
+	public void simulateServiceFee() {
+		mf1.setCourierList(list_courier);
+		make3orders();
+		
+		mf1.setTargetProfitPolicyToSerFeeProf();
+		
+		double deliveryFee = 5;
+		double markupProfit = 0.05;
+		double profit = 9;
+		
+		double sum = 0;
+		double placeHolder = 0;
+		
+		// profit for one order = order price * markupPercentage + service fee - delivery cost
+		
+		//there are three orders so we'll calculate placeHolder as the left 
+		// side of the equation and sum as the rigth side of the function 
+		// so that placeHolder = markupPercentage * sum
+		for(Order order : mf1.getSavedOrders()) {
+			sum += order.getPriceInter();
+		}
+		placeHolder = profit + 3*deliveryFee - sum*markupProfit;
+		
+//		System.out.println(placeHolder/3);
+//		System.out.println(mf1.simulateProfit(profit, markupProfit, deliveryFee));
+		
+		assertTrue(Order.round2(placeHolder/3)==mf1.simulateProfit(profit, markupProfit, deliveryFee));
+		System.out.println("TEST calculateProfit() : DONE\n");
+	}
+	
+	/**************************************************************************************************/
+	// functions
+	
 	
 	public void make3orders() {
 		System.out.println("Making 3 orders...");
@@ -248,6 +372,12 @@ public class CoreTest {
 		HalfMeal hm3 = list_hmeal.get(2);
 		HalfMeal hm4 = list_hmeal.get(3);
 		
+		rest1.addMeal(hm3);
+		rest1.addMeal(hm1);
+		
+		rest2.addMeal(hm2);
+		rest2.addMeal(hm4);
+		
 		System.out.println("Making 2 orders...");
 		/* Make sure that all parameters are in accordance with tests */
 		mf1.setMarkup_percentage(0.05);
@@ -267,19 +397,10 @@ public class CoreTest {
 
 		// Treat the three placed orders : two for rest1 and one for rest2
 		mf1.treatNewOrders();
-		System.out.println("Done with the 3 orders !");
+		System.out.println("Done with the 2 meal orders !");
 	}
 	
-public void make2orders6Dishes() {
-		
-		//TODO
-	
-		mf1.addDishCount(d1, 4, rest1);
-		mf1.addDishCount(d2, 1, rest2);
-		mf1.addDishCount(d3, 4, rest1);
-		mf1.addDishCount(d4, 5, rest1);
-		mf1.addDishCount(d5, 9, rest2);
-		mf1.addDishCount(d5, 9, rest1);
+	public void make2orders6Dishes() {
 		
 		Dish d1 = list_starter.get(0);
 		Dish d2 = list_starter.get(1);
@@ -287,6 +408,14 @@ public void make2orders6Dishes() {
 		Dish d4 = list_starter.get(3);
 		Dish d5 = list_starter.get(4);
 		
+		rest1.addStarter((Starter) d1);
+		rest1.addStarter((Starter) d3);
+		rest1.addStarter((Starter) d4);
+		rest1.addStarter((Starter) d5);
+		
+		rest2.addStarter((Starter) d2);
+		rest2.addStarter((Starter) d5);
+		
 		System.out.println("Making 2 orders...");
 		/* Make sure that all parameters are in accordance with tests */
 		mf1.setMarkup_percentage(0.05);
@@ -294,143 +423,20 @@ public void make2orders6Dishes() {
 		mf1.setServiceFee(2.5);
 
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
-		order1.addMeal(hm3, 4);
-		order1.addMeal(hm1, 4);
-		order1.addMeal(hm1, 3);
+		order1.addDish(d1, 4);
+		order1.addDish(d3, 4);
+		order1.addDish(d4, 5);
+		order1.addDish(d5, 9);
 		mf1.placeNewOrder(order1);
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
-		order2.addMeal(hm2, 1);
-		order2.addMeal(hm4, 3);
+		order2.addDish(d2, 1);
+		order2.addDish(d5, 9);
 		mf1.placeNewOrder(order2);
 
 		// Treat the three placed orders : two for rest1 and one for rest2
 		mf1.treatNewOrders();
-		System.out.println("Done with the 3 orders !");
+		System.out.println("Done with the 2 dish orders !");
 	}
 	
-	@Test
-	public void mostAndLeastSellingRestaurant() {
-		make3orders();
-		
-		Restaurant temp_restaurant;
-		// Most selling
-		temp_restaurant = mf1.getMostOrLeastSellingRestaurant(true);
-		assertTrue(temp_restaurant.equals(rest1));
-		// Least selling
-		temp_restaurant = mf1.getMostOrLeastSellingRestaurant(false);
-		assertTrue(temp_restaurant.equals(rest3));
-		
-		System.out.println("TEST mostAndLeastSellingRestaurant : DONE\n");
-	}
-	
-	/* /!\ Note that we can only test if the most/least active
-	 * courier method works but not if the returned courier is the
-	 * good one as there is a random factor that plays when the 
-	 * courier decides to accept an offer or not. */
-	@Test
-	public void mostOrLeastActiveCourier() {
-		make3orders();
-		
-		Courier temp_courier;
-		// Most active
-		temp_courier = mf1.getMostOrLeastActiveCourier(true);
-		assertTrue(temp_courier != null);
-		// Least active
-		temp_courier = mf1.getMostOrLeastActiveCourier(false);
-		assertTrue(temp_courier != null);
-
-		System.out.println("TEST mostOrLeastActiveCourier : DONE\n");
-	}
-	
-	/*********************************************************************/
-	/* calculate Target profit quantities */ 
-	
-	@Test
-	public void simulateMarkupPerc() {
-		make3orders();
-		
-		double serviceFee = 5;
-		double deliveryFee = 3;
-		double profit = 9;
-		
-		double sum = 0;
-		double placeHolder = 0;
-		
-		// profit for one order = order price * markupPercentage + service fee - delivery cost
-		
-		//there are three orders so we'll calculate placeHolder as the left 
-		// side of the equation and sum as the rigth side of the function 
-		// so that placeHolder = markupPercentage * sum
-		for(Order order : mf1.getSavedOrders()) {
-			System.out.println(order.getPriceInter());
-			sum += order.getPriceInter();
-		}
-		placeHolder = profit - 3*serviceFee + 3*deliveryFee;
-		
-		assertTrue(Order.round4(placeHolder/sum)==mf1.simulateProfit(profit, deliveryFee, serviceFee));
-		System.out.println("TEST calculateProfit() : DONE\n");
-	}
-	
-	@Test
-	public void simulateDeliveryCost() {
-		make3orders();
-		
-		mf1.setTargetProfitPolicyToDelivCostProf();;
-		
-		double serviceFee = 5;
-		double markupProfit = 0.05;
-		double profit = 9;
-		
-		double sum = 0;
-		double placeHolder = 0;
-		
-		// profit for one order = order price * markupPercentage + service fee - delivery cost
-		
-		//there are three orders so we'll calculate placeHolder as the left 
-		// side of the equation and sum as the rigth side of the function 
-		// so that placeHolder = markupPercentage * sum
-		for(Order order : mf1.getSavedOrders()) {
-			System.out.println(order.getPriceInter());
-			sum += order.getPriceInter();
-		}
-		placeHolder = profit - 3*serviceFee - sum*markupProfit;
-		
-//		System.out.println(-placeHolder/3);
-//		System.out.println(mf1.simulateProfit(profit, markupProfit, serviceFee));
-		
-		assertTrue(Order.round2(-placeHolder/3)==mf1.simulateProfit(profit, markupProfit, serviceFee));
-		System.out.println("TEST calculateProfit() : DONE\n");
-	}
-	
-	@Test
-	public void simulateServiceFee() {
-		make3orders();
-		
-		mf1.setTargetProfitPolicyToSerFeeProf();
-		
-		double deliveryFee = 5;
-		double markupProfit = 0.05;
-		double profit = 9;
-		
-		double sum = 0;
-		double placeHolder = 0;
-		
-		// profit for one order = order price * markupPercentage + service fee - delivery cost
-		
-		//there are three orders so we'll calculate placeHolder as the left 
-		// side of the equation and sum as the rigth side of the function 
-		// so that placeHolder = markupPercentage * sum
-		for(Order order : mf1.getSavedOrders()) {
-			System.out.println(order.getPriceInter());
-			sum += order.getPriceInter();
-		}
-		placeHolder = profit + 3*deliveryFee - sum*markupProfit;
-		
-		System.out.println(placeHolder/3);
-		System.out.println(mf1.simulateProfit(profit, markupProfit, deliveryFee));
-		
-		assertTrue(Order.round2(placeHolder/3)==mf1.simulateProfit(profit, markupProfit, deliveryFee));
-		System.out.println("TEST calculateProfit() : DONE\n");
-	}
 }
