@@ -3,6 +3,7 @@ package users;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Order;
 import restaurantSetUp.Address;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.MainDish;
@@ -140,7 +141,7 @@ public class Restaurant extends User {
 			throw new NullPointerException();
 		}
 		
-			return meal.getPrice()*(1-getDiscountFactor());
+			return Order.round2(meal.getPrice()*(1-getDiscountFactor()));
 	}
 	
 	/**

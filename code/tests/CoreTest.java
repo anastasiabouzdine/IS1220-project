@@ -17,6 +17,7 @@ import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
 import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
+import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
 import users.Courier;
 import users.Customer;
@@ -59,7 +60,16 @@ public class CoreTest {
 	}
 	
 	/**
-	 * @throws AlreadyUsedUsernameException *******************************************************************/
+	 * Checks if two double values match on specific no of decimal places.
+	 * @param a 	a double
+	 * @param b		a double
+	 * @return a boolean whose value is true if the two args are equals up to 4 decimal places
+	 */
+	public static boolean equals2(double a, double b){
+		return Math.floor(Order.round2(a) * 10000) == Math.floor(Order.round2(b) * 10000);
+	}
+	
+	/*********************************************************************/
 	/* Add, remove, log in, log out users */ 
 	@Test
 	public void removeAndAddUser() throws AlreadyUsedUsernameException {
@@ -107,6 +117,24 @@ public class CoreTest {
 		mf1.logOut();
 		assertTrue(mf1.getCurrent_user() == null);
 		System.out.println("TEST logInAndThenLogOut : DONE\n");
+	}
+	
+	/*********************************************************************/
+	/* Setting a special meal of the week offer and notifying customers */ 
+	
+	@Test
+	public void logInAndAddSpecMealAndCheckIfCustomersAreNotified() {
+		mf1.logIn(rest1.getUsername());
+		Meal fm1 = list_fmeal.get(0);
+		mf1.getCurrent_restaurant().addMeal(fm1);
+		Meal fm2 = list_fmeal.get(1);
+		mf1.getCurrent_restaurant().addMeal(fm2);
+		mf1.setSpecialMeal(fm1);
+		mf1.setSpecialMeal(fm2);
+		mf1.logOut();
+		assertTrue(list_customer.get(0).getMessageBox().size() == 2);
+		
+		System.out.println("TEST logInAndAddSpecMealAndCheckIfCustomersAreNotified : DONE\n");
 	}
 	
 	/*********************************************************************/
@@ -172,7 +200,7 @@ public class CoreTest {
 		// ------------------------------------------------------
 		// = 61.95
 		
-		assertTrue(totalIn == 61.95);
+		assertTrue(equals2(totalIn,61.95));
 		System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
 	}
 	
@@ -187,8 +215,8 @@ public class CoreTest {
 		// - 3xdeliveryCost : 3x4 = 12
 		// ------------------------------------------------------
 		// = -1.78
-		double trueTotalProfit = Order.round2((-1.78));
-		assertTrue(totalProfit == trueTotalProfit);
+		double trueTotalProfit = -1.78D;
+		assertTrue(equals2(totalProfit,trueTotalProfit));
 		
 		System.out.println("TEST chekcIfCalcTotalProfitWorks : DONE\n");
 	}
@@ -200,8 +228,9 @@ public class CoreTest {
 		mf1.autoSetDateAfter();
 		double avgProfit = mf1.calcAverageProfit();
 		// = -1.78 /3
-		double trueAvg = Order.round2((-1.78D)/3D);
-		assertTrue(avgProfit == trueAvg);
+		double trueAvg = Order.round2(-1.78D/3);
+		System.out.println("avg = " + avgProfit + " true = " + trueAvg);
+		assertTrue(equals2(avgProfit, trueAvg));
 		
 		System.out.println("TEST chekcIfCalcAverageProfitWorks : DONE\n");
 	}
@@ -272,7 +301,8 @@ public class CoreTest {
 		}
 		placeHolder = profit - 3*serviceFee + 3*deliveryFee;
 		
-		assertTrue(Order.round4(placeHolder/sum)==mf1.simulateProfit(profit, deliveryFee, serviceFee));
+		assertTrue(equals2(Order.round4(placeHolder/Order.round2(sum)),
+				mf1.simulateProfit(profit, deliveryFee, serviceFee)));
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
@@ -438,5 +468,5 @@ public class CoreTest {
 		mf1.treatNewOrders();
 		System.out.println("Done with the 2 dish orders !");
 	}
-	
+		
 }
