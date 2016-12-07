@@ -13,7 +13,8 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] review `toString()` functions
 - [ ] finish JavaDoc
 - [ ] verify disactivated users don't get involved in `Core` functions
-- [ ] rounding problems in Coretest
+- [ ] rounding problems in Coretest or just the fact that sometimes there is no courier avaiable -> to verify
+
 
 
 #### Managers
@@ -37,7 +38,7 @@ The project consists of two parts, the **core** and the **interface**.
 #### Customers
 - [x] place orders --> in GUI
 - [x] choose fidelity plan option --> in `Customer` class
-- [x] access account info --> in GUI
+- [ ] access account info --> implement show history of customer in core and in GUI
 - [x] give/rm consensus for notification --> in GUI
 
 #### Couriers

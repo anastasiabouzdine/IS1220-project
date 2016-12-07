@@ -205,7 +205,7 @@ public class CoreTest {
 	}
 	
 	@Test
-	public void chekcIfCalcTotalProfitWorks() {
+	public void checkIfCalcTotalProfitWorks() {
 		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
@@ -218,7 +218,7 @@ public class CoreTest {
 		double trueTotalProfit = -1.78D;
 		assertTrue(equals2(totalProfit,trueTotalProfit));
 		
-		System.out.println("TEST chekcIfCalcTotalProfitWorks : DONE\n");
+		System.out.println("TEST checkIfCalcTotalProfitWorks : DONE\n");
 	}
 	
 	@Test
@@ -232,7 +232,7 @@ public class CoreTest {
 		System.out.println("avg = " + avgProfit + " true = " + trueAvg);
 		assertTrue(equals2(avgProfit, trueAvg));
 		
-		System.out.println("TEST chekcIfCalcAverageProfitWorks : DONE\n");
+		System.out.println("TEST checkIfCalcAverageProfitWorks : DONE\n");
 	}
 	
 	
