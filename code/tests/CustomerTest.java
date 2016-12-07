@@ -49,5 +49,13 @@ public class CustomerTest {
 		assertTrue(0 <= fidCardPlan1.applyReduction());
 	}
 	
+	@Test
+	public void verifyCustomerCanChangeHisNotificationSystem(){
+		Customer cust1 = list_customer.get(0);
+		assertTrue(cust1.isBeNotified());
+		cust1.changeNotifyConsensus();
+		assertTrue(!cust1.isBeNotified());
+	}
+	
 	
 }

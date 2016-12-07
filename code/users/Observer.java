@@ -14,6 +14,6 @@ import restaurantSetUp.Meal;
 
 public interface Observer {
 	
-	public void update(Meal specialMealOfTheWeek, Restaurant restaurant);
+	public void update(Restaurant restaurant);
 
 }

@@ -1,9 +1,12 @@
 package users;
 
+import core.Order;
 import restaurantSetUp.Address;
 
 import restaurantSetUp.FidCardPlan;
 import restaurantSetUp.FidCardPlanBasic;
+import restaurantSetUp.FidCardPlanPoints;
+import restaurantSetUp.FidCardPlanLottery;
 import restaurantSetUp.Meal;
 
 /**
@@ -41,6 +44,60 @@ public class Customer extends User implements Observer{
 	}
 	
 	
+	
+	
+	
+	/*********************************************************************/
+	/* Fidelity card plans */
+
+	/**
+	 * This functions sets the fidelity card plan and
+	 * checks whether the class of new fidCardPlan is the same as the old one,
+	 * if so, nothing will be changed.
+	 */
+	public void setFidCardPlan(FidCardPlan fidCardPlan) {
+		if(!(fidCardPlan.getClass().equals(this.fidCardPlan.getClass())))
+			this.fidCardPlan = fidCardPlan;
+	}
+	public FidCardPlan getFidCardPlan() {
+		return fidCardPlan;
+	}
+	
+	public void setFidCardToBasic() {
+		FidCardPlanBasic basic = new FidCardPlanBasic();
+		setFidCardPlan(basic);
+	}
+	public void setFidCardToPoints() {
+		FidCardPlanPoints points = new FidCardPlanPoints();
+		setFidCardPlan(points);
+	}
+	public void setFidCardToLottery() {
+		FidCardPlanLottery lottery = new FidCardPlanLottery();
+		setFidCardPlan(lottery);
+	}
+	
+	/*********************************************************************/
+	
+	/**
+	 * // TODO
+	 */
+	public void update(Restaurant restaurant){
+		if (beNotified){
+			Meal specialMealOfTheWeek = restaurant.getSpecMeal();
+			double mealPrice = Order.round2(specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact());
+			String info = restaurant.getName() + " has put the meal "
+					+ specialMealOfTheWeek.getName() + " at a price of " 
+					+ mealPrice;
+			this.update(info);
+			System.out.println("[Customer UPDATE] " + getUsername() + " has been notified that " + info);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + "]";
+	}
+	
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
 
@@ -75,50 +132,8 @@ public class Customer extends User implements Observer{
 	public void setBeNotified(boolean beNotified) {
 		this.beNotified = beNotified;
 	}
-	
-	public FidCardPlan getFidCardPlan() {
-		return fidCardPlan;
-	}
-
-	/**
-	 *this functions checks whether the class of new fidCardPlan is the same as the old one. If so, nothing will be changed.
-	 */
-	public void setFidCardPlan(FidCardPlan fidCardPlan) {
-		
-		if(!(fidCardPlan.getClass().equals(this.fidCardPlan.getClass())))
-			this.fidCardPlan = fidCardPlan;
-	}
-	
-	/*********************************************************************/
-	
-	/**
-	 * // TODO
-	 */
-	public void update(Meal specialMealOfTheWeek, Restaurant restaurant){
-		if (beNotified){
-			double mealPrice = specialMealOfTheWeek.getPrice()*restaurant.getSpecDiscFact();
-			System.out.println("[Customer UPDATE] " + getName() + " " + surname + " has been notified"
-					+ " that " + restaurant.getName() + " has put the meal "
-					+ specialMealOfTheWeek.getName() + " at a price of " 
-					+ mealPrice);
-		}
-	}
-	
-//	/**
-//	 * @param	message	of which this user is going to be notified
-//	 */
-//	public void update(String message){
-//		System.out.println("[Customer UPDATE] " + message);
-//	}
-
-	
-
-	@Override
-	public String toString() {
-		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + "]";
-//		return "Customer [name=" + name + ", surname=" + surname + ", ID=" + ID + ", address=" + address + ", email="
-//				+ email + ", phoneNumber=" + phoneNumber + ", username=" + username + ", beNotified=" + beNotified
-//				+ "]";
+	public void changeNotifyConsensus() {
+		this.beNotified = !this.beNotified;
 	}
 
 	
