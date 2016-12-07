@@ -82,7 +82,7 @@ public class Courier extends User {
 	 * @return	order	that was given to the courier
 	 */
 	public void replyRandom(){
-		if(Math.random() <= 0.7)
+		if(Math.random() <= 0.9)
 			acceptOrder();
 		else
 			declineOrder();

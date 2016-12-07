@@ -48,12 +48,14 @@ public class MarkupProfit implements TargetProfitPolicy {
 		int amountOrders = orders.size();
 		double sum=0;
 		
-		for(Order order: orders)
-			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+		for(Order order: orders){
+			if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0){
 				sum += order.getPriceInter();
+			}
+		}
 		
 		
-		markupFee = (profit - input2*amountOrders + input1*amountOrders)/sum;
+		markupFee = (profit - input2*amountOrders + input1*amountOrders)/Order.round2(sum);
 
 		return Order.round4(markupFee);
 	}

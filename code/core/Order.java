@@ -111,11 +111,11 @@ public class Order {
 	/* Round function */
 	
 	public static double round2(double n){
-		return Math.round(n * 100.0) / 100.0;
+		return Math.round(n * 100.0D) / 100.0D;
 	}
 	
 	public static double round4(double n){
-		return Math.round(n * 10000.0) / 10000.0;
+		return Math.round(n * 10000.0D) / 10000.0D;
 	}
 	
 	/* Getters and Setter */ //no set ID! no set Date!
@@ -125,7 +125,7 @@ public class Order {
 	}
 	
 	public double getPriceFinal() {
-		return priceFinal;
+		return round2(priceFinal);
 	}
 
 	public void setPriceFinal(double priceFinal) {

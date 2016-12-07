@@ -48,7 +48,7 @@ public class DeliveryCostProfit implements TargetProfitPolicy {
 		double sum=0;
 		
 		for(Order order: orders)
-			if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
+			if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0)
 				sum += order.getPriceInter();
 		
 		sum *= input1;

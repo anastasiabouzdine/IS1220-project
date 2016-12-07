@@ -59,16 +59,6 @@ public class CoreTest {
 	
 	}
 	
-	/**
-	 * Checks if two double values match on specific no of decimal places.
-	 * @param a 	a double
-	 * @param b		a double
-	 * @return a boolean whose value is true if the two args are equals up to 4 decimal places
-	 */
-	public static boolean equals2(double a, double b){
-		return Math.floor(Order.round2(a) * 10000) == Math.floor(Order.round2(b) * 10000);
-	}
-	
 	/*********************************************************************/
 	/* Add, remove, log in, log out users */ 
 	@Test
@@ -86,11 +76,13 @@ public class CoreTest {
 		}
 		assertTrue(mf1.logIn(e.getUsername()) != null);
 		assertTrue(mf1.getCourierList().contains(e));
+		System.out.println("TEST removeAndAddUser : DONE\n");
 	}
 	
 	@Test(expected=AlreadyUsedUsernameException.class)
 	public void addAlreadyUsedUsername() throws AlreadyUsedUsernameException  {
 		mf1.addUser(list_restaurant.get(0));
+		System.out.println("TEST addAlreadyUsedUsername : DONE\n");
 	}
 
 	@Test
@@ -142,7 +134,6 @@ public class CoreTest {
 	
 	@Test
 	public void addAndPrintListOfMealsByCount() {
-		mf1.setCourierList(list_courier);
 		make2orders5HalfMeals();
 		assertTrue(7 == mf1.getSortedList(true).first().getCount());
 		assertTrue(3 == mf1.getSortedList(rest2, true).first().getCount());
@@ -189,7 +180,6 @@ public class CoreTest {
 	
 	@Test
 	public void checkIfCalcTotalIncomeWorks() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double totalIn = mf1.calcTotalIncome();
@@ -200,13 +190,12 @@ public class CoreTest {
 		// ------------------------------------------------------
 		// = 61.95
 		
-		assertTrue(equals2(totalIn,61.95));
+		assertTrue(equalsDouble(totalIn,61.95));
 		System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
 	}
 	
 	@Test
 	public void chekcIfCalcTotalProfitWorks() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double totalProfit = mf1.calcTotalProfit();
@@ -216,21 +205,19 @@ public class CoreTest {
 		// ------------------------------------------------------
 		// = -1.78
 		double trueTotalProfit = -1.78D;
-		assertTrue(equals2(totalProfit,trueTotalProfit));
+		assertTrue(equalsDouble(totalProfit,trueTotalProfit));
 		
 		System.out.println("TEST chekcIfCalcTotalProfitWorks : DONE\n");
 	}
 	
 	@Test
 	public void chekcIfCalcAverageProfitWorks() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		mf1.autoSetDateAfter();
 		double avgProfit = mf1.calcAverageProfit();
 		// = -1.78 /3
 		double trueAvg = Order.round2(-1.78D/3);
-		System.out.println("avg = " + avgProfit + " true = " + trueAvg);
-		assertTrue(equals2(avgProfit, trueAvg));
+		assertTrue(equalsDouble(avgProfit, trueAvg));
 		
 		System.out.println("TEST chekcIfCalcAverageProfitWorks : DONE\n");
 	}
@@ -239,10 +226,8 @@ public class CoreTest {
 //	/*********************************************************************/
 //	/* Most/least selling restaurants and active couriers */ 
 	
-	
 	@Test
 	public void mostAndLeastSellingRestaurant() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		Restaurant temp_restaurant;
 		System.out.println(mf1.getMostOrLeastSellingRestaurant(true));
@@ -262,7 +247,6 @@ public class CoreTest {
 	 * courier decides to accept an offer or not. */
 	@Test
 	public void mostOrLeastActiveCourier() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		
 		Courier temp_courier;
@@ -281,7 +265,6 @@ public class CoreTest {
 	
 	@Test
 	public void simulateMarkupPerc() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		
 		double serviceFee = 5;
@@ -300,15 +283,15 @@ public class CoreTest {
 			sum += order.getPriceInter();
 		}
 		placeHolder = profit - 3*serviceFee + 3*deliveryFee;
+		double expected = Order.round4((double)placeHolder/Order.round2(sum));
+		double value = mf1.simulateProfit(profit, deliveryFee, serviceFee);
 		
-		assertTrue(equals2(Order.round4(placeHolder/Order.round2(sum)),
-				mf1.simulateProfit(profit, deliveryFee, serviceFee)));
+		assertTrue(equalsDouble(expected, value));
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
 	@Test
 	public void simulateDeliveryCost() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		
 		mf1.setTargetProfitPolicyToDelivCostProf();;
@@ -339,7 +322,6 @@ public class CoreTest {
 	
 	@Test
 	public void simulateServiceFee() {
-		mf1.setCourierList(list_courier);
 		make3orders();
 		
 		mf1.setTargetProfitPolicyToSerFeeProf();
@@ -361,18 +343,40 @@ public class CoreTest {
 		}
 		placeHolder = profit + 3*deliveryFee - sum*markupProfit;
 		
-//		System.out.println(placeHolder/3);
-//		System.out.println(mf1.simulateProfit(profit, markupProfit, deliveryFee));
-		
 		assertTrue(Order.round2(placeHolder/3)==mf1.simulateProfit(profit, markupProfit, deliveryFee));
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
 	/**************************************************************************************************/
-	// functions
+	/* Get customer history */
+	
+	@Test
+	public void assertNoHistoryIsGivenWhenNoCustomerLoggedIn() {
+		make2orders5HalfMeals();
+		
+		assertTrue(mf1.getHistoryOfOrders() == null);
+
+		System.out.println("TEST assertNoHistoryIsGivenWhenNoCustomerLoggedIn : DONE\n");
+	}
+	
+	@Test
+	public void checkIfHistoryOfOrdersIsCorrectWhenCustomerLoggedIn() {
+		make2orders5HalfMeals();
+		Customer cust_at_test = list_customer.get(2);
+		
+		mf1.logIn(cust_at_test.getUsername());
+		assertTrue(mf1.getHistoryOfOrders().size() == 1);
+
+		System.out.println("TEST checkIfHistoryOfOrdersIsCorrectWhenCustomerLoggedIn : DONE\n");
+	}
+	
+	/**************************************************************************************************/
+	/* Helpers */
 	
 	
 	public void make3orders() {
+		mf1.setCourierList(list_courier);
+
 		System.out.println("Making 3 orders...");
 		/* Make sure that all parameters are in accordance with tests */
 		mf1.setMarkup_percentage(0.05);
@@ -396,7 +400,8 @@ public class CoreTest {
 	}
 	
 	public void make2orders5HalfMeals() {
-		
+		mf1.setCourierList(list_courier);
+
 		HalfMeal hm1 = list_hmeal.get(0);
 		HalfMeal hm2 = list_hmeal.get(1);
 		HalfMeal hm3 = list_hmeal.get(2);
@@ -428,6 +433,16 @@ public class CoreTest {
 		// Treat the three placed orders : two for rest1 and one for rest2
 		mf1.treatNewOrders();
 		System.out.println("Done with the 2 meal orders !");
+	}
+	
+	/**
+	 * Compares with flexibility if two doubles are equals up to 2 decimal places.
+	 * @param expected
+	 * @param value
+	 * @return
+	 */
+	public static boolean equalsDouble(double expected, double value){
+		return (Math.abs(value-expected) < 0.01);
 	}
 	
 	public void make2orders6Dishes() {
