@@ -13,7 +13,8 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] review `toString()` functions
 - [ ] finish JavaDoc
 - [ ] verify disactivated users don't get involved in `Core` functions
-- [ ] rounding problems in Coretest
+- [x] rounding problems in Coretest --> because of bad dates handling (use of compareTo instead of before and after)
+- [x] problem with `MarkupProfit` Class
 
 
 #### Managers
@@ -38,6 +39,7 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] place orders --> in GUI
 - [x] choose fidelity plan option --> in `Customer` class
 - [x] access account info --> in GUI
+- [x] get history of orders and fidelity points
 - [x] give/rm consensus for notification --> in GUI
 
 #### Couriers

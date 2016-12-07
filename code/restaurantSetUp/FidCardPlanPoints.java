@@ -48,10 +48,11 @@ public class FidCardPlanPoints implements FidCardPlan{
 	public double getReduc() {
 		return reduc;
 	}
-
 	public void setReduc(double reduc) {
 		this.reduc = reduc;
 	}
-	
+	public int getPoints() {
+		return points;
+	}
 	
 }
