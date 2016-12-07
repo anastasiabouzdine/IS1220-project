@@ -512,13 +512,30 @@ public class Core{
 	}
 
 	/*********************************************************************/
-	/* Methods for a new order */
 	/* Methods for customers */
 
-	//TODO get history for customers
-
 	/**
-	 * creates a new order
+	 * Returns the history of orders of the current user, null if none is logged in.
+	 * @return an ArrayList of orders containing the orders of the current user
+	 */
+	public ArrayList<Order> getHistoryOfOrders() {
+		if (current_customer != null){
+			int temp_ID = current_customer.getID();
+			ArrayList<Order> temp_cust_orders = new ArrayList<Order>();
+			for(Order o : savedOrders){
+				if (temp_ID == o.getCustomer().getID()){
+					temp_cust_orders.add(o);
+				}
+			}
+			return temp_cust_orders;
+		} else {
+			unauthorizedCommand();
+			return null;
+		}
+	}
+	
+	/**
+	 * Creates a new order.
 	 * @param	cust	as type of Customer	
 	 * @param	rest	as type of Restaurant
 	 * @return	new Order
@@ -528,7 +545,7 @@ public class Core{
 	}
 
 	/**
-	 * places a new order in the queue of new orders
+	 * Places a new order in the queue of new orders.
 	 * @param	order	of type order
 	 */
 	public void placeNewOrder(Order order){
@@ -621,10 +638,13 @@ public class Core{
 	 */
 	public double calcTotalProfit(){
 		if(current_manager != null){
-			double sum = 0;
-			for(Order order : this.savedOrders)
-				if(order.getDate().after(dateBefore)&&order.getDate().before(dateAfter))
-					sum += order.getProfitFinal();
+			double sum = 0.0D;
+			for(Order order : this.savedOrders){
+				System.out.println("CALCTOTAL order " + order.getID());
+				if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0){
+					sum = Order.round2(sum + order.getProfitFinal());
+				}
+			}
 			return Order.round2(sum);
 		}else{
 			unauthorizedCommand();

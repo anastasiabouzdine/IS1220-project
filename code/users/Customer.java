@@ -76,6 +76,19 @@ public class Customer extends User implements Observer{
 		setFidCardPlan(lottery);
 	}
 	
+	/**
+	 * Returns the number of fidelity points if the customer is subscribed to the FidelityPoints plan,
+	 * 0 if not.
+	 * @return an int corresponding to the number of points for the FidelityPoints plan
+	 */
+	public int getNumberOfFidelityPoints() {
+		if (this.fidCardPlan instanceof FidCardPlanPoints){
+			FidCardPlanPoints temp_fid = (FidCardPlanPoints) this.fidCardPlan;
+			return temp_fid.getPoints();
+		} 
+		return 0;
+	}
+	
 	/*********************************************************************/
 	
 	/**
