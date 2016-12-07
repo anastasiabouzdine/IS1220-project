@@ -7,10 +7,9 @@ import users.Courier;
 
 
 /**
- * The class <code>FairOccupationDelivery</code> allows to create a delivery policy that 
- * influences the way the system chooses the courier that will execute the order of the clients.
- * This policy makes sure that the system chooses the courier that has fulfilled the least orders 
- * so far as its first choice to execute the order
+ * The class <code>FairOccupationDelivery</code> allows to create a delivery policy
+ * that makes sure that the system chooses the courier that has fulfilled the least orders 
+ * so far as its first choice is to execute the order.
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
@@ -21,7 +20,7 @@ public class FairOccupationDelivery implements DeliveryPolicy {
 	
 	
 	/**
-	 * Constructor
+	 * Constructor of fair occupation.
 	 */
 	public FairOccupationDelivery() {
 		super();

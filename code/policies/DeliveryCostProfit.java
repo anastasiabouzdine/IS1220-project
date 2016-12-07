@@ -8,8 +8,9 @@ import core.Order;
 /**
  * The class <code>DeliveryCostProfit</code> allows 
  * to create the policy DeliveryCostProfit to calculate 
- * the delivery cost needed to achieve a certain profit
- * @see the method <code>howToTargetProfit</code>
+ * the delivery cost needed to achieve a certain profit.
+ * 
+ * @see <code>howToTargetProfit</code>
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
@@ -25,11 +26,9 @@ public class DeliveryCostProfit implements TargetProfitPolicy {
 	}
 	
 	/**
-	 * The method howToTargetProfit of <code>DeliveryCostProfit</code> allows 
-	 * 
-	 * to calculate the delivery cost that is needed to reach a 
-	 * certain profit by taking ancient orders of a certain period of time,
-	 * the markup percentage and the service fee as given.
+	 * The method howToTargetProfit of <code>DeliveryCostProfit</code> allows to calculate 
+	 * the delivery cost that is needed to reach a certain profit by taking ancient orders 
+	 * of a certain period of time, the markup percentage and the service fee as given.
 	 * 
 	 * @param	input1	the markup percentage
 	 * @param	input2	the	service fee

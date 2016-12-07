@@ -8,12 +8,11 @@ import restaurantSetUp.*;
 import users.*;
 
 /**
- * The class <code>Core</code> is the core class of the system.
- * It can be seen as the center amongst all other classes and
- * it keeps track of all useful informations for all users.
+ * The class <code>Core</code> is the core class of the system that can be seen as the 
+ * center amongst all other classes keeping track of all useful informations for all users.
  * 
- * 
- * TODO add useful description of this class
+ * A hashMap of username as key and user as value allows to have an efficient way of 
+ * activating and deactivating <code>Users</code>.
  * 
  * In order to efficiently display a sorted list of all the <code>Menu</code> and
  * the <code>Dish</code> the <code>TreeMap</code> called <code>MealHeap</code> and 
@@ -101,18 +100,13 @@ public class Core{
 		this.dateBefore = Calendar.getInstance();
 	}
 
-	/**
-	 * Class constructor specifying the name of the core system.
-	 * @param name	a <code>String</code> containing the name of the core system
-	 */
-	public Core(String name){
-		this();
-		this.name = name;
-	}
-
-
 	/*********************************************************************/
-	/* register */
+	/**
+	 * This method allows unregistered clients to register themselves.
+	 * The method cannot be called if somebody is logged in.
+	 * 
+	 * @param User a newly created user
+	 */
 	public void register(User user) throws AlreadyUsedUsernameException {
 		if(current_user == null){ 
 			if (users.containsKey(user.getUsername())){
@@ -138,7 +132,12 @@ public class Core{
 		}
 	}
 
-	/* Log in */
+	/**
+	 * This method allows registered users to log in and changes the current user to the user 
+	 * having completed the log in. New messages are printed out if user logs in.
+	 * 
+	 * @param username registered username that is saved in the system.
+	 */
 	public String logIn(String username){
 		if (users.containsKey(username)){
 			current_user = users.get(username);
@@ -155,11 +154,14 @@ public class Core{
 				current_restaurant = (Restaurant) current_user;
 				return "Successfully logged in as a Restaurant !";
 			}
-			current_user.checkMessages(); //TODO check out the function @John
+			current_user.checkMessages(); 
 		}
 		return null;
 	}
 
+	/**
+	 * This method allows logged in users to log out.
+	 */
 	public void logOut(){
 		current_user = null;
 		current_courier = null;
@@ -168,7 +170,7 @@ public class Core{
 		current_restaurant = null;
 	}
 
-	/* Add and remove users */
+	/* Add, remove, activate and deactivate users */
 	public void activateUser(User user){
 		if(current_manager != null){
 			users.put(user.getUsername(), user);

@@ -5,9 +5,10 @@
 package restaurantSetUp;
 
 /************************************************************/
-/**class that represent a 2-dim address 
+/**class that represents a 2-dim address 
  * 
- * @author Patrick 
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 public class Address {
 	
@@ -59,7 +60,7 @@ public class Address {
 	}
 
 	/************************************************************
-	 * Overriden methods
+	 * Overridden methods
 	 * toString, hashCode and equals  
 	 */
 	@Override
@@ -79,7 +80,8 @@ public class Address {
 
 
 	/**
-	 * Return TRUE if two addresses are equals, meaning they have the same X and Y coordinates.
+	 * @param	object of Address
+	 * @return TRUE if two addresses are equal, meaning they have the same X and Y coordinates.
 	 */
 	@Override
 	public boolean equals(Object obj) {

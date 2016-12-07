@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import core.Core;
 import core.Order;
-import core.ParseCustomers;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
 import restaurantSetUp.Dessert;

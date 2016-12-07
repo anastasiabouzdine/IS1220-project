@@ -37,6 +37,12 @@ public class Order {
 	private double priceFinal;
 	private final Calendar date;
 	
+	/**
+	 * Constructor of an order.
+	 * 
+	 * @param customer customer that has initialised the order 
+	 * @param Restaurant restaurant the user has ordered at
+	 */
 	public Order(Customer customer, Restaurant restaurant){
 		this.ID = (++counter);
 		this.customer = customer;
@@ -47,11 +53,11 @@ public class Order {
 		this.date = Calendar.getInstance();
 	}
 	
+	// add Meal and add Dish functions
 	public void addMeal(Meal m, int q){
 		meals.add(m);
 		quantity.add(q);
 	}
-	
 	public void addDish(Dish m, int q){
 		dishes.add(m);
 		quantity.add(q);
@@ -59,7 +65,9 @@ public class Order {
 	
  	
 	/*********************************************************************/
-	
+	/**
+	 * The method states whether the Fidelity is basic or not.
+	 */
 	public boolean isFidCardPlanBasic() {
 		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
 	}

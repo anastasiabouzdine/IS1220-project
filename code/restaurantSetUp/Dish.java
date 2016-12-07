@@ -18,11 +18,12 @@ public class Dish {
 	private String type;
 	
 	/**
+	 * Constructor of type Dish that cannot be created from outside and is therefore protected.
+	 * 
 	 * @param name = name of the dish f.e. "spaghetti"
 	 * @param price = price of the dish
 	 * @param type = each dish can have a different type f.e. "vegetarian"
 	 * 
-	 * the constructor is protected so that a class of type Dish can not be created from the outside but only by its subclasses
 	 */
 	protected Dish(String name, double price, String type) {
 		super();

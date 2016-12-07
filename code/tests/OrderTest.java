@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import core.Order;
-import core.ParseCustomers;
 import parsers.*;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;

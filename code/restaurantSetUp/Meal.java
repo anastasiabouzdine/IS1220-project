@@ -11,10 +11,10 @@ import restaurantSetUp.Dish;
 
 /************************************************************/
 /**
- * Meal creates objects representing a either a halfMeal or a FullMeal
- * Meal is being inherited by halfMeal and FullMeal
+ * Meal is an abstract class that is inherited by either a halfMeal or a FullMeal.
  * 
- * @author Patrick 
+ * @author Patrick von Platen
+ * @author John Wasseige
  */
 public abstract class Meal {
 	
@@ -23,15 +23,17 @@ public abstract class Meal {
 	private String type;
 	
 	
+	/**
+	 * for tests only
+	 */
 	public Meal(){
 		super();
 	}
 	
 
 	/**
+	 * Constructor of <code>Meal</code> where the constructor is protected so that a class of type Dish can not be created from the outside the package.
 	 * @param name = name of the meal f.e. "Lucky Luke" 
-	 * 
-	 * the constructor is protected so that a class of type Dish can not be created from the outside but only by its subclasses
 	 */
 	protected Meal(String name) {
 		this.name = name;
