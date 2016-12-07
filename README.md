@@ -5,11 +5,15 @@ whose functionality are similar to that of nowadays food delivery systems.
 The project consists of two parts, the **core** and the **interface**.
 
 ## To do
-- [ ] decide if functions should be restricted to users in the `Core` or in the `GUI`
 - [ ] eventually divide CoreTest file into multiple more specific test files
 - [x] make `treatNewOrders` work for multiple orders
 - [x] number of `preparedOrders` for a `Restaurant` ? 
 - [x] handling of the `dateAfter` as the current date ?
+- [ ] update users lists (.txt)
+- [ ] review `toString()` functions
+- [ ] finish JavaDoc
+- [ ] verify disactivated users don't get involved in `Core` functions
+- [ ] rounding problems in Coretest
 
 
 #### Managers
@@ -31,10 +35,10 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] sort of shipped orders according policy
 
 #### Customers
-- [ ] place orders
-- [ ] choose fidelity plan option
-- [ ] access account info
-- [ ] give/rm consensus for notification
+- [x] place orders --> in GUI
+- [x] choose fidelity plan option --> in `Customer` class
+- [x] access account info --> in GUI
+- [x] give/rm consensus for notification --> in GUI
 
 #### Couriers
 - [x] register/unregister their account
@@ -45,6 +49,6 @@ The project consists of two parts, the **core** and the **interface**.
 #### Core system
 - [x] setting of the 3 profit related values
 - [x] allocation of a courier to an order placed by a customer
-- [ ] notify users of special offers
+- [x] notify users of special offers
 - [x] compute total income
 - [x] choose target policy
