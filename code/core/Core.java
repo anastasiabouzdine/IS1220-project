@@ -253,9 +253,9 @@ public class Core{
 	 * associated with each `Customer`.
 	 */
 	private void notifyCustomersOfSpecialOffer(){
-		for(Customer c : customerList){
-			if (users.containsKey(c.getUsername())){
-				c.update(current_restaurant);
+		for(Customer cust : customerList){
+			if (users.containsKey(cust.getUsername())){
+				cust.update(current_restaurant);
 			}
 		}
 	}

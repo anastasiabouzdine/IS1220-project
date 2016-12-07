@@ -207,7 +207,7 @@ public class CoreTest {
 		double trueTotalProfit = -1.78D;
 		assertTrue(equalsDouble(totalProfit,trueTotalProfit));
 		
-		System.out.println("TEST chekcIfCalcTotalProfitWorks : DONE\n");
+		System.out.println("TEST checkIfCalcTotalProfitWorks : DONE\n");
 	}
 	
 	@Test
@@ -219,7 +219,7 @@ public class CoreTest {
 		double trueAvg = Order.round2(-1.78D/3);
 		assertTrue(equalsDouble(avgProfit, trueAvg));
 		
-		System.out.println("TEST chekcIfCalcAverageProfitWorks : DONE\n");
+		System.out.println("TEST checkIfCalcAverageProfitWorks : DONE\n");
 	}
 	
 	
@@ -312,9 +312,6 @@ public class CoreTest {
 			sum += order.getPriceInter();
 		}
 		placeHolder = profit - 3*serviceFee - sum*markupProfit;
-		
-//		System.out.println(-placeHolder/3);
-//		System.out.println(mf1.simulateProfit(profit, markupProfit, serviceFee));
 		
 		assertTrue(Order.round2(-placeHolder/3)==mf1.simulateProfit(profit, markupProfit, serviceFee));
 		System.out.println("TEST calculateProfit() : DONE\n");

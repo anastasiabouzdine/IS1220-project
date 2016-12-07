@@ -16,7 +16,6 @@ The project consists of two parts, the **core** and the **interface**.
 - [x] rounding problems in Coretest --> because of bad dates handling (use of compareTo instead of before and after)
 - [x] problem with `MarkupProfit` Class
 
-
 #### Managers
 - [x] add/remove users
 - [x] activate/disactivate users
