@@ -7,7 +7,7 @@ import core.Order;
 
 /**
  * The interface <code>TargetProfitPolicy</code> allow managers 
- * for reasoning about different ways of meeting a given target profit.
+ * to simulate different parameters to meet a given target profit.
  * 
  * The classes implementing this interface are
  * <ul>

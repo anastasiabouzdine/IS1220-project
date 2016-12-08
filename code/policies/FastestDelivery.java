@@ -11,9 +11,8 @@ import users.Courier;
 
 /**
  * The class <code>FairOccupationDelivery</code> allows to create a delivery policy that 
- * influences the way the system chooses the courier that will execute the order of the clients.
- * This policy makes sure that the system chooses the courier that has to take the shortest part to the restaurant
- * according to their respective positions
+ * makes sure that the system chooses the courier that has to take the shortest part to 
+ * the restaurant according to their respective positions.
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
@@ -25,7 +24,7 @@ public class FastestDelivery implements DeliveryPolicy {
 	
 	
 	/**
-	 * Constructor
+	 * Constructor of fastest delivery.
 	 */
 	public FastestDelivery() {
 		super();

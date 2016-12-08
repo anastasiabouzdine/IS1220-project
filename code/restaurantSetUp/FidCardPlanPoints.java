@@ -1,21 +1,20 @@
 package restaurantSetUp;
 
+/**
+ * The class <code>FidCardPlanPoints</code> allows to create a FidCardPlanPoints which 
+ * <ul>
+ * 	<li>will apply a reduction according to the points collected by <code>Customer</code></li>
+ *  <li> is inherited from <code>FidelityCardPlan</code></li>
+ * </ul>
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
+
 public class FidCardPlanPoints implements FidCardPlan{
 	
-	/**
-	 * The class <code>FidCardPlanPoints</code> allows to create a FidCardPlanPoints which 
-	 * <ul>
-	 * 	<li>will apply a reduction according to the points collected by <code>Customer</code></li>
-	 *  <li> is inherited from <code>FidelityCardPlan</code></li>
-	 * </ul>
-	 * 
-	 * @author John de Wasseige
-	 * @author Patrick von Platen
-	 */
-
 	private int points;
 	private double reduc;
-	
 	
 	/**
 	 * @param points default is set to 0 (new plan = 0 points)
@@ -28,6 +27,7 @@ public class FidCardPlanPoints implements FidCardPlan{
 	}
 
 	/**
+	 * The function that is used if the Fidelity plan is set to FidCardPlanPoints.
 	 * @return 0 if customer has more than 100 points or (1 - reduc) if customer has more than 100 points
 	 */
 	@Override

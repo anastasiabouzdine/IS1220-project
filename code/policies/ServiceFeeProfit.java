@@ -8,7 +8,8 @@ import core.Order;
 /**
  * The class <code>ServiceFeeProfit</code> allows 
  * to create the policy ServiceFeeProfit to calculate 
- * the service fee needed to achieve a certain profit
+ * the service fee needed to achieve a certain profit.
+ * 
  * @see the method <code>howToTargetProfit</code>
  * 
  * @author John de Wasseige
@@ -26,7 +27,6 @@ public class ServiceFeeProfit implements TargetProfitPolicy {
 		
 		/**
 		 * The method howToTargetProfit of <code>ServiceFeeProfit</code> allows 
-		 * 
 		 * to calculate the service fee that is needed to reach a 
 		 * certain profit by taking ancient orders of a certain period of time,
 		 * the markup percentage and the delivery cost as given.

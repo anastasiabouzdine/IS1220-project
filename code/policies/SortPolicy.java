@@ -21,11 +21,11 @@ public abstract class SortPolicy implements Comparable<SortPolicy> {
 	private Restaurant rest;
 	
 	/**
+	 * Constructor of SortPolicy which is protected. 
+	 * 
 	 *@param	count	is the number of times the respective choice was taken
 	 *@param	rest	is the restaurant where the choice was ordered from
 	 *
-	 *is protected so that only classes that inherit <code>SortPolicy</code> can access the
-	 *constructor
 	 */
 	protected SortPolicy(int count, Restaurant rest) {
 		super();
@@ -34,12 +34,11 @@ public abstract class SortPolicy implements Comparable<SortPolicy> {
 	}
 
 	/**
+	 * Constructor for attributeless Instance of SortPolicy that exists because core 
+	 * needs an attributeless SortPolicy that can be changed.
 	 * 
-	 * is there because core needs an attributeless SortPolicy to save as policy
-	 * is protected so that only classes that inherit <code>SortPolicy</code> can access the
-	 *constructor
 	 */
-	protected SortPolicy() {
+	public SortPolicy() {
 		super();
 	}
 

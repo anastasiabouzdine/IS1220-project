@@ -4,7 +4,13 @@ import restaurantSetUp.Meal;
 import users.Restaurant;
 
 
-//TODO give description of this class
+/**
+ * The class <code>MealSort</code> inherits the class <code>Sort</code>
+ * and is used to give back a sorted list of all meals being sold.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 
 
 public class MealSort extends SortPolicy {
@@ -12,6 +18,8 @@ public class MealSort extends SortPolicy {
 	private Meal meal;
 	
 	/**
+	 * Constructor of MealSort.
+	 * 
 	 *@param	count	is the number of times the respective choice was taken
 	 *@param	rest	is the restaurant where the choice was ordered from
 	 *@param	meal	is the meal that was ordered
@@ -22,7 +30,7 @@ public class MealSort extends SortPolicy {
 	}
 
 	/**
-	 * is there because core needs an attributeless MealSort to save as policy
+	 * Constructer which exists because core needs an attributeless MealSort to save as policy.
 	 */
 	public MealSort() {
 		super();
@@ -42,10 +50,11 @@ public class MealSort extends SortPolicy {
 	
 	
 	/**
-	 *the abstract function to implement
+	 *This method return whether the list should be sorted in ascending or descending order.
+	 *
 	 *@param	order	is a boolean that states whether the list will be displayed 
 	 *in ascending or descending order 
-	 *@return	return	order	boolean
+	 *@return	return	order	boolean (true or false)
 	 */
 	@Override
 	public boolean howToSortOrder(boolean order) {

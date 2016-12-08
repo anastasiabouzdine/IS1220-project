@@ -7,7 +7,7 @@ import users.Courier;
 
 /**
  * The interface <code>DeliveryPolicy</code> allows the MyFoodora system
- * to choose the policy for allocating a courier to an order to be delivered.
+ * to choose the policy to allocate a courier for an order.
  * 
  * The classes implementing this interface are
  * <ul>

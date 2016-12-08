@@ -1,13 +1,23 @@
 package restaurantSetUp;
 
+/**
+ * The class <code>FidCardPlanLottery</code> implements the interface <code>FidCardPlan</code> and presents the Lottery Fidelity Card Plan.
+ *  
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class FidCardPlanLottery implements FidCardPlan {
 
+	/**
+	 * Constructor of Basic Fidelity Plan
+	 */
 	public FidCardPlanLottery() {
 		super();
 	}
 
 	/**
-	 * @return 1 if customer won the lottery and 0 if he did not
+	 * The function that is used if the Fidelity plan is set to FidCardPlanLottery.
+	 * @return 1 if customer wan the lottery and 0 if he did not (depending on the random number).
 	 */
 	@Override
 	public double applyReduction() {

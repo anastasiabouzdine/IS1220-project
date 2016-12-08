@@ -7,7 +7,7 @@ package restaurantSetUp;
 /************************************************************/
 
 /**
- * MainDish is a Dish and takes over all functionality of Dash
+ * MainDish is a Dish and takes over all functionality of Dish.
  * @author John de Wasseige
  * @author Patrick von Platen
  */

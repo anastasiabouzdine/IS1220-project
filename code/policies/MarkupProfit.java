@@ -8,7 +8,8 @@ import core.Order;
 /**
  * The class <code>MarkupProfit</code> allows 
  * to create the policy MarkupProfit to calculate 
- * the service fee needed to achieve a certain profit
+ * the service fee needed to achieve a certain profit.
+ * 
  * @see the method <code>howToTargetProfit</code>
  * 
  * @author John de Wasseige
@@ -47,16 +48,12 @@ public class MarkupProfit implements TargetProfitPolicy {
 		double markupFee=0;
 		int amountOrders = orders.size();
 		double sum=0;
-		
 		for(Order order: orders){
 			if(order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0){
 				sum += order.getPriceInter();
 			}
 		}
-		
-		
 		markupFee = (profit - input2*amountOrders + input1*amountOrders)/Order.round2(sum);
-
 		return Order.round4(markupFee);
 	}
 
