@@ -7,6 +7,21 @@ import java.util.Scanner;
 
 import users.Manager;
 
+/**
+* ParseManagers allows to generate an ArrayList of <code>Manager</code> from a text file
+* given as input the <code>parseManagers</code> method.
+* This class is a tool to parse managers from a textfile.
+* This is especially useful when making test needing more than
+* one manager and when the thing to test is something else
+* than the actual creation of a <code>Manager</code> object.
+* 
+* For the syntax of the txt file, see "managersList.txt".
+* 
+* @author John de Wasseige
+* @author Patrick von Platen
+* 
+* @see parseManagers
+*/
 public class ParseManagers {
 	
 	public static ArrayList<Manager> parseManagers(String fileName) {

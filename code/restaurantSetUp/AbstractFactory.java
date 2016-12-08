@@ -11,6 +11,7 @@ package restaurantSetUp;
 public abstract class AbstractFactory {
 	
 	public abstract Dish getDish(String dishType, String dishName, double dishPrice);
+	
 	public abstract Meal getMeal(String mealType);
 
 }

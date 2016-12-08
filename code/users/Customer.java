@@ -10,7 +10,7 @@ import restaurantSetUp.FidCardPlanLottery;
 import restaurantSetUp.Meal;
 
 /**
- * The class <code>Customer</code> allows to create a Customer which will be able to
+ * The class <code>Customer</code> allows to create a customer which will be able to
  * <ul>
  * 	<li>place an <code>Order</code></li>
  *  <li>register/unregister to/from a <code>FidelityCardPlan</code></li>
@@ -22,8 +22,6 @@ import restaurantSetUp.Meal;
  * @author Patrick von Platen
  */
 public class Customer extends User implements Observer{
-	
-	//TODO discuss with John whether a static attribute of the core is a good idea or not
 
 	private String surname;
 	private Address address;
@@ -42,10 +40,6 @@ public class Customer extends User implements Observer{
 		this.email = email;
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
-	
-	
-	
-	
 	
 	/*********************************************************************/
 	/* Fidelity card plans */
@@ -90,10 +84,7 @@ public class Customer extends User implements Observer{
 	}
 	
 	/*********************************************************************/
-	
-	/**
-	 * // TODO
-	 */
+
 	public void update(Restaurant restaurant){
 		if (beNotified){
 			Meal specialMealOfTheWeek = restaurant.getSpecMeal();
@@ -102,7 +93,6 @@ public class Customer extends User implements Observer{
 					+ specialMealOfTheWeek.getName() + " at a price of " 
 					+ mealPrice;
 			this.update(info);
-			//TODO syso can be deleted if only message box is necessary
 			System.out.println("[Customer UPDATE] " + getUsername() + " has been notified that " + info);
 		}
 	}

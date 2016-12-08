@@ -1,7 +1,5 @@
 package users;
 
-import restaurantSetUp.Meal;
-
 /**
  * The interface <code>Observer</code> allows to implement the <b>Strategy Pattern</b>.
  * Contrary to the usual Observer interface, we won't need <code>addObserver</code>

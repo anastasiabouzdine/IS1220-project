@@ -150,6 +150,7 @@ public class Core{
 				return "Successfully logged in as a Customer !";
 			} else if (current_user instanceof Manager){
 				current_manager = (Manager) current_user;
+				treatNewOrders(); //TODO check whether this is fine or not
 				return "Successfully logged in as a Manager !";
 			} else if (current_user instanceof Restaurant){
 				current_restaurant = (Restaurant) current_user;
@@ -461,7 +462,7 @@ public class Core{
 	 *	4) either no courier has been found (then the order is disregarded) 
 	 *	5) or the courier accepts and all the data is saved and updated respectively
 	 */ 
-	public void treatNewOrders(){
+	public void treatNewOrders(){ //TODO make this function private if it is in logged in
 		while (receivedOrders.size() != 0){
 			Order order = this.receivedOrders.removeFirst();
 			//get ordered list of couriers according to the chosen policy
@@ -470,7 +471,7 @@ public class Core{
 			// while no courier has been found yet or until there are couriers
 			while(order.getCourier() == null && !currentList.isEmpty()) { 
 				courier = currentList.get(0);
-				if(courier.isAvailable()){
+				if(courier.isAvailable() && users.containsKey(courier.getUsername())){
 					courier.addNewOrder(order); // courier receives order
 					update(courier, "[Order ID : "+ order.getID() + "] You have received a new order. "
 							+ "Please respond whether you can carry out the order or not.");

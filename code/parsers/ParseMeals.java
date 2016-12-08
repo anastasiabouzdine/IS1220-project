@@ -11,9 +11,25 @@ import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Starter;
 
-
+/**
+* ParseMeals allows to generate an ArrayList of <code>Meal</code> from a text file
+* given as input the <code>parseFullMeals</code> and <code>parseHalfMeals</code> methods.
+* This class is a tool to parse meals from a textfile.
+* This is especially useful when making test needing more than
+* one meal and when the thing to test is something else
+* than the actual creation of <code>FullMeal</code> and <code>HalfMeal</code> objects.
+* 
+* For the syntax of the txt file, see "halfMeals.txt" and "fullMeals.txt".
+* 
+* @author John de Wasseige
+* @author Patrick von Platen
+* 
+* @see parseFullMeals
+* @see parseHalfMeals
+*/
 public class ParseMeals {
 	
+
 	public static ArrayList<FullMeal> parseFullMeals(String fileName){
 		
 		ArrayList<Starter> starter_list = ParseDishes.parseStarter("src/txtFILES/starters.txt");

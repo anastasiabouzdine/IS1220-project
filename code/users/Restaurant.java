@@ -30,9 +30,7 @@ import restaurantSetUp.Starter;
  */
 
 public class Restaurant extends User {
-	
-	//TODO discuss with John whether a static attribute of the core is a good idea or not
-	
+		
 	private Address address;
 	private double discountFactor; // discount factor is set by default to 5%
 	private double specDiscFact ;  // discount factor is set by default to 10%
@@ -42,16 +40,16 @@ public class Restaurant extends User {
 
 	
 	/**
-	 * Constructor 
-	 * 
-	 * @param name = name of restaurant
-	 * @param xCoord = x coordinate of restaurant
-	 * @param yCoord = y coordinate of restaurant
-	 * @param username = log-in name of restaurant
-	 * @param discountFactor = in %/ Factor
-	 * 		   by which the price of a meal is cheaper than the sum of its single dishes
-	 * @param specDiscFact = > discountFactor/ applied only
-	 * 		  for one meal, menu = menu of restaurant that includes all dishes
+	 * Class constructor. 
+	 * 	
+	 * @param name			 	name of restaurant
+	 * @param xCoord 	 		x coordinate of restaurant
+	 * @param yCoord 	 		y coordinate of restaurant
+	 * @param username 	 		log-in name of restaurant
+	 * @param discountFactor	in %/ factor by which the price 
+	 * 							of a meal is cheaper than the sum of its single dishes
+	 * @param specDiscFact	    discountFactor/ applied only for one meal, 
+	 * 							menu of restaurant that includes all dishes
 	 */
 	public Restaurant(String name, Address address, String username) {
 		super(name, username);
@@ -63,7 +61,8 @@ public class Restaurant extends User {
 	}
 		
 	/************************************************************/
-
+	/* Auxiliaries function */
+	
 	/**
 	 * @param	starter	will be added to the restaurant's menu 
 	 */
@@ -71,44 +70,37 @@ public class Restaurant extends User {
 		menu.addStarter(starter);
 	}
 	
-	
-		/**
-		 * @param	mainDish	will be added to the restaurant's menu  
-		 */
+	/**
+	 * @param	mainDish	will be added to the restaurant's menu  
+	 */
 	public void addMainDish(MainDish mainDish){
 		menu.addMainDish(mainDish);
 	}
 	
-	
-		/**
-		 * @param	Dessert	will be added to the restaurant's menu
-		 */
+	/**
+	 * @param	Dessert	will be added to the restaurant's menu
+	 */
 	public void addDessert(Dessert dessert){
 		menu.addDessert(dessert);
 	}
-	
 
-	
-
-		/**
-		 * @param	starter	will be removed from the restaurant's menu 
-		 */
+	/**
+	 * @param	starter	will be removed from the restaurant's menu 
+	 */
 	public void removeStarter(Starter starter){
 		menu.removeStarter(starter);
 	}
-	
 
-		/**
-		 * @param	mainDish	will be removed from the restaurant's menu  
-		 */
+	/**
+	 * @param	mainDish	will be removed from the restaurant's menu  
+	 */
 	public void removeMainDish(MainDish mainDish){
 		menu.removeMainDish(mainDish);
 	}
-	
 
-		/**
-		 * @param Dessert	will be removed from the restaurant's menu
-		 */
+	/**
+	 * @param Dessert	will be removed from the restaurant's menu
+	 */
 	public void removeDessert(Dessert dessert){
 		menu.removeDessert(dessert);
 	}
@@ -128,7 +120,6 @@ public class Restaurant extends User {
 	public void removeMeal(Meal meal) {
 		listOfMeal.remove(meal);
 	}
-
 
 	/**
 	 * @param	meal	is a Meal 
@@ -161,29 +152,15 @@ public class Restaurant extends User {
 		
 		return false;		
 	}
-	
-//	/**
-//	 * @param	message	of which this user is going to be notified
-//	 */
-//	public void update(String message) {
-//		System.out.println("[Restaurant UPDATE] " + message);
-//	}
-	
-	
-	
 
 	@Override
 	public String toString() {
 		return "Restaurant [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
-		// return "Restaurant [name=" + getName() + ", Adress=" + address + ", username=" + getUsername() + ", discountFactor="
-		//		+ discountFactor + ", specDiscFact=" + specDiscFact + ", menu=" + menu + ", ID=" + ID + ", listOfMeal="
-		//		+ listOfMeal + "]";
 	}
 
 	
-	/************************************************************
-	 * Getters and Setters 
-	 */
+	/************************************************************/
+	/* Getters and Setters */
 
 	public Address getAddress() {
 		return address;
@@ -227,7 +204,6 @@ public class Restaurant extends User {
 	public Meal getSpecMeal() {
 		return specialMeal;
 	}
-
 	public void setSpecMeal(Meal specMeal) {
 		if(!(listOfMeal.contains(specMeal))) {
 			System.out.println("Restaurant does not offer this meal");
@@ -235,6 +211,5 @@ public class Restaurant extends User {
 		}
 		this.specialMeal = specMeal;
 	}
-	
-	
+
 };

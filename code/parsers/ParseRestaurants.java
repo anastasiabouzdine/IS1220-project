@@ -8,7 +8,21 @@ import java.util.Scanner;
 import restaurantSetUp.Address;
 import users.Restaurant;
 
-
+/**
+* ParseRestaurants allows to generate an ArrayList of <code>Restaurant</code> from a text file
+* given as input the <code>parseRestaurants</code> method.
+* This class is a tool to parse restaurants from a textfile.
+* This is especially useful when making test needing more than
+* one restaurant and when the thing to test is something else
+* than the actual creation of a <code>Restaurant</code> object.
+* 
+* For the syntax of the txt file, see "restaurantList.txt".
+* 
+* @author John de Wasseige
+* @author Patrick von Platen
+* 
+* @see parseRestaurants
+*/
 public class ParseRestaurants {
 	
 	public static ArrayList<Restaurant> parseRestaurants(String fileName) {

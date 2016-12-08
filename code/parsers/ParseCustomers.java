@@ -9,18 +9,20 @@ import restaurantSetUp.Address;
 import users.Customer;
 
 /**
+ * ParseCustomers allows to generate an ArrayList of <code>Customer</code> from a text file
+ * given as input the <code>parseCustomers</code> method.
  * This class is a tool to parse customers from a textfile.
  * This is especially useful when making test needing more than
  * one customer and when the thing to test is something else
- * than the actual creation of a Customer object.
+ * than the actual creation of a <code>Customer</code> object.
  * 
- * For the syntax of the txt file, see "customersList.txt"
+ * For the syntax of the .txt file, see "customersList.txt".
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
- *
+ * 
+ * @see parseCustomers
  */
-
 public class ParseCustomers {
 	
 	public static ArrayList<Customer> parseCustomers(String fileName) {

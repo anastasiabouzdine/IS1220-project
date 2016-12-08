@@ -11,7 +11,29 @@ import restaurantSetUp.Dish;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Starter;
 
-
+/**
+* ParseDishes allows to generate multiples ArrayLists of <code>Dish</code>.
+* In detail, an ArrayList of <code>Starter</code>  from a text file
+* given as input the <code>parseStarter</code> method,
+* an ArrayList of <code>MainDish</code>  from a text file
+* given as input the <code>parseMainDish</code> method and
+* an ArrayList of <code>Dessert</code>  from a text file
+* given as input the <code>parseDessert</code> method.
+* 
+* This is especially useful when making test needing more than
+* one dish and when the thing to test is something else
+* than the actual creation of a <code>Dish</code> object.
+* 
+* For the syntax of the txt file, see "starters.txt",
+* "mainDishes.txt" and "desserts.txt".
+* 
+* @author John de Wasseige
+* @author Patrick von Platen
+* 
+* @see parseStarter
+* @see parseMainDish
+* @see parseDessert
+*/
 public class ParseDishes {
 	
 	public static ArrayList<Starter> parseStarter(String fileName) {

@@ -8,7 +8,15 @@ package restaurantSetUp;
  */
 public class DishFactory extends AbstractFactory {
 
-	
+	/**
+	 * Returns a dish of specified type (starter, maindish, dessert),
+	 * name and price.
+	 * 
+	 * @param dishType	  a string containing the type of the Dish
+	 * @param dishName	  a string containing the name of the Dish
+	 * @param dishPrice   a double for the price of the Dish
+	 * 
+	 */
 	public Dish getDish(String dishType, String dishName, double dishPrice){
 		if (dishType.equalsIgnoreCase("STARTER")){
 			return new Starter(dishName, dishPrice);
@@ -19,6 +27,12 @@ public class DishFactory extends AbstractFactory {
 		}
 		return null;		
 	}
+	
+	/**
+	 * NOT TO USE METHOD, SEE <code>MealFactory</code> to get a Meal,
+	 * this method returns null as we have to extend the <code>AbstractFactory</code> class.
+	 * 
+	 */
 	public Meal getMeal(String mealType){
 		return null;
 	}

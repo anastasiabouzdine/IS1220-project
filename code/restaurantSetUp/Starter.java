@@ -1,19 +1,20 @@
 package restaurantSetUp;
 
-
-
 /**
- * Starter is a Dish and takes over all functionality of Dash
- * @author Patrick
+ * Starter extends the <code>Dish</code> class and
+ * represent a starter with name, price and price.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 public class Starter extends Dish {
 
 	/**
 	 * Constructor for a Starter with given type.
 	 * 
-	 * @param name = name of the Starter f.e. "Brushetta"
-	 * @param price = price of the Starter
-	 * @param type = type of the Starter (ie. standard/vegetarian/glutenfree)
+	 * @param name	 name of the Starter
+	 * @param price  price of the Starter
+	 * @param type   type of the Starter (ie. standard/vegetarian/glutenfree)
 	 * 
 	 */
 	public Starter(String name, double price, String type) {
@@ -21,10 +22,11 @@ public class Starter extends Dish {
 	}
 	
 	/**
-	 * Constructor for a Starter with given type.
+	 * Constructor for a Starter with no given type
+	 * and will thus be standard.
 	 * 
-	 * @param name = name of the Starter f.e. "Brushetta"
-	 * @param price = price of the Starter
+	 * @param name 	 name of the Starter
+	 * @param price  price of the Starter
 	 * 
 	 */
 	public Starter(String name, double price) {

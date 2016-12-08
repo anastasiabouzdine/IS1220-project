@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import core.Core;
 import core.Order;
-import core.ParseCustomers;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.*;
 import restaurantSetUp.Dessert;
@@ -25,8 +24,6 @@ import users.Manager;
 import users.Restaurant;
 
 public class CoreTest {
-	
-	//TODO update CoreTest so that it will be accessible
 	
 	Core mf1 = new Core("MyFoodora");
 	
@@ -439,7 +436,7 @@ public class CoreTest {
 	 * @return
 	 */
 	public static boolean equalsDouble(double expected, double value){
-		return (Math.abs(value-expected) < 0.01);
+		return (Math.abs(value-expected) < 0.0001);
 	}
 	
 	public void make2orders6Dishes() {

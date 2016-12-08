@@ -7,7 +7,7 @@ import core.Order;
 import restaurantSetUp.Address;
 
 /**
- * The class <code>Courier</code> allows to create a Courier which will be able to
+ * The class <code>Courier</code> allows to create a courier which will be able to
  * <ul>
  * 	<li>register/unregister their Account to the MyFoodora system</li>
  *  <li>set their available as on-duty or off-duty</li>
@@ -17,11 +17,11 @@ import restaurantSetUp.Address;
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
+ * 
+ * @see replyRandom
  */
 
 public class Courier extends User {
-	
-	//TODO discuss with John whether a static attribute of the core is a good idea or not
 	
 	private String surname;
 	private Address position;
@@ -94,13 +94,6 @@ public class Courier extends User {
 	public void addNewOrder(Order order) {
 		this.listOfReceivedOrders.add(order);
 	}
-	
-//	/**
-//	 * @param	message	of which this user is going to be notified
-//	 */
-//	public void update(String message) {
-//		System.out.println("[Courier UPDATE] " + message);
-//	}
 
 	@Override
 	public String toString() {

@@ -19,10 +19,7 @@ package users;
  */
 
 public class Manager extends User {
-	
-	//TODO discuss with John whether a static attribute of the core is a good idea or not
-	
-	//private String name;
+		
 	private String surname;
 		
 	public Manager(String name, String surname, String username){

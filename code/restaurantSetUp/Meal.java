@@ -105,10 +105,5 @@ public abstract class Meal {
 		else
 			return false;			
 	}
-		
-		
-	
-	
-	
 	
 };
