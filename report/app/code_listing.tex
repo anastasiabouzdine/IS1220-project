@@ -1,10 +1,97 @@
 \section{Code listing} % (fold)
-\label{sec:code_listing}
+\label{app:code_listing}
 
-\begin{lstlisting}[caption=Hello World, label=hello_world]
-public static void main(String[] args) {
-  System.out.println("Hello world !");
+\lstset{basicstyle=\rm\footnotesize\ttfamily}
+
+%%%%%%%%%%%%%%%%% OBSERVER PATTERN %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=\emph{Observer} pattern for \texttt{Customer} and \texttt{Meal}.,
+label=lst:observer]
+public interface Observer {
+  public void update(Meal specMeal, Restaurant r);
+}
+
+public class Customer extends User implements Observer {
+  private boolean beNotified = true;
+  public void update(Meal specMeal, Restaurant r){
+    if (beNotified){
+       System.out.println("[Customer UPDATE] " + ...);
+} } }
+
+public class Core {
+  private void notifyCustomersOfSpecialOffer(){
+    for(Customer cust : customerList){
+      if (users.containsKey(cust.getUsername())){
+        cust.update(current_restaurant);
+} } } }
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%% STRATEGY PATTERN %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=\emph{Strategy} pattern for the \texttt|DeliveryPolicy|.,
+label=lst:strategy]
+public interface DeliveryPolicy {
+  public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g); 
+}
+
+public class FairOccupationDelivery implements DeliveryPolicy {
+  private ArrayList<Courier> listCourier;
+  
+  public FairOccupationDelivery() {
+  	super();
+  	listCourier = new ArrayList<Courier>();
+  }
+  
+  public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g) {
+  	...
+  }
+}
+
+public class FastestDelivery implements DeliveryPolicy {
+  private ArrayList<Courier> courierListSorted;
+  private ArrayList<Double> courierDistanceList;
+
+  public FastestDelivery() {
+  	super();
+  	courierListSorted = new ArrayList<Courier>();
+  	courierDistanceList = new ArrayList<Double>();
+  }
+ 
+  @Override
+  public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g) {
+  	...
+  }
+  
+  public void getDistance(ArrayList<Courier> courierList, Address address) {
+    ...
+  }
+  
+}
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%% STRATEGY PATTERN %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=Application of the \texttt{current\_customer}
+  concept to \texttt{getHistoryOfOrders}.,
+  label=lst:historyOfOrders]
+/**
+ * Returns the history of orders of the current user, null if none is logged in.
+ * @return an ArrayList of orders containing the orders of the current user
+ */
+public ArrayList<Order> getHistoryOfOrders() {
+  if (current_customer != null){
+    int temp_ID = current_customer.getID();
+    ArrayList<Order> temp_cust_orders = new ArrayList<Order>();
+    for(Order o : savedOrders){
+      if (temp_ID == o.getCustomer().getID()){
+        temp_cust_orders.add(o);
+      }
+    }
+    return temp_cust_orders;
+  } else {
+    unauthorizedCommand();
+    return null;
+  }
 }
 \end{lstlisting}
 
 % section code_listing (end)
+\lstset{basicstyle=\rm\small\ttfamily}

@@ -75,8 +75,8 @@ that
 \end{table}
 
 The basic idea of the implementation of this pattern is given
-in listing~\ref{lst:observer}. We notice the use of a \lstinline|beNotified|
-boolean attribute to the \Customer.
+in listing~\ref{lst:observer} in Appendix~\ref{app:code_listing} (page~\pageref{app:code_listing}). 
+We notice the use of a \lstinline|beNotified| boolean attribute to the \Customer.
 The use of the latter attribute is a design choice that seems more
 efficient than keeping a list of ``I accept to be notified users''
 for two reasons.
@@ -84,23 +84,6 @@ First, we won't need to have one more list in the \Core~containing
 references to already used objects (ie. users), and second,
 no add or remove from a list is needed when a \Customer~wants to
 change its notification system, just a primitive assignment.
-
-\begin{lstlisting}[caption=Observer pattern for \Customer~and \Meal.,
-label=lst:observer]
-public interface Observer {
-  public void update(Meal specMeal, Restaurant r);
-}
-
-public class Customer extends User implements Observer {
-  private boolean beNotified = true;
-  public void update(Meal specMeal, Restaurant r){
-    if (beNotified){
-       System.out.println("[Customer UPDATE] " + ...);
-    }
-  }
-}  
-\end{lstlisting}
-
 
 % subsection observer_pattern_for (end)
 
