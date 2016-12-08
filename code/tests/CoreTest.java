@@ -25,7 +25,7 @@ import users.Restaurant;
 
 public class CoreTest {
 	
-	Core mf1 = new Core("MyFoodora");
+	Core mf1 = new Core();
 	
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
