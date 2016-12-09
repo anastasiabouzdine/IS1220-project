@@ -99,7 +99,7 @@ public class Core{
 		this.dateAfter = Calendar.getInstance();
 		this.dateBefore = Calendar.getInstance();
 	}
-
+	
 	/*********************************************************************/
 	/**
 	 * This method allows unregistered clients to register themselves.

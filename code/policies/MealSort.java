@@ -37,16 +37,6 @@ public class MealSort extends SortPolicy {
 	}
 
 	/*********************************************************************/
-	/* Getters and Setter */ 
-	
-	public Meal getMeal() {
-		return meal;
-	}
-
-	public void setMeal(Meal meal) {
-		this.meal = meal;
-	}
-	/*********************************************************************/
 	
 	
 	/**
@@ -60,9 +50,28 @@ public class MealSort extends SortPolicy {
 	public boolean howToSortOrder(boolean order) {
 		return order;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		return "[meal=" + meal.getName() + ", sold=" + getCount() + ", Restaurant=" + getRest().getName() + "]";
 	}	
+	
+	/*********************************************************************/
+	/* Getters and Setters */ 
+	
+	/**
+	 * @return the meal
+	 */
+	public Meal getMeal() {
+		return meal;
+	}
+
+	/**
+	 * @param meal the meal to set
+	 */
+	public void setMeal(Meal meal) {
+		this.meal = meal;
+	}
+	
 }

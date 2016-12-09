@@ -41,35 +41,59 @@ public abstract class Meal {
 	}
 	
 	
-	/************************************************************
-	 * Getters and Setters 
+	/************************************************************/
+	/* Getters and Setters */
+
+	/**
+	 * @return the name
 	 */
-	
 	public String getName() {
 		return name;
 	}
 
+
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
-
+	/**
+	 * @return the listOfDish
+	 */
 	public List<Dish> getListOfDish() {
 		return listOfDish;
 	}
 
+
+	/**
+	 * @param listOfDish the listOfDish to set
+	 */
 	public void setListOfDish(List<Dish> listOfDish) {
 		this.listOfDish = listOfDish;
 	}
+
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	
 	/************************************************************/
+	
 	
 	/**
 	 * @return returns the price of the meal (adds up the prices of all its elements)
@@ -83,6 +107,8 @@ public abstract class Meal {
 		
 		return sum;
 	}
+
+
 
 	@Override
 	public String toString() {

@@ -29,23 +29,13 @@ public class DishSort extends SortPolicy{
 	}
 	
 	/**
-	 * is there because core needs an attributeless SortPolicy to save as policy
+	 * Is there because core needs an attributeless SortPolicy to save as policy.
 	 */
 	public DishSort(){
 		super();
 	}
 	
 	/*********************************************************************/
-	/* Getters and Setter */ 
-	public Dish getDish() {
-		return dish;
-	}
-
-	public void setDish(Dish dish) {
-		this.dish = dish;
-	}
-	/*********************************************************************/
-	
 	
 	/**
 	 *This method return whether the list should be sorted in ascending or descending order.
@@ -59,9 +49,27 @@ public class DishSort extends SortPolicy{
 		return order;
 	}
 
+
 	@Override
 	public String toString() {
 		return "[dish=" + dish.getName() + ", sold=" + getCount() + ", Restaurant=" + getRest().getName() + "]";
+	}
+	
+	/*********************************************************************/
+	/* Getters and Setter */ 
+
+	/**
+	 * @return the dish
+	 */
+	public Dish getDish() {
+		return dish;
+	}
+
+	/**
+	 * @param dish the dish to set
+	 */
+	public void setDish(Dish dish) {
+		this.dish = dish;
 	}
 
 

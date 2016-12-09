@@ -77,37 +77,63 @@ public class User {
 	
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
-	
-	public String getUsername() {
-		return username;
-	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
+
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public static int getCounter() {
-		return counter;
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
 	}
 
-	public int getID() {
-		return ID;
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
+	/**
+	 * @return the messageBox
+	 */
 	public Stack<String> getMessageBox() {
 		return messageBox;
 	}
 
+	/**
+	 * @param messageBox the messageBox to set
+	 */
 	public void setMessageBox(Stack<String> messageBox) {
 		this.messageBox = messageBox;
 	}
+
+	/**
+	 * @return the iD
+	 */
+	public int getID() {
+		return ID;
+	}
+
+	/**
+	 * @return the counter
+	 */
+	public static int getCounter() {
+		return counter;
+	}
+
 		
 }

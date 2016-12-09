@@ -113,29 +113,46 @@ public class Menu {
 	/************************************************************/
 	/* Getters and Setters */
 	
+	/**
+	 * @return the listOfStarter
+	 */
 	public List<Starter> getListOfStarter() {
 		return listOfStarter;
 	}
 
+	/**
+	 * @param listOfStarter the listOfStarter to set
+	 */
 	public void setListOfStarter(List<Starter> listOfStarter) {
 		this.listOfStarter = listOfStarter;
 	}
 
-	public List<MainDish> getListOfMain() {
+	/**
+	 * @return the listOfMainDish
+	 */
+	public List<MainDish> getListOfMainDish() {
 		return listOfMainDish;
 	}
 
-	public void setListOfMain(List<MainDish> listOfMain) {
-		this.listOfMainDish = listOfMain;
+	/**
+	 * @param listOfMainDish the listOfMainDish to set
+	 */
+	public void setListOfMainDish(List<MainDish> listOfMainDish) {
+		this.listOfMainDish = listOfMainDish;
 	}
 
+	/**
+	 * @return the listOfDessert
+	 */
 	public List<Dessert> getListOfDessert() {
 		return listOfDessert;
 	}
-
+	
+	/**
+	 * @param listOfDessert the listOfDessert to set
+	 */
 	public void setListOfDessert(List<Dessert> listOfDessert) {
 		this.listOfDessert = listOfDessert;
-	}
-	
+	}	
 	
 };

@@ -1,7 +1,6 @@
 package users;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import core.Order;
 import restaurantSetUp.Address;
@@ -100,52 +99,107 @@ public class Courier extends User {
 		return "Courier [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
 	}
 
-
+	
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
+	
+	
 
+	/**
+	 * @return the surname
+	 */
 	public String getSurname() {
 		return surname;
 	}
+
+
+	/**
+	 * @param surname the surname to set
+	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+
+	/**
+	 * @return the position
+	 */
 	public Address getPosition() {
 		return position;
 	}
+
+
+	/**
+	 * @param position the position to set
+	 */
 	public void setPosition(Address position) {
 		this.position = position;
 	}
+
+
+	/**
+	 * @return the phoneNumber
+	 */
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+
+
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
+
+
+	/**
+	 * @return the nbOfDeliveredOrders
+	 */
 	public int getNbOfDeliveredOrders() {
 		return nbOfDeliveredOrders;
 	}
 
+
+	/**
+	 * @param nbOfDeliveredOrders the nbOfDeliveredOrders to set
+	 */
+	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
+		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
+	}
+
+
+	/**
+	 * @return the available
+	 */
 	public boolean isAvailable() {
 		return available;
 	}
 
+
+	/**
+	 * @param available the available to set
+	 */
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
-	public void setNbOfDeliveredOrders(int nbOfDeliveredOrders) {
-		this.nbOfDeliveredOrders = nbOfDeliveredOrders;
-	}
-	
-	public List<Order> getListOfReceivedOrders() {
+
+
+	/**
+	 * @return the listOfReceivedOrders
+	 */
+	public LinkedList<Order> getListOfReceivedOrders() {
 		return listOfReceivedOrders;
 	}
 
+
+	/**
+	 * @param listOfReceivedOrders the listOfReceivedOrders to set
+	 */
 	public void setListOfReceivedOrders(LinkedList<Order> listOfReceivedOrders) {
 		this.listOfReceivedOrders = listOfReceivedOrders;
 	}
-	
+
 	
 	
 }

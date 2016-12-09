@@ -42,26 +42,10 @@ public abstract class SortPolicy implements Comparable<SortPolicy> {
 		super();
 	}
 
-	/*********************************************************************/
-	/* Getters and Setter */ 
 	
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
-	public Restaurant getRest() {
-		return rest;
-	}
-
-	public void setRest(Restaurant rest) {
-		this.rest = rest;
-	}
-	/*********************************************************************/
 	
+	/*********************************************************************/
+
 	/**
 	 *the abstract function to implement
 	 *@param	order	is a boolean that states whether the list will be displayed 
@@ -77,5 +61,37 @@ public abstract class SortPolicy implements Comparable<SortPolicy> {
 	public int compareTo(SortPolicy o) {
 		return (this.count <= o.getCount()) ? 1 : -1;
 	}
+	
+	/*********************************************************************/
+	/* Getters and Setter */ 
+	
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
+
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	/**
+	 * @return the rest
+	 */
+	public Restaurant getRest() {
+		return rest;
+	}
+
+	/**
+	 * @param rest the rest to set
+	 */
+	public void setRest(Restaurant rest) {
+		this.rest = rest;
+	}
+
 	
 }

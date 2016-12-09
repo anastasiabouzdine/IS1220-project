@@ -28,21 +28,39 @@ public class CourierDistance {
 		Distance = distance;
 	}
 
-
+	
 	/*************************************************************/
-	//Getters and Setters 
+	/* Getters and Setters */
+
+	/**
+	 * @return the courier
+	 */
 	public Courier getCourier() {
 		return courier;
 	}
+
+
+	/**
+	 * @param courier the courier to set
+	 */
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
+
+
+	/**
+	 * @return the distance
+	 */
 	public double getDistance() {
 		return Distance;
 	}
+
+
+	/**
+	 * @param distance the distance to set
+	 */
 	public void setDistance(double distance) {
 		Distance = distance;
 	}
-	
 	
 }

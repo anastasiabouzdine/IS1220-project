@@ -41,18 +41,31 @@ public class FidCardPlanPoints implements FidCardPlan{
 		else
 			return 1;
 	}
+
+	/************************************************************/
+	/* Getters and Setters */ // no setter for the points!
 	
-	/*********************************************************************/
-	/* Getters and Setter */ // no setter for the points!
 	
+	/**
+	 * @return the reduc
+	 */
 	public double getReduc() {
 		return reduc;
 	}
+
+	/**
+	 * @param reduc the reduc to set
+	 */
 	public void setReduc(double reduc) {
 		this.reduc = reduc;
 	}
+
+	/**
+	 * @return the points
+	 */
 	public int getPoints() {
 		return points;
 	}
+
 	
 }

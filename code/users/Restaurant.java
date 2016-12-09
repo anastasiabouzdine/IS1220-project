@@ -162,54 +162,92 @@ public class Restaurant extends User {
 	/************************************************************/
 	/* Getters and Setters */
 
+	/**
+	 * @return the address
+	 */
 	public Address getAddress() {
 		return address;
 	}
 
+	/**
+	 * @param address the address to set
+	 */
 	public void setAddress(Address address) {
 		this.address = address;
 	}
 
+	/**
+	 * @return the discountFactor
+	 */
 	public double getDiscountFactor() {
 		return discountFactor;
 	}
 
+	/**
+	 * @param discountFactor the discountFactor to set
+	 */
 	public void setDiscountFactor(double discountFactor) {
 		this.discountFactor = discountFactor;
 	}
 
+	/**
+	 * @return the specDiscFact
+	 */
 	public double getSpecDiscFact() {
 		return specDiscFact;
 	}
 
+	/**
+	 * @param specDiscFact the specDiscFact to set
+	 */
 	public void setSpecDiscFact(double specDiscFact) {
 		this.specDiscFact = specDiscFact;
 	}
 
+	/**
+	 * @return the menu
+	 */
 	public Menu getMenu() {
 		return menu;
 	}
 
+	/**
+	 * @param menu the menu to set
+	 */
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
 
-	public List<Meal> getListOfMeal() {
-		return listOfMeal;
-	}
-
-	public void setListOfMeal(List<Meal> listOfMeal) {
-		this.listOfMeal = listOfMeal;
-	}
+	/**
+	 * @return the specialMeal
+	 */
 	public Meal getSpecMeal() {
 		return specialMeal;
 	}
+
+	/**
+	 * @param specialMeal the specMeal to set
+	 */
 	public void setSpecMeal(Meal specMeal) {
 		if(!(listOfMeal.contains(specMeal))) {
 			System.out.println("Restaurant does not offer this meal");
 			throw new NullPointerException();
 		}
 		this.specialMeal = specMeal;
+	}
+
+	/**
+	 * @return the listOfMeal
+	 */
+	public List<Meal> getListOfMeal() {
+		return listOfMeal;
+	}
+
+	/**
+	 * @param listOfMeal the listOfMeal to set
+	 */
+	public void setListOfMeal(List<Meal> listOfMeal) {
+		this.listOfMeal = listOfMeal;
 	}
 
 };

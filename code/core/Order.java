@@ -125,83 +125,156 @@ public class Order {
 	public static double round4(double n){
 		return Math.round(n * 10000.0D) / 10000.0D;
 	}
-	
+
+	/*********************************************************************/
 	/* Getters and Setter */ //no set ID! no set Date!
-	
-	public Calendar getDate() {
-		return date;
-	}
-	
-	public double getPriceFinal() {
-		return round2(priceFinal);
-	}
 
-	public void setPriceFinal(double priceFinal) {
-		this.priceFinal = round2(priceFinal);
-	}
-
-	public double getProfitFinal() {
-		return profitFinal;
-	}
-
-	public void setProfitFinal(double priceFinal) {
-		this.profitFinal = round2(priceFinal);
-	}
-	
-	public int getID() {
-		return ID;
-	}
-
+	/**
+	 * @return the customer
+	 */
 	public Customer getCustomer() {
 		return customer;
 	}
 
+	/**
+	 * @param customer the customer to set
+	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
+	/**
+	 * @return the restaurant
+	 */
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
 
+	/**
+	 * @param restaurant the restaurant to set
+	 */
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
 
-	public ArrayList<Integer> getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(ArrayList<Integer> quantity) {
-		this.quantity = quantity;
-	}
-
+	/**
+	 * @return the meals
+	 */
 	public ArrayList<Meal> getMeals() {
 		return meals;
 	}
 
+	/**
+	 * @param meals the meals to set
+	 */
 	public void setMeals(ArrayList<Meal> meals) {
 		this.meals = meals;
 	}
 
+	/**
+	 * @return the dishes
+	 */
 	public ArrayList<Dish> getDishes() {
 		return dishes;
 	}
 
+	/**
+	 * @param dishes the dishes to set
+	 */
 	public void setDishes(ArrayList<Dish> dishes) {
 		this.dishes = dishes;
 	}
 
+	/**
+	 * @return the quantity
+	 */
+	public ArrayList<Integer> getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(ArrayList<Integer> quantity) {
+		this.quantity = quantity;
+	}
+
+	/**
+	 * @return the courier
+	 */
 	public Courier getCourier() {
 		return courier;
 	}
 
+	/**
+	 * @param courier the courier to set
+	 */
 	public void setCourier(Courier courier) {
 		this.courier = courier;
 	}
-	
-	public double getPriceInter() {
-		return priceInter;
+
+	/**
+	 * @return the profitFinal
+	 */
+	public double getProfitFinal() {
+		return round2(profitFinal);
 	}
+
+	/**
+	 * @param profitFinal the profitFinal to set
+	 */
+	public void setProfitFinal(double profitFinal) {
+		this.profitFinal = round2(profitFinal);
+	}
+
+	/**
+	 * @return the priceInter
+	 */
+	public double getPriceInter() {
+		return round2(priceInter);
+	}
+
+	/**
+	 * @param priceInter the priceInter to set
+	 */
+	public void setPriceInter(double priceInter) {
+		this.priceInter = round2(priceInter);
+	}
+
+	/**
+	 * @return the priceFinal
+	 */
+	public double getPriceFinal() {
+		return round2(priceFinal);
+	}
+
+	/**
+	 * @param priceFinal the priceFinal to set
+	 */
+	public void setPriceFinal(double priceFinal) {
+		this.priceFinal = round2(priceFinal);
+	}
+
+	/**
+	 * @return the iD
+	 */
+	public int getID() {
+		return ID;
+	}
+
+	/**
+	 * @return the counter
+	 */
+	public static int getCounter() {
+		return counter;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public Calendar getDate() {
+		return date;
+	}		
+	
 
 }

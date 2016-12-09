@@ -26,20 +26,32 @@ public class Manager extends User {
 		super(name, username);
 		this.surname = surname;
 	}
+
 	
-	/*********************************************************************/
-	/* Getters and Setter */
-
-	public String getSurname() {
-		return surname;
-	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
 	@Override
 	public String toString() {
 		return "Manager [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
 	}
+
+	/*********************************************************************/
+	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
+
+
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	
 	
 }
