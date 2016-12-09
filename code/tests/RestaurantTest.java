@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import parsers.*;
-import restaurantSetUp.Address;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
@@ -15,6 +14,7 @@ import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
+import users.Address;
 import users.Restaurant;
 
 public class RestaurantTest {
