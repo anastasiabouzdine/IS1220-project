@@ -48,6 +48,8 @@ public class Customer extends User implements Observer{
 	 * This functions sets the fidelity card plan and
 	 * checks whether the class of new fidCardPlan is the same as the old one,
 	 * if so, nothing will be changed.
+	 * @param fidCardPlan 	a FidCardPlan object representing the FidCardPlan
+	 * 						to be set
 	 */
 	public void setFidCardPlan(FidCardPlan fidCardPlan) {
 		if(!(fidCardPlan.getClass().equals(this.fidCardPlan.getClass())))

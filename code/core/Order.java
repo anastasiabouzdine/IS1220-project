@@ -41,7 +41,7 @@ public class Order {
 	 * Constructor of an order.
 	 * 
 	 * @param customer customer that has initialised the order 
-	 * @param Restaurant restaurant the user has ordered at
+	 * @param restaurant restaurant the user has ordered at
 	 */
 	public Order(Customer customer, Restaurant restaurant){
 		this.ID = (++counter);
@@ -67,6 +67,7 @@ public class Order {
 	/*********************************************************************/
 	/**
 	 * The method states whether the Fidelity is basic or not.
+	 * @return a boolean to true if the customer fidCardPlan is basic, false if not
 	 */
 	public boolean isFidCardPlanBasic() {
 		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
@@ -117,11 +118,21 @@ public class Order {
 
 	/*********************************************************************/
 	/* Round function */
-	
+
+	/**
+	 * Returns the input rounded to 2 decimal places.
+	 * @param n the number to round
+	 * @return the rounded number
+	 */
 	public static double round2(double n){
 		return Math.round(n * 100.0D) / 100.0D;
 	}
 	
+	/**
+	 * Returns the input rounded to 4 decimal places.
+	 * @param n the number to round
+	 * @return the rounded number
+	 */
 	public static double round4(double n){
 		return Math.round(n * 10000.0D) / 10000.0D;
 	}

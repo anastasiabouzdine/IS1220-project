@@ -10,10 +10,11 @@ import core.Order;
  * to create the policy MarkupProfit to calculate 
  * the service fee needed to achieve a certain profit.
  * 
- * @see the method <code>howToTargetProfit</code>
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
+ * 
+ * @see #howToTargetProfit(double, double, double, ArrayList, Calendar, Calendar)
  */
 
 public class MarkupProfit implements TargetProfitPolicy {
@@ -36,7 +37,7 @@ public class MarkupProfit implements TargetProfitPolicy {
 	 * @param	input1	the delivery cost fee
 	 * @param	input2	service fee
 	 * @param	profit	the expected profit
-	 * @param	order	the list of all orders
+	 * @param	orders	the list of all orders
 	 * @param	dateBefore	the beginning of the period 
 	 * @param	dateAfter	the end of the period 	
 	 * 

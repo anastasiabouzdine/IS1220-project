@@ -21,7 +21,7 @@ import users.Courier;
  * @author John de Wasseige
  * @author Patrick von Platen
  * 
- * @see parseCouriers
+ * @see #parseCouriers(String)
  */
 
 public class ParseCouriers {

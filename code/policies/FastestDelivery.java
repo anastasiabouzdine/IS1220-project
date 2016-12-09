@@ -36,7 +36,8 @@ public class FastestDelivery implements DeliveryPolicy {
 	 * This functions takes the List of all the couriers and the list of their respective distances 
 	 * to the restaurant and orders the couriers according to their distances
 	 * 
-	 * @param	list	is of type ArrayList<Courier> and get all active Couriers as an input
+	 * @param	list	list	an ArrayList of <code>Courier</code>
+	 * 					and get all active Couriers as an input
 	 * @param	g	is the address of the restaurant that was ordered from
 	 * @return	the sorted courierlist
 	 */

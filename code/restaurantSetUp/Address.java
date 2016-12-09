@@ -14,8 +14,8 @@ public class Address {
 	
 	/************************************************************/
 	/**
-	 * @param xCoordinate
-	 * @param yCoordinate
+	 * @param xCoordinate the x coordinate of the address
+	 * @param yCoordinate the y coordinate of the address
 	 */
 	public Address(int xCoordinate, int yCoordinate) {
 		super();
@@ -84,7 +84,7 @@ public class Address {
 
 
 	/**
-	 * @param	object of Address
+	 * @param	obj of Address
 	 * @return TRUE if two addresses are equal, meaning they have the same X and Y coordinates.
 	 */
 	@Override

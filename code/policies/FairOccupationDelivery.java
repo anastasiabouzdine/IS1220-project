@@ -30,9 +30,10 @@ public class FairOccupationDelivery implements DeliveryPolicy {
 
 
 	/**
-	 * @param	list	is of type ArrayList<Courier> and get all active Couriers as an input
-	 * @param	g	is in this class not used
-	 * @return	listCourier	is of type ArrayList<Courier> and is the sorted list according to the policy
+	 * @param	list		an ArrayList of <code>Courier</code>
+	 * 						and get all active Couriers as an input
+	 * @param	g	   		is in this class not used
+	 * @return	listCourier	an ArrayList of <code>Courier</code> and is the sorted list according to the policy
 	 */
 	@Override
 	public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g) {

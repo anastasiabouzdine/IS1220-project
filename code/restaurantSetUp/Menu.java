@@ -44,10 +44,10 @@ public class Menu {
 	 * @param listOfDessert = all dishes of type "Dessert"
 	 *  
 	 */
-	public Menu(List<Starter> listOfStarter, List<MainDish> listOfMain, List<Dessert> listOfDessert) {
+	public Menu(List<Starter> listOfStarter, List<MainDish> listOfMainDish, List<Dessert> listOfDessert) {
 		super();
 		this.listOfStarter = listOfStarter;
-		this.listOfMainDish = listOfMain;
+		this.listOfMainDish = listOfMainDish;
 		this.listOfDessert = listOfDessert;
 	}
 

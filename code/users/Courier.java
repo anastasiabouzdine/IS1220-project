@@ -17,7 +17,7 @@ import restaurantSetUp.Address;
  * @author John de Wasseige
  * @author Patrick von Platen
  * 
- * @see replyRandom
+ * @see #replyRandom()
  */
 
 public class Courier extends User {
@@ -34,14 +34,11 @@ public class Courier extends User {
 	/**
 	 * Constructor 
 	 * 
-	 * @param	name 	of courier
-	 * @param	surname	of courier
-	 * @param	position	of courier
-	 * @param	phonenumber	of courier 
-	 * @param	username	of courier to log into the system
-	 * @param	id	unique id of courier
-	 * @param	nbOfDeliveredOrders	amount of orders delivered by courier
-	 * @param	available	states whether courier is on duty (true = yes)
+	 * @param	name 		a String containing the name
+	 * @param	surname		a String containing the surname
+	 * @param	position	an Address object a String containing the position
+	 * @param	phoneNumber a String containing the phonenumber
+	 * @param	username	a String containing the username
 	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username){
 		super(name, username);
@@ -57,9 +54,8 @@ public class Courier extends User {
 	/*********************************************************************/
 	
 	/**
-	 * the function <code>acceptOrder</code> accepts the order by 
-	 * setting the courier of that order to this courier
-	 * @return	order	that was given to the courier
+	 * The function <code>acceptOrder</code> accepts the order by 
+	 * setting the courier of that order to this courier.
 	 */
 	public void acceptOrder(){
 		Order order = this.listOfReceivedOrders.remove(); // rm first element of linkedlist
@@ -68,17 +64,15 @@ public class Courier extends User {
 	}
 	
 	/**
-	 * the function <code>declineOrder</code> accepts the order by 
-	 * setting the courier of that order null
-	 * @return	order	that was given to the courier
+	 * The function <code>declineOrder</code> declines the order by 
+	 * setting the courier of that order null.
 	 */
 	public void declineOrder(){
 		this.listOfReceivedOrders.remove();  // rm first element of linkedlist
 	}
 	
 	/**
-	 * the function <code>replyRand</code> randomly either accepts or declines an order
-	 * @return	order	that was given to the courier
+	 * The function <code>replyRand</code> randomly either accepts or declines an order.
 	 */
 	public void replyRandom(){
 		if(Math.random() <= 0.9)

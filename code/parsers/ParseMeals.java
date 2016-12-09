@@ -24,8 +24,8 @@ import restaurantSetUp.Starter;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see parseFullMeals
-* @see parseHalfMeals
+* @see #parseFullMeals(String)
+* @see #parseHalfMeals(String)
 */
 public class ParseMeals {
 	
@@ -88,15 +88,5 @@ public static ArrayList<HalfMeal> parseHalfMeals(String fileName){
 		return halfMeals_list;
 	}
 
-public static void main(String[] args) {
-	ArrayList<FullMeal> fullMeals_list = parseFullMeals("src/txtFILES/fullMeals.txt");
-	ArrayList<HalfMeal> halfMeals_list = parseHalfMeals("src/txtFILES/halfMeals.txt");
-	
-	for(FullMeal c : fullMeals_list)
-		System.out.println(c.toString());
-		
-	for(HalfMeal c : halfMeals_list)
-		System.out.println(c.toString());
-}
 
 }

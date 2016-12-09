@@ -43,13 +43,8 @@ public class Restaurant extends User {
 	 * Class constructor. 
 	 * 	
 	 * @param name			 	name of restaurant
-	 * @param xCoord 	 		x coordinate of restaurant
-	 * @param yCoord 	 		y coordinate of restaurant
+	 * @param address 	 		an Address object containing the address of the restaurant 
 	 * @param username 	 		log-in name of restaurant
-	 * @param discountFactor	in %/ factor by which the price 
-	 * 							of a meal is cheaper than the sum of its single dishes
-	 * @param specDiscFact	    discountFactor/ applied only for one meal, 
-	 * 							menu of restaurant that includes all dishes
 	 */
 	public Restaurant(String name, Address address, String username) {
 		super(name, username);
@@ -78,7 +73,7 @@ public class Restaurant extends User {
 	}
 	
 	/**
-	 * @param	Dessert	will be added to the restaurant's menu
+	 * @param	dessert		will be added to the restaurant's menu
 	 */
 	public void addDessert(Dessert dessert){
 		menu.addDessert(dessert);
@@ -99,7 +94,7 @@ public class Restaurant extends User {
 	}
 
 	/**
-	 * @param Dessert	will be removed from the restaurant's menu
+	 * @param dessert	will be removed from the restaurant's menu
 	 */
 	public void removeDessert(Dessert dessert){
 		menu.removeDessert(dessert);
@@ -226,7 +221,7 @@ public class Restaurant extends User {
 	}
 
 	/**
-	 * @param specialMeal the specMeal to set
+	 * @param specMeal 	the specMeal to set
 	 */
 	public void setSpecMeal(Meal specMeal) {
 		if(!(listOfMeal.contains(specMeal))) {

@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 
 import restaurantSetUp.Dessert;
-import restaurantSetUp.Dish;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Starter;
 
@@ -30,9 +29,9 @@ import restaurantSetUp.Starter;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see parseStarter
-* @see parseMainDish
-* @see parseDessert
+* @see #parseDessert(String)
+* @see #parseMainDish(String)
+* @see #parseStarter(String)
 */
 public class ParseDishes {
 	
@@ -108,20 +107,4 @@ public class ParseDishes {
 		return dessert_list;
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Starter> starter_list = parseStarter("src/txtFILES/starters.txt");
-		ArrayList<MainDish> mainDish_list = parseMainDish("src/txtFILES/mainDishes.txt");
-		ArrayList<Dessert> dessert_list = parseDessert("src/txtFILES/dessert.txt");
-		
-		for(Dish c : starter_list)
-			System.out.println(c.toString());
-			
-		for(Dish c : mainDish_list)
-			System.out.println(c.toString());
-				
-		for(Dish c : dessert_list)
-			System.out.println(c.toString());
-		}
-	}
-
-
+}

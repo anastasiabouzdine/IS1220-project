@@ -21,7 +21,7 @@ import users.Restaurant;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see parseRestaurants
+* @see #parseRestaurants(String)
 */
 public class ParseRestaurants {
 	
@@ -52,11 +52,5 @@ public class ParseRestaurants {
 		return restaurant_list;
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Restaurant> restaurant_list = parseRestaurants("src/txtFILES/restaurantList.txt");
-		for(Restaurant c : restaurant_list){
-			System.out.println(c.getName() + " ; " + c.getAddress());
-		}
-	}
 
 }

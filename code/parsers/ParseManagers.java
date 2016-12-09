@@ -20,7 +20,7 @@ import users.Manager;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see parseManagers
+* @see #parseManagers(String)
 */
 public class ParseManagers {
 	
@@ -49,12 +49,6 @@ public class ParseManagers {
 		return manager_list;
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Manager> manager_list = parseManagers("src/txtFILES/managersList.txt");
-		for(Manager c : manager_list){
-			System.out.println(c.getID() + " : " + c.toString());
-		}
-	}
 
 }
 

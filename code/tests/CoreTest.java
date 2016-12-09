@@ -58,6 +58,7 @@ public class CoreTest {
 	
 	/*********************************************************************/
 	/* Add, remove, log in, log out users */ 
+	
 	@Test
 	public void removeAndAddUser() throws AlreadyUsedUsernameException {
 		Courier e = list_courier.get(0);

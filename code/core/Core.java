@@ -105,7 +105,8 @@ public class Core{
 	 * This method allows unregistered clients to register themselves.
 	 * The method cannot be called if somebody is logged in.
 	 * 
-	 * @param User a newly created user
+	 * @param user a newly created user
+	 * @throws exceptions.AlreadyUsedUsernameException
 	 */
 	public void register(User user) throws AlreadyUsedUsernameException {
 		if(current_user == null){ 
@@ -137,6 +138,8 @@ public class Core{
 	 * having completed the log in. New messages are printed out if user logs in.
 	 * 
 	 * @param username registered username that is saved in the system.
+	 * @return a String containing a welcome message if the login was successful
+	 * 		   or null if not
 	 */
 	public String logIn(String username){
 		if (users.containsKey(username)){
@@ -594,7 +597,6 @@ public class Core{
 	 * </ul>
 	 * 
 	 * </ul>
-	 * 
 	 */
 	public double simulateProfit(double profit, double input1, double input2){
 		if(current_manager != null){
@@ -758,6 +760,7 @@ public class Core{
 	/*********************************************************************/
 	/* policy setters to respective policies */
 
+    
 	public void setDeliveryPolicyToFastDeliv(){
 		if(current_manager != null){
 			this.dPolicy = new FastestDelivery();
@@ -816,6 +819,10 @@ public class Core{
 
 	/*********************************************************************/
 	/* Getters and Setter */
+	
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		if(current_manager != null){
 			return name;
@@ -825,6 +832,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param name the name to set
+	 */
 	public void setName(String name) {
 		if(current_manager != null){
 			this.name = name;
@@ -834,6 +844,9 @@ public class Core{
 	}
 
 	/* Getters for policies */ 
+	/**
+	 * @return the sortPolicy
+	 */
 	public SortPolicy getSoPolicy() {
 		if(current_manager != null){
 			return sortPolicy;
@@ -843,15 +856,24 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the dPolicy
+	 */
 	public DeliveryPolicy getdPolicy() {
 		return dPolicy;
 	}
 
+	/**
+	 * @return the tpPolicy
+	 */
 	public TargetProfitPolicy getTpPolicy() {
 		return tpPolicy;
 	}
 
 	/* Getters and setters for the profit-related attributes (for the managers) */
+	/**
+	 * @return the serviceFee
+	 */
 	public double getServiceFee() {
 		if(current_manager != null){
 			return serviceFee;
@@ -861,6 +883,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param service_fee the service_fee to set
+	 */
 	public void setServiceFee(double service_fee) {
 		if(current_manager != null){
 			this.serviceFee = service_fee;
@@ -869,6 +894,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the markupPercentage
+	 */
 	public double getMarkupPercentage() {
 		if(current_manager != null){
 			return markupPercentage;
@@ -878,6 +906,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param markupPercentage the markupPercentage to set
+	 */
 	public void setMarkup_percentage(double markupPercentage) {
 		if(current_manager != null){
 			this.markupPercentage = markupPercentage;
@@ -886,6 +917,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the deliveryCost
+	 */
 	public double getDeliveryCost() {
 		if(current_manager != null){
 			return deliveryCost;
@@ -895,6 +929,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param deliveryCost the deliveryCost to set
+	 */
 	public void setDeliveryCost(double deliveryCost) {
 		if(current_manager != null){
 			this.deliveryCost = deliveryCost;
@@ -904,42 +941,37 @@ public class Core{
 	}
 
 	/* Getters and setters for the meal- and dish- sorting structures */
+	/**
+	 * @return the mealHeap
+	 */
 	private TreeSet<SortPolicy> getMealHeap() {
 		return mealHeap;
 	}
 
-	//	public void setMealHeap(TreeSet<SortPolicy> mealHeap) {
-	//		this.mealHeap = mealHeap;
-	//	}
-
-	//	public MealSort getMealSort() {
-	//		return mealSort;
-	//	}
-
+	/**
+	 * @param mealSort the mealSort to set
+	 */
 	private void setMealSort(MealSort mealSort) {
 		this.mealSort = mealSort;
 	}
 
+	/**
+	 * @return the dishHeap
+	 */
 	private TreeSet<SortPolicy> getDishHeap() {
 		return dishHeap;
 	}
 
-	//	public void setDishHeap(TreeSet<SortPolicy> dishHeap) {
-	//		this.dishHeap = dishHeap;
-	//	}
-
-	//	private void setDishRestHeap(TreeSet<SortPolicy> dishRestHeap) {
-	//		this.dishRestHeap = dishRestHeap;
-	//	}
-
-	//	public DishSort getDishSort() {
-	//		return dishSort;
-	//	}
-
+	/**
+	 * @param dishSort the dishSort to set
+	 */
 	private void setDishSort(DishSort dishSort) {
 		this.dishSort = dishSort;
 	}
 
+	/**
+	 * @return the receivedOrders
+	 */
 	public LinkedList<Order> getReceivedOrders() {
 		if(current_manager != null){
 			return receivedOrders;
@@ -949,6 +981,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param receivedOrders the receivedOrders to set
+	 */
 	public void setReceivedOrders(LinkedList<Order> receivedOrders) {
 		if(current_manager != null){
 			this.receivedOrders = receivedOrders;
@@ -956,6 +991,10 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+    
+	/**
+	 * @param markupPercentage the markupPercentage to set
+	 */
 	public void setMarkupPercentage(double markupPercentage) {
 		if(current_manager != null){
 			this.markupPercentage = markupPercentage;
@@ -965,6 +1004,9 @@ public class Core{
 	}
 
 	/* Getters and setters date */ 
+	/**
+	 * @return the dateAfter
+	 */
 	public Calendar getDateAfter() {
 		if(current_manager != null){
 			return dateAfter;
@@ -974,6 +1016,11 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param year the year to set
+     * @param month the month to set
+     * @param date the date to set
+	 */
 	public void setDateAfter(int year, int month, int date) {
 		if(current_manager != null){
 			dateAfter.clear();
@@ -997,6 +1044,9 @@ public class Core{
 	}
 
 
+	/**
+	 * @return the dateBefore
+	 */
 	public Calendar getDateBefore() {
 		if(current_manager != null){
 			return dateBefore;
@@ -1006,12 +1056,20 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @param year the year to set
+     * @param month the month to set
+     * @param date the date to set
+	 */
 	public void setDateBefore(int year, int month, int date) {
 		dateBefore.clear();
 		dateBefore.set(year, month, date);
 	}
 
 	/* Getters and Setter for user lists */
+	/**
+	 * @return the users
+	 */
 	public HashMap<String, User> getUsers() {
 		if(current_manager != null){
 			return users;
@@ -1020,6 +1078,10 @@ public class Core{
 			return null;
 		}
 	}
+    
+	/**
+	 * @param users the users to set
+	 */
 	public void setUsers(HashMap<String, User> users) {
 		if(current_manager != null){
 			this.users = users;
@@ -1027,6 +1089,9 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+	/**
+	 * @return the courierList
+	 */
 	public ArrayList<Courier> getCourierList() {
 		if(current_manager != null){
 			return courierList;
@@ -1035,6 +1100,9 @@ public class Core{
 			return null;
 		}
 	}
+	/**
+	 * @param courierList the courierList to set
+	 */
 	public void setCourierList(ArrayList<Courier> courierList) {
 		if(current_manager != null){
 			for (Courier courier : courierList){
@@ -1045,6 +1113,9 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+	/**
+	 * @return the customerList
+	 */
 	public ArrayList<Customer> getCustomerList() {
 		if(current_manager != null){
 			return customerList;
@@ -1053,6 +1124,9 @@ public class Core{
 			return null;
 		}
 	}
+	/**
+	 * @param customerList the customerList to set
+	 */
 	public void setCustomerList(ArrayList<Customer> customerList) {
 		if(current_manager != null){
 			for (Customer cust : customerList){
@@ -1063,6 +1137,9 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+	/**
+	 * @return the managerList
+	 */
 	public ArrayList<Manager> getManagerList() {
 		if(current_manager != null){
 			return managerList;
@@ -1071,6 +1148,9 @@ public class Core{
 			return null;
 		}
 	}
+	/**
+	 * @param managerList the managerList to set
+	 */
 	public void setManagerList(ArrayList<Manager> managerList) {
 		if(current_manager != null){
 			for (Manager manag : managerList){
@@ -1081,6 +1161,9 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+	/**
+	 * @return the restaurantList
+	 */
 	public ArrayList<Restaurant> getRestaurantList() {
 		if(current_manager != null){
 			return restaurantList;
@@ -1089,6 +1172,9 @@ public class Core{
 			return null;
 		}
 	}
+	/**
+	 * @param restaurantList the restaurantList to set
+	 */
 	public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
 		if(current_manager != null){
 			for (Restaurant rest : restaurantList){
@@ -1100,10 +1186,16 @@ public class Core{
 		}
 	}
 	/* Getters and Setter for users */
+	/**
+	 * @return the current_user
+	 */
 	public User getCurrent_user() {
 		return current_user;
 	}
 
+	/**
+	 * @return the current_courier
+	 */
 	public Courier getCurrent_courier() {
 		if(current_courier != null){
 			return current_courier;
@@ -1113,6 +1205,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the current_customer
+	 */
 	public Customer getCurrent_customer() {
 		if(current_customer != null){
 			return current_customer;
@@ -1122,6 +1217,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the current_manager
+	 */
 	public Manager getCurrent_manager() {
 		if(current_manager != null){
 			return current_manager;
@@ -1131,6 +1229,9 @@ public class Core{
 		}
 	}
 
+	/**
+	 * @return the current_restaurant
+	 */
 	public Restaurant getCurrent_restaurant() {
 		if(current_restaurant != null){
 			return current_restaurant;
@@ -1141,6 +1242,10 @@ public class Core{
 	}
 
 	/* MISC Getters and Setters */ 
+	
+	/**
+	 * @return the savedOrders
+	 */
 	public ArrayList<Order> getSavedOrders() {
 		if(current_manager != null){
 			return savedOrders;

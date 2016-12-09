@@ -17,7 +17,7 @@ import users.Restaurant;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see parseOrders
+* @see #parseOrders()
 */
 public class ParseOrders {
 	
@@ -37,11 +37,5 @@ public class ParseOrders {
 		return order_list;
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Order> order_list = parseOrders();
-		for(Order c : order_list){
-			System.out.println(c.toString());
-		}
-	}
-
+	
 }

@@ -17,8 +17,7 @@ public class FidCardPlanPoints implements FidCardPlan{
 	private double reduc;
 	
 	/**
-	 * @param points default is set to 0 (new plan = 0 points)
-	 * @param reduc default is set to 10 %
+	 * Class constructor.
 	 */
 	public FidCardPlanPoints() {
 		super();

@@ -5,10 +5,10 @@ import users.Courier;
 /**
  * The class <code>CourierDistance</code> is only used by the class <code>FastestDelivery</code>
  * to order the courier by their distance to a certain restaurant.
- * @see the method <code>howToTargetProfit</code>
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
+ * 
  */
 
 public class CourierDistance {
