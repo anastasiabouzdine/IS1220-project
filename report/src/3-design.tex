@@ -75,7 +75,8 @@ that
 \end{table}
 
 The basic idea of the implementation of this pattern is given
-in listing~\ref{lst:observer} in Appendix~\ref{app:code_listing} (page~\pageref{app:code_listing}). 
+in listing~\ref{lst:observer} (in order not to overload this section with listings, most
+of them have been placed in appendix~\ref{app:code_listing} page~\pageref{app:code_listing}). 
 We notice the use of a \lstinline|beNotified| boolean attribute to the \Customer.
 The use of the latter attribute is a design choice that seems more
 efficient than keeping a list of ``I accept to be notified users''
@@ -89,9 +90,43 @@ change its notification system, just a primitive assignment.
 
 \subsection{Strategy pattern for the \texttt{MyFoodora} policies} % (fold)
 \label{sub:strategy_pattern_for_the_texttt_myfoodora_policies}
+Once the users and restaurant related classes and subclasses had
+been implemented, the \Core~(ie. ``one to rule them all'') had to be started.
+The first part consisted in designing the different policies that
+the system supports. These policies can be seen as different \emph{behaviours}
+for the system. So, instead of using inheritance, which seems the
+most intuitive approach, one has to use \emph{aggregation}.
+In the project context this means that the \Core~will have references
+to some \lstinline|xxxPolicies| objects.
+Application to our code of this concept can be found in the listing~\ref{lst:aggregationCore}.
+
+The application of this pattern is useful as it allows modifying 
+the different policies without having to change the \Core~class
+and adding a new option for a policy only requires a further
+implementation of the policy interface.
+The listing~\ref{lst:strategy} shows how we applied to strategy pattern
+for the DeliveryPolicy and the table~\ref{tab:strategy}
+makes the link between the theorical view of the pattern
+and how it's applied to the project.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Strategy pattern} & \textbf{Applied to \MyFoodora}\\
+    \hline
+          Context &             \Core  \\
+          Strategy &             \lstinline|DeliveryPolicy| \\
+          ConcreteStrategyA &     \lstinline|FastestDelivery| \\
+          ConcreteStrategyB &     \lstinline|FairOccupationDelivery| \\
+    \hline
+  \end{tabular}
+  \caption{Relationship between Strategy pattern in theory and applied to \MyFoodora.}
+  \label{tab:strategy}
+\end{table}
+
 
 % subsection strategy_pattern_for_the_texttt_myfoodora_policies (end)
-
 
 \subsection{What about the Singleton pattern ?} % (fold)
 \label{sub:what_about_the_singleton_pattern}

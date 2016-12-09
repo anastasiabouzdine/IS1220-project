@@ -25,8 +25,8 @@ public class Core {
 } } } }
 \end{lstlisting}
 
-%%%%%%%%%%%%%%%%% STRATEGY PATTERN %%%%%%%%%%%%%%%%%
-\begin{lstlisting}[caption=\emph{Strategy} pattern for the \texttt|DeliveryPolicy|.,
+%%%%%%%%%%%%%%%%% STRATEGY PATTERN %%%%%%%%%%%%%%%%% strategy (fold)
+\begin{lstlisting}[caption=\emph{Strategy} pattern for the \lstinline|DeliveryPolicy|.,
 label=lst:strategy]
 public interface DeliveryPolicy {
   public <G> ArrayList<Courier> howToDeliver(ArrayList<Courier> list, G g); 
@@ -67,8 +67,19 @@ public class FastestDelivery implements DeliveryPolicy {
 }
 \end{lstlisting}
 
+\begin{lstlisting}[caption=Aggregation applied to the \Core~and its policies.,
+  label=lst:aggregationCore]
+public class Core{
+    private DeliveryPolicy dPolicy;
+    private TargetProfitPolicy tpPolicy;
+    private SortPolicy sortPolicy;
+}
+  
+\end{lstlisting}
 
-%%%%%%%%%%%%%%%%% STRATEGY PATTERN %%%%%%%%%%%%%%%%%
+% strategy (end)
+
+%%%%%%%%%%%%%%%%% CURRENT USER SYSTEM %%%%%%%%%%%%%%%%% current_user (fold)
 \begin{lstlisting}[caption=Application of the \texttt{current\_customer}
   concept to \texttt{getHistoryOfOrders}.,
   label=lst:historyOfOrders]
@@ -93,6 +104,8 @@ public ArrayList<Order> getHistoryOfOrders() {
 }
 \end{lstlisting}
 
+% current_user (end)
+
 % %%%%%%%%%%%%%%%%% TEST EXAMPLES %%%%%%%%%%%%%%%%%
 % \begin{lstlisting}[caption=Example of a test using \texttt{assertEquals} with 2 decimal precision.,
 %   label=lst:test_total_income]
@@ -113,4 +126,7 @@ public ArrayList<Order> getHistoryOfOrders() {
 % \end{lstlisting}
 
 % section code_listing (end)
+  
+  
+  
 \lstset{basicstyle=\rm\small\ttfamily}
