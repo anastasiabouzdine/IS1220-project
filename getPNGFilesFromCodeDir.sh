@@ -1,0 +1,1 @@
+find ./code/ -name "*.png" -exec cp {} ./model ";"
