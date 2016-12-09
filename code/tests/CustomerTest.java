@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import parsers.ParseCustomers;
-import restaurantSetUp.FidCardPlan;
-import restaurantSetUp.FidCardPlanBasic;
-import restaurantSetUp.FidCardPlanLottery;
-import restaurantSetUp.FidCardPlanPoints;
+import policies.FidCardPlan;
+import policies.FidCardPlanBasic;
+import policies.FidCardPlanLottery;
+import policies.FidCardPlanPoints;
 import users.Customer;
 
 public class CustomerTest {

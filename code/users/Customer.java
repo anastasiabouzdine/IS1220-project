@@ -1,12 +1,10 @@
 package users;
 
 import core.Order;
-import restaurantSetUp.Address;
-
-import restaurantSetUp.FidCardPlan;
-import restaurantSetUp.FidCardPlanBasic;
-import restaurantSetUp.FidCardPlanPoints;
-import restaurantSetUp.FidCardPlanLottery;
+import policies.FidCardPlan;
+import policies.FidCardPlanBasic;
+import policies.FidCardPlanLottery;
+import policies.FidCardPlanPoints;
 import restaurantSetUp.Meal;
 
 /**

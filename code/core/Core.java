@@ -106,7 +106,7 @@ public class Core{
 	 * The method cannot be called if somebody is logged in.
 	 * 
 	 * @param user a newly created user
-	 * @throws exceptions.AlreadyUsedUsernameException
+	 * @throws exceptions.AlreadyUsedUsernameException if the chosen username already exists
 	 */
 	public void register(User user) throws AlreadyUsedUsernameException {
 		if(current_user == null){ 
@@ -377,7 +377,7 @@ public class Core{
 	 * managers. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<SortPolicy> getSortedList(boolean order){
-		if(current_manager != null){
+		if(current_manager != null || current_restaurant != null){
 			if(this.sortPolicy instanceof MealSort){
 				if(this.sortPolicy.howToSortOrder(order))
 					return getMealHeap();
@@ -403,7 +403,7 @@ public class Core{
 	 * managers for the chosen restaurant. returned Heap can be in ascending or descending order according to the input
 	 */
 	public TreeSet<SortPolicy> getSortedList(Restaurant rest, boolean order){
-		if(current_manager != null){
+		if(current_manager != null || current_restaurant != null){
 			if(this.sortPolicy instanceof MealSort) {
 				if(this.sortPolicy.howToSortOrder(order))
 					return getMealRestHeap(rest);
@@ -568,32 +568,33 @@ public class Core{
 	/**
 	 * Depending on the chosen tpPolicy a certain profit related quantity is calculated:
 	 * @param	profit	wanted profit 
-	 * @param	input1	depending on the Case (see below)
-	 * @param	input2	depending on the Case (see below)
+	 * @param	input1 		service fee || markup percentage || delivery cost
+	 * @param	input2 	markup percentage || delivery cost || service fee
+	 * @return  delivery cost || service fee || markup percentage (all needed to achieve profit)
 	 * 
 	 *  <ul>
 	 * 	<li> Case 1: tpPolicy = DeliveryCostProfit
 	 * 
 	 *  <ul>
-	 * 	<li> @param	input1	markup percentage </li>
-	 *  <li> @param	input2	service fee </li>
-	 *  <li> @return delivery cost needed to achieve profit </li>
+	 * 	<li> input1	markup percentage </li>
+	 *  <li> input2	service fee </li>
+	 *  <li> delivery cost needed to achieve profit </li>
 	 * </ul>
 	 * 
 	 * </li> <li> Case 2: tpPolicy = ServiceFeeProfit
 	 *  
 	 *  <ul>
-	 * 	<li> @param	input1	markup percentage </li>
-	 *  <li> @param	input2	delivery cost </li>
-	 *  <li> @return service fee needed to achieve profit </li>
+	 * 	<li> input1	markup percentage </li>
+	 *  <li> input2	delivery cost </li>
+	 *  <li> service fee needed to achieve profit </li>
 	 * </ul>
 	 * 
 	 *  </li> <li> Case 3: tpPolicy = MarkupProfit
 	 * 
 	 *  <ul>
-	 * 	<li> @param	input1	delivery cost </li>
-	 *  <li> @param	input2	service fee </li>
-	 *  <li> @return markup percentage needed to achieve profit </li>
+	 * 	<li> input1	delivery cost </li>
+	 *  <li> input2	service fee </li>
+	 *  <li> markup percentage needed to achieve profit </li>
 	 * </ul>
 	 * 
 	 * </ul>

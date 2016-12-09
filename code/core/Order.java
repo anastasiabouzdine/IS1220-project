@@ -4,8 +4,8 @@ package core;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import policies.FidCardPlanBasic;
 import restaurantSetUp.Dish;
-import restaurantSetUp.FidCardPlanBasic;
 import restaurantSetUp.Meal;
 import users.Courier;
 import users.Customer;

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import restaurantSetUp.Address;
+import users.Address;
 import users.Restaurant;
 
 /**
@@ -21,7 +21,7 @@ import users.Restaurant;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see #parseRestaurants(String)
+* @see parseRestaurants
 */
 public class ParseRestaurants {
 	
@@ -52,5 +52,11 @@ public class ParseRestaurants {
 		return restaurant_list;
 	}
 	
+	public static void main(String[] args) {
+		ArrayList<Restaurant> restaurant_list = parseRestaurants("src/txtFILES/restaurantList.txt");
+		for(Restaurant c : restaurant_list){
+			System.out.println(c.getName() + " ; " + c.getAddress());
+		}
+	}
 
 }

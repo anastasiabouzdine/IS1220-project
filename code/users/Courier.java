@@ -3,7 +3,6 @@ package users;
 import java.util.LinkedList;
 
 import core.Order;
-import restaurantSetUp.Address;
 
 /**
  * The class <code>Courier</code> allows to create a courier which will be able to
