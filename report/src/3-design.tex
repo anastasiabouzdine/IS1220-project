@@ -91,4 +91,58 @@ change its notification system, just a primitive assignment.
 \label{sub:strategy_pattern_for_the_texttt_myfoodora_policies}
 
 % subsection strategy_pattern_for_the_texttt_myfoodora_policies (end)
+
+
+\subsection{What about the Singleton pattern ?} % (fold)
+\label{sub:what_about_the_singleton_pattern}
+Towards the end of the project, while implementing the \Core,
+we thought that it would be a good idea to be able
+to generate only one single instance of the \Core,
+because that would be what the client would be looking for.
+This reminded us of the \emph{Singleton pattern} seen in class.
+We therefore listed all possible solutions on how to code
+it efficiently and we came to the implementation described
+in the listing~\ref{lst:singleton}.
+The latter uses the so called \emph{Holder} technique~\cite{goodSingleton},
+which prevents two threads from creating two different singletons
+while staying memory efficient as the internal class will only be
+loaded once (ie. at the call of the \lstinline|getInstance()| method).
+
+Implementing this pattern immediately led to many problems with
+the \textsc{JUnit} tests as once the singleton was defined it
+didn't allow to reset the instance, something that is done extensively
+in the \Core test, the latter being the most important test file.
+We thus put into consideration again the fact of using this pattern.
+Some research~\cite{singletonLiars} led us to believe that using a singleton for this kind
+of project brought more arm than good for two reasons.
+Indeed, the ``\textit{core of the issue is that the global instance 
+variables have transitive property. All of the internal objects of the 
+singleton are global as well (and the internals of those objects are 
+global as well\dots recursively)}''\cite{codeHardToTest}.
+Comes next the problem of re using the code and not knowing that
+there can only be one single instance of the \Core class,
+which always seems normal when you wrote the code but not
+when someone comes after.
+Moreover, the fact that the second part of the project consist in
+designing a \emph{user interface} allow us to ensure one instanciation
+at each usage of the program.
+
+\begin{lstlisting}[caption=How the implementation of the Singleton pattern
+  would be.,
+  label=lst:singleton] 
+/** Class constructor */
+public Core() {
+}
+/** Holder of the singleton */
+private static final class CoreHolder {		
+  private static final Core instance = new Core();
+}
+/** Getter of the unique singleton */
+public static Core getInstance() {
+  return CoreHolder.instance;
+}
+\end{lstlisting}
+  
+% subsection what_about_the_singleton_pattern (end)
+
 % section analysis_and_design (end)

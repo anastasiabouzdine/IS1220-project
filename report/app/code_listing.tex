@@ -93,5 +93,24 @@ public ArrayList<Order> getHistoryOfOrders() {
 }
 \end{lstlisting}
 
+% %%%%%%%%%%%%%%%%% TEST EXAMPLES %%%%%%%%%%%%%%%%%
+% \begin{lstlisting}[caption=Example of a test using \texttt{assertEquals} with 2 decimal precision.,
+%   label=lst:test_total_income]
+% @Test
+% public void checkIfCalcTotalIncomeWorks() {
+%   make3orders();
+%   mf1.autoSetDateAfter();
+%   double totalIn = mf1.calcTotalIncome();
+%   //   3xdish1 : 3x8.3 = 24.9
+%   // + 2xdish2 : 2x6.35 = 12.7
+%   // + 1xdish3 : 1x16.85 = 16.85
+%   // + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
+%   // ------------------------------------------------------
+%   // = 61.95
+%   assertEquals(totalIn, 61.95, 0.01);
+%   System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
+% }
+% \end{lstlisting}
+
 % section code_listing (end)
 \lstset{basicstyle=\rm\small\ttfamily}
