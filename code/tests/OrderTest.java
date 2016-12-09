@@ -72,14 +72,13 @@ public class OrderTest {
 		order1.addMeal(hm1,3);
 		order1.addMeal(fm1,3);
 		
-		System.out.println(order1);
-		
-		double a = 3*(4.3 + 8.3 + 4.3)*0.95 + 3*(8.3 + 4.3)*0.95;
-		
-		assertTrue(order1.getPrice() == a);
+		double a = 0.95*3*(4.3 + 8.3 + 4.3 + 8.3 + 4.3);
+		System.out.println(a);
+		System.out.println(order1.getPrice());
+
+		assertEquals(a, order1.getPrice(), 0.1);
 	}
 	
-	//TODO round 
 	@Test 
 	public void getPriceOfOrderWithSpecialMeal() {
 		Order order1 = list_order.get(0);
@@ -95,7 +94,7 @@ public class OrderTest {
 		
 		r1.setSpecMeal(fm1);
 		
-		System.out.println(order1.isFidCardPlanBasic());
+		assertTrue(order1.isFidCardPlanBasic());
 		
 		order1.addMeal(hm1,3);
 		order1.addMeal(fm1,3);
@@ -105,7 +104,7 @@ public class OrderTest {
 		System.out.println(a);
 		System.out.println(order1.getPrice());
 		
-		assertTrue(order1.getPrice() == a);
+		assertEquals(order1.getPrice(), a, 0.01);
 	}
 
 }

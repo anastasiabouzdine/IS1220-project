@@ -26,7 +26,7 @@ import users.Restaurant;
 public class CoreTest {
 	
 	Core mf1 = new Core();
-	
+
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
 	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
@@ -45,6 +45,7 @@ public class CoreTest {
 	Courier cour1 = list_courier.get(0);
 	Courier cour2 = list_courier.get(1);
 	Courier cour3 = list_courier.get(2);
+	
 
 	@Before
 	public void setUserLists() throws AlreadyUsedUsernameException {
@@ -52,8 +53,7 @@ public class CoreTest {
 		mf1.logIn("johnBoss");
 		
 		mf1.setCustomerList(list_customer);
-		mf1.setRestaurantList(list_restaurant);
-	
+		mf1.setRestaurantList(list_restaurant);			
 	}
 	
 	/*********************************************************************/
@@ -187,7 +187,7 @@ public class CoreTest {
 		// ------------------------------------------------------
 		// = 61.95
 		
-		assertTrue(equalsDouble(totalIn,61.95));
+		assertEquals(totalIn, 61.95, 0.01);
 		System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
 	}
 	
@@ -202,7 +202,7 @@ public class CoreTest {
 		// ------------------------------------------------------
 		// = -1.78
 		double trueTotalProfit = -1.78D;
-		assertTrue(equalsDouble(totalProfit,trueTotalProfit));
+		assertEquals(totalProfit,trueTotalProfit, 0.01);
 		
 		System.out.println("TEST checkIfCalcTotalProfitWorks : DONE\n");
 	}
@@ -214,14 +214,14 @@ public class CoreTest {
 		double avgProfit = mf1.calcAverageProfit();
 		// = -1.78 /3
 		double trueAvg = Order.round2(-1.78D/3);
-		assertTrue(equalsDouble(avgProfit, trueAvg));
-		
+		assertEquals(avgProfit, trueAvg, 0.01);
+
 		System.out.println("TEST checkIfCalcAverageProfitWorks : DONE\n");
 	}
 	
 	
-//	/*********************************************************************/
-//	/* Most/least selling restaurants and active couriers */ 
+	/*********************************************************************/
+	/* Most/least selling restaurants and active couriers */ 
 	
 	@Test
 	public void mostAndLeastSellingRestaurant() {
@@ -283,7 +283,8 @@ public class CoreTest {
 		double expected = Order.round4((double)placeHolder/Order.round2(sum));
 		double value = mf1.simulateProfit(profit, deliveryFee, serviceFee);
 		
-		assertTrue(equalsDouble(expected, value));
+		assertEquals(expected, value, 0.0001);
+
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
@@ -310,7 +311,8 @@ public class CoreTest {
 		}
 		placeHolder = profit - 3*serviceFee - sum*markupProfit;
 		
-		assertTrue(Order.round2(-placeHolder/3)==mf1.simulateProfit(profit, markupProfit, serviceFee));
+		assertEquals(-placeHolder/3D, mf1.simulateProfit(profit, markupProfit, serviceFee), 0.01);
+
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
@@ -337,7 +339,8 @@ public class CoreTest {
 		}
 		placeHolder = profit + 3*deliveryFee - sum*markupProfit;
 		
-		assertTrue(Order.round2(placeHolder/3)==mf1.simulateProfit(profit, markupProfit, deliveryFee));
+		assertEquals(placeHolder/3D, mf1.simulateProfit(profit, markupProfit, deliveryFee), 0.01);
+
 		System.out.println("TEST calculateProfit() : DONE\n");
 	}
 	
@@ -429,15 +432,6 @@ public class CoreTest {
 		System.out.println("Done with the 2 meal orders !");
 	}
 	
-	/**
-	 * Compares with flexibility if two doubles are equals up to 2 decimal places.
-	 * @param expected
-	 * @param value
-	 * @return
-	 */
-	public static boolean equalsDouble(double expected, double value){
-		return (Math.abs(value-expected) < 0.0001);
-	}
 	
 	public void make2orders6Dishes() {
 		

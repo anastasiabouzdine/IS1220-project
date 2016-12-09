@@ -61,7 +61,7 @@ public class RestaurantTest {
 		r2.addMeal(meal1);
 		double a = 0.95*(4.3+8.3+4.3);
 		
-		assertEquals(a, r2.getPrice(meal1), 0.0001);
+		assertEquals(a, r2.getPrice(meal1), 0.01);
 	}
 	
 	@Test
