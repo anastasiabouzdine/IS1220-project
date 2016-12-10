@@ -1,31 +1,31 @@
 \section{Analysis and design} % (fold)
 \label{sec:analysis_and_design}
 This section will describe the design of our solution and how
-it implements the given requirements presented in section~\ref{sec:background}.
-The first part will mainly present the different \emph{design patterns}
+it meets the given requirements presented in section~\ref{sec:background}.
+The first part will present the different \emph{design patterns}
 used throughout the code.
 These patterns are useful as they allow
 \begin{enumerate}
   \item to avoid redesigning,
-  \item to follow guidelines so that the solution is extensible,
-  \item to isolate part of the code that might undergo changes.
+  \item to follow guidelines so that the solution is extendable,
+  \item to isolate parts of the code that might undergo changes.
 \end{enumerate}
-% TODO add description of second part (rest of patterns)
 
 \subsection{Factory pattern for \texttt{Dish} and \texttt{Meal} classes} % (fold)
 \label{sub:factory_pattern_for_the_texttt_dish_and_texttt_meal_classes}
-When going through the different requirements for those classes, a first thought
+When going through the different requirements for the two classes, a first thought
 might be to implement two factory patterns, one for each.
 This lead us to the first type of factory pattern known as \emph{parametric factory pattern}.
 But the latter is not easily extendable to new features, such as
-a \Drink~class to handle all type of drinks, especially if
+a \Drink~class to handle all types of drinks, especially if
 those belong to different families (as \Dish, \Meal~and \Drink).
 Therefore, the \emph{abstract factory pattern} seems to be the
-most appropriate to respect the open/close principle.
+most appropriate choice to respect the open/close principle.
 
-This type of factory pattern allows us to separe the \Dish~and \Meal~creation from their use.
+This type of factory pattern allows us to seperate the \Dish~and \Meal~creation from their own functions, 
+as the constructor is outsourced to another class - the factory.
 The listing~\ref{lst:factory} illustrates how it can be applied and why it is powerful.
-We have the same \lstinline|AbstractFactory| object that is able to produce
+We have one \lstinline|AbstractFactory| object that is able to produce
 two types of dishes (ie. a \Starter~and a \MainDish).
 
 \begin{lstlisting}[caption=Factory pattern for \Dish~and \Meal.,
@@ -44,18 +44,17 @@ double price = d1.getPrice() + d2.getPrice();
 
 \subsection{Observer pattern for \texttt{Customer} and \texttt{Core} class} % (fold)
 \label{sub:observer_pattern_for}
-The second use of a design pattern appears when we want to \emph{notify
-the customers} that a special meal of the week offer has been updated.
-This can be formulated as different \emph{subscribers} interested in the state
-changes of a \emph{publisher} and the relation with the project
-is described in table~\ref{tab:observer}.
+The second use of a design pattern comes into place when implementing the function that
+a restaurant can \emph{notify the customers} when it changed the special meal of the week offer. 
+This can be compared to different \emph{subscribers} being interested in updates of a \emph{publisher}. 
+The relation with the project is described in table~\ref{tab:observer}.
 
 It is important to note here that the publisher is not the \Restaurant.
-This might seem counter-intuitive at first sight but it is here the \Core~object
-that
+This might seem counter-intuitive at first sight but in our case 
+it is the \Core~object that
 \begin{itemize}
   \item keeps track of the registered customers,
-  \item notifies all the latter that gave their consensus,
+  \item notifies those who gave their consensus,
   \item knows when a \Restaurant~changes his meal of the week.
 \end{itemize}
 
@@ -67,47 +66,46 @@ that
     \hline
           Suscribers &             \Customer \\
           Publisher &              \Core\\
-          Change of state &        \Meal~of the week updated \\
+          Change of state &        updated \Meal~of the week\\
     \hline
   \end{tabular}
-  \caption{Relationship between Observer pattern in theory and applied to \MyFoodora.}
+  \caption{Relationship between Observer pattern in theory and practical application for \MyFoodora.}
   \label{tab:observer}
 \end{table}
 
 The basic idea of the implementation of this pattern is given
-in listing~\ref{lst:observer} (in order not to overload this section with listings, most
-of them have been placed in appendix~\ref{app:code_listing} page~\pageref{app:code_listing}). 
-We notice the use of a \lstinline|beNotified| boolean attribute to the \Customer.
-The use of the latter attribute is a design choice that seems more
+in the listing~\ref{lst:observer} (in order not to overload this section with listings, most
+of them have been placed to the appendix~\ref{app:code_listing} page~\pageref{app:code_listing}). 
+We notice the use of a \lstinline|beNotified| boolean attribute by the \Customer.
+The use of this attribute is a design choice that seems more
 efficient than keeping a list of ``I accept to be notified users''
 for two reasons.
-First, we won't need to have one more list in the \Core~containing
+First, we won't need to have another list in the \Core~containing
 references to already used objects (ie. users), and second,
-no add or remove from a list is needed when a \Customer~wants to
-change its notification system, just a primitive assignment.
+there is no adding or removing from a list needed when a \Customer~wants to
+change its notification system, but only a primitive assignment.
 
 % subsection observer_pattern_for (end)
 
 \subsection{Strategy pattern for the \texttt{MyFoodora} policies} % (fold)
 \label{sub:strategy_pattern_for_the_texttt_myfoodora_policies}
-Once the users and restaurant related classes and subclasses had
-been implemented, the \Core~(ie. ``one to rule them all'') had to be started.
-The first part consisted in designing the different policies that
+Once the classes and subclasses being related to the users and the 
+restaurants had been implemented, the coding of the \Core~(ie. ``one to rule them all'') had to be started.
+The first part consisted of designing the different policies that
 the system supports. These policies can be seen as different \emph{behaviours}
-for the system. So, instead of using inheritance, which seems the
-most intuitive approach, one has to use \emph{aggregation}.
-In the project context this means that the \Core~will have references
-to some \lstinline|xxxPolicies| objects.
-Application to our code of this concept can be found in the listing~\ref{lst:aggregationCore}.
+of the system. Instead of using inheritance, which seems the
+most intuitive approach, it is more efficient to use \emph{aggregation}.
+In the project's context this means that the \Core~will have references
+to objects of the \lstinline|Policies|~explained in section~\ref{sec:background}.
+Application of this concept to our code can be found in the listing~\ref{lst:aggregationCore}.
 
-The application of this pattern is useful as it allows modifying 
-the different policies without having to change the \Core~class
-and adding a new option for a policy only requires a further
+The application of this pattern is useful as it allows to change from one policy to
+another with a simple call of a function f.e. \lstinline|setTPolicyToFastestDelivery()|~ without having to change the \Core~class functions.
+Also, adding a new option for a policy only requires a further
 implementation of the policy interface.
 The listing~\ref{lst:strategy} shows how we applied to strategy pattern
 for the DeliveryPolicy and the table~\ref{tab:strategy}
-makes the link between the theorical view of the pattern
-and how it's applied to the project.
+links the theorical view of the pattern and the practical application the project.
 
 \begin{table}[H]
   \centering
@@ -121,7 +119,7 @@ and how it's applied to the project.
           ConcreteStrategyB &     \lstinline|FairOccupationDelivery| \\
     \hline
   \end{tabular}
-  \caption{Relationship between Strategy pattern in theory and applied to \MyFoodora.}
+  \caption{Relationship between Strategy pattern in theory and practical application for \MyFoodora.}
   \label{tab:strategy}
 \end{table}
 
@@ -131,39 +129,39 @@ and how it's applied to the project.
 \subsection{What about the Singleton pattern ?} % (fold)
 \label{sub:what_about_the_singleton_pattern}
 Towards the end of the project, while implementing the \Core,
-we thought that it would be a good idea to be able
-to generate only one single instance of the \Core,
-because that would be what the client would be looking for.
+we thought that it would be a good idea to limit
+the instantionation of the \Core to only one single instance
+since the client would only create one instance.
 This reminded us of the \emph{Singleton pattern} seen in class.
 We therefore listed all possible solutions on how to code
 it efficiently and we came to the implementation described
 in the listing~\ref{lst:singleton}.
-The latter uses the so called \emph{Holder} technique~\cite{goodSingleton},
+The singleton uses the so called \emph{Holder} technique~\cite{goodSingleton},
 which prevents two threads from creating two different singletons
 while staying memory efficient as the internal class will only be
 loaded once (ie. at the call of the \lstinline|getInstance()| method).
 
 Implementing this pattern immediately led to many problems with
-the \textsc{JUnit} tests as once the singleton was defined it
-didn't allow to reset the instance, something that is done extensively
+the \textsc{JUnit} tests because once the singleton was defined in the test class it
+was impossible to reset the instance, a necessity that is done extensively
 in the \Core test, the latter being the most important test file.
-We thus put into consideration again the fact of using this pattern.
+We thus reconsidered using this pattern.
 Some research~\cite{singletonLiars} led us to believe that using a singleton for this kind
-of project brought more arm than good for two reasons.
+of project brought more harm than good for two reasons.
 Indeed, the ``\textit{core of the issue is that the global instance 
 variables have transitive property. All of the internal objects of the 
 singleton are global as well (and the internals of those objects are 
 global as well\dots recursively)}''\cite{codeHardToTest}.
-Comes next the problem of re using the code and not knowing that
+Moreover, the problem of reusing the code and not knowing that
 there can only be one single instance of the \Core class,
-which always seems normal when you wrote the code but not
-when someone comes after.
-Moreover, the fact that the second part of the project consist in
-designing a \emph{user interface} allow us to ensure one instanciation
-at each usage of the program.
+which always seems normal to the writer of the code but not
+to somenone from the outside.
+Last but not least, the fact that the second part of the project consists of
+designing a \emph{user interface} allow us to ensure that there is only one instanciation
+for every usage of the program.
 
 \begin{lstlisting}[caption=How the implementation of the Singleton pattern
-  would be.,
+  would look like.,
   label=lst:singleton] 
 public Core() {
 }
