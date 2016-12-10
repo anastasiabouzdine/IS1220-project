@@ -11,21 +11,11 @@
 \input{./top/new_commands.tex}
 
 \begin{document}
-% title (fold)
-\begin{center}
-{\LARGE \bfseries 
-  Final report : \texttt{MyFoodora}\\[0.1cm] 
-}
-{\large
-  \textsc{CentraleSupélec} --- John \textsc{de Wasseige} --- Patrick \textsc{von Platen}\\[0.3cm]
-}
-{\normalsize
-  IS1220 Object oriented Software design --- Prof. : Paolo \textsc{Ballarini} \\[0.9cm]
-}
-\end{center}
-% title (end)
+\input{./top/title.tex}
 
-{\hypersetup{linkcolor=black} \tableofcontents}
+{\hypersetup{linkcolor=black}
+\tableofcontents
+}
 \newpage
 
 \part{Body report}
@@ -46,12 +36,12 @@
 
 \part{Annexes}
 \appendix
-\input{./app/test_results.tex}
-\newpage
 \input{./app/code_listing.tex}
 \newpage
 \input{./app/UML_diagrams.tex}
 \newpage
+% \input{./app/test_results.tex}
+% \newpage
 
 \addcontentsline{toc}{part}{References}
 \nocite{*}

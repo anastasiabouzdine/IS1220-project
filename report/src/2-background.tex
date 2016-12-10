@@ -3,50 +3,50 @@
 
 As already mentioned in the introduction, the project deals with the realisation of
 a tool that simulates today's food delivery systems. The projet requires to have five main 
-actors being the users: \Restaurant, \Customer, \Manager, \Courier~and the system: \Core.
+actors being the users: \Restaurant, \Customer, \Manager, \Courier~and the system (ie. the \Core).
 
-A restaurant offers different \Meal~, being either a \HalfMeal~or a  
-\FullMeal. A \FullMeal~ is made of a \Starter, a \MainDish~and a \Dessert. The \HalfMeal~ consists 
-of a \MainDish~and either a \Starter~ or a \Dessert. Additionally each restaurant offers a \Menu~containing 
-a list of \Starter~, \MainDish~ and \Dessert, so that a \Meal can be chosen à la carte. 
+A restaurant offers different \Meal, being either a \HalfMeal~or a  
+\FullMeal. A \FullMeal~ is made of a \Starter, a \MainDish~and a \Dessert.
+The \HalfMeal~consists of a \MainDish~and either a \Starter~or a \Dessert. 
+Additionally each restaurant offers a \Menu~containing 
+a list of \Starter, \MainDish~and \Dessert, so that a \Meal~can be chosen ``à la carte''. 
 
-A \Customer can choose one of three different \emph{fidelity card plans} that allow him to some kind of reduction 
+A \Customer~can choose one of three different \emph{fidelity card plans}
+that allow him to some kind of reduction 
 according to chosen \emph{fidelity card plan} \ref{sub:fidcardplan}.
-
-All users contain basic attributes like a name, a surname, etc. and have distinctive functions that are described 
-in detail below \ref{sub:users}.
-
-Moreover, the system implements different \emph{target profit policies}, \emph{delivery policies}, \emph{shipped order policies}
+All users contain basic attributes like a name, a surname, etc.
+and have distinctive functions that are described 
+in detail below in the ~\ref{sub:users}.
+Moreover, the system implements different \emph{target profit policies},
+\emph{delivery policies}, \emph{shipped order policies}
 also being described in detail below \ref{sub:policies}.
 
-Let's take a more detailed look at the core, the different actors, the fidelity card plan and the supported policies.
+Let's take a more detailed look at the requirements
+needed for the core, the different actors,
+the fidelity card plan and the supported policies.
 
 \subsection{Core system} % (fold)
 \label{sub:core_system}
-The following paragraph contains concise description  
-of the different requirements needed for the core.
-
 \vspace{0.3\baselineskip}
 
 \begin{itemize}
-  \begin{minipage}{0.47\linewidth}
-    \item setting of the service-fee, the markup percentage and the delivery cost
-    \item allocating \Courier~depending on the shipped order policy \ref{sub:policies}
-    \item notifying \Customer~if enabled by him
+  \begin{minipage}{0.51\linewidth}
+    \item setting of the service-fee
+    \item setting of the markup percentage
+    \item setting of the delivery cost
+    \item notifying customers
   \end{minipage}
-  \begin{minipage}{0.53\linewidth}
+  \begin{minipage}{0.57\linewidth}
+   \item allocating couriers to orders
    \item computing total income 
-   \item choosing target profit policy \ref{sub:policies}
+   \item choosing target profit policy
   \end{minipage}
 \end{itemize}
 
+% subsection core_system (end)
 
 \subsection{Users} % (fold)
 \label{sub:users}
-The following paragraphs contain concise descriptions
-of the different most important requirements needed for every \User.
-
-
 \paragraph{Manager}~\vspace{0.3\baselineskip}
 \begin{itemize}
   \begin{minipage}{0.47\linewidth}
@@ -73,7 +73,7 @@ of the different most important requirements needed for every \User.
   \end{minipage}
   \begin{minipage}{0.53\linewidth}
     \item set \lstinline|discountFactors|
-    \item sort of shipped orders following policy \ref{fid_card_plan}
+    \item sort of shipped orders following policy
   \end{minipage}
 \end{itemize}
 
@@ -81,7 +81,7 @@ of the different most important requirements needed for every \User.
 \begin{itemize}
   \begin{minipage}{0.47\linewidth}
     \item place \Order
-    \item choose fidelity plan option \ref{fid_card_plan}
+    \item choose fidelity plan option
     \item get history of orders
   \end{minipage}
   \begin{minipage}{0.53\linewidth}
@@ -103,17 +103,20 @@ of the different most important requirements needed for every \User.
   \end{minipage}
 \end{itemize}
 
+% subsection users (end)
+
 \subsection{Policies} % (fold)
 \label{sub:policies}
-The following paragraph contains concise description  
-of the different policies.
-
 \paragraph{Target profit policies}~\vspace{0.3\baselineskip}
-Two out of the three profit related quantities: \emph{service-fee, the markup percentage, the delivery cost}
-are taken as given inputs depending on the chosen \emph{target policy} as well as an expected profit. The functions implemented
-by each policy allow the \Manager to simulate the third profit related quantity that is not taken as an input and thus 
+Two out of the three profit related quantities: \emph{service-fee,
+the markup percentage, the delivery cost}
+are taken as given inputs depending on the chosen \emph{target policy} as well as an expected profit.
+The functions implemented by each policy allow the \Manager~to simulate the third 
+profit related quantity that is not taken as an input and thus 
 needed to achieve the profit. The profit is calculated as follows: 
-\[ profit for one order = order price * markup percentage + service fee - delivery cost \] 
+\begin{center} 
+  profit for one order = order price $\cdot$ markup percentage + service fee - delivery cost
+\end{center}
 
 \begin{itemize}
     \item \emph{targetProfit DeliveryCost}: the delivery cost is simulated.
@@ -122,7 +125,7 @@ needed to achieve the profit. The profit is calculated as follows:
 \end{itemize}
 
 \paragraph{Delivery policies}~\vspace{0.3\baselineskip}
-The delivery policies define in which way the \Core choses the courier for a placed order.
+The delivery policies define in which way the \Core~choses the \Courier~for a placed \Order.
 
 \begin{itemize}
     \item \emph{fastest delivery}: The courier having the shortest distance to the selected restaurant is chosen.
@@ -130,32 +133,42 @@ The delivery policies define in which way the \Core choses the courier for a pla
 \end{itemize}
 
 \paragraph{Shipped order sorting policies}~\vspace{0.3\baselineskip}
-The \emph{shipped order sorting policies} allow restaurants and managers to sort the shipped orders according to different criterias.
+The \emph{shipped order sorting policies} allow restaurants and managers
+to sort the shipped orders according to different criterias.
 
 \begin{itemize}
     \item \emph{most/least ordered Meal}: A ascending/descending list of all sold Meals
     \item \emph{most/least ordered dishes}: A ascending/descending list of all sold Dishes.
 \end{itemize}
 
+% subsection policies (end)
+
 \subsection{Fidelity Card Plan} % (fold)
 \label{sub:fid_card_plan}
 
-Each customer can choose between three different fidelity card plans having each different bonuses.
+Each \Customer can choose between three different fidelity card plans having each different bonuses.
 
 \begin{itemize}
-    \item \emph{Basic fidelity card}: The \Customer has access to a special offer provided by each restaurant.
-    \item \emph{Point fidelity card}: The \Customer collects fidelity points and gets a certain reduction after 
+  \item \emph{Basic fidelity card}: The \Customer has access to a special offer provided by each restaurant.
+  \item \emph{Point fidelity card}: The \Customer collects fidelity points
+  and gets a certain reduction after 
 	having reached a certain limit of points.
-	\item \emph{Lottery fidelity card}: The \Customer takes part in a lottery and has the chance of getting his order for free.
+	\item \emph{Lottery fidelity card}: The \Customer takes part in a lottery
+  and has the chance of getting his order for free.
 \end{itemize}
 
-\subsection{Summary}
+% subsection fid_card_plan (end)
 
-In order to give a basic overview of the typical function, the ordering of a food item, we want to briefly summarize this process.
-A \Client will place an \Order by choosing a one or more \Meal or one or more \Dish of a \Restaurant. The \Order containing all the 
-necessary information is handed to the \Core. The \Core will treat the \Order by choosing a \Courier according to the \emph{Delivery policy}. 
-The \Courier can either accept or decline the \Order. If any \Courier accepts the \Order, it is executed and saved in the \Core.
+\subsection{Summary} % (fold)
 
-% subsection users (end)
+In order to give a basic overview of the typical function, the ordering of a food item,
+we want to briefly summarize this process.
+A \Customer~will place an \Order~by choosing a one or more \Meal~or one or more \Dish~of a \Restaurant.
+The \Order~containing all the necessary information is handed to the \Core.
+The \Core~will treat the \Order~by choosing a \Courier~according to the \emph{Delivery policy}. 
+The \Courier~can either accept or decline the \Order. If any \Courier~accepts the \Order,
+it is executed and saved in the \Core.
+
+% subsection summary (end)
 
 % section background (end)

@@ -22,16 +22,24 @@
   </class>  
   <association id="3">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="4" name="savedOrders"/>      
-      <multiplicity id="5" minimum="0" maximum="2147483647"/>    
+      <attribute id="4" name="savedOrders">        
+        <position height="18" width="78" x="349" y="-783"/>      
+      </attribute>      
+      <multiplicity id="5" minimum="0" maximum="2147483647">        
+        <position height="16" width="23" x="363" y="-767"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="6">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="7" name="receivedOrders"/>      
-      <multiplicity id="8" minimum="0" maximum="2147483647"/>    
+      <attribute id="7" name="receivedOrders">        
+        <position height="18" width="92" x="350" y="-702"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="16" width="23" x="412" y="-721"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
