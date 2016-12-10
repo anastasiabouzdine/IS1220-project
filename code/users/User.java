@@ -18,7 +18,7 @@ public class User {
 	private String username;
 	private int ID;
 	private static int counter;
-	private Stack<String> messageBox = new Stack<String>(); //TODO check out the function @John
+	private Stack<String> messageBox = new Stack<String>(); 
 	
 	public User(String name, String username){
 		this.name = name;
@@ -31,7 +31,7 @@ public class User {
 	 * @param	message	new message
 	 *  
 	 */
-	public void update(String message){ //TODO check out the function @John
+	public void update(String message){ 
 		messageBox.push(message);
 	}
 	
@@ -39,7 +39,7 @@ public class User {
 	 * This function allows to read new messages as soon as the user is logged in
 	 *  
 	 */
-	public void checkMessages(){ //TODO check out the function @John
+	public void checkMessages(){ 
 		int amount = messageBox.size();
 		while(!messageBox.isEmpty()){
 			String message = messageBox.pop();

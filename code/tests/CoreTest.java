@@ -50,8 +50,10 @@ public class CoreTest {
 	@Before
 	public void setUserLists() throws AlreadyUsedUsernameException {
 		mf1.register(list_manager.get(0));
-		mf1.logIn("johnBoss");
-		
+		mf1.logIn("john45");
+		mf1.logOut();
+		mf1.register(list_customer.get(0));
+		mf1.logIn("john45");
 		mf1.setCustomerList(list_customer);
 		mf1.setRestaurantList(list_restaurant);			
 	}
@@ -160,15 +162,13 @@ public class CoreTest {
 		
 		Order order1 = mf1.createNewOrder(list_customer.get(0), rest1);
 		order1.addMeal(list_hmeal.get(0), 3);
-		mf1.placeNewOrder(order1);
-		mf1.treatNewOrders();
-		
+		placeOrder(order1);
 		
 		mf1.setDeliveryPolicyToFairOcc();
 		Order order2 = mf1.createNewOrder(list_customer.get(0), list_restaurant.get(0));
 		order2.addMeal(list_hmeal.get(0), 3);
-		mf1.placeNewOrder(order2);
-		mf1.treatNewOrders();
+		placeOrder(order2);
+		
 		
 		System.out.println("TEST treatOrder : DONE\n");
 	}
@@ -333,7 +333,7 @@ public class CoreTest {
 		// profit for one order = order price * markupPercentage + service fee - delivery cost
 		
 		//there are three orders so we'll calculate placeHolder as the left 
-		// side of the equation and sum as the rigth side of the function 
+		// side of the equation and sum as the right side of the function 
 		// so that placeHolder = markupPercentage * sum
 		for(Order order : mf1.getSavedOrders()) {
 			sum += order.getPriceInter();
@@ -343,6 +343,41 @@ public class CoreTest {
 		assertEquals(placeHolder/3D, mf1.simulateProfit(profit, markupProfit, deliveryFee), 0.01);
 
 		System.out.println("TEST calculateProfit() : DONE\n");
+	}
+	
+	@Test
+	public void testIfCourierIsDeactivated() throws AlreadyUsedUsernameException{
+		
+		mf1.logOut();
+		
+		for(Courier r: list_courier)
+			mf1.register(r);
+		
+		mf1.logIn("john45");
+		
+		
+		
+		for(int i=0; i < 4; i++)
+			list_courier.get(i).setAvailable(false);
+		
+		assertTrue(mf1.getCourierList().size() == 6);
+		int sum = 0;
+		
+		for(Courier c : list_courier)
+			if(c.isAvailable()==false)
+				sum++;
+		
+		assertTrue(sum == 4);
+		
+		String[] string = {"couPvp23","coujohn42","couP23p23","coujayjay34"};
+		
+		make3orders();
+		
+		for(int i=0; i<mf1.getSavedOrders().size(); i++)
+			for(int j = 0; j < 4; j++)
+				assertTrue(!mf1.getSavedOrders().get(i).getCourier().getUsername().equals(string[j]));
+		
+		System.out.println("TEST testIfCourierIsDeactivated() : DONE\n");
 	}
 	
 	/**************************************************************************************************/
@@ -369,6 +404,11 @@ public class CoreTest {
 	}
 	
 	/**************************************************************************************************/
+	/* CheckMessageBox */
+	
+	
+	
+	/**************************************************************************************************/
 	/* Helpers */
 	
 	
@@ -383,17 +423,16 @@ public class CoreTest {
 
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
 		order1.addDish(list_mainDish.get(0), 3);
-		mf1.placeNewOrder(order1);
+		placeOrder(order1);
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest3);
 		order2.addDish(list_mainDish.get(1), 2);
-		mf1.placeNewOrder(order2);
+		placeOrder(order2);
 
 		Order order3 = mf1.createNewOrder(list_customer.get(4), rest1);
 		order3.addDish(list_mainDish.get(2), 1);
-		mf1.placeNewOrder(order3);
+		placeOrder(order3);
 		// Treat the three placed orders : two for rest1 and one for rest2
-		mf1.treatNewOrders();
 		System.out.println("Done with the 3 orders !");
 	}
 	
@@ -421,15 +460,17 @@ public class CoreTest {
 		order1.addMeal(hm3, 4);
 		order1.addMeal(hm1, 4);
 		order1.addMeal(hm1, 3);
-		mf1.placeNewOrder(order1);
+		
+		placeOrder(order1);
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
 		order2.addMeal(hm2, 1);
 		order2.addMeal(hm4, 3);
-		mf1.placeNewOrder(order2);
+
+		placeOrder(order2);
 
 		// Treat the three placed orders : two for rest1 and one for rest2
-		mf1.treatNewOrders();
+		
 		System.out.println("Done with the 2 meal orders !");
 	}
 	
@@ -461,16 +502,24 @@ public class CoreTest {
 		order1.addDish(d3, 4);
 		order1.addDish(d4, 5);
 		order1.addDish(d5, 9);
-		mf1.placeNewOrder(order1);
-
+		placeOrder(order1);
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
 		order2.addDish(d2, 1);
 		order2.addDish(d5, 9);
-		mf1.placeNewOrder(order2);
-
-		// Treat the three placed orders : two for rest1 and one for rest2
-		mf1.treatNewOrders();
+		placeOrder(order2);
+		
 		System.out.println("Done with the 2 dish orders !");
 	}
+	
+	public void placeOrder(Order order){
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
+		mf1.placeNewOrder(order);
+		mf1.logOut();
+		mf1.logIn("john45");
+		
+	}
+	
+	
 		
 }

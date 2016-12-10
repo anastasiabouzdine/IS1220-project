@@ -119,17 +119,16 @@ public class Core{
 			} else if (user instanceof Customer){
 				Customer customer_user = (Customer) user;
 				this.customerList.add(customer_user);
-			} else if (current_user instanceof Manager){
+			} else if (user instanceof Manager){
 				Manager manager_user = (Manager) user;
 				this.managerList.add(manager_user);
-			} else if (current_user instanceof Restaurant){
+			} else if (user instanceof Restaurant){
 				Restaurant restaurant_user = (Restaurant) user;
 				this.restaurantList.add(restaurant_user);
 			}
 			users.put(user.getUsername(), user);
 		}else{
 			unauthorizedCommand();
-			System.out.println("You have to be logged out to sign up to the system");
 		}
 	}
 
@@ -142,25 +141,26 @@ public class Core{
 	 * 		   or null if not
 	 */
 	public String logIn(String username){
+		String output=null;
 		if (users.containsKey(username)){
 			current_user = users.get(username);
 			if (current_user instanceof Courier){
 				current_courier = (Courier) current_user;
-				return "Successfully logged in as a Courier !";
+				output = "Successfully logged in as a Courier !";
 			} else if (current_user instanceof Customer){
 				current_customer = (Customer) current_user;
-				return "Successfully logged in as a Customer !";
+				output = "Successfully logged in as a Customer !";
 			} else if (current_user instanceof Manager){
 				current_manager = (Manager) current_user;
-				treatNewOrders(); //TODO check whether this is fine or not
-				return "Successfully logged in as a Manager !";
+				output = "Successfully logged in as a Manager !";
 			} else if (current_user instanceof Restaurant){
 				current_restaurant = (Restaurant) current_user;
-				return "Successfully logged in as a Restaurant !";
+				output = "Successfully logged in as a Restaurant !";
 			}
+			System.out.println(current_user.getName() + " is logged in.");
 			current_user.checkMessages(); 
 		}
-		return null;
+		return output;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
-	public void disactivateUser(User user){
+	public void deactivateUser(User user){
 		if(current_manager != null){
 			users.remove(user.getUsername(), user);
 		}else{
@@ -215,7 +215,7 @@ public class Core{
 	public void removeUser(User e){
 		if(current_manager != null){
 			if (users.containsKey(e.getUsername())){
-				disactivateUser(e);
+				deactivateUser(e);
 				if (e instanceof Courier){
 					Courier courier_e = (Courier) e;
 					this.courierList.remove(courier_e);
@@ -466,8 +466,9 @@ public class Core{
 	 *	does that randomly in our case) 
 	 *	4) either no courier has been found (then the order is disregarded) 
 	 *	5) or the courier accepts and all the data is saved and updated respectively
+	 *	This function is private because it is only used by the function placeOrder()
 	 */ 
-	public void treatNewOrders(){ //TODO make this function private if it is in logged in
+	private void treatNewOrders(){ 
 		while (receivedOrders.size() != 0){
 			Order order = this.receivedOrders.removeFirst();
 			//get ordered list of couriers according to the chosen policy
@@ -482,7 +483,7 @@ public class Core{
 							+ "Please respond whether you can carry out the order or not.");
 					// courier decides randomly if he accepts or declines
 					courier.replyRandom();
-				} //TODO implement a test to check whether the isAvailable attribute of the courier is functioning
+				} 
 				currentList.remove(0);
 			}
 
@@ -495,7 +496,7 @@ public class Core{
 				order.setPriceFinal(order.getPriceInter() + this.serviceFee);
 				savedOrders.add(order); // order is saved
 				updateSystem("[Order ID : "+ order.getID() + "] " + courier + " will proceed with the order. Order has been saved.");
-
+				
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
 				List<Dish> order_dishes = order.getDishes();
@@ -556,7 +557,8 @@ public class Core{
 	 */
 	public void placeNewOrder(Order order){
 		this.receivedOrders.add(order);
-		update(order.getCustomer(),"Your order has succesfully been placed.");
+		update(this.current_customer,"Your order has succesfully been placed.");
+		treatNewOrders();
 	}
 
 

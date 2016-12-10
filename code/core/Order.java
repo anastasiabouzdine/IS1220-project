@@ -1,6 +1,5 @@
 package core;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,10 +11,10 @@ import users.Customer;
 import users.Restaurant;
 
 /**
- * The class <code>Order</code> allows to create an Order which
- * contains informations about the <code>Customer</code> who ordered it it
- * and the <code>Restaurant</code> to which it has been addressed.
- * It also contains the quantity of the different <code>Dish</code> or <code>Meal</code>.
+ * The class <code>Order</code> allows to create an Order which contains
+ * informations about the <code>Customer</code> who ordered it it and the
+ * <code>Restaurant</code> to which it has been addressed. It also contains the
+ * quantity of the different <code>Dish</code> or <code>Meal</code>.
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
@@ -28,22 +27,24 @@ public class Order {
 	private Restaurant restaurant;
 	private ArrayList<Meal> meals;
 	private ArrayList<Dish> dishes;
-	// quantity.get(i) gives the quantity of meals.get(i) or dishes.get(i) 
+	// quantity.get(i) gives the quantity of meals.get(i) or dishes.get(i)
 	// customer can either choose multiple dishes or multiple meals
 	private ArrayList<Integer> quantity;
-	private Courier courier; 
+	private Courier courier;
 	private double profitFinal;
 	private double priceInter;
 	private double priceFinal;
 	private final Calendar date;
-	
+
 	/**
 	 * Constructor of an order.
 	 * 
-	 * @param customer customer that has initialised the order 
-	 * @param restaurant restaurant the user has ordered at
+	 * @param customer
+	 *            customer that has initialised the order
+	 * @param restaurant
+	 *            restaurant the user has ordered at
 	 */
-	public Order(Customer customer, Restaurant restaurant){
+	public Order(Customer customer, Restaurant restaurant) {
 		this.ID = (++counter);
 		this.customer = customer;
 		this.restaurant = restaurant;
@@ -52,57 +53,62 @@ public class Order {
 		quantity = new ArrayList<Integer>();
 		this.date = Calendar.getInstance();
 	}
-	
+
 	// add Meal and add Dish functions
-	public void addMeal(Meal m, int q){
+	public void addMeal(Meal m, int q) {
 		meals.add(m);
 		quantity.add(q);
 	}
-	public void addDish(Dish m, int q){
+
+	public void addDish(Dish m, int q) {
 		dishes.add(m);
 		quantity.add(q);
 	}
-	
- 	
+
 	/*********************************************************************/
 	/**
 	 * The method states whether the Fidelity is basic or not.
-	 * @return a boolean to true if the customer fidCardPlan is basic, false if not
+	 * 
+	 * @return a boolean to true if the customer fidCardPlan is basic, false if
+	 *         not
 	 */
 	public boolean isFidCardPlanBasic() {
 		return (customer.getFidCardPlan() instanceof FidCardPlanBasic);
 	}
-	
+
 	/**
-	 * The method <code>Order.getPrice</code> calculates the price of the <code>Order</code> depending on 
+	 * The method <code>Order.getPrice</code> calculates the price of the
+	 * <code>Order</code> depending on
 	 * 
 	 * <ul>
-	 * 	<li>whether the customer ordered multiple <code>Meal</code> or multiple <code>Deal</code></li>
-	 *  <li>whether the customer has a <code>FidCardPlanBasic</code>
-	 *  ,a <code>FidCardPlanPoints</code> or a <code>FidCardPlanLottery</code></li>
+	 * <li>whether the customer ordered multiple <code>Meal</code> or multiple
+	 * <code>Deal</code></li>
+	 * <li>whether the customer has a <code>FidCardPlanBasic</code> ,a
+	 * <code>FidCardPlanPoints</code> or a <code>FidCardPlanLottery</code></li>
 	 * </ul>
 	 * 
-	 * @return	price	of the order is returned as a double
+	 * @return price of the order is returned as a double
 	 */
-	public double getPrice(){
+	public double getPrice() {
 		double price = 0.0;
-		
-		if(isFidCardPlanBasic()) {
-			for(int i = 0; i < meals.size(); i++) {
-				if(restaurant.isMealSpecial(meals.get(i))) {
-					price += quantity.get(i)*meals.get(i).getPrice()*(1-restaurant.getSpecDiscFact());
-					// price += quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
+
+		if (isFidCardPlanBasic()) {
+			for (int i = 0; i < meals.size(); i++) {
+				if (restaurant.isMealSpecial(meals.get(i))) {
+					price += quantity.get(i) * meals.get(i).getPrice() * (1 - restaurant.getSpecDiscFact());
+					// price +=
+					// quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
 				} else {
-					price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+					price += quantity.get(i) * restaurant.getPrice(meals.get(i));
 				}
 			}
 		} else {
-			for(int i = 0; i < meals.size(); i++) {
-				price += quantity.get(i)*restaurant.getPrice(meals.get(i));
+			for (int i = 0; i < meals.size(); i++) {
+				price += quantity.get(i) * restaurant.getPrice(meals.get(i));
 			}
 		}
-		for(int i = 0; i < dishes.size(); i++) {
-			price += quantity.get(i)*dishes.get(i).getPrice();
+		for (int i = 0; i < dishes.size(); i++) {
+			price += quantity.get(i) * dishes.get(i).getPrice();
 		}
 		price *= customer.getFidCardPlan().applyReduction();
 		price = round2(price);
@@ -112,8 +118,8 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant 
-				+ ", courier=" + courier + "]";
+		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant + ", courier=" + courier
+				+ "]";
 	}
 
 	/*********************************************************************/
@@ -121,24 +127,29 @@ public class Order {
 
 	/**
 	 * Returns the input rounded to 2 decimal places.
-	 * @param n the number to round
+	 * 
+	 * @param n
+	 *            the number to round
 	 * @return the rounded number
 	 */
-	public static double round2(double n){
+	public static double round2(double n) {
 		return Math.round(n * 100.0D) / 100.0D;
 	}
-	
+
 	/**
 	 * Returns the input rounded to 4 decimal places.
-	 * @param n the number to round
+	 * 
+	 * @param n
+	 *            the number to round
 	 * @return the rounded number
 	 */
-	public static double round4(double n){
+	public static double round4(double n) {
 		return Math.round(n * 10000.0D) / 10000.0D;
 	}
 
 	/*********************************************************************/
-	/* Getters and Setter */ //no set ID! no set Date!
+	/* Getters and Setter */
+	// no set ID! no set Date!
 
 	/**
 	 * @return the customer
@@ -148,7 +159,8 @@ public class Order {
 	}
 
 	/**
-	 * @param customer the customer to set
+	 * @param customer
+	 *            the customer to set
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
@@ -162,7 +174,8 @@ public class Order {
 	}
 
 	/**
-	 * @param restaurant the restaurant to set
+	 * @param restaurant
+	 *            the restaurant to set
 	 */
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
@@ -176,7 +189,8 @@ public class Order {
 	}
 
 	/**
-	 * @param meals the meals to set
+	 * @param meals
+	 *            the meals to set
 	 */
 	public void setMeals(ArrayList<Meal> meals) {
 		this.meals = meals;
@@ -190,7 +204,8 @@ public class Order {
 	}
 
 	/**
-	 * @param dishes the dishes to set
+	 * @param dishes
+	 *            the dishes to set
 	 */
 	public void setDishes(ArrayList<Dish> dishes) {
 		this.dishes = dishes;
@@ -204,7 +219,8 @@ public class Order {
 	}
 
 	/**
-	 * @param quantity the quantity to set
+	 * @param quantity
+	 *            the quantity to set
 	 */
 	public void setQuantity(ArrayList<Integer> quantity) {
 		this.quantity = quantity;
@@ -218,7 +234,8 @@ public class Order {
 	}
 
 	/**
-	 * @param courier the courier to set
+	 * @param courier
+	 *            the courier to set
 	 */
 	public void setCourier(Courier courier) {
 		this.courier = courier;
@@ -232,7 +249,8 @@ public class Order {
 	}
 
 	/**
-	 * @param profitFinal the profitFinal to set
+	 * @param profitFinal
+	 *            the profitFinal to set
 	 */
 	public void setProfitFinal(double profitFinal) {
 		this.profitFinal = round2(profitFinal);
@@ -246,7 +264,8 @@ public class Order {
 	}
 
 	/**
-	 * @param priceInter the priceInter to set
+	 * @param priceInter
+	 *            the priceInter to set
 	 */
 	public void setPriceInter(double priceInter) {
 		this.priceInter = round2(priceInter);
@@ -260,7 +279,8 @@ public class Order {
 	}
 
 	/**
-	 * @param priceFinal the priceFinal to set
+	 * @param priceFinal
+	 *            the priceFinal to set
 	 */
 	public void setPriceFinal(double priceFinal) {
 		this.priceFinal = round2(priceFinal);
@@ -285,7 +305,6 @@ public class Order {
 	 */
 	public Calendar getDate() {
 		return date;
-	}		
-	
+	}
 
 }
