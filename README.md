@@ -5,14 +5,13 @@ whose functionality are similar to that of nowadays food delivery systems.
 The project consists of two parts, the **core** and the **interface**.
 
 ## To do
-- [ ] eventually divide CoreTest file into multiple more specific test files
 - [x] make `treatNewOrders` work for multiple orders
 - [x] number of `preparedOrders` for a `Restaurant` ? 
 - [x] handling of the `dateAfter` as the current date ?
-- [ ] update users lists (.txt)
-- [ ] review `toString()` functions
-- [ ] finish JavaDoc
-- [ ] verify disactivated users don't get involved in `Core` functions
+- [x] update users lists (.txt)
+- [x] review `toString()` functions
+- [x] finish JavaDoc
+- [x] verify disactivated users don't get involved in `Core` functions
 - [x] rounding problems in Coretest --> because of bad dates handling (use of compareTo instead of before and after)
 - [x] problem with `MarkupProfit` Class
 
