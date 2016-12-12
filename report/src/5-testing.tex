@@ -1,24 +1,58 @@
 \section{Testing} % (fold)
 \label{sec:testing}
-This section describes how testing methods have been applied to our project.
+Now that we have described how the work has been designed and then implemented,
+it is time to ``prove'' that our solution works and leads to satisfying \emph{results}.
+This section will thus describe how testing methods have been applied to our project
+and how we managed to \emph{cover} most of the written code while testing.
 
-%%%%%%%%%%%%%%%%% TEST EXAMPLES %%%%%%%%%%%%%%%%%
-\begin{lstlisting}[caption=Example of a test using \texttt{assertEquals} with 2 decimal precision.,
-  label=lst:test_total_income]
-@Test
-public void checkIfCalcTotalIncomeWorks() {
-  make3orders();
-  mf1.autoSetDateAfter();
-  double totalIn = mf1.calcTotalIncome();
-  //   3xdish1 : 3x8.3 = 24.9
-  // + 2xdish2 : 2x6.35 = 12.7
-  // + 1xdish3 : 1x16.85 = 16.85
-  // + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
-  // ------------------------------------------------------
-  // = 61.95
-  assertEquals(totalIn, 61.95, 0.01);
-  System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
-}
-\end{lstlisting}
+While coding, each time a class (or group of classes working in the same pattern)
+was completed, an associated \textsc{JUnit} file, containing diversified \lstinline|assert|
+methods and \lstinline|@Before| statements to avoid repitition
+(see listing~\ref{lst:test_total_income} to get an example),
+was created and all important
+methods had at least one test method.
+Once we finished implementing the \Core~and the test associated
+to it (it is logically the most detailed one), we had a total of 15 tests
+files.
+Even if test driven development wasn't our approach, we put a point
+onto implementing the tests in detail and it seemed that they were
+challenging all of our code.
+
+At that point we began to wonder if it was possible to know \emph{exactly}
+how much of the code was \emph{covered} by the tests.
+Some research lead us to a very useful \textsc{Eclipse} plugin
+called \textsc{EclEmma}~\cite{eclemma} that produces a very
+detailed summary of the code coverage.
+The first run of all tests using this plugin led to the
+results shown in figure~\ref{fig:coverage_first}.
+We observe a $80.2\%$ code coverage which seems intuitevely
+fair enough as some of the code may not be useful to test.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.47]{./img/coverage_start.png} 
+  \end{center}
+  \caption{Code coverage results when using \textsc{EclEmma} for
+  the first time.}
+  \label{fig:coverage_first}
+\end{figure} 
+
+Next comes the question of what code coverage percentage
+we should achieve for it to be efficient.
+It seems as ``\textit{the amount of testing necessary depends on a number of
+factors}''~\cite{artimaHowMuchCoverage} that themselves depend
+on how the code is written and what functions it implements.
+Therefore, eventhough no particular goal for the coverage is set,
+it allows to point out what part of the code \emph{might have been not tested}
+or \emph{might be useless} and indeed led to $84.9\%$ after review (fig.~\ref{fig:coverage_end}).
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[scale=0.47]{./img/coverage_end.png} 
+  \end{center}
+  \caption{Code coverage results after review of
+  tests using first results (fig.~\ref{fig:coverage_first}).}
+  \label{fig:coverage_end}
+\end{figure}
 
 % section testing (end)

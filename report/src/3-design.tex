@@ -34,7 +34,6 @@ AbstractFactory dishF = FactoryProducer.getFactory("Dish");
 
 Dish d1 = dishF.getDish("starter", "avocado", 6.5);
 d1.setType("vegetarian");
-
 Dish d2 = dishF.getDish("maindish", "ham with salad", 12.5);
 
 double price = d1.getPrice() + d2.getPrice();
