@@ -18,7 +18,6 @@
 }
 \newpage
 
-\part{Body report}
 \input{./src/1-intro.tex} 
 \newpage
 \input{./src/2-background.tex} 
@@ -29,19 +28,20 @@
 \newpage
 \input{./src/5-testing.tex} 
 \newpage
-\input{./src/6-results.tex} 
-\newpage
+% \input{./src/6-results.tex} 
+% \newpage
 \input{./src/7-conclusion.tex}
 \newpage
 
-\part{Annexes}
+\part*{Appendix}
+\addcontentsline{toc}{part}{Appendix}
 \appendix
 \input{./app/code_listing.tex}
 \newpage
 \input{./app/UML_diagrams.tex}
 \newpage
-% \input{./app/test_results.tex}
-% \newpage
+\input{./app/who_did_what.tex}
+\newpage
 
 \addcontentsline{toc}{part}{References}
 \nocite{*}

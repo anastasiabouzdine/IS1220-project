@@ -104,80 +104,53 @@ public ArrayList<Order> getHistoryOfOrders() {
 }
 \end{lstlisting}
 
-%%%%%%%%%%%%%%%%% CURRENT USER SYSTEM %%%%%%%%%%%%%%%%% current_user (fold)
-\begin{lstlisting}[caption=Application of the \texttt{current\_customer}
-  concept to \texttt{getHistoryOfOrders}.,
-  label=lst:historyOfOrders]
-/**
- * Returns the history of orders of the current user, null if none is logged in.
- * @return an ArrayList of orders containing the orders of the current user
- */
-public ArrayList<Order> getHistoryOfOrders() {
-  if (current_customer != null){
-    int temp_ID = current_customer.getID();
-    ArrayList<Order> temp_cust_orders = new ArrayList<Order>();
-    for(Order o : savedOrders){
-      if (temp_ID == o.getCustomer().getID()){
-        temp_cust_orders.add(o);
-      }
-    }
-    return temp_cust_orders;
-  } else {
-    unauthorizedCommand();
-    return null;
-  }
-}
-\end{lstlisting}
-
 %%%%%%%%%%%%%%%%% LOGIN / LOGOUT SYSTEM %%%%%%%%%%%%%%%%% current_user (fold)
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:login]
 /**
-	 * This method allows registered users to log in and changes the current user to the user 
-	 * having completed the log in. New messages are printed out if user logs in.
-	 * 
-	 * @param username registered username that is saved in the system.
-	 * @return a String containing a welcome message if the login was successful
-	 * 		   or null if not
-	 */
-	public String logIn(String username){
-		String output=null;
-		if (users.containsKey(username)){
-			current_user = users.get(username);
-			if (current_user instanceof Courier){
-				current_courier = (Courier) current_user;
-				output = "Successfully logged in as a Courier !";
-			} else if (current_user instanceof Customer){
-				current_customer = (Customer) current_user;
-				output = "Successfully logged in as a Customer !";
-			} else if (current_user instanceof Manager){
-				current_manager = (Manager) current_user;
-				output = "Successfully logged in as a Manager !";
-			} else if (current_user instanceof Restaurant){
-				current_restaurant = (Restaurant) current_user;
-				output = "Successfully logged in as a Restaurant !";
-			}
-			current_user.checkMessages(); 
-		}
-		return output;
-	}
+* This method allows registered users to log in and changes the current user to the user 
+* having completed the log in. New messages are printed out if user logs in.
+* 
+* @param username registered username that is saved in the system.
+* @return a String containing a welcome message if the login was successful
+* 		   or null if not
+*/
+public String logIn(String username){
+  String output=null;
+  if (users.containsKey(username)){
+    current_user = users.get(username);
+    if (current_user instanceof Courier){
+    	current_courier = (Courier) current_user;
+    	output = "Successfully logged in as a Courier !";
+    } else if (current_user instanceof Customer){
+    	current_customer = (Customer) current_user;
+    	output = "Successfully logged in as a Customer !";
+    } else if (current_user instanceof Manager){
+    	current_manager = (Manager) current_user;
+    	output = "Successfully logged in as a Manager !";
+    } else if (current_user instanceof Restaurant){
+    	current_restaurant = (Restaurant) current_user;
+    	output = "Successfully logged in as a Restaurant !";
+    }
+    current_user.checkMessages(); 
+  }
+  return output;
+}
 \end{lstlisting}
 
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:logout]
-	/**
-	 * This method allows logged in users to log out.
-	 */
-	public void logOut(){
-		current_user = null;
-		current_courier = null;
-		current_customer = null;
-		current_manager = null;
-		current_restaurant = null;
-	}
+/**
+ * This method allows logged in users to log out.
+ */
+public void logOut(){
+current_user = null;
+current_courier = null;
+current_customer = null;
+current_manager = null;
+current_restaurant = null;
+}
 \end{lstlisting}
-
-
 
 % current_user (end)
 
