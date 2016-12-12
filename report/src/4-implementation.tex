@@ -3,12 +3,135 @@
 
 % Give code details (not a complete listing, but descriptions of key parts). Discuss the most important/interesting aspects. It probably won't be possible to discuss everything - give a rationale for what you do discuss.
 
+In order to effectively give an overview of the code implementation and to describe the key points, we will take the following approach: 
+
+\begin{enumerate}
+	
+	\item First, we will describe the general structure of the main packages \ref{sub:structure_of_the_main_packages}.
+	\item Second, we will pick out key methods of the packages and explain them in detail \ref{sub:key_methods}. 
+	\item Third, we will describe the most important functionality of the system: Placing an order and treating it afterwards \ref{sub:???}. 
+	
+\end{enumerate}
+
+\subsection{Structure of the main packages} % (fold)
+\label{sub:structure_of_the_main_packages}
+
+Our java project contains in total nine packages: (\core, \exceptions, \parsers, \policies, \restaurantSetup, \tests, \txtF, \userI~and \users). \exceptions~will not be further explained as it is not too important. \parsers~and \txtF~are there too create objects for the testing and also need no further explanation. \userI is not relevant for the first part of the project and will be described in the second part. Lastly, \tests~will be explained in detail in the following section \ref{sec:testing}.
+
+\subsubsection{Package core} % (fold)
+\label{ssub:core}
+
+The package \core~contains the classes \Core~and \Order~as can be seen in the diagram below \ref{fig:core_order_uml}. 
+
+\Core~is the center of the application that connects all the users. To better understand the structure, please take a quick look at the following UML diagram \ref{fig:core_users_uml}. All classes that we made are there to give a certain functionality to a \User. Since the \Core~contains a list of all \User,it is able to access all classes and thus all the information that is saved in the system. This characteristic is probably the most important one of our application since it allows us to:
+
+\begin{enumerate}
+	\item handle all relevant functionalites over the \Core,
+	\item ensure the open-close principle because we can easily decide which \User~has access to which functionality 
+	\item and finally to take care that the structure is clear and well-organized.
+\end{enumerate}
+
+How the core guarantees the open-close principle via the log-in log-out functionality will be explained in the second part of this section \ref{ssub:log_in_functionality_of_the_core}.
+
+\Order~is there to present an actual made order. \Order~is in some sense the way the different \User~communicate to each other. Its most important functionalities will also discussed throughoutly furter below \ref{???}. It is important to understand the two different price attributes that are in the state of \Order: (@John: Insert an image of the code)
+
+\begin{enumerate}
+	\item \lstinline|priceInter| is the part of the order price the restaurant will receive.
+	\item \lstinline|priceFinal| is the actual price the customer pays \MyFoodora.
+	\item \lstinline|profitFinal| is the profit \MyFoodora~makes with the order. 
+\end{enumerate}
+
+The different prices are used in different ways and will be explained in the third part af this section \ref{???}.
+
+% subsubsection core (end)
+
+\subsubsection{Package policies} % (fold)
+\label{ssub:policies}
+
+The package \policies~contains all the necessary policies that are needed and whose basic design was explained earlier \ref{sub:strategy_pattern_for_the_texttt_myfoodora_policies}. 
+
+Most of the policies follow the typical \emph{strategy pattern}, whereas an interface with the name of the actual policy is implemented by the actual policies, as can be seen in the diagram annexes \ref{fig:delivery_uml}. The core then has an attribute where its declaration is the class' name and which can be the reference to one of the actual policies \ref{fig:core_policies_uml}. An exemple of the actual implementation of a policy is given later \ref{???}.
+
+Only the policy \lstinline|SortPolicy|~is not realised after the typical \emph{strategy pattern} and uses an abstract class instead of an interface. Why did we choose to do so? SortPolicy is used to display the most or least selling meal or dish. 
+
+@John(make this look important): At this point it has to be metioned that we well understood the assignement to only display \HalfMeal, but we are convinced that is more logical and user friendly to present all \Meal~instead of only \HalfMeal. 
+
+We thought about using the \lstinline|ArrayList|~\lstinline|savedOrders|~of the core that saves all orders ever having been executed to present how often a \Meal~or \Dish~was sold, but we decided against it since: 
+
+\begin{enumerate}
+	\item First, it is not easy to extract the needed information from \lstinline|savedOrders|~because it contains objects of type \Order.
+	\item Second, a new \lstinline|List|~would have to be created that has to sort all the needed information.
+\end{enumerate}
+
+Therefore, we implemented a two sorted lists of type \lstinline|TreeSet|, a list that is always sorted because it puts the added element directly at the right spot. The advantages are:
+
+\begin{enumerate}
+	\item Each time the function is called there is no sorting needed in advance.
+	\item A lot of complicated and long coding was avoided and transparency is improved.
+\end{enumerate}
+
+% subsubsection policies (end)
+
+\subsubsection{Package restaurantSetUp} % (fold)
+\label{ssub:restaurantsetup}
+
+The package \restaurantSetup contains all the classes that are needed for \Restaurant~as can be seen below \ref{fig:dish_meal_uml}.
+In order to add \Dish~and \Meal~to its offer the already explained \emph{abstract factory pattern} is used. The other two important structures of \restaurantSetup~are the class structures of \Meal~and \Dish. 
+
+\Meal is inheritated by \HalfMeal~and \FullMeal. Since the function \lstinline|getPrice()|~thats add up the prices of the dishes included in the meal is the same for \FullMeal~and \HalfMeal, \Meal~does not have to be abstract. We also considered an extension of another type of \Meal, and were convinced that the functionality would still be the same so that a not abstract \Meal~is justified.
+Because we do not want an object of type \Meal~to be created, the constructor is of type protected so that classes of other packages cannot access the constructor. We make sure that a \FullMeal~is composed of exactly one \Starter, one \MainDish~and one \Dessert~by declaring the parameters of the constructor respectively. The same holds true for \HalfMeal~taking the respective requirements into account.
+
+\Dish~is inheritated by \Starter, \MainDish, \Dessert. All functionality for the concrete dishes is the same so the same reasoning as explained in the upper paragraph holds true. 
+
+Lastly, it is to be noticed that \Restaurant~offers either a \Meal~or a self composed meal composed of different \Dish~of the menu. 
+That is why we used \emph{composition} by giving each \Restaurant~exactly one \Menu~that contains all the single \Dish~being offered.
+An object of type \Menu~contains therefore a list of \Starter, \MainDish, and \Dessert. Additionally, is a list of all the provided \Meal included in each \Restaurant.
+
+An exemple will be explained below \ref{???}.
+
+% subsubsection restaurantsetup (end)
+
+\subsubsection{Package users} % (fold)
+\label{ssub:users}
+
+The package \users~contains the all the users of the system being: ``\textit{the carrier, the customer, the restaurant and the manager}''.
+Each of them is inherited by \User~and therefore takes over certain necessary attributes like \lstinline|name|~and \lstinline|messageBox|~which is a \lstinline|Stack|~that contains all the messages intented for this \User. Additionally it is important that every \User~has the function \lstinline|update()|~that adds a message to the \lstinline|messageBox|, which is the reason why this method is also in the class \User. Each \User~adds specific functions for its needed functionality. We want to mention two important implementations:
+
+\begin{enumerate}
+	\item \Courier~has a \lstinline|LinkedList| of received orders, where an \Order~is placed every time he is choosen.
+	\item \Customer~implements the interface \lstinline|Observer|~that is implemented by us \ref{fig:observer_pattern_for}.
+\end{enumerate}
+
+\Manager~neither has many attributes, nor does it has many methods since all the functions used by \Manager~are in the \Core.
+\Restaurent~is already sufficiently explained above \ref{ssub:restaurantsetup}.
+
+% subsubsection users (end)
+
+% subsection structure_of_the_main_packages (end)
+\subsection{Key methods} % (fold)
+\label{sub:key_methods}
+
+\subsubsection{Log-in functionality of the core} % (fold)
+\label{ssub:log_in_functionality_of_the_core}
+
+The \emph{log-in/log-out functionality} of the core is very important because it ensures that certain function can only be accessed by certain \User. Let's take a look at the method \lstinline|logIn()| \ref{lst:login}. The input is a username. First the function checks whether the \lstinline|username|~is registered and only if this holds true the \User~having this \lstinline|username|~can log in. Then the \lstinline|current_user|~being an attribute of \Core~ and of type \User~is given the \User~that is associated to the \lstinline|username|~via the \lstinline|HashMap|~\lstinline|users|. Now, the function checks which type of \User~has just logged in sets the respective ``current" attribute to the \User~being now logged in. If for exemple a \Manager~logs in the attribute \lstinline|current_manager|~will be set to the \User, whereas the other ``current" attributes (respectively \lstinline|current_restaurant|, \lstinline|current_customer| and \lstinline|current_courrier|) stay equal to \lstinline|null|. Finally the left messages for the logged-in \User~are displayed via calling the method \lstinline|current_user.checkMessages()|.
+
+This system allows us to design pretty much every method in the core in a way that it contains in the beginning a check who is actually logged-in, e.g.: \lstinline|if(current_manager != null){|. Herewith, we can ensure that certain functions can only be used by certain \User and that a log-in had to be performed before a \User~can use a method.
+
+The logged-out function is self-explanatory \ref{lst:logout}.
+
+% subsubsection log_in_functionality_of_the_core (end)
+
+% subsection key_methods (end)
 
 
 
-% \subsection{Javadoc usage} % (fold)
-% \label{sub:javadoc_usage}
-% 
-% % subsection javadoc_usage (end)
+
+
+
+
+
+
+
 
 % section implementation (end)
