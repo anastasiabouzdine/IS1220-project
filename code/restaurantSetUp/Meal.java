@@ -117,7 +117,6 @@ public abstract class Meal {
 	
 	@Override
 	public boolean equals(Object obj) {
-		
 		if(obj instanceof Meal){
 			Meal meal = (Meal) obj;
 			if(meal.getName().equals(name) && meal.getType().equals(type)){

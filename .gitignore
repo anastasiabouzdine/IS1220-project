@@ -17,6 +17,7 @@
 *.db
 *.lb
 *.metadata
+*.jar
 
 report/auxFile/*
 report/report.pdf

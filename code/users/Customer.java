@@ -83,6 +83,18 @@ public class Customer extends User implements Observer{
 		return 0;
 	}
 	
+	/**
+	 * Add fidelity points if the customer is subscribed to the FidelityPoints plan.
+	 * @param n an int representing the number of fidelity points to add
+	 * 
+	 */
+	public void addFidelityPoints(int n) {
+		if (this.fidCardPlan instanceof FidCardPlanPoints){
+			FidCardPlanPoints temp_fid = (FidCardPlanPoints) this.fidCardPlan;
+			temp_fid.setPoints(temp_fid.getPoints() + n);
+		} 
+	}
+	
 	public void changeNotifyConsensus(){
 		setBeNotified(!beNotified);
 	}

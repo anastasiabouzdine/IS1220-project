@@ -56,12 +56,6 @@ public class ParseCouriers {
 		}
 		return courier_list;
 	}
-	
-	public static void main(String[] args) {
-		ArrayList<Courier> courier_list = parseCouriers("src/txtFILES/courierList.txt");
-		for(Courier c : courier_list){
-			System.out.println(c.getID() + " : " + c.toString());
-		}
-	}
+
 
 }

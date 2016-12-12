@@ -20,7 +20,7 @@ public class User {
 	private static int counter;
 	private Stack<String> messageBox = new Stack<String>(); 
 	
-	public User(String name, String username){
+	protected User(String name, String username){
 		this.name = name;
 		this.username = username;
 		this.ID = ++counter;

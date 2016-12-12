@@ -17,7 +17,8 @@ public class FidCardPlanLottery implements FidCardPlan {
 
 	/**
 	 * The function that is used if the Fidelity plan is set to FidCardPlanLottery.
-	 * @return 1 if customer wan the lottery and 0 if he did not (depending on the random number).
+	 * @return 1 if customer wan the lottery and 0 if he did not 
+	 * (depending on the random number).
 	 */
 	@Override
 	public double applyReduction() {

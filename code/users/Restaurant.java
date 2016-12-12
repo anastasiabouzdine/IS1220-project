@@ -120,7 +120,6 @@ public class Restaurant extends User {
 	 * @return the price of a meal is returned as a double
 	 */
 	public double getPrice(Meal meal) {
-		
 		if(!(listOfMeal.contains(meal))) {
 			System.out.println("Restaurant does not offer this meal");
 			throw new NullPointerException();
@@ -134,16 +133,13 @@ public class Restaurant extends User {
 	 * @return 	true or false depending on whether the meal is the special meal of the week
 	 */
 	public boolean isMealSpecial(Meal meal) {
-	
 		if(!(listOfMeal.contains(meal))) {
 			System.out.println("Restaurant does not offer this meal");
 			throw new NullPointerException();
 		}
-		
 		if(meal.equals(specialMeal)){
 			return true;
 		} 
-		
 		return false;		
 	}
 

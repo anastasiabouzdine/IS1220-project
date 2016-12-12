@@ -27,12 +27,6 @@ public class RestaurantTest {
 	ArrayList<Restaurant> list_restaurant = ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt");
 	
 	
-	
-	@Test
-	public void createAnAddress() {
-		@SuppressWarnings("unused")
-		Address address1 = new Address(3,2);
-	}
 	@SuppressWarnings("unused")
 	@Test
 	public void createRestaurant() {
@@ -54,7 +48,6 @@ public class RestaurantTest {
 	
 	@Test
 	public void checkIfRestaurantGetPriceWorks(){
-		
 		Restaurant r2 = list_restaurant.get(1);
 		
 		Meal meal1 = list_fmeal.get(0);

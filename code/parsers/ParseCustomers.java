@@ -57,12 +57,6 @@ public class ParseCustomers {
 		}
 		return cust_list;
 	}
-	
-	public static void main(String[] args) {
-		ArrayList<Customer> cust_list = parseCustomers("src/txtFILES/customersList.txt");
-		for(Customer c : cust_list){
-			System.out.println(c.getID() + " : " + c.toString());
-		}
-	}
+
 
 }

@@ -88,6 +88,8 @@ public class Core{
 		this.managerList = new ArrayList<Manager>();
 		this.restaurantList = new ArrayList<Restaurant>();
 
+		managerList.add(new Manager("system", "admin", "root"));
+
 		this.mealHeap = new TreeSet<SortPolicy>();
 		this.mealRestHeap = new TreeSet<SortPolicy>();
 		this.dishHeap = new TreeSet<SortPolicy>();
@@ -119,9 +121,6 @@ public class Core{
 			} else if (user instanceof Customer){
 				Customer customer_user = (Customer) user;
 				this.customerList.add(customer_user);
-			} else if (user instanceof Manager){
-				Manager manager_user = (Manager) user;
-				this.managerList.add(manager_user);
 			} else if (user instanceof Restaurant){
 				Restaurant restaurant_user = (Restaurant) user;
 				this.restaurantList.add(restaurant_user);
@@ -512,8 +511,10 @@ public class Core{
 					update(order_restaurant,"[Order ID : "+ order.getID() + "] Please prepare the dish(es): " + order_dishes 
 							+ "to be picked up shortly by: " + courier.getName() + ".");
 				}
-				update(order.getCustomer(),"[Order ID : "+ order.getID() + "] Your order has been accepted "
-						+ "and will be carried out as soon as possible.");
+				Customer order_customer = order.getCustomer();
+				order_customer.addFidelityPoints(Math.floorDiv((int)order.getPriceInter(), 10));
+				update(order_customer,"[Order ID : "+ order.getID() + "] Your order has been accepted "
+						+ "for the price of " + order.getPriceFinal() + " and will be carried out as soon as possible.");
 			}
 		}
 	}

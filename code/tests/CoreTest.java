@@ -26,7 +26,6 @@ import users.Restaurant;
 public class CoreTest {
 	
 	Core mf1 = new Core();
-
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
 	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
@@ -74,7 +73,7 @@ public class CoreTest {
 		} catch (AlreadyUsedUsernameException e1) {
 			e1.printStackTrace();
 		}
-		assertTrue(mf1.logIn(e.getUsername()) != null);
+		assertNotNull(mf1.logIn(e.getUsername()));
 		assertTrue(mf1.getCourierList().contains(e));
 		System.out.println("TEST removeAndAddUser : DONE\n");
 	}
@@ -82,7 +81,7 @@ public class CoreTest {
 	@Test(expected=AlreadyUsedUsernameException.class)
 	public void addAlreadyUsedUsername() throws AlreadyUsedUsernameException  {
 		mf1.addUser(list_restaurant.get(0));
-		System.out.println("TEST addAlreadyUsedUsername : DONE\n");
+//		System.out.println("TEST addAlreadyUsedUsername : DONE\n");
 	}
 
 	@Test
@@ -220,6 +219,39 @@ public class CoreTest {
 		System.out.println("TEST checkIfCalcAverageProfitWorks : DONE\n");
 	}
 	
+	/*********************************************************************/
+	/* Fidelity plan with points */ 
+	
+	@Test
+	public void checkFidPlan() {
+		Customer cust = list_customer.get(4);
+		cust.setFidCardToPoints();
+		assertEquals(cust.getNumberOfFidelityPoints(), 0);
+		mf1.setCourierList(list_courier);
+		/* Make sure that all parameters are in accordance with tests */
+		mf1.setMarkup_percentage(0.05);
+		mf1.setDeliveryCost(4.0);
+		mf1.setServiceFee(2.5);
+
+		Order order1 = mf1.createNewOrder(cust, rest1);
+		order1.addDish(list_mainDish.get(0), 150);
+		placeOrder(order1);
+		// 150*8.3 = 1245 --> 124 points and reduction applied for next order
+		assertEquals(cust.getNumberOfFidelityPoints(), 124);
+		
+		Order order2 = mf1.createNewOrder(cust, rest1);
+		order2.addDish(list_mainDish.get(0), 40);
+		// 40*8.3*90% = 332 - 33.2 = 298.8 --> 124 - 100 + 29 = 53
+		placeOrder(order2);
+		assertEquals(order2.getPriceInter(), 298.8, 0.01);
+		// check if the number of points has been set to 24 points
+		System.out.println("####"+ cust.getNumberOfFidelityPoints());
+		assertEquals(cust.getNumberOfFidelityPoints(), 53);
+		
+		System.out.println("TEST checkIfCalcAverageProfitWorks : DONE\n");
+	}
+	
+	
 	
 	/*********************************************************************/
 	/* Most/least selling restaurants and active couriers */ 
@@ -259,7 +291,7 @@ public class CoreTest {
 	}
 	
 	/*********************************************************************/
-	/* calculate Target profit quantities */ 
+	/* Calculate Target profit quantities */ 
 	
 	@Test
 	public void simulateMarkupPerc() {
@@ -320,7 +352,6 @@ public class CoreTest {
 	@Test
 	public void simulateServiceFee() {
 		make3orders();
-		
 		mf1.setTargetProfitPolicyToSerFeeProf();
 		
 		double deliveryFee = 5;
@@ -332,7 +363,7 @@ public class CoreTest {
 		
 		// profit for one order = order price * markupPercentage + service fee - delivery cost
 		
-		//there are three orders so we'll calculate placeHolder as the left 
+		// there are three orders so we'll calculate placeHolder as the left 
 		// side of the equation and sum as the right side of the function 
 		// so that placeHolder = markupPercentage * sum
 		for(Order order : mf1.getSavedOrders()) {
@@ -347,22 +378,16 @@ public class CoreTest {
 	
 	@Test
 	public void testIfCourierIsDeactivated() throws AlreadyUsedUsernameException{
-		
 		mf1.logOut();
-		
 		for(Courier r: list_courier)
 			mf1.register(r);
-		
 		mf1.logIn("john45");
-		
-		
 		
 		for(int i=0; i < 4; i++)
 			list_courier.get(i).setAvailable(false);
 		
 		assertTrue(mf1.getCourierList().size() == 6);
 		int sum = 0;
-		
 		for(Courier c : list_courier)
 			if(c.isAvailable()==false)
 				sum++;
@@ -370,9 +395,7 @@ public class CoreTest {
 		assertTrue(sum == 4);
 		
 		String[] string = {"couPvp23","coujohn42","couP23p23","coujayjay34"};
-		
 		make3orders();
-		
 		for(int i=0; i<mf1.getSavedOrders().size(); i++)
 			for(int j = 0; j < 4; j++)
 				assertTrue(!mf1.getSavedOrders().get(i).getCourier().getUsername().equals(string[j]));
@@ -386,9 +409,7 @@ public class CoreTest {
 	@Test
 	public void assertNoHistoryIsGivenWhenNoCustomerLoggedIn() {
 		make2orders5HalfMeals();
-		
 		assertTrue(mf1.getHistoryOfOrders() == null);
-
 		System.out.println("TEST assertNoHistoryIsGivenWhenNoCustomerLoggedIn : DONE\n");
 	}
 	
@@ -402,11 +423,6 @@ public class CoreTest {
 
 		System.out.println("TEST checkIfHistoryOfOrdersIsCorrectWhenCustomerLoggedIn : DONE\n");
 	}
-	
-	/**************************************************************************************************/
-	/* CheckMessageBox */
-	
-	
 	
 	/**************************************************************************************************/
 	/* Helpers */
@@ -477,15 +493,15 @@ public class CoreTest {
 	
 	public void make2orders6Dishes() {
 		
-		Dish d1 = list_starter.get(0);
+		Starter d1 = list_starter.get(0);
 		Dish d2 = list_starter.get(1);
-		Dish d3 = list_starter.get(2);
-		Dish d4 = list_starter.get(3);
+		Dish d3 = list_mainDish.get(4);
+		Dish d4 = list_dessert.get(5);
 		Dish d5 = list_starter.get(4);
 		
 		rest1.addStarter((Starter) d1);
-		rest1.addStarter((Starter) d3);
-		rest1.addStarter((Starter) d4);
+		rest1.addMainDish((MainDish) d3);
+		rest1.addDessert((Dessert) d4);
 		rest1.addStarter((Starter) d5);
 		
 		rest2.addStarter((Starter) d2);

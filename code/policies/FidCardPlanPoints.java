@@ -31,7 +31,6 @@ public class FidCardPlanPoints implements FidCardPlan{
 	 */
 	@Override
 	public double applyReduction() {
-		
 		if(points >= 100) {
 			points -= 100;
 			return (1 - reduc);
@@ -64,6 +63,13 @@ public class FidCardPlanPoints implements FidCardPlan{
 	 */
 	public int getPoints() {
 		return points;
+	}
+
+	/**
+	 * @param points the points to set
+	 */
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
 	
