@@ -71,7 +71,9 @@ public class FastestDelivery implements DeliveryPolicy {
   label=lst:aggregationCore]
 public class Core{
     private DeliveryPolicy dPolicy;
+    
     private TargetProfitPolicy tpPolicy;
+    
     private SortPolicy sortPolicy;
 }
   
@@ -97,6 +99,7 @@ public ArrayList<Order> getHistoryOfOrders() {
       }
     }
     return temp_cust_orders;
+    
   } else {
     unauthorizedCommand();
     return null;
@@ -129,9 +132,7 @@ public void checkIfCalcTotalIncomeWorks() {
 % log-in\out (fold)
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:login]
-
 public String logIn(String username){
-
   if (users.containsKey(username)){
     current_user = users.get(username);
     if (current_user instanceof Courier){
@@ -155,13 +156,12 @@ public String logIn(String username){
 
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:logout]
-
 public void logOut(){
-current_user = null;
-current_courier = null;
-current_customer = null;
-current_manager = null;
-current_restaurant = null;
+  current_user = null;
+  current_courier = null;
+  current_customer = null;
+  current_manager = null;
+  current_restaurant = null;
 }
 \end{lstlisting}
 
@@ -173,35 +173,36 @@ current_restaurant = null;
 \begin{lstlisting}[caption=Implementation of different price quantities in \texttt{Order}.,
   label=lst:prices_order]
 public class Order {
-	...
-	private double profitFinal;
-	private double priceInter;
-	private double priceFinal;
-	...
-	}
+  ...
+  private double profitFinal;
+  private double priceInter;
+  private double priceFinal;
+  ...
+  }
 \end{lstlisting}
 % attr_price (end)
 
 %%%%%%%%%%%%%%%%% FASTEST DELIVERY %%%%%%%%%%%%%%%%%
 % fastest deliv (fold)
- \begin{lstlisting}[caption=Fastest Delivery Method.,
+ \begin{lstlisting}[caption=Pseudo java code of  fastest delivery method.,
    label=lst:fast_deliv_meth] 
 
 @Override
 ArrayList<Courier> howToDeliver(list of couriers, Address) {
-		...
-		list of distances = getDistance(list of couriers, Address);
-	
-		sorted courier list = IntStream.range(0, amount of members in list of distances)
-				.mapToObj(i -> new CourierDistance(list of couriers(i), list of distances(i)))
-			    .sorted(Comparator.comparingDouble(CourierDistance -> distance of CourierDistance))
-			    .map(CourierDistance -> Courier of CourierDistance())
-			    .collect(Collectors.toList());
-				
-		return sorted courier list;
-	}
+  ...
+  list of distances = getDistance(list of couriers, Address);	
+  sorted courier list = IntStream.range(0, amount of members in list of distances)
+    .mapToObj(i -> new CourierDistance(list of couriers(i), list of distances(i)))
+    .sorted(Comparator.comparingDouble(CourierDistance -> distance of CourierDistance))
+    .map(CourierDistance -> Courier of CourierDistance())
+    .collect(Collectors.toList());
+  		
+  return sorted courier list;
+}
   
-\lstset{basicstyle=\rm\small\ttfamily}
 \end{lstlisting}
 
 % fastest deliv (end)
+
+\lstset{basicstyle=\rm\small\ttfamily}
+

@@ -1,39 +1,56 @@
 \section{Implementation} % (fold)
 \label{sec:implementation}
 
-% Give code details (not a complete listing, but descriptions of key parts). Discuss the most important/interesting aspects. It probably won't be possible to discuss everything - give a rationale for what you do discuss.
-
-In order to effectively give an overview of the code implementation and to describe the key points, we will take the following approach: 
+In order to effectively give an overview of the code implementation
+and to describe the key points, we will take the following approach: 
 
 \begin{enumerate}
-	
-	\item First, we will describe the general structure of the main packages \ref{sub:structure_of_the_main_packages}.
-	\item Second, we will pick out key methods of the packages and explain them in detail \ref{sub:key_methods}. 
-	\item Third, we will describe the most important functionality of the system: Placing an order and treating it afterwards \ref{sub:???}. 
-	
+	\item First, we will describe the general structure of the
+  main \emph{packages} (see~\ref{sub:structure_of_the_main_packages}).
+	\item Second, we will pick out \emph{key methods} of the packages
+  and explain them in detail (see~\ref{sub:key_methods}). 
+	\item Third, we will describe the most important functionality of the system :
+  \emph{placing an order} and treating it afterwards (see~\ref{sub:place_and_treat_order}).
 \end{enumerate}
 
 \subsection{Structure of the main packages} % (fold)
 \label{sub:structure_of_the_main_packages}
-
-Our java project contains in total nine packages: (\core, \exceptions, \parsers, \policies, \restaurantSetup, \tests, \txtF, \userI~and \users). \exceptions~will not be further explained as it is not too important. \parsers~and \txtF~are there too create objects for the testing and also need no further explanation. \userI is not relevant for the first part of the project and will be described in the second part. Lastly, \tests~will be explained in detail in the following section \ref{sec:testing}.
+Our java project contains in total nine packages.
+The \exceptions~package will not be further explained as it is not too important.
+The \parsers~and \txtF~ ones are there to create objects for the testing
+and also need no further explanation.
+The \userI~package is not relevant for the first part of the project
+and will be described in the second part.
+Lastly, the \tests~package will be explained in detail in the next section.
+We will thus describe the \policies, \restaurantSetup, \policies, \tests~and
+\users~packages. 
 
 \subsubsection{Package core} % (fold)
 \label{ssub:core}
+The package \core~contains the classes \Core~and \Order~as can be seen in
+the UML diagram in figure~\ref{fig:core_order_uml}. 
 
-The package \core~contains the classes \Core~and \Order~as can be seen in the diagram below \ref{fig:core_order_uml}. 
-
-\Core~is the center of the application that connects all the users. To better understand the structure, please take a quick look at the following UML diagram \ref{fig:core_users_uml}. All classes that we made are there to give a certain functionality to a \User. Since the \Core~contains a list of all \User, it is able to access all classes and thus all the information that is saved in the system. This characteristic is probably the most important one of our application since it allows us to:
+The core is the center of the application that \emph{connects all the users}.
+To better understand the structure, please take a quick look at the UML diagram
+in figure~\ref{fig:core_users_uml}. 
+All classes that we made are there to give a certain functionality to a \User.
+Since the \Core~contains a list of all \User, it is able to access all classes
+and thus all the information that is saved in the system.
+This characteristic is probably the most important one of our application since it allows us to
 
 \begin{enumerate}
 	\item handle all relevant functionalites over the \Core,
-	\item ensure the open-close principle because we can easily decide which \User~has access to which functionality 
+	\item ensure the open-close principle because we can easily decide
+  which \User~has access to which functionality,
 	\item and finally to take care that the structure is clear and well-organized.
 \end{enumerate}
 
-How the core guarantees the open-close principle via the log-in log-out functionality will be explained in the second part of this section (see \ref{ssub:log_in_functionality_of_the_core}).
-
-\Order~is there to present an actual made order. \Order~is in some sense the way the different \User~communicate to each other. Its most important functionalities will also be discussed throughoutly furter below \ref{???}. It is important to understand the different price attributes that are in the state of \Order as can be seen in the diagrams \ref{lst:prices_order}.
+The \Order~class is there to present an actual made order.
+An order is in some sense the way the different users ``communicate'' with restaurants.
+Its most important functionalities will also be discussed throughoutly 
+furter below (see~\ref{sub:place_and_treat_order}).
+It is important to understand the different price attributes that are in 
+the state of \Order as can be seen in listing~\ref{lst:prices_order}.
 
 \begin{enumerate}
 	\item \lstinline|priceInter| is the part of the order price the restaurant will receive.
@@ -41,7 +58,8 @@ How the core guarantees the open-close principle via the log-in log-out function
 	\item \lstinline|profitFinal| is the profit \MyFoodora~makes with the order. 
 \end{enumerate}
 
-The different prices are used in different ways and will be explained in the third part af this section (see \ref{???}).
+The different prices are used in different ways
+and will be explained in the third part af this section (see \ref{sub:place_and_treat_order}).
 
 % subsubsection core (end)
 
@@ -161,7 +179,12 @@ The background of this method will be clearer after having read the third part o
 
 
 
+\subsection{Place and treat order} % (fold)
+\label{sub:place_and_treat_order}
 
+hello
+
+% subsection place_and_treat_order (end)
 
 
 % section implementation (end)
