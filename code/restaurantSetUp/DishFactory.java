@@ -33,7 +33,7 @@ public class DishFactory extends AbstractFactory {
 	 * this method returns null as we have to extend the <code>AbstractFactory</code> class.
 	 * 
 	 */
-	public Meal getMeal(String mealType){
+	public Meal getMeal(String mealType, String mealName){
 		return null;
 	}
 	

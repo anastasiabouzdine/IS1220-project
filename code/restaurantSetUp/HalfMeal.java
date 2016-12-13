@@ -9,8 +9,8 @@ package restaurantSetUp;
  */
 public class HalfMeal extends Meal {
 	
-	public HalfMeal(){
-		super();
+	public HalfMeal(String name){
+		super(name);
 	}
 	
 	/**
@@ -50,7 +50,41 @@ public class HalfMeal extends Meal {
 			type = mainDish.getType();
 		
 		setType(type);
+	}
+	
+	/**
+	 * SetDishes method which checks whether the added dishes are of they same type 
+	 * and names the meal either standard (different types) or of a type.
+	 * 
+	 * @param name 		 name of the halfmeal
+	 * @param mainDish 	 a <code>MainDish</code>
+	 * @param secChoice  a <code>Dish</code> that can be a <code>Starter</code> or a <code>Dessert</code>
+	 * 
+	 */
+	public void setHalfMeal(MainDish mainDish, Dish secChoice){
+		String type = "standard";
 		
+		if (mainDish instanceof MainDish){
+			MainDish main = (MainDish) mainDish;
+			getListOfDish().add(main);
+		} else {
+			throw new Error(new ClassCastException());
+		}
+		
+		if(secChoice instanceof Dessert){
+			Dessert des = (Dessert) secChoice;
+			getListOfDish().add(des);
+		} else if (secChoice instanceof Starter){
+			Starter star = (Starter) secChoice;
+			getListOfDish().add(star);
+		} else { 
+			throw new Error(new ClassCastException());
+		}
+		
+		if(mainDish.getType()==secChoice.getType())
+			type = mainDish.getType();
+		
+		setType(type);
 	}
 	
 };
