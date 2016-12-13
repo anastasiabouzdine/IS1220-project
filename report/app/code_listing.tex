@@ -104,19 +104,34 @@ public ArrayList<Order> getHistoryOfOrders() {
 }
 \end{lstlisting}
 
-%%%%%%%%%%%%%%%%% LOGIN / LOGOUT SYSTEM %%%%%%%%%%%%%%%%% current_user (fold)
+%%%%%%%%%%%%%%%%% TEST EXAMPLES %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=Example of a test using \texttt{assertEquals} with 2 decimal precision.,
+  label=lst:test_total_income]
+@Test
+public void checkIfCalcTotalIncomeWorks() {
+  make3orders();
+  mf1.autoSetDateAfter();
+  double totalIn = mf1.calcTotalIncome();
+  //   3xdish1 : 3x8.3 = 24.9
+  // + 2xdish2 : 2x6.35 = 12.7
+  // + 1xdish3 : 1x16.85 = 16.85
+  // + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
+  // ------------------------------------------------------
+  // = 61.95
+  assertEquals(totalIn, 61.95, 0.01);
+  System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
+}
+\end{lstlisting}
+
+% section code_listing (end)
+
+%%%%%%%%%%%%%%%%% LOGIN / LOGOUT SYSTEM %%%%%%%%%%%%%%%%% 
+% log-in\out (fold)
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:login]
-/**
-* This method allows registered users to log in and changes the current user to the user 
-* having completed the log in. New messages are printed out if user logs in.
-* 
-* @param username registered username that is saved in the system.
-* @return a String containing a welcome message if the login was successful
-* 		   or null if not
-*/
+
 public String logIn(String username){
-  String output=null;
+
   if (users.containsKey(username)){
     current_user = users.get(username);
     if (current_user instanceof Courier){
@@ -140,9 +155,7 @@ public String logIn(String username){
 
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
   label=lst:logout]
-/**
- * This method allows logged in users to log out.
- */
+
 public void logOut(){
 current_user = null;
 current_courier = null;
@@ -152,29 +165,43 @@ current_restaurant = null;
 }
 \end{lstlisting}
 
-% current_user (end)
+% log-in\out (end)
 
-%%%%%%%%%%%%%%%%% TEST EXAMPLES %%%%%%%%%%%%%%%%%
-\begin{lstlisting}[caption=Example of a test using \texttt{assertEquals} with 2 decimal precision.,
-  label=lst:test_total_income]
-@Test
-public void checkIfCalcTotalIncomeWorks() {
-  make3orders();
-  mf1.autoSetDateAfter();
-  double totalIn = mf1.calcTotalIncome();
-  //   3xdish1 : 3x8.3 = 24.9
-  // + 2xdish2 : 2x6.35 = 12.7
-  // + 1xdish3 : 1x16.85 = 16.85
-  // + 3x(serviceFee + deliveryCost) : 3x2.5 = 7.5
-  // ------------------------------------------------------
-  // = 61.95
-  assertEquals(totalIn, 61.95, 0.01);
-  System.out.println("TEST chekcIfCalcTotalIncomeWorks : DONE\n");
-}
+%%%%%%%%%%%%%%%%% PRICE ATTRIBUTES ORDER %%%%%%%%%%%%%%%%%
+
+% attr_price (fold)
+\begin{lstlisting}[caption=Implementation of different price quantities in \texttt{Order}.,
+  label=lst:prices_order]
+public class Order {
+	...
+	private double profitFinal;
+	private double priceInter;
+	private double priceFinal;
+	...
+	}
 \end{lstlisting}
+% attr_price (end)
 
-% section code_listing (end)
-  
-  
+%%%%%%%%%%%%%%%%% FASTEST DELIVERY %%%%%%%%%%%%%%%%%
+% fastest deliv (fold)
+ \begin{lstlisting}[caption=Fastest Delivery Method.,
+   label=lst:fast_deliv_meth] 
+
+@Override
+ArrayList<Courier> howToDeliver(list of couriers, Address) {
+		...
+		list of distances = getDistance(list of couriers, Address);
+	
+		sorted courier list = IntStream.range(0, amount of members in list of distances)
+				.mapToObj(i -> new CourierDistance(list of couriers(i), list of distances(i)))
+			    .sorted(Comparator.comparingDouble(CourierDistance -> distance of CourierDistance))
+			    .map(CourierDistance -> Courier of CourierDistance())
+			    .collect(Collectors.toList());
+				
+		return sorted courier list;
+	}
   
 \lstset{basicstyle=\rm\small\ttfamily}
+\end{lstlisting}
+
+% fastest deliv (end)

@@ -23,7 +23,7 @@ Our java project contains in total nine packages: (\core, \exceptions, \parsers,
 
 The package \core~contains the classes \Core~and \Order~as can be seen in the diagram below \ref{fig:core_order_uml}. 
 
-\Core~is the center of the application that connects all the users. To better understand the structure, please take a quick look at the following UML diagram \ref{fig:core_users_uml}. All classes that we made are there to give a certain functionality to a \User. Since the \Core~contains a list of all \User,it is able to access all classes and thus all the information that is saved in the system. This characteristic is probably the most important one of our application since it allows us to:
+\Core~is the center of the application that connects all the users. To better understand the structure, please take a quick look at the following UML diagram \ref{fig:core_users_uml}. All classes that we made are there to give a certain functionality to a \User. Since the \Core~contains a list of all \User, it is able to access all classes and thus all the information that is saved in the system. This characteristic is probably the most important one of our application since it allows us to:
 
 \begin{enumerate}
 	\item handle all relevant functionalites over the \Core,
@@ -31,9 +31,9 @@ The package \core~contains the classes \Core~and \Order~as can be seen in the di
 	\item and finally to take care that the structure is clear and well-organized.
 \end{enumerate}
 
-How the core guarantees the open-close principle via the log-in log-out functionality will be explained in the second part of this section \ref{ssub:log_in_functionality_of_the_core}.
+How the core guarantees the open-close principle via the log-in log-out functionality will be explained in the second part of this section (see \ref{ssub:log_in_functionality_of_the_core}).
 
-\Order~is there to present an actual made order. \Order~is in some sense the way the different \User~communicate to each other. Its most important functionalities will also discussed throughoutly furter below \ref{???}. It is important to understand the two different price attributes that are in the state of \Order: (@John: Insert an image of the code)
+\Order~is there to present an actual made order. \Order~is in some sense the way the different \User~communicate to each other. Its most important functionalities will also be discussed throughoutly furter below \ref{???}. It is important to understand the different price attributes that are in the state of \Order as can be seen in the diagrams \ref{lst:prices_order}.
 
 \begin{enumerate}
 	\item \lstinline|priceInter| is the part of the order price the restaurant will receive.
@@ -41,16 +41,16 @@ How the core guarantees the open-close principle via the log-in log-out function
 	\item \lstinline|profitFinal| is the profit \MyFoodora~makes with the order. 
 \end{enumerate}
 
-The different prices are used in different ways and will be explained in the third part af this section \ref{???}.
+The different prices are used in different ways and will be explained in the third part af this section (see \ref{???}).
 
 % subsubsection core (end)
 
 \subsubsection{Package policies} % (fold)
 \label{ssub:policies}
 
-The package \policies~contains all the necessary policies that are needed and whose basic design was explained earlier \ref{sub:strategy_pattern_for_the_texttt_myfoodora_policies}. 
+The package \policies~contains all the necessary policies that are needed and whose basic design was explained in the section before:  \ref{sub:strategy_pattern_for_the_texttt_myfoodora_policies}. 
 
-Most of the policies follow the typical \emph{strategy pattern}, whereas an interface with the name of the actual policy is implemented by the actual policies, as can be seen in the diagram annexes \ref{fig:delivery_uml}. The core then has an attribute where its declaration is the class' name and which can be the reference to one of the actual policies \ref{fig:core_policies_uml}. An exemple of the actual implementation of a policy is given later \ref{???}.
+Most of the policies follow the typical \emph{strategy pattern}, whereas an interface with the name of the actual policy is implemented by the actual policies, as can be seen in the diagram annexes \ref{fig:delivery_uml}. The core then has an attribute where its declaration is the class' name and which then is a reference to one of the actual policies (see \ref{fig:core_policies_uml}). An exemple of the actual implementation of a policy is given later (see \ref{???}).
 
 Only the policy \lstinline|SortPolicy|~is not realised after the typical \emph{strategy pattern} and uses an abstract class instead of an interface. Why did we choose to do so? SortPolicy is used to display the most or least selling meal or dish. 
 
@@ -75,7 +75,7 @@ Therefore, we implemented a two sorted lists of type \lstinline|TreeSet|, a list
 \subsubsection{Package restaurantSetUp} % (fold)
 \label{ssub:restaurantsetup}
 
-The package \restaurantSetup contains all the classes that are needed for \Restaurant~as can be seen below \ref{fig:dish_meal_uml}.
+The package \restaurantSetup contains all the classes that are needed for \Restaurant~as can be seen below:  \ref{fig:dish_meal_uml}.
 In order to add \Dish~and \Meal~to its offer the already explained \emph{abstract factory pattern} is used. The other two important structures of \restaurantSetup~are the class structures of \Meal~and \Dish. 
 
 \Meal is inheritated by \HalfMeal~and \FullMeal. Since the function \lstinline|getPrice()|~thats add up the prices of the dishes included in the meal is the same for \FullMeal~and \HalfMeal, \Meal~does not have to be abstract. We also considered an extension of another type of \Meal, and were convinced that the functionality would still be the same so that a not abstract \Meal~is justified.
@@ -99,7 +99,7 @@ Each of them is inherited by \User~and therefore takes over certain necessary at
 
 \begin{enumerate}
 	\item \Courier~has a \lstinline|LinkedList| of received orders, where an \Order~is placed every time he is choosen.
-	\item \Customer~implements the interface \lstinline|Observer|~that is implemented by us \ref{fig:observer_pattern_for}.
+	\item \Customer~implements the interface \lstinline|Observer|~that is implemented by us (see  \ref{fig:observer_pattern_for}).
 \end{enumerate}
 
 \Manager~neither has many attributes, nor does it has many methods since all the functions used by \Manager~are in the \Core.
@@ -115,13 +115,43 @@ Each of them is inherited by \User~and therefore takes over certain necessary at
 \subsubsection{Log-in functionality of the core} % (fold)
 \label{ssub:log_in_functionality_of_the_core}
 
-The \emph{log-in/log-out functionality} of the core is very important because it ensures that certain function can only be accessed by certain \User. Let's take a look at the method \lstinline|logIn()| \ref{lst:login}. The input is a username. First the function checks whether the \lstinline|username|~is registered and only if this holds true the \User~having this \lstinline|username|~can log in. Then the \lstinline|current_user|~being an attribute of \Core~ and of type \User~is given the \User~that is associated to the \lstinline|username|~via the \lstinline|HashMap|~\lstinline|users|. Now, the function checks which type of \User~has just logged in sets the respective ``current" attribute to the \User~being now logged in. If for exemple a \Manager~logs in the attribute \lstinline|current_manager|~will be set to the \User, whereas the other ``current" attributes (respectively \lstinline|current_restaurant|, \lstinline|current_customer| and \lstinline|current_courrier|) stay equal to \lstinline|null|. Finally the left messages for the logged-in \User~are displayed via calling the method \lstinline|current_user.checkMessages()|.
+The \emph{log-in/log-out functionality} of the core is very important because it ensures that certain function can only be accessed by certain \User. Let's take a look at the method \lstinline|logIn()|: \ref{lst:login}. The input is a username. First the function checks whether the \lstinline|username|~is registered and only if this holds true the \User~having this \lstinline|username|~can log in. Then the \lstinline|current_user|~being an attribute of \Core~ and of type \User~is given the \User~that is associated to the \lstinline|username|~via the \lstinline|HashMap|~\lstinline|users|. Now, the function checks which type of \User~has just logged in sets the respective ``current" attribute to the \User~being now logged in. If for exemple a \Manager~logs in the attribute \lstinline|current_manager|~will be set to the \User, whereas the other ``current" attributes (respectively \lstinline|current_restaurant|, \lstinline|current_customer| and \lstinline|current_courrier|) stay equal to \lstinline|null|. Finally the left messages for the logged-in \User~are displayed via calling the method \lstinline|current_user.checkMessages()|.
 
 This system allows us to design pretty much every method in the core in a way that it contains in the beginning a check who is actually logged-in, e.g.: \lstinline|if(current_manager != null){|. Herewith, we can ensure that certain functions can only be used by certain \User and that a log-in had to be performed before a \User~can use a method.
 
-The logged-out function is self-explanatory \ref{lst:logout}.
+The logged-out function is self-explanatory: \ref{lst:logout}.
 
 % subsubsection log_in_functionality_of_the_core (end)
+
+\subsubsection{Fastest Delivery method of Delivery Policy} % (fold)
+\label{ssub:fastest_delivery_method_of_delivery_policy}
+
+The \emph{Fastest Delivery method} is presented at this point because it gives a good exemple of how the implementation of the \emph{Strategy pattern} actual works and also shows how this project allowed us to gain new skills in \lstinline|Java|. Please take a look at the following pseudo code in order to better understand the method that is talked about: 
+\ref{lst:fast_deliv_meth}. 
+
+To begin with, it can easily seen that the method is the method that has to be overridden due to the implementation of the interface \lstinline|DeliveryPolicy|. Every object that is declared as an \lstinline|DeliveryPolicy|~object thus has to have a function called \lstinline|howToDeliver|. So what does this function do? In short, this method takes a list of all couriers and an address (of a \Restaurant) as entries and returns a list of the same couriers sorted in ascending order according to the distance between the couriers address and the inserted restaurant's address. Let's dive into the code.
+
+First the method calls another method called \lstinline|getDistance|~that takes the same entries as the \lstinline|howToDeliver|~method and gives back an \lstinline|ArrayList|~of type \lstinline|double|~containing the distances between each courier and the restaurant's address. The list is unsorted and looks for exemple as follows: \lstinline|{4.22, 8.9, 9.34, 8.3, ...}|. This method performs a simple calculation and will not be explained it detail.
+
+Second comes the actual sorting part of the function. In the beginning, we did not find an efficient way to sort the couriers of list by a value that is not even an attribute of the object \Courier. After searching the internet, we discovered the \lstinline|Stream|~functionality of \lstinline|Java|~and after learning the basics of this Java8 extension saw in it a good solution to our problem. So, we initialise a \lstinline|Stream|~having the amount of members as there are couriers in the list and map each of those members to a new Object, called 
+\lstinline|CourierDistance| that contains a \Courier~as well as a distance. We created this class to actually sort the \Courier~by their respective distance, being an external value that changes depending on the restaurants \lstinline|Address|. Now our stream is basically an unsorted list of objects of type \lstinline|CourierDistance|. The next step is to sort the list members according to their distances. Finally, the objects \lstinline|CourierDistance|~are mapped to the type \Courier~ and the \lstinline|Stream|~is transformed into an \lstinline|ArrayList|~that will be returned and used to chose the best fit courier for a specific order. 
+
+The background of this method will be clearer after having read the third part of this section \ref{???}. This code excerpt should have shown:
+
+\begin{enumerate}
+	\item how the \emph{Strategy pattern} works in practise and
+	\item how we always looked for efficient code designing.
+\end{enumerate}
+
+% subsubsection fastest_delivery_method_of_delivery_policy (end)
+
+\subsubsection{Add Full Meal method} % (fold)
+\label{ssub:add_full_meal_method}
+
+
+
+% subsubsection add_full_meal_method (end)
+
 % subsection key_methods (end)
 
 
