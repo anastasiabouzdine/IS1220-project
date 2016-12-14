@@ -40,10 +40,9 @@ public class FullMeal extends Meal{
 		
 		String type = "standard";
 			
-		if((starter.getType() == mainDish.getType()) && (mainDish.getType()==dessert.getType()))
-			type = mainDish.getType();
+		if((starter.getType().equals(mainDish.getType())) && (mainDish.getType().equals(dessert.getType())))
+		  	type = mainDish.getType();
 		setType(type);
-
 	}
 	
 	
@@ -64,7 +63,7 @@ public class FullMeal extends Meal{
 		
 		String type = "standard";
 			
-		if((starter.getType() == mainDish.getType()) && (mainDish.getType()==dessert.getType()))
+		if((starter.getType().equals(mainDish.getType())) && (mainDish.getType().equals(dessert.getType())))
 			type = mainDish.getType();
 		setType(type);
 	}

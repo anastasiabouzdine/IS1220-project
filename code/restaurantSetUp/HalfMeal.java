@@ -46,7 +46,7 @@ public class HalfMeal extends Meal {
 			throw new Error(new ClassCastException());
 		}
 		
-		if(mainDish.getType()==secChoice.getType())
+		if(mainDish.getType().equals(secChoice.getType()))
 			type = mainDish.getType();
 		
 		setType(type);
@@ -80,7 +80,7 @@ public class HalfMeal extends Meal {
 			throw new Error(new ClassCastException());
 		}
 		
-		if(mainDish.getType()==secChoice.getType())
+		if(mainDish.getType().equals(secChoice.getType()))
 			type = mainDish.getType();
 		
 		setType(type);
