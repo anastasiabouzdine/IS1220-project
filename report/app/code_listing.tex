@@ -187,7 +187,6 @@ public class Order {
 % fastest deliv (fold)
  \begin{lstlisting}[caption=Pseudo java code of  fastest delivery method.,
    label=lst:fast_deliv_meth] 
-
 @Override
 ArrayList<Courier> howToDeliver(list of couriers, Address) {
   ...
@@ -214,6 +213,7 @@ public static AbstractFactory getFactory(String choice){
     } else if (choice.equalsIgnoreCase("MEAL")){
     	  return new MealFactory();
     }
+    
     return null;
 }
 \end{lstlisting}
@@ -227,6 +227,7 @@ public Meal getMeal(String mealType, String mealName){
     } else if (mealType.equalsIgnoreCase("HALFMEAL")){
     	  return new HalfMeal(mealName);
     } 
+    
     return null;		
 }
 \end{lstlisting}
