@@ -156,7 +156,6 @@ public class Core{
 				current_restaurant = (Restaurant) current_user;
 				output = "Successfully logged in as a Restaurant !";
 			}
-			System.out.println(current_user.getName() + " is logged in.");
 			current_user.checkMessages(); 
 		}
 		return output;
@@ -549,7 +548,12 @@ public class Core{
 	 * @return	new Order
 	 */
 	public Order createNewOrder(Customer cust, Restaurant rest){
-		return new Order(cust, rest);
+		if (current_customer != null){
+			return new Order(cust, rest);
+		} else {
+			unauthorizedCommand();
+			return null;
+		}
 	}
 
 	/**
@@ -557,9 +561,14 @@ public class Core{
 	 * @param	order	of type order
 	 */
 	public void placeNewOrder(Order order){
-		this.receivedOrders.add(order);
-		update(this.current_customer,"Your order has succesfully been placed.");
-		treatNewOrders();
+	 
+		if (current_customer != null){
+			this.receivedOrders.add(order);
+			update(this.current_customer,"Your order has succesfully been placed.");
+			treatNewOrders();
+		} else {
+			unauthorizedCommand();
+		}
 	}
 
 

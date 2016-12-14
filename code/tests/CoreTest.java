@@ -159,9 +159,15 @@ public class CoreTest {
 		rest1.addMeal(list_hmeal.get(1));
 		rest1.setSpecMeal(list_hmeal.get(1));
 		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
+		
 		Order order1 = mf1.createNewOrder(list_customer.get(0), rest1);
 		order1.addMeal(list_hmeal.get(0), 3);
 		placeOrder(order1);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 		
 		mf1.setDeliveryPolicyToFairOcc();
 		Order order2 = mf1.createNewOrder(list_customer.get(0), list_restaurant.get(0));
@@ -232,12 +238,18 @@ public class CoreTest {
 		mf1.setMarkup_percentage(0.05);
 		mf1.setDeliveryCost(4.0);
 		mf1.setServiceFee(2.5);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order1 = mf1.createNewOrder(cust, rest1);
 		order1.addDish(list_mainDish.get(0), 150);
 		placeOrder(order1);
 		// 150*8.3 = 1245 --> 124 points and reduction applied for next order
 		assertEquals(cust.getNumberOfFidelityPoints(), 124);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 		
 		Order order2 = mf1.createNewOrder(cust, rest1);
 		order2.addDish(list_mainDish.get(0), 40);
@@ -436,14 +448,23 @@ public class CoreTest {
 		mf1.setMarkup_percentage(0.05);
 		mf1.setDeliveryCost(4.0);
 		mf1.setServiceFee(2.5);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
 		order1.addDish(list_mainDish.get(0), 3);
 		placeOrder(order1);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest3);
 		order2.addDish(list_mainDish.get(1), 2);
 		placeOrder(order2);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order3 = mf1.createNewOrder(list_customer.get(4), rest1);
 		order3.addDish(list_mainDish.get(2), 1);
@@ -471,6 +492,9 @@ public class CoreTest {
 		mf1.setMarkup_percentage(0.05);
 		mf1.setDeliveryCost(4.0);
 		mf1.setServiceFee(2.5);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
 		order1.addMeal(hm3, 4);
@@ -478,6 +502,9 @@ public class CoreTest {
 		order1.addMeal(hm1, 3);
 		
 		placeOrder(order1);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
 		order2.addMeal(hm2, 1);
@@ -512,6 +539,9 @@ public class CoreTest {
 		mf1.setMarkup_percentage(0.05);
 		mf1.setDeliveryCost(4.0);
 		mf1.setServiceFee(2.5);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
 
 		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
 		order1.addDish(d1, 4);
@@ -519,6 +549,10 @@ public class CoreTest {
 		order1.addDish(d4, 5);
 		order1.addDish(d5, 9);
 		placeOrder(order1);
+		
+		mf1.logOut();
+		mf1.logIn("cuspvp23");
+		
 		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
 		order2.addDish(d2, 1);
 		order2.addDish(d5, 9);

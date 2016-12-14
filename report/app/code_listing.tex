@@ -126,8 +126,6 @@ public void checkIfCalcTotalIncomeWorks() {
 }
 \end{lstlisting}
 
-% section code_listing (end)
-
 %%%%%%%%%%%%%%%%% LOGIN / LOGOUT SYSTEM %%%%%%%%%%%%%%%%% 
 % log-in\out (fold)
 \begin{lstlisting}[caption=the main methods for the log in log out system.,
@@ -204,5 +202,95 @@ ArrayList<Courier> howToDeliver(list of couriers, Address) {
 
 % fastest deliv (end)
 
-\lstset{basicstyle=\rm\small\ttfamily}
+%%%%%%%%%%%%%%%%% CREATE FACTORY %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption= Factory producer for \texttt{Dish} and \texttt{Meal}.,
+label=lst:createFactory]
+public static AbstractFactory getFactory(String choice){
+		if (choice.equalsIgnoreCase("DISH")){
+			return new DishFactory();
+		} else if (choice.equalsIgnoreCase("MEAL")){
+			return new MealFactory();
+		}
+		return null;
+	}
+\end{lstlisting}
 
+%%%%%%%%%%%%%%%%% CREATE MEAL %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=\emph{MealFactory} to create \texttt{Meal}.,
+label=lst:mealCreator]
+public Meal getMeal(String mealType, String mealName){
+		if (mealType.equalsIgnoreCase("FULLMEAL")){
+			return new FullMeal(mealName);
+		} else if (mealType.equalsIgnoreCase("HALFMEAL")){
+			return new HalfMeal(mealName);
+		} 
+		return null;		
+	}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%% SETFULLMEAL %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=Set method to add \texttt{Dish} to \texttt{Meal}.,
+label=lst:SetFullMeal]
+public void setFullMeal(Starter starter, MainDish mainDish, Dessert dessert) {
+		
+		getListOfDish().add(starter);
+		getListOfDish().add(mainDish);
+		getListOfDish().add(dessert);
+		
+		String type = "standard";
+			
+		if((starter.getType() == mainDish.getType()) && (mainDish.getType()==dessert.getType()))
+			type = mainDish.getType();
+		setType(type);
+	}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%% ADD MEAL %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=\emph{Add method} for \texttt{Meal}.,
+label=lst:addMeal]
+public void addMeal(Meal meal) {
+		listOfMeal.add(meal);
+	}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%% TREAT ORDER %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=Method to treat \texttt{Order} of \texttt{Core}.,
+label=lst:treatOrder]
+private void treatNewOrders(){ 
+	
+		Order = latest order in list;
+		list of couriers = DeliveryPolicy.howToDeliver(list of couriers, address);
+			
+		while(courier of order is filled OR there are no couriers left) { 
+			courier = first courier according to list;
+			courier reply to order;
+			remove courier of list
+		}
+
+		if there are no couriers left { --> no order 
+		} else {
+			set final price of order (= price of meals or dishes + service fee);
+			save order;
+			inform system that order has been saved;
+			inform restaurant to prepare order;
+			inform customer of execution of order and final price 
+		}
+}
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%% PLACE ORDER %%%%%%%%%%%%%%%%%
+\begin{lstlisting}[caption=Method to place an \texttt{Order} of \texttt{Core}.,
+label=lst:placeOrder]
+public void placeNewOrder(Order order){
+		if (current_customer != null){
+			this.receivedOrders.add(order);
+			update(this.current_customer,"Your order has succesfully been placed.");
+			treatNewOrders();
+		} else {
+			unauthorizedCommand();
+		}
+	}
+\end{lstlisting}
+
+\lstset{basicstyle=\rm\small\ttfamily}
+% section code_listing (end)

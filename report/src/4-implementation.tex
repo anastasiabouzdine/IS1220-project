@@ -10,7 +10,7 @@ and to describe the key points, we will take the following approach:
 	\item Second, we will pick out \emph{key methods} of the packages
   and explain them in detail (see~\ref{sub:key_methods}). 
 	\item Third, we will describe the most important functionality of the system :
-  \emph{placing an order} and treating it afterwards (see~\ref{sub:place_and_treat_order}).
+  \emph{placing an order} and treating it afterwards (see~\ref{ssub:process_of_giving_up_an_order}).
 \end{enumerate}
 
 \subsection{Structure of the main packages} % (fold)
@@ -48,7 +48,7 @@ This characteristic is probably the most important one of our application since 
 The \Order~class is there to present an actual made order.
 An order is in some sense the way the different users ``communicate'' with restaurants.
 Its most important functionalities will also be discussed throughoutly 
-furter below (see~\ref{sub:place_and_treat_order}).
+furter below (see~\ref{ssub:process_of_giving_up_an_order}).
 It is important to understand the different price attributes that are in 
 the state of \Order as can be seen in listing~\ref{lst:prices_order}.
 
@@ -219,7 +219,7 @@ First the method calls another method called \lstinline|getDistance|~that takes 
 Second comes the actual sorting part of the function. In the beginning, we did not find an efficient way to sort the couriers of list by a value that is not even an attribute of the object \Courier. After searching the internet, we discovered the \lstinline|Stream|~functionality of \lstinline|Java|~and after learning the basics of this Java8 extension saw in it a good solution to our problem. So, we initialise a \lstinline|Stream|~having the amount of members as there are couriers in the list and map each of those members to a new Object, called 
 \lstinline|CourierDistance| that contains a \Courier~as well as a distance. We created this class to actually sort the \Courier~by their respective distance, being an external value that changes depending on the restaurants \lstinline|Address|. Now our stream is basically an unsorted list of objects of type \lstinline|CourierDistance|. The next step is to sort the list members according to their distances. Finally, the objects \lstinline|CourierDistance|~are mapped to the type \Courier~ and the \lstinline|Stream|~is transformed into an \lstinline|ArrayList|~that will be returned and used to chose the best fit courier for a specific order. 
 
-The background of this method will be clearer after having read the third part of this section \ref{???}. This code excerpt should have shown:
+The background of this method will be clearer after having read the third part of this section \ref{ssub:process_of_giving_up_an_order}. This code excerpt should have shown:
 
 \begin{enumerate}
 	\item how the \emph{Strategy pattern} works in practise and
@@ -231,22 +231,84 @@ The background of this method will be clearer after having read the third part o
 \subsubsection{Add \FullMeal~method} % (fold)
 \label{ssub:add_full_meal_method}
 
+This section explaines how a restaurant will actually add a \FullMeal. In order to
+create a \FullMeal, one creates a new \lstinline|MealFactory| as can been seen in
+listing \ref{lst:createFactory}. Calling the \lstinline|static|
+\lstinline|getFactory()| method with the parameter ``MEAL" returns a
+\lstinline|MealFactory|. Having created the factory, the next step is to create 
+the actual \FullMeal. The just created \lstinline|MealFactory| now enables one to
+create an actual \Meal~as can be seen in listing \ref{lst:mealCreator}. Calling the
+method \lstinline|getMeal()| with the name of the \Meal~and the parameter ``FULLMEAL"
+returns finally a \FullMeal~that does not yet include the actual dishes belonging to
+the meal. 
+
+To complete the \FullMeal~the method \lstinline|setFullMeal()| with the three
+parameters of type \Dish~ being notably \Starter, \MainDish and \Dessert~is called,
+which can be seen in listing \ref{lst:SetFullMeal}. First, the three \Dish~are added to
+the \FullMeal. Second, the method automatically recognizes whether all added dishes are
+of the same type by a simple \lstinline|==| comparision and names the type of the
+\Meal~accordingly. The \FullMeal~is finally completed and can be added to \Restaurant. 
+The self-explanatory method of the class \Restaurant~can be seen in listing \ref{lst:addMeal}.
+
+The question arises, whether it is really necessary to call that many methods only to 
+have added a \FullMeal~to \Restaurant. This brings us to the disadvantage of
+implementing the \emph{abstract factory pattern}. Having assessed the different
+designing possibilities, we considered the easy-to-extend design of the 
+\emph{abstract factory pattern} to be the best fit since a likely extension of the restaurant's offer (e.g. drinks) can very easily implemented. The slightly more complex process of creating a \FullMeal~is will stay unnoticed to the actual user because he will be guided by the system while inserting the needed information for a \FullMeal.
 
 % subsubsection add_full_meal_method (end)
 
 % subsection key_methods (end)
 
+\subsection{Process of giving up an order} % (fold)
+\label{ssub:process_of_giving_up_an_order}
 
+In the last part of the implementation section, we quickly want to go through the most
+important functions being placing an order and then treating it. 
+So, making the hypothesis that a customer created an \Order~by having chosen a
+\Restaurant~and having added all the necessary \Meal~or \Dish,
+we start with the code \lstinline|placeOrder()| with the parameter \Order~ that can be
+seen in listing \ref{lst:placeOrder}. 
+The first lines of the code ensure as we explained earlier that a \Customer~is
+actually logged in to give up an \Order~. The created order will be saved in the
+\lstinline|LinkedList| \lstinline|receivedOrders| of the \Core. The Use of a
+\lstinline|LinkedList| realises the so-called ``First-in-First-out", which is reasonable considering the fact that the oldest \Order~should be treated first.
+Next, the \Customer~will be notified and the order can be treated.
 
+Now, we arrive at the main method of the system the \lstinline|treatOrder()| method of
+the \Core. Please take a look at both the simplified pseudo code that will be
+clarified in the following - listing \ref{lst:treatOrder} - as well as the actual code
+in the class \Core.
 
+The function is declared \lstinline|private| so that the function can only be
+called in the core and this is done solely by the function \lstinline|placeOrder()|.
+This means that as soon as a logged-in \Customer~places an \Order~it will be taken
+care of instantely, so that in the current version of our system each \Order~that is
+placed in the list of \lstinline|receivedOrders| is removed and treaten on the spot.
+A system extended to a multi-threaded one takes advantage of the implementation of
+a list of \lstinline|receivedOrders|, whereas it is useless for the system as it is now. 
 
+\begin{itemize}
+	\item First, the oldest order is taken and will be treated. 
+	\item Second, a list of couriers is generated according to the current
+		\lstinline|DeliveryPolicy| whose exact functioning is explained in the
+		subsubsection \ref{ssub:fastest_delivery_method_of_delivery_policy}.
+	\item Third, now that we have a list of courier we will contact them one by one
+		according to the order of the courier list until either a \Courier~accepted
+		the \Order~or there are currently no \Courier~available. This means a
+		\Courier~is set to the current courier. Then this \Courier~can either accept
+		or decline the \Order. Since the system is a single-threaded system, we use a
+		function that randomely makes the courier accept/decline the \Order. Finally,
+		the \Courier~is removed from the list.
+	\item Forth, if all \Courier~delined, the system will notify the \Customer,the
+		\Order~will be deleted and the method finishes.
+	\item Fifth, if a \Courier~was found, the final price of the order will be saved
+		as an attribute of the \Order. Lastely the \Order~is saved and all related
+		users will be notified.	
+\end{itemize}
 
-
-
-\subsection{Place and treat order} % (fold)
-\label{sub:place_and_treat_order}
-
-hello
+This pseudo code is a quite simplified version of the real code, but explains well the
+most important functioning.
 
 % subsection place_and_treat_order (end)
 
