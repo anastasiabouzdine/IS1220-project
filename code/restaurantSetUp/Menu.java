@@ -17,7 +17,7 @@ import restaurantSetUp.Starter;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public abstract class Menu {
+public class Menu {
 
 	private List<Starter> listOfStarter;
 	private List<MainDish> listOfMainDish;
