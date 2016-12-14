@@ -12,6 +12,7 @@ public class FullMeal extends Meal{
 	
 	/**
 	 * Class constructor.
+	 * @param name a String containing the name of the  fullmeal
 	 */
 	public FullMeal(String name){
 		super(name);
@@ -50,7 +51,6 @@ public class FullMeal extends Meal{
 	 * SetFullMeals method which checks whether the added dishes are of they same type 
 	 * and names the meal either standard (different types) or of a type.
 	 * 
-	 * @param name 		 name of the fullmeal
 	 * @param starter 	 a <code>Starter</code>
 	 * @param mainDish 	 a <code>MainDish</code>
 	 * @param dessert    a <code>Dessert</code>

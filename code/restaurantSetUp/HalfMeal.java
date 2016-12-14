@@ -56,7 +56,6 @@ public class HalfMeal extends Meal {
 	 * SetDishes method which checks whether the added dishes are of they same type 
 	 * and names the meal either standard (different types) or of a type.
 	 * 
-	 * @param name 		 name of the halfmeal
 	 * @param mainDish 	 a <code>MainDish</code>
 	 * @param secChoice  a <code>Dish</code> that can be a <code>Starter</code> or a <code>Dessert</code>
 	 * 
