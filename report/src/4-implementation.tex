@@ -112,32 +112,53 @@ In order to add dishes or meals, we used the already explained \emph{abstract
 factory pattern}. The two other important structures of 
 \restaurantSetup~are the class structures of \Meal~and \Dish. 
 
-\Meal~is inheritated by \HalfMeal~and \FullMeal. It is important to know that even if the class \Meal~does not have to be abstract, we declared it as an abstract class either way. The reason is that, we want to prevent other classes being able to create an object of type abstract.
-Because we do not want an object of type \Meal~to be created, the constructor is of type protected so that classes of other packages cannot access the constructor. We make sure that a \FullMeal~is composed of exactly one \Starter, one \MainDish~and one \Dessert~by declaring the parameters of the method \lstinline|setFullMeal|~ respectively. The exact functioning of the method is going to be explained later in the subsubsection \ref{ssub:add_full_meal_method} The same holds true for \HalfMeal~taking the respective requirements into account.
+\Meal~is inheritated by \HalfMeal~and \FullMeal. 
+It is important to know that even if the class \Meal~does not have to be abstract,
+we declared it as an abstract class either way. 
+The reason is that, we want to prevent other classes being able to 
+create an instance of this type, as this have no meaning for the solution.
+We make sure that a \FullMeal~is composed of exactly one \Starter,
+one \MainDish~and one \Dessert~by declaring the parameters of the method
+\lstinline|setFullMeal| respectively.
+The same holds true for \HalfMeal~taking the respective requirements into account.
 
-\Dish~is inheritated by \Starter, \MainDish, \Dessert. All functionality for the concrete dishes is the same so the same reasoning as explained in the upper paragraph holds true. 
+On the other side, \Dish~is inheritated by \Starter, \MainDish~and \Dessert.
+All functionalities for the concrete dishes are the same so the same 
+reasoning as explained for meals holds true. 
 
-Lastly, it is to be noticed that \Restaurant~offers either a \Meal~or a self composed meal composed of different \Dish~of the menu. 
-That is why we used \emph{composition} by giving each \Restaurant~exactly one \Menu~that contains all the single \Dish~being offered.
-An object of type \Menu~contains therefore a list of \Starter, \MainDish, and \Dessert. Additionally, is a list of all the provided \Meal~included in each \Restaurant.
-
-An exemple will be explained below \ref{???}.
+Lastly, it is to be noticed that a \Restaurant~offers either a \Meal~or
+a self composed meal composed of different dishes of the menu.
+That is why we used \emph{composition} by giving each \Restaurant~exactly
+one \Menu~that contains all the single dishes being offered.
+An object of type \Menu~contains therefore a list of starters, maindishes and desserts.
+Additionally, is a list of all the provided meals included in each \Restaurant.
 
 % subsubsection restaurantsetup (end)
 
 \subsubsection{Package users} % (fold)
 \label{ssub:users}
 
-The package \users~contains the all the users of the system being: ``\textit{the carrier, the customer, the restaurant and the manager}''.
-Each of them is inherited by \User~and therefore takes over certain necessary attributes like \lstinline|name|~and \lstinline|messageBox|~which is a \lstinline|Stack|~that contains all the messages intented for this \User. Additionally it is important that every \User~has the function \lstinline|update()|~that adds a message to the \lstinline|messageBox|, which is the reason why this method is also in the class \User. Each \User~adds specific functions for its needed functionality. We want to mention two important implementations:
-
+The package \users~contains all classes related to users of the system,
+being ``\textit{the courier, the customer, the restaurant and the manager}''.
+Each of them is inherited by \User~and therefore takes over certain 
+necessary attributes like \lstinline|name| and \lstinline|messageBox|
+which is a \lstinline|Stack| that contains all the messages intented for this \User.
+Note that (as for the \Dish~and \Meal~classes), the \User~class is declared \emph{abstract},
+preventing ``unintented users'' instanciation.
+Additionally it is important that every \User~has the function \lstinline|update()|
+that adds a message to its \lstinline|messageBox|, which is the reason 
+why this method is also in the class \User.
+Each \User~adds specific functions for its needed functionality.
+We want to mention two important implementations
 \begin{enumerate}
-	\item \Courier~has a \lstinline|LinkedList| of received orders, where an \Order~is placed every time he is choosen.
-	\item \Customer~implements the interface \lstinline|Observer|~that is implemented by us (see  \ref{fig:observer_pattern_for}).
+	\item \Courier~has a \lstinline|LinkedList| of received orders,
+  where an \Order~is placed every time he has to deliver it.
+	\item \Customer~implements the interface \lstinline|Observer|,
+  as shown in figure~\ref{fig:users_uml}.
 \end{enumerate}
 
-\Manager~neither has many attributes, nor does it has many methods since all the functions used by \Manager~are in the \Core.
-\Restaurant~is already sufficiently explained above \ref{ssub:restaurantsetup}.
+\Manager~neither has many attributes, nor does it has many methods 
+since all the functions used by \Manager~are in the \Core.
 
 % subsubsection users (end)
 
@@ -149,11 +170,39 @@ Each of them is inherited by \User~and therefore takes over certain necessary at
 \subsubsection{Log-in functionality of the core} % (fold)
 \label{ssub:log_in_functionality_of_the_core}
 
-The \emph{log-in/log-out functionality} of the core is very important because it ensures that certain function can only be accessed by certain \User. Let's take a look at the method \lstinline|logIn()|: \ref{lst:login}. The input is a username. First the function checks whether the \lstinline|username|~is registered and only if this holds true the \User~having this \lstinline|username|~can log in. Then the \lstinline|current_user|~being an attribute of \Core~ and of type \User~is given the \User~that is associated to the \lstinline|username|~via the \lstinline|HashMap|~\lstinline|users|. Now, the function checks which type of \User~has just logged in sets the respective ``current" attribute to the \User~being now logged in. If for exemple a \Manager~logs in the attribute \lstinline|current_manager|~will be set to the \User, whereas the other ``current" attributes (respectively \lstinline|current_restaurant|, \lstinline|current_customer| and \lstinline|current_courrier|) stay equal to \lstinline|null|. Finally the left messages for the logged-in \User~are displayed via calling the method \lstinline|current_user.checkMessages()|.
+The \emph{log-in/log-out functionality} of the core is very important because it ensures 
+that certain functions can only be accessed by certain users.
+Let's take a closer look at the method \lstinline|logIn()| (see listing~\ref{lst:login}).
+First the function checks whether the \lstinline|username|~is
+registered and only if this holds true the \User~having this \lstinline|username| can log in.
+Then the \lstinline|current_user| being an attribute of \Core~and
+of type \User~is given the \User~that is associated to the \lstinline|username|
+via the \lstinline|users HashMap|.
+Now, the function checks which type of \User~has just logged in sets 
+the respective ``current" attribute to the \User~being now logged in.
 
-This system allows us to design pretty much every method in the core in a way that it contains in the beginning a check who is actually logged-in, e.g.: \lstinline|if(current_manager != null){|. Herewith, we can ensure that certain functions can only be used by certain \User and that a log-in had to be performed before a \User~can use a method.
+If for exemple a \Manager~logs in the attribute \lstinline|current_manager| will
+be set to the \User, whereas the other ``current" attributes (respectively
+\lstinline|current_customer|, \lstinline|current_restaurant|
+and \lstinline|current_courrier|) stay equal to \lstinline|null|.
+Finally the left messages for the logged-in \User~are displayed
+via calling the method \lstinline|checkMessages|.
 
-The logged-out function is self-explanatory: \ref{lst:logout}.
+This system allows us to design pretty much every method in the core in a defensive way 
+by containing a ``checker'' verifying who is actually logged-in, e.g.
+\begin{center}
+  \lstinline|if(current_customer != null){ doAction(); }|
+\end{center}
+Herewith, we can ensure that certain functions can only be used 
+by certain \User~and that a log-in had to be performed before a \User~can use a method.
+
+A point has to be made on the \emph{efficiency} of the login function, which
+is somewhat important in such systems where the users don't want to wait
+while logging in.
+Indeed, the use of an \lstinline|HashMap| allows to check if username exists
+in $\mathcal{O}(1)$ time on average and in $\mathcal{O}(\log{n})$ on worst case
+(this happens when collisions happen, ie. the \lstinline|HashMap|
+entries container is not big enough)\cite{hashMap}.
 
 % subsubsection log_in_functionality_of_the_core (end)
 
