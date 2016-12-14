@@ -58,34 +58,46 @@ the state of \Order as can be seen in listing~\ref{lst:prices_order}.
 	\item \lstinline|profitFinal| is the profit \MyFoodora~makes with the order. 
 \end{enumerate}
 
-The different prices are used in different ways
-and will be explained in the third part af this section (see \ref{sub:place_and_treat_order}).
-
 % subsubsection core (end)
 
 \subsubsection{Package policies} % (fold)
 \label{ssub:policies}
 
-The package \policies~contains all the necessary policies that are needed and whose basic design was explained in the section before:  \ref{sub:strategy_pattern_for_the_texttt_myfoodora_policies}. 
+The package \policies~contains all the necessary policies that are needed
+and whose designs were explained in the previous section.
 
-Most of the policies follow the typical \emph{strategy pattern}, whereas an interface with the name of the actual policy is implemented by the actual policies, as can be seen in the diagram annexes \ref{fig:delivery_uml}. The core then has an attribute where its declaration is the class' name and which then is a reference to one of the actual policies (see \ref{fig:core_policies_uml}). An exemple of the actual implementation of a policy is given later (see \ref{???}).
+Most of the policies follow the typical \emph{strategy pattern},
+where an interface with the name of the actual policy is implemented by the corresponding
+behaviours classes, as shown in the UML diagram in figure~\ref{fig:delivery_uml}.
+The core then has an attribute where its declaration is the class name
+and which then is a reference to one of the actual policies (see 
+figure~\ref{fig:core_policies_uml}). 
+Only the \lstinline|SortPolicy|~is not realised according to
+the typical \emph{strategy pattern}
+and uses an \emph{abstract class} instead of an interface.
+The following paragraph explains why we choose to do it this way
+and what advantages it brings to the solution.
 
-Only the policy \lstinline|SortPolicy|~is not realised after the typical \emph{strategy pattern} and uses an abstract class instead of an interface. Why did we choose to do so? SortPolicy is used to display the most or least selling meal or dish. 
+\textit{At this point it has to be mentioned that we well understood the assignement
+to only display \HalfMeal, but we are convinced that is more logical
+and user friendly to present all \Meal~instead of only halfmeals.}
 
-@John(make this look important): At this point it has to be metioned that we well understood the assignement to only display \HalfMeal, but we are convinced that is more logical and user friendly to present all \Meal~instead of only \HalfMeal. 
-
-We thought about using the \lstinline|ArrayList|~\lstinline|savedOrders|~of the core that saves all orders ever having been executed to present how often a \Meal~or \Dish~was sold, but we decided against it since: 
-
+We thought about using the \lstinline|ArrayList<savedOrders>|
+of the core that saves all orders ever having been executed 
+to present how often a \Meal~or \Dish~was sold, but we decided against it since
 \begin{enumerate}
-	\item First, it is not easy to extract the needed information from \lstinline|savedOrders|~because it contains objects of type \Order.
-	\item Second, a new \lstinline|List|~would have to be created that has to sort all the needed information.
+	\item First, it is not easy to extract the needed information
+  from \lstinline|savedOrders|~because it contains objects of type \Order.
+	\item Second, a new \lstinline|List|~would have to be created
+  that has to sort all the needed information.
 \end{enumerate}
-
-Therefore, we implemented a two sorted lists of type \lstinline|TreeSet|, a list that is always sorted because it puts the added element directly at the right spot. The advantages are:
-
+Therefore, we implemented two sorted \lstinline|TreeSet|, 
+ie. a list that is \emph{always sorted} because it puts the added 
+element directly at the right spot. 
+The advantages are
 \begin{enumerate}
 	\item Each time the function is called there is no sorting needed in advance.
-	\item A lot of complicated and long coding was avoided and transparency is improved.
+	\item A lot of coding was avoided and \emph{transparency} is improved.
 \end{enumerate}
 
 % subsubsection policies (end)
@@ -93,10 +105,14 @@ Therefore, we implemented a two sorted lists of type \lstinline|TreeSet|, a list
 \subsubsection{Package restaurantSetUp} % (fold)
 \label{ssub:restaurantsetup}
 
-The package \restaurantSetup contains all the classes that are needed for \Restaurant~as can be seen below:  \ref{fig:dish_meal_uml}.
-In order to add \Dish~and \Meal~to its offer the already explained \emph{abstract factory pattern} is used. The other two important structures of \restaurantSetup~are the class structures of \Meal~and \Dish. 
+The package \restaurantSetup~contains all the classes that are needed
+for a restaurant to function properly.
+Its corresponding UML diagram can be seen in figure~\ref{fig:dish_meal_uml}.
+In order to add dishes or meals, we used the already explained \emph{abstract
+factory pattern}. The two other important structures of 
+\restaurantSetup~are the class structures of \Meal~and \Dish. 
 
-\Meal is inheritated by \HalfMeal~and \FullMeal. Since the function \lstinline|getPrice()|~thats add up the prices of the dishes included in the meal is the same for \FullMeal~and \HalfMeal, \Meal~does not have to be abstract. We also considered an extension of another type of \Meal, and were convinced that the functionality would still be the same so that a not abstract \Meal~is justified.
+\Meal~is inheritated by \HalfMeal~and \FullMeal. Since the function \lstinline|getPrice()|~thats add up the prices of the dishes included in the meal is the same for \FullMeal~and \HalfMeal, \Meal~does not have to be abstract. We also considered an extension of another type of \Meal, and were convinced that the functionality would still be the same so that a not abstract \Meal~is justified.
 Because we do not want an object of type \Meal~to be created, the constructor is of type protected so that classes of other packages cannot access the constructor. We make sure that a \FullMeal~is composed of exactly one \Starter, one \MainDish~and one \Dessert~by declaring the parameters of the constructor respectively. The same holds true for \HalfMeal~taking the respective requirements into account.
 
 \Dish~is inheritated by \Starter, \MainDish, \Dessert. All functionality for the concrete dishes is the same so the same reasoning as explained in the upper paragraph holds true. 
