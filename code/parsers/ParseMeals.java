@@ -34,7 +34,7 @@ public class ParseMeals {
 		
 		ArrayList<Starter> starter_list = ParseDishes.parseStarter("src/txtFILES/starters.txt");
 		ArrayList<MainDish> mainDish_list = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
-		ArrayList<Dessert> dessert_list = ParseDishes.parseDessert("src/txtFILES/dessert.txt");
+		ArrayList<Dessert> dessert_list = ParseDishes.parseDessert("src/txtFILES/desserts.txt");
 		int l = Math.min(Math.min(starter_list.size(), mainDish_list.size()), dessert_list.size());
 		ArrayList<FullMeal> fullMeals_list = new ArrayList<FullMeal>();
 		

@@ -14,7 +14,6 @@ import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
-import users.Address;
 import users.Restaurant;
 
 public class RestaurantTest {

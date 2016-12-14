@@ -14,14 +14,16 @@ public class MealFactory extends AbstractFactory{
 	 * @param mealType	  a string containing the type of the <code>Meal</code>
 	 * 
 	 */
-	public Meal getMeal(String mealType){
+	public Meal getMeal(String mealType, String mealName){
 		if (mealType.equalsIgnoreCase("FULLMEAL")){
-			return new FullMeal();
+			return new FullMeal(mealName);
 		} else if (mealType.equalsIgnoreCase("HALFMEAL")){
-			return new HalfMeal();
+			return new HalfMeal(mealName);
 		} 
 		return null;		
 	}
+	
+	
 	
 	/**
 	 * NOT TO USE METHOD, SEE <code>DishFactory</code> to get a Dish,

@@ -13,8 +13,8 @@ public class FullMeal extends Meal{
 	/**
 	 * Class constructor.
 	 */
-	public FullMeal(){
-		super();
+	public FullMeal(String name){
+		super(name);
 	}
 	
 	
@@ -43,6 +43,30 @@ public class FullMeal extends Meal{
 			type = mainDish.getType();
 		setType(type);
 
+	}
+	
+	
+	/**
+	 * SetFullMeals method which checks whether the added dishes are of they same type 
+	 * and names the meal either standard (different types) or of a type.
+	 * 
+	 * @param name 		 name of the fullmeal
+	 * @param starter 	 a <code>Starter</code>
+	 * @param mainDish 	 a <code>MainDish</code>
+	 * @param dessert    a <code>Dessert</code>
+	 * 
+	 */
+	public void setFullMeal(Starter starter, MainDish mainDish, Dessert dessert) {
+		
+		getListOfDish().add(starter);
+		getListOfDish().add(mainDish);
+		getListOfDish().add(dessert);
+		
+		String type = "standard";
+			
+		if((starter.getType() == mainDish.getType()) && (mainDish.getType()==dessert.getType()))
+			type = mainDish.getType();
+		setType(type);
 	}
 	
 	

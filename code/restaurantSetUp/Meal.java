@@ -107,8 +107,7 @@ public abstract class Meal {
 		
 		return sum;
 	}
-
-
+	
 
 	@Override
 	public String toString() {

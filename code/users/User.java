@@ -12,7 +12,7 @@ import java.util.Stack;
  * @author Patrick von Platen
  */
 
-public class User {
+public abstract class User {
 
 	private String name;
 	private String username;

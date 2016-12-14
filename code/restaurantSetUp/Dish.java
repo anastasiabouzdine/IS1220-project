@@ -8,7 +8,7 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Dish {
+public abstract class Dish {
 	
 	private String name;
 	private double price;
