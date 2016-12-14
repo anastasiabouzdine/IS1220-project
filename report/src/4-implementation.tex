@@ -112,14 +112,14 @@ In order to add dishes or meals, we used the already explained \emph{abstract
 factory pattern}. The two other important structures of 
 \restaurantSetup~are the class structures of \Meal~and \Dish. 
 
-\Meal~is inheritated by \HalfMeal~and \FullMeal. Since the function \lstinline|getPrice()|~thats add up the prices of the dishes included in the meal is the same for \FullMeal~and \HalfMeal, \Meal~does not have to be abstract. We also considered an extension of another type of \Meal, and were convinced that the functionality would still be the same so that a not abstract \Meal~is justified.
-Because we do not want an object of type \Meal~to be created, the constructor is of type protected so that classes of other packages cannot access the constructor. We make sure that a \FullMeal~is composed of exactly one \Starter, one \MainDish~and one \Dessert~by declaring the parameters of the constructor respectively. The same holds true for \HalfMeal~taking the respective requirements into account.
+\Meal~is inheritated by \HalfMeal~and \FullMeal. It is important to know that even if the class \Meal~does not have to be abstract, we declared it as an abstract class either way. The reason is that, we want to prevent other classes being able to create an object of type abstract.
+Because we do not want an object of type \Meal~to be created, the constructor is of type protected so that classes of other packages cannot access the constructor. We make sure that a \FullMeal~is composed of exactly one \Starter, one \MainDish~and one \Dessert~by declaring the parameters of the method \lstinline|setFullMeal|~ respectively. The exact functioning of the method is going to be explained later in the subsubsection \ref{ssub:add_full_meal_method} The same holds true for \HalfMeal~taking the respective requirements into account.
 
 \Dish~is inheritated by \Starter, \MainDish, \Dessert. All functionality for the concrete dishes is the same so the same reasoning as explained in the upper paragraph holds true. 
 
 Lastly, it is to be noticed that \Restaurant~offers either a \Meal~or a self composed meal composed of different \Dish~of the menu. 
 That is why we used \emph{composition} by giving each \Restaurant~exactly one \Menu~that contains all the single \Dish~being offered.
-An object of type \Menu~contains therefore a list of \Starter, \MainDish, and \Dessert. Additionally, is a list of all the provided \Meal included in each \Restaurant.
+An object of type \Menu~contains therefore a list of \Starter, \MainDish, and \Dessert. Additionally, is a list of all the provided \Meal~included in each \Restaurant.
 
 An exemple will be explained below \ref{???}.
 
