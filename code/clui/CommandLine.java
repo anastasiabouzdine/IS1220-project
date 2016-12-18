@@ -1,6 +1,8 @@
 package clui;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -27,7 +29,7 @@ public class CommandLine {
 	/**************************************************/
 	/* Methods */
 	
-	public String getInputInfo(String s) {
+	public String getInputInfoAndProcessCmd(String s) {
 		if (s.equals("stop")){
 			return "";
 		}
@@ -41,7 +43,7 @@ public class CommandLine {
 			return "Wrong syntax for arguments !";
 		} 
 		String[] args = input[1].substring(1, input[1].length()-1).split(",");
-		if (args.length != command_hm.get(input[0]).intValue()) {
+		if (!args[0].equals("") && args.length != command_hm.get(input[0]).intValue()) {
 			return "Wrong number of arguments for this command !";
 		}
 		try {
@@ -49,20 +51,20 @@ public class CommandLine {
 		} catch (Exception e) {
 			
 		}
-		return "";
+		return input[0] + " command executed.";
 	}
 	
-	public void launch() {
+	public void launchFromInput() {
 		Scanner sc; 
-		String s = ""; String inputInfo = "";
+		String inputInfo, s = "";
 		try {
 			sc = new Scanner(System.in);
 			System.out.println("Please enter a command");
 			System.out.print(">");
 			while(!s.equals("stop") && sc.hasNextLine()) {
 				s = sc.nextLine();
-				inputInfo = getInputInfo(s);
-				System.out.println(inputInfo);
+				inputInfo = getInputInfoAndProcessCmd(s);
+				System.out.println("[CL-info] " + inputInfo);
 				System.out.print(">");
 			} 
 			System.out.println("End of program");
@@ -72,8 +74,22 @@ public class CommandLine {
 		}
 	}
 	
-	public void executeCurrentCommand() {
-		
+	public void launchFromFile(String filename) {
+		File file = new File(filename);
+		Scanner scan = null;
+		String s, inputInfo;
+		try {
+			System.out.println("[CL-info] Reading commands from " + filename);
+			scan = new Scanner(file);
+			while (scan.hasNextLine()){
+				s = scan.nextLine();
+				inputInfo = getInputInfoAndProcessCmd(s);
+				System.out.println("[CL-info] " + inputInfo);
+			}
+			System.out.println("[CL-info] End of commands from " + filename + "\n");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**************************************************/

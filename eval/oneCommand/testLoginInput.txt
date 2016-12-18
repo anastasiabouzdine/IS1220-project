@@ -1,0 +1,3 @@
+login <hello, world>
+login <cuspvp23, mypassword>
+logout <>

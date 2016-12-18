@@ -100,3 +100,6 @@ specialPrice
 showMeals
 1
 orderingCriteria
+-------
+logout
+0 

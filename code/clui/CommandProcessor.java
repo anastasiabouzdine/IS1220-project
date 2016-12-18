@@ -26,12 +26,15 @@ public class CommandProcessor {
 	private String current_name;
 	private String[] current_args;
 	
+	/* 
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
 	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
 	ArrayList<MainDish> list_mainDish = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
 	ArrayList<Dessert> list_dessert = ParseDishes.parseDessert("src/txtFILES/desserts.txt");
 	ArrayList<Order> list_orders = ParseOrders.parseOrders();
+	 */
+	
 	
 	/**************************************************/
 	/* Singleton pattern */
@@ -100,6 +103,8 @@ public class CommandProcessor {
 		    notifySpecialOffer();
 		} else if (current_name.equals("showMeals")) {
 		    showMeals();
+		} else if (current_name.equals("logout")) {
+		    logout();
 		}
 	}
 	
@@ -289,7 +294,7 @@ public class CommandProcessor {
 	    String username = current_args[1];
 	    String address = current_args[2];
 	    String password = current_args[3];
-	    
+
 	    Restaurant r = new Restaurant(name, new Address(address), username, password);
 	    try {
 	    	core.register(r);
@@ -312,6 +317,13 @@ public class CommandProcessor {
 	// WAIT FOR NEW REQUIREMENTS (difference between call from manager and restaurant)
 	public void showMeals() {
 	    String orderingCriteria = current_args[0];
+	}
+	
+	/**
+	 * Performs logout.
+	 */
+	public void logout() {
+		core.logOut();
 	}
 	
 	

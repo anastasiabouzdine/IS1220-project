@@ -1,0 +1,3 @@
+nonexistingCommand
+login
+login <hello>

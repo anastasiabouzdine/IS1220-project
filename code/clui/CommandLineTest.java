@@ -4,7 +4,6 @@
 package clui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import parsers.ParseCommands;
 
@@ -21,8 +20,7 @@ public class CommandLineTest {
 
 		CL.setCommand_list(command_list);
 		
-		CL.launch();
-
+		CL.launchFromInput();
 	}
 
 }

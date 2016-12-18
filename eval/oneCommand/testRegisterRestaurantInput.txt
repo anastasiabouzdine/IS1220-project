@@ -1,0 +1,1 @@
+registerRestaurant <"Chez Arthurr", "arthurrBoss", [11;22], "arthurPass">
