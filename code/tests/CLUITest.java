@@ -20,20 +20,18 @@ public class CLUITest {
 	}
 
 	@Test
-	public void testInput0() {
+	public void testInputWrongCommand() {
 		CL.launchFromFile("eval/oneCommand/testWrongCommandInput.txt");
 	}
 
 	@Test
-	public void testInput1() {
+	public void testInputLogin() {
 		CL.launchFromFile("eval/oneCommand/testLoginInput.txt");
-		;
 	}
 
 	@Test
-	public void testInput2() {
+	public void testInputRegisterRestaurant() {
 		CL.launchFromFile("eval/oneCommand/testRegisterRestaurantInput.txt");
-		;
 	}
 
 }

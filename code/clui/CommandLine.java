@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import parsers.ParseCommands;
+
 public class CommandLine {
 	private HashMap<String, Integer> command_hm = new HashMap<String, Integer>();
 	private ArrayList<Command> command_list = new ArrayList<Command>();
@@ -18,6 +20,11 @@ public class CommandLine {
 	private CommandLine()
 	{
 		cmd_processor = CommandProcessor.getInstance();
+		
+		command_list = ParseCommands.parseCommands("src/txtFILES/mf_commands.txt");
+		for(Command cmd : command_list) {
+			command_hm.put(cmd.getName(), cmd.getNb_args());
+		}
 	}
 	
 	private static CommandLine INSTANCE = new CommandLine();
