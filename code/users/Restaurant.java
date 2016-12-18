@@ -53,6 +53,23 @@ public class Restaurant extends User {
 		this.menu = new Menu();
 		this.listOfMeal = new ArrayList<Meal>();
 	}
+	
+	/**
+	 * Class constructor with password. 
+	 * 	
+	 * @param name			 	name of restaurant
+	 * @param address 	 		an Address object containing the address of the restaurant 
+	 * @param username 	 		log-in name of restaurant
+	 * @param password 			password of restaurant
+	 */
+	public Restaurant(String name, Address address, String username, String password) {
+		super(name, username, password);
+		this.address = address;
+		this.discountFactor = 0.05;
+		this.specDiscFact = 0.1;
+		this.menu = new Menu();
+		this.listOfMeal = new ArrayList<Meal>();
+	}
 		
 	/************************************************************/
 	/* Auxiliaries function */

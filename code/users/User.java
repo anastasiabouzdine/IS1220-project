@@ -16,14 +16,33 @@ public abstract class User {
 
 	private String name;
 	private String username;
+	private String password;
 	private int ID;
 	private static int counter;
 	private Stack<String> messageBox = new Stack<String>(); 
 	
+	/**
+	 * Class constructor. 
+	 * 	
+	 * @param name			 	name of user
+	 * @param username 	 		log-in name of user
+	 */
 	protected User(String name, String username){
 		this.name = name;
 		this.username = username;
 		this.ID = ++counter;
+	}
+	
+	/**
+	 * Class constructor with password. 
+	 * 	
+	 * @param name			 	name of user
+	 * @param username 	 		log-in name of user
+	 * @param password 	 		password of user
+	 */
+	protected User(String name, String username, String password) {
+		this(name, username);
+		this.password = password;
 	}
 	
 	/**
@@ -134,6 +153,23 @@ public abstract class User {
 	public static int getCounter() {
 		return counter;
 	}
+
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+	
 
 		
 }
