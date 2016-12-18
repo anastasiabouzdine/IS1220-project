@@ -88,7 +88,9 @@ public class Core{
 		this.managerList = new ArrayList<Manager>();
 		this.restaurantList = new ArrayList<Restaurant>();
 
-		managerList.add(new Manager("system", "admin", "root"));
+		Manager root = new Manager("system", "admin", "root");
+		users.put("root", root);
+		managerList.add(root);
 
 		this.mealHeap = new TreeSet<SortPolicy>();
 		this.mealRestHeap = new TreeSet<SortPolicy>();
@@ -140,7 +142,7 @@ public class Core{
 	 * 		   or null if not
 	 */
 	public String logIn(String username){
-		String output=null;
+		String output="Not valid username";
 		if (users.containsKey(username)){
 			current_user = users.get(username);
 			if (current_user instanceof Courier){
