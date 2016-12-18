@@ -28,6 +28,9 @@ public class CommandLine {
 	/* Methods */
 	
 	public String getInputInfo(String s) {
+		if (s.equals("stop")){
+			return "";
+		}
 		String[] input = s.split(" ", 2);
 		if (!command_hm.containsKey(input[0])) {
 			return "Command not found !";
@@ -46,7 +49,7 @@ public class CommandLine {
 		} catch (Exception e) {
 			
 		}
-		return "\nCommand successfully executed";
+		return "";
 	}
 	
 	public void launch() {
@@ -56,12 +59,12 @@ public class CommandLine {
 			sc = new Scanner(System.in);
 			System.out.println("Please enter a command");
 			System.out.print(">");
-			while(!s.equals("stop") || sc.hasNextLine()) {
+			while(!s.equals("stop") && sc.hasNextLine()) {
 				s = sc.nextLine();
 				inputInfo = getInputInfo(s);
 				System.out.println(inputInfo);
 				System.out.print(">");
-			}
+			} 
 			System.out.println("End of program");
 			sc.close();
 		} catch (Exception e) {

@@ -1,7 +1,6 @@
 package clui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import core.Core;
 import core.Order;
@@ -14,12 +13,13 @@ import parsers.ParseMeals;
 import parsers.ParseOrders;
 import parsers.ParseRestaurants;
 import restaurantSetUp.Dessert;
+import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
 import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
+import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
-import users.Address;
-import users.Customer;
+import users.*;
 
 public class CommandProcessor {
 	private Core core;
@@ -112,15 +112,33 @@ public class CommandProcessor {
 		System.out.println(info);
 	}
 	
+	// WAIT FOR NEW REQ. WITH HALF- AND FULLMEALS
 	public void createMeal() {
 	    String mealName = current_args[0];
 	}
+	
+	// WAIT FOR REQ. WITH HALF- AND FULLMEALS
 	public void addDish2Meal() {
 	    String dishName = current_args[0];
 	    String mealName = current_args[1];
+	    
+	    Restaurant r = core.getCurrent_restaurant();
+	    Dish d = r.getDishByName(dishName);
+	    Meal m = r.getMealByName(mealName);
 	}
+	
+	/**
+	 * Show dishes in a meal with given name.
+	 */
 	public void showMeal() {
 	    String mealName = current_args[0];
+	    
+	    Meal meal = core.getCurrent_restaurant().getMealByName(mealName);
+	    if (meal != null) {
+	    	System.out.println(meal.toString());;
+	    } else {
+	    	System.out.println("! This meal does not exist !");
+	    }
 	}
 	public void saveMeal() {
 	    String mealName = current_args[0];
@@ -130,18 +148,33 @@ public class CommandProcessor {
 	}
 	public void setSpecialOffer() {
 	    String mealName = current_args[0];
+	    
+	    Meal meal = core.getCurrent_restaurant().getMealByName(mealName);
+	    if (meal != null) {
+	    	core.setSpecialMeal(meal);
+	    } else {
+	    	System.out.println("! This meal does not exist !");
+	    }
 	}
+	
+	// WAIT FOR NEW REQ. (should not have an argument)
 	public void removeFromSpecialOffer() {
 	    String mealName = current_args[0];
+	    
+	    core.getCurrent_restaurant().setSpecMeal(null);
 	}
+	
+	// WAIT FOR NEW REQ. (category means standard/vegetarian OR starter/maindish/dessert)
 	public void addDish() {
 	    String dishName = current_args[0];
 	    String dishCategory = current_args[1];
 	    double unitPrice = Double.parseDouble(current_args[2]);
 	}
+	// WAIT FOR NEW REQ. (there will probably be a startOrder function to initialize order)
 	public void addMeal2Order() {
 	    String mealName = current_args[0];
 	}
+	// WAIT FOR NEW REQ. (see above function)
 	public void endOrder() {
 	}
 	// WAIT FOR NEW REQUIREMENTS (command might change)
@@ -151,13 +184,9 @@ public class CommandProcessor {
 	    String username = current_args[2].trim();
 	    String address = current_args[3]; 
 	    String password = current_args[4];
-	    
-	    // address has to have the syntax : [xCoord;yCoord]
-	    String[] coord = address.trim().substring(1, address.length() - 2).split(";");
-	    Customer c = new Customer(firstName, lastName,
-	    		new Address(Integer.parseInt(coord[0]),Integer.parseInt(coord[1])),
+	    	    
+	    Customer c = new Customer(firstName, lastName, new Address(address),
 	    		"00000000", "null@null.null", username);
-	    
 	    try {
 	    	core.register(c);
 	    } catch (AlreadyUsedUsernameException e) {
@@ -174,34 +203,113 @@ public class CommandProcessor {
 	    String password = current_args[4];
 	    
 	}
+	
+	/**
+	 * Set the state of a courier with given username as on-duty.
+	 */
 	public void onDuty() {
 	    String username = current_args[0];
+	    
+	    core.logIn(username);
+	    Courier c = core.getCurrent_courier();
+	    if (c != null) {
+	    	c.setAvailable(true);
+	    	System.out.println(username + " has been set on duty.");
+	    } else {
+	    	System.out.println("! This username is not associated with a courier !");
+	    }
+	    core.logOut();
 	}
+	
+	/**
+	 * Set the state of a courier with given username as off-duty.
+	 */
 	public void offDuty() {
 	    String username = current_args[0];
+	    
+	    core.logIn(username);
+	    core.getCurrent_courier().setAvailable(false);
+	    core.logOut();
 	}
+	
+	// WAIT FOR NEW REQUIREMENTS
 	public void addContactInfo() {
 	    String contactInfo = current_args[0];
 	}
+	
+	/**
+	 * Associates a fidelity card plan to a customer with given username.
+	 */
 	public void associateCard() {
 	    String username = current_args[0];
 	    String cardType = current_args[1];
+	    
+	    core.logIn(username);
+	    Customer c = core.getCurrent_customer();
+	    if (c != null) {
+	    	 if (cardType.equalsIgnoreCase("basic")){
+	 	    	c.setFidCardToBasic();
+	 	    } else if (cardType.equalsIgnoreCase("points")) {
+	 	    	c.setFidCardToPoints();
+	 	    } else if (cardType.equalsIgnoreCase("lottery")) {
+	 	    	c.setFidCardToLottery();
+	 	    } else {
+	 	    	System.out.println("! Not a valid fidelity card type !");
+	 	    	System.out.println("Please choose between basic|points|lottery.");
+	 	    }
+	    } else {
+	    	System.out.println("! This username is not associated with a customer !");
+	    }
+	    core.logOut();
 	}
+	
+	/**
+	 * To associate an agreement (true or false) to a user.
+	 */
 	public void associateAgreement() {
 	    String username = current_args[0];
-	    String agreement = current_args[1];
+	    boolean agreement = Boolean.parseBoolean(current_args[1]);
+	    
+	    core.logIn(username);
+	    Customer c = core.getCurrent_customer();
+	    if (c != null) {
+	    	c.setBeNotified(agreement);
+	    	System.out.println("Agreement has been set for " + username + ".");
+	    } else {
+	    	System.out.println("! This username is not associated with a customer !");
+	    }
+	    core.logOut();
 	}
+	
+	/**
+	 * Adds a restaurant to the system with given name, username, address and password.
+	 */
 	public void registerRestaurant() {
 	    String name = current_args[0];
 	    String username = current_args[1];
 	    String address = current_args[2];
 	    String password = current_args[3];
+	    
+	    Restaurant r = new Restaurant(name, new Address(address), username, password);
+	    try {
+	    	core.register(r);
+	    } catch (AlreadyUsedUsernameException e) {
+	    	System.out.println("! This username is already taken ! ");
+	    }
 	}
+	
+	/**
+	 * @deprecated this function is of no use for our program
+	 * as we automatically notify registered customers whenever
+	 * a restaurant sets a new special meal of the week offer
+	 */
 	public void notifySpecialOffer() {
 	    String message = current_args[0];
 	    String mealName = current_args[1];
 	    double specialPrice = Double.parseDouble(current_args[2]);
 	}
+	
+	// WAIT FOR NEW REQUIREMENTS (difference between call from manager and restaurant)
 	public void showMeals() {
 	    String orderingCriteria = current_args[0];
 	}

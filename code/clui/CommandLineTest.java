@@ -18,16 +18,11 @@ public class CommandLineTest {
 		CommandLine CL = CommandLine.getInstance();
 		
 		ArrayList<Command> command_list = ParseCommands.parseCommands("src/txtFILES/mf_commands.txt");
-		for (Command cmd : command_list) {
-//			System.out.println(cmd.getName() + " " + cmd.getName());
-		}
+
 		CL.setCommand_list(command_list);
 		
 		CL.launch();
 
-		
-//		System.out.println(c1.getDescription());
-//		parseCommands();
 	}
 
 }
