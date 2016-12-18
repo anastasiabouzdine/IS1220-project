@@ -5,6 +5,7 @@ import java.util.List;
 
 import core.Order;
 import restaurantSetUp.Dessert;
+import restaurantSetUp.Dish;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Menu;
@@ -158,6 +159,45 @@ public class Restaurant extends User {
 			return true;
 		} 
 		return false;		
+	}
+	
+	
+	/**
+	 * Return the Meal with given mealName, null if this restaurant has not that meal.
+	 * @param mealName a String containing the name of the meal
+	 * @return the Meal associated with the given meal name
+	 */
+	public Meal getMealByName(String mealName) {
+		for(Meal m : listOfMeal){
+			if (m.getName().equals(mealName)){
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Return the Dish with given dishName, null if this restaurant has not that dish.
+	 * @param dishName a String containing the name of the dish
+	 * @return the Dish associated with the given dish name
+	 */
+	public Dish getDishByName(String dishName) {
+		for (Dish m : menu.getListOfStarter()){
+			if (m.getName().equals(dishName)){
+				return m;
+			}
+		}
+		for (Dish m : menu.getListOfMainDish()){
+			if (m.getName().equals(dishName)){
+				return m;
+			}
+		}
+		for (Dish m : menu.getListOfDessert()){
+			if (m.getName().equals(dishName)){
+				return m;
+			}
+		}
+		return null;
 	}
 
 	@Override

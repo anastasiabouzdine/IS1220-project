@@ -12,8 +12,9 @@ public class Address {
 	private int yCoordinate;
 	
 	
-	/************************************************************/
 	/**
+	 * Class constructor.
+	 * 
 	 * @param xCoordinate the x coordinate of the address
 	 * @param yCoordinate the y coordinate of the address
 	 */
@@ -23,6 +24,18 @@ public class Address {
 		this.yCoordinate = yCoordinate;
 	}
 	
+	/**
+	 * More flexible constructor which allows for the input to be a String
+	 * in the form of [xCoordinate;yCoordinate].
+	 * This is used in particular for the CLUI to create new addresses
+	 * 
+	 * @param address 	a String in the form of [xCoordinate;yCoordinate]
+	 */
+	public Address(String address) {
+		String[] coord = address.trim().substring(1, address.length() - 2).split(";");
+		this.xCoordinate = Integer.parseInt(coord[0]);
+		this.yCoordinate = Integer.parseInt(coord[1]);
+	}
 
 	public double calculateDistance(Address address){
 		return Math.sqrt(Math.pow((this.xCoordinate-address.xCoordinate),2) + Math.pow((this.yCoordinate-address.yCoordinate),2));
