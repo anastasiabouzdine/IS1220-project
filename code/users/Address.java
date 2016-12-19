@@ -1,7 +1,5 @@
 package users;
 
-import java.util.Arrays;
-
 /**
  * Class that represents a 2-dim address.
  * 
@@ -35,8 +33,8 @@ public class Address {
 	 */
 	public Address(String address) {
 		String[] coord = address.trim().substring(1, address.length() - 1).split(";");
-		this.xCoordinate = Integer.parseInt(coord[0]);
-		this.yCoordinate = Integer.parseInt(coord[1]);
+		this.xCoordinate = Integer.parseInt(coord[0].trim());
+		this.yCoordinate = Integer.parseInt(coord[1].trim());
 	}
 
 	public double calculateDistance(Address address){
