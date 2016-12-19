@@ -773,7 +773,7 @@ public class Core{
 	}
 
 	/*********************************************************************/
-	/* policy setters to respective policies */
+	/* Policy setters to respective policies */
 
     
 	public void setDeliveryPolicyToFastDeliv(){
@@ -831,9 +831,27 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
+	
+	
 
 	/*********************************************************************/
 	/* Getters and Setter */
+	
+	/**
+	 * Returns the restaurant object corresponding to the name given as input
+	 * or null if the restaurant is not in the restaurant list.
+	 * @param name a String containing the restaurant name
+	 * @return the restaurant object corresponding to the name 
+	 * or null if the restaurant is not in the restaurant list
+	 */
+	public Restaurant findRestaurantByName(String name) {
+		for(Restaurant r : restaurantList) {
+			if (r.getName().equals(name)) {
+				return r;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * @return the name

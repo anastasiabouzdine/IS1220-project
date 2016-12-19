@@ -18,20 +18,26 @@ public class CLUITest {
 		ArrayList<Command> command_list = ParseCommands.parseCommands("src/txtFILES/mf_commands.txt");
 		CL.setCommand_list(command_list);
 	}
-
 	@Test
 	public void testInputWrongCommand() {
 		CL.launchFromFile("eval/oneCommand/testWrongCommandInput.txt");
 	}
-
 	@Test
 	public void testInputLogin() {
 		CL.launchFromFile("eval/oneCommand/testLoginInput.txt");
 	}
-
 	@Test
 	public void testInputRegisterRestaurant() {
 		CL.launchFromFile("eval/oneCommand/testRegisterRestaurantInput.txt");
 	}
+	@Test
+	public void testInputAddDishRestaurantMenu() {
+		CL.launchFromFile("eval/oneCommand/testAddDishRestaurantMenu.txt");
+	}
+	@Test
+	public void testInputShowMenuItem() {
+		CL.launchFromFile("eval/oneCommand/testShowMenuItem.txt");
+	}
+	
 
 }

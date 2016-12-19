@@ -1,0 +1,4 @@
+login "r4" "password"
+addDishRestaurantMenu "PainEtBeurre" "starter" "4.2"
+logout
+showMenuItem "Knaller"

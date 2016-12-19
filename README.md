@@ -10,24 +10,29 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] how to give info to user --> see `onDuty` and `offDuty` difference in `CommandProcessor` class
 
 ### CLUI methods
-- [x] `login <username, password>`
+- [ ] `registerRestaurant <name> <address> <password>`
+- [ ] `registerCustomer <firstName> <lastName> <username> <address> <password>`
+- [ ] `registerCourier <firstName> <lastName> <username> <position> <password>`
+- [x] `addDishRestaurantMenu <dishName> <dishCategory> <unitPrice>` --> we don't use restName as we have the login system
+- [x] `login <username> <password>`
 - [ ] `createMeal <mealName>` --> wait for new req.
-- [ ] `addDish2Meal <dishName, mealName>` --> wait for new req.
+- [ ] `addDish2Meal <dishName> <mealName>` --> wait for new req.
 - [x] `showMeal <mealName>`
 - [ ] `saveMeal <mealName>` --> wait for new req.
-- [ ] `setMealPrice <mealName>` --> wait for new req.
 - [x] `setSpecialOffer <mealName>`
 - [x] `removeFromSpecialOffer <mealName>`
-- [ ] `addDish <dishName, dishCategory, unitPrice>` --> wait for new req.
 - [ ] `addMeal2Order <mealName>` --> wait for new req.
 - [ ] `endOrder <>` --> wait for new req. 
-- [ ] `registerClient <firstName, lastName, username, address, password>` --> wait for new req.
-- [ ] `registerCourier <firstName, lastName, username, position, password>` --> wait for new req.
 - [x] `onDuty <username>`
 - [x] `offDuty <username>`
-- [ ] `addContactInfo <contactInfo>` --> wait for new req.
-- [x] `associateCard <username, cardType>`
-- [x] `associateAgreement <username, agreement>`
-- [x] `registerRestaurant <name, username, address, password>`
-- [x] `notifySpecialOffer <message, mealName, specialPrice>` --> deprecade see code
+- [x] `associateCard <username> <cardType>`
+- [x] `notifySpecialOffer <message> <mealName> <specialPrice>` --> deprecade see code
 - [ ] `showMeals <orderingCriteria>` --> wait for new req.
+- [ ] `showCourierDeliveries <>`
+- [ ] `showRestaurantTop <>`
+- [x] `showCustomers <> `
+- [x] `showMenuItem <restaurant-name>`
+- [ ] `showTotalProfit<>`
+- [ ] `showTotalProfit<startDate> <endDate>`
+- [x] `runTest <testScenario-file>`
+- [x] `help <>`

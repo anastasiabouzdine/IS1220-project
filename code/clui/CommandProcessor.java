@@ -68,8 +68,15 @@ public class CommandProcessor {
 	public void processCmd(Command cmd) {
 		current_name = cmd.getName();
 		current_args = cmd.getArgs();
-		if (current_name.equals("login")) {
-			login();
+
+		if (current_name.equals("registerCustomer")) {
+			registerCustomer();
+		} else if (current_name.equals("registerCourier")) {
+			registerCourier();
+		} else if (current_name.equals("registerRestaurant")) {
+			registerRestaurant();
+		} else if (current_name.equals("addDishRestaurantMenu")) {
+			addDishRestaurantMenu();
 		} else if (current_name.equals("login")) {
 			login();
 		} else if (current_name.equals("createMeal")) {
@@ -80,38 +87,30 @@ public class CommandProcessor {
 			showMeal();
 		} else if (current_name.equals("saveMeal")) {
 			saveMeal();
-		} else if (current_name.equals("setMealPrice")) {
-			setMealPrice();
 		} else if (current_name.equals("setSpecialOffer")) {
 			setSpecialOffer();
 		} else if (current_name.equals("removeFromSpecialOffer")) {
 			removeFromSpecialOffer();
-		} else if (current_name.equals("addDish")) {
-			addDish();
-		} else if (current_name.equals("addMeal2Order")) {
-			addMeal2Order();
+		} else if (current_name.equals("createOrder")) {
+			createOrder();
 		} else if (current_name.equals("endOrder")) {
 			endOrder();
-		} else if (current_name.equals("registerClient")) {
-			registerClient();
-		} else if (current_name.equals("registerCourier")) {
-			registerCourier();
 		} else if (current_name.equals("onDuty")) {
 			onDuty();
 		} else if (current_name.equals("offDuty")) {
 			offDuty();
-		} else if (current_name.equals("addContactInfo")) {
-			addContactInfo();
 		} else if (current_name.equals("associateCard")) {
 			associateCard();
-		} else if (current_name.equals("associateAgreement")) {
-			associateAgreement();
-		} else if (current_name.equals("registerRestaurant")) {
-			registerRestaurant();
-		} else if (current_name.equals("notifySpecialOffer")) {
-			notifySpecialOffer();
-		} else if (current_name.equals("showMeals")) {
-			showMeals();
+		} else if (current_name.equals("showCourierDeliveries")) {
+			showCourierDeliveries();
+		} else if (current_name.equals("showRestaurantTop")) {
+			showRestaurantTop();
+		} else if (current_name.equals("showCustomers")) {
+			showCustomers();
+		} else if (current_name.equals("showMenuItem")) {
+			showMenuItem();
+		} else if (current_name.equals("showTotalProfit")) {
+			showTotalProfit();
 		} else if (current_name.equals("logout")) {
 			logout();
 		} 
@@ -119,6 +118,66 @@ public class CommandProcessor {
 
 	/**************************************************/
 	/* Apply commands to core */
+
+	
+	// WAIT FOR NEW REQUIREMENTS (bad design from project requirements)
+	/**
+	 * Adds a restaurant to the system with given name, username, address and
+	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 */
+	public void registerRestaurant() {
+		String name = current_args[0];
+		String username = current_args[1];
+		String address = current_args[2];
+		String password = current_args[3];
+
+		Restaurant r = new Restaurant(name, new Address(address), username, password);
+		try {
+			core.register(r);
+		} catch (AlreadyUsedUsernameException e) {
+			System.out.println("! This username is already taken ! ");
+		}
+	}
+	
+	// WAIT FOR NEW REQUIREMENTS (command might change)
+	public void registerCustomer() {
+		String firstName = current_args[0];
+		String lastName = current_args[1];
+		String username = current_args[2].trim();
+		String address = current_args[3];
+		String password = current_args[4];
+
+		Customer c = new Customer(firstName, lastName, new Address(address), "00000000", "null@null.null", username);
+		try {
+			core.register(c);
+		} catch (AlreadyUsedUsernameException e) {
+			System.out.println("! This username is already taken ! ");
+		}
+	}
+
+	// WAIT FOR NEW REQUIREMENTS (command might change)
+	public void registerCourier() {
+		String firstName = current_args[0];
+		String lastName = current_args[1];
+		String username = current_args[2];
+		String position = current_args[3];
+		String password = current_args[4];
+
+	}
+
+	public void addDishRestaurantMenu() {
+		String dishName = current_args[0];
+		String dishCategory = current_args[1];
+		double unitPrice = Double.parseDouble(current_args[2]);
+		
+		if (dishCategory.equals("starter")){
+			core.getCurrent_restaurant().addStarter(new Starter(dishName, unitPrice));
+		} else if (dishCategory.equals("maindish")) {
+			core.getCurrent_restaurant().addMainDish(new MainDish(dishName, unitPrice));
+		} else if (dishCategory.equals("dessert")) {
+			core.getCurrent_restaurant().addDessert(new Dessert(dishName, unitPrice));
+		}
+	}
 
 	public void login() {
 		String username = current_args[0];
@@ -130,7 +189,7 @@ public class CommandProcessor {
 	public void createMeal() {
 		String mealName = current_args[0];
 
-//		Meal m = meal_factory.getMeal("fullmeal", mealName);
+		//		Meal m = meal_factory.getMeal("fullmeal", mealName);
 	}
 
 	// WAIT FOR REQ. WITH HALF- AND FULLMEALS
@@ -162,10 +221,6 @@ public class CommandProcessor {
 		String mealName = current_args[0];
 	}
 
-	public void setMealPrice() {
-		String mealName = current_args[0];
-	}
-
 	public void setSpecialOffer() {
 		String mealName = current_args[0];
 
@@ -184,49 +239,18 @@ public class CommandProcessor {
 		core.getCurrent_restaurant().setSpecMeal(null);
 	}
 
-	// WAIT FOR NEW REQ. (category means standard/vegetarian OR
-	// starter/maindish/dessert)
-	public void addDish() {
-		String dishName = current_args[0];
-		String dishCategory = current_args[1];
-		double unitPrice = Double.parseDouble(current_args[2]);
-	}
-
-	// WAIT FOR NEW REQ. (there will probably be a startOrder function to
-	// initialize order)
-	public void addMeal2Order() {
-		String mealName = current_args[0];
+	// WAIT FOR NEW REQ. (see above function)
+	public void createOrder() {
+		String customerName = current_args[0];
+		String restaurantName = current_args[0];
+		String orderName = current_args[0];
 	}
 
 	// WAIT FOR NEW REQ. (see above function)
 	public void endOrder() {
 	}
 
-	// WAIT FOR NEW REQUIREMENTS (command might change)
-	public void registerClient() {
-		String firstName = current_args[0];
-		String lastName = current_args[1];
-		String username = current_args[2].trim();
-		String address = current_args[3];
-		String password = current_args[4];
 
-		Customer c = new Customer(firstName, lastName, new Address(address), "00000000", "null@null.null", username);
-		try {
-			core.register(c);
-		} catch (AlreadyUsedUsernameException e) {
-			System.out.println("! This username is already taken ! ");
-		}
-	}
-
-	// WAIT FOR NEW REQUIREMENTS (command might change)
-	public void registerCourier() {
-		String firstName = current_args[0];
-		String lastName = current_args[1];
-		String username = current_args[2];
-		String position = current_args[3];
-		String password = current_args[4];
-
-	}
 
 	/**
 	 * Set the state of a courier with given username as on-duty.
@@ -256,11 +280,6 @@ public class CommandProcessor {
 		core.logOut();
 	}
 
-	// WAIT FOR NEW REQUIREMENTS
-	public void addContactInfo() {
-		String contactInfo = current_args[0];
-	}
-
 	/**
 	 * Associates a fidelity card plan to a customer with given username.
 	 */
@@ -286,58 +305,54 @@ public class CommandProcessor {
 		}
 		core.logOut();
 	}
-
+	
+	public void showCourierDeliveries() {
+		
+	}
+	public void showRestaurantTop() {
+		
+	}
+	
 	/**
-	 * To associate an agreement (true or false) to a user.
+	 * Display the list of registered customers.
 	 */
-	public void associateAgreement() {
-		String username = current_args[0];
-		boolean agreement = Boolean.parseBoolean(current_args[1]);
-
-		core.logIn(username);
-		Customer c = core.getCurrent_customer();
-		if (c != null) {
-			c.setBeNotified(agreement);
-			System.out.println("Agreement has been set for " + username + ".");
+	public void showCustomers() {
+		for(Customer c : core.getCustomerList()) {
+			System.out.println(c.toString());
+		}
+	}
+	
+	/**
+	 * Display the list of meals and dishes of a given restaurant.
+	 */
+	public void showMenuItem() {
+		String restaurantName = current_args[0];
+		
+		Restaurant r = core.findRestaurantByName(restaurantName);
+		if (r == null) {
+			System.out.println("! This restaurant is not valid !");
 		} else {
-			System.out.println("! This username is not associated with a customer !");
-		}
-		core.logOut();
-	}
-
-	/**
-	 * Adds a restaurant to the system with given name, username, address and
-	 * password, recalling that the address must have the syntax "xCoord,yCoord".
-	 */
-	public void registerRestaurant() {
-		String name = current_args[0];
-		String username = current_args[1];
-		String address = current_args[2];
-		String password = current_args[3];
-
-		Restaurant r = new Restaurant(name, new Address(address), username, password);
-		try {
-			core.register(r);
-		} catch (AlreadyUsedUsernameException e) {
-			System.out.println("! This username is already taken ! ");
+			System.out.println("--- Meals ---");
+			for(Meal m : r.getListOfMeal()) {
+				System.out.println(m.toString());
+			}
+			System.out.println("--- Starters ---");
+			for(Dish d : r.getMenu().getListOfStarter()) {
+				System.out.println(d.toString());
+			}
+			System.out.println("--- Maindishes ---");
+			for(Dish d : r.getMenu().getListOfMainDish()) {
+				System.out.println(d.toString());
+			}
+			System.out.println("--- Desserts ---");
+			for(Dish d : r.getMenu().getListOfDessert()) {
+				System.out.println(d.toString());
+			}
 		}
 	}
-
-	/**
-	 * @deprecated this function is of no use for our program as we
-	 *             automatically notify registered customers whenever a
-	 *             restaurant sets a new special meal of the week offer
-	 */
-	public void notifySpecialOffer() {
-		String message = current_args[0];
-		String mealName = current_args[1];
-		double specialPrice = Double.parseDouble(current_args[2]);
-	}
-
-	// WAIT FOR NEW REQUIREMENTS (difference between call from manager and
-	// restaurant)
-	public void showMeals() {
-		String orderingCriteria = current_args[0];
+	public void showTotalProfit() {
+		String beginDate = current_args[0];
+		String endDate = current_args[1];
 	}
 
 	/**

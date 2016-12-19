@@ -15,14 +15,11 @@ public class Command {
 	
 	public String getDescription() {
 		StringBuilder sb = new StringBuilder(name);
-		if (nb_args > 0) {
-			sb.append(" <").append(args[0]);
-			if (nb_args > 1) {
-				for(int i = 1; i < nb_args; i++){
-					sb.append(", ").append(args[i]);
-				}
-			}
-			sb.append(">");
+		for(String arg : args) {
+			sb.append(" <").append(arg).append(">");
+		}
+		if (args.length == 0) {
+			sb.append(" <>");
 		}
 		return sb.toString();
 	}

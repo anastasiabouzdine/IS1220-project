@@ -11,40 +11,51 @@ public class CommandLine {
 	private HashMap<String, Integer> command_hm = new HashMap<String, Integer>();
 	private ArrayList<Command> command_list = new ArrayList<Command>();
 	private CommandProcessor cmd_processor;
-	
-	
+
+
 	/**************************************************/
 	/* Singleton pattern */
-	
+
 	private CommandLine()
 	{
 		cmd_processor = CommandProcessor.getInstance();
-		
+
 		command_list = ParseCommands.parseCommands("src/txtFILES/mf_commands.txt");
 		for(Command cmd : command_list) {
 			command_hm.put(cmd.getName(), cmd.getNb_args());
 		}
 	}
-	
+
 	private static CommandLine INSTANCE = new CommandLine();
- 
+
 	public static CommandLine getInstance()
 	{	return INSTANCE;
 	}
-	
+
 	/**************************************************/
 	/* Methods */
 	public String getInputInfoAndProcessCmd(String s) {
-		if (s.equals("stop") || s.equals("help")){
+		if (s.equals("stop")){
+			return s + " command executed.";
+		} else if (s.equals("help")) { 
+			printListOfCommands();
 			return s + " command executed.";
 		}
 		String[] input = s.trim().split(" ");
+		if (input[0].equals("runtest")) {
+			launchFromFile("./eval/" + input[1].substring(1, input[1].length()-1));
+			return "";
+		}
 		if (input.length == 0) { return ""; }
 		String command = input[0];
 		if (!command_hm.containsKey(command)) {
 			return "Command not found !";
 		}
 		String[] args = new String[0];
+		// special case as the showTotalProfit is used twice with different number of arguments
+		if (input[0].equals("showTotalProfit") && input.length == 1) {
+			args = new String[]{null, null};
+		}
 		if (input.length > 1) {
 			args = new String[input.length - 1];
 			for(int i = 0; i < args.length; i++){
@@ -65,7 +76,7 @@ public class CommandLine {
 		}
 		return input[0] + " command executed.";
 	}
-	
+
 	public void launchFromInput() {
 		Scanner sc; 
 		String inputInfo, s = "";
@@ -76,7 +87,6 @@ public class CommandLine {
 			System.out.print(">");
 			while(!s.equals("stop") && sc.hasNextLine()) {
 				s = sc.nextLine();
-				if (s.equals("help")) { printListOfCommands();}
 				inputInfo = getInputInfoAndProcessCmd(s);
 				System.out.println("[CL-info] " + inputInfo);
 				System.out.print(">");
@@ -87,7 +97,7 @@ public class CommandLine {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void launchFromFile(String filename) {
 		File file = new File(filename);
 		Scanner scan = null;
@@ -97,7 +107,6 @@ public class CommandLine {
 			scan = new Scanner(file);
 			while (scan.hasNextLine()){
 				s = scan.nextLine();
-				if (s.equals("help")) { printListOfCommands();}
 				inputInfo = getInputInfoAndProcessCmd(s);
 				System.out.println("[CL-info] " + inputInfo);
 			}
@@ -106,7 +115,7 @@ public class CommandLine {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**************************************************/
 	/* Printers, getters and setters for command list */
 
@@ -134,6 +143,6 @@ public class CommandLine {
 			command_hm.put(cmd.getName(), cmd.getNb_args());
 		}
 	}
-	
-	
+
+
 }
