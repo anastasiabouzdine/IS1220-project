@@ -114,7 +114,7 @@ public class CommandProcessor {
 			showMeals();
 		} else if (current_name.equals("logout")) {
 			logout();
-		}
+		} 
 	}
 
 	/**************************************************/
@@ -307,7 +307,7 @@ public class CommandProcessor {
 
 	/**
 	 * Adds a restaurant to the system with given name, username, address and
-	 * password.
+	 * password, recalling that the address must have the syntax "xCoord,yCoord".
 	 */
 	public void registerRestaurant() {
 		String name = current_args[0];
@@ -346,5 +346,6 @@ public class CommandProcessor {
 	public void logout() {
 		core.logOut();
 	}
+
 
 }

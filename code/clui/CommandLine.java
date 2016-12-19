@@ -34,31 +34,32 @@ public class CommandLine {
 	
 	/**************************************************/
 	/* Methods */
-	
 	public String getInputInfoAndProcessCmd(String s) {
-		if (s.equals("stop")){
-			return "";
+		if (s.equals("stop") || s.equals("help")){
+			return s + " command executed.";
 		}
-		String[] input = s.split(" ", 2);
-		if (!command_hm.containsKey(input[0])) {
+		String[] input = s.trim().split(" ");
+		if (input.length == 0) { return ""; }
+		String command = input[0];
+		if (!command_hm.containsKey(command)) {
 			return "Command not found !";
-		} else if (input.length != 2) {
-			return "Missing arguments !";
-		} else if (input[1].charAt(0) != '<' 
-				|| input[1].charAt(input[1].length() - 1) != '>') {
-			return "Wrong syntax for arguments !";
-		} 
-		String[] args = input[1].substring(1, input[1].length()-1).split(",");
-		if (!args[0].equals("") && args.length != command_hm.get(input[0]).intValue()) {
+		}
+		String[] args = new String[0];
+		if (input.length > 1) {
+			args = new String[input.length - 1];
+			for(int i = 0; i < args.length; i++){
+				if (input[i+1].charAt(0) != '"' || input[i+1].charAt(input[i+1].length()-1) != '"'){
+					return "Wrong syntax for arguments !";
+				}
+				args[i] = input[i+1].substring(1, input[i+1].length()-1);
+			}
+		}
+
+		if (args.length != command_hm.get(command).intValue()){
 			return "Wrong number of arguments for this command !";
 		}
-		// remove white spaces around arguments
-		for(int i = 0; i < args.length; i++) {
-			args[i] = args[i].trim();
-		}
 		try {
-			cmd_processor.processCmd(new Command(input[0], args));
-			
+			cmd_processor.processCmd(new Command(command, args));
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -70,10 +71,12 @@ public class CommandLine {
 		String inputInfo, s = "";
 		try {
 			sc = new Scanner(System.in);
-			System.out.println("Please enter a command");
+			System.out.println("MyFoodora application --- IS1220\nPlease enter a command"
+					+ ", type \"help\" to get commands info or \"stop\" to end the program !");
 			System.out.print(">");
 			while(!s.equals("stop") && sc.hasNextLine()) {
 				s = sc.nextLine();
+				if (s.equals("help")) { printListOfCommands();}
 				inputInfo = getInputInfoAndProcessCmd(s);
 				System.out.println("[CL-info] " + inputInfo);
 				System.out.print(">");
@@ -94,6 +97,7 @@ public class CommandLine {
 			scan = new Scanner(file);
 			while (scan.hasNextLine()){
 				s = scan.nextLine();
+				if (s.equals("help")) { printListOfCommands();}
 				inputInfo = getInputInfoAndProcessCmd(s);
 				System.out.println("[CL-info] " + inputInfo);
 			}
@@ -104,8 +108,16 @@ public class CommandLine {
 	}
 	
 	/**************************************************/
-	/* Getters and setters for command list */
+	/* Printers, getters and setters for command list */
 
+	/**
+	 * Prints the list of commands.
+	 */
+	public void printListOfCommands() {
+		for (Command c : command_list) {
+			System.out.println(c.getDescription());
+		}
+	}
 	/**
 	 * @return the command_list
 	 */

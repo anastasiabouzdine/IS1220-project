@@ -29,10 +29,10 @@ public class Address {
 	 * in the form of [xCoordinate;yCoordinate].
 	 * This is used in particular for the CLUI to create new addresses
 	 * 
-	 * @param address 	a String in the form of [xCoordinate;yCoordinate]
+	 * @param address 	a String in the form of xCoordinate,yCoordinate
 	 */
 	public Address(String address) {
-		String[] coord = address.trim().substring(1, address.length() - 1).split(";");
+		String[] coord = address.split(",");
 		this.xCoordinate = Integer.parseInt(coord[0].trim());
 		this.yCoordinate = Integer.parseInt(coord[1].trim());
 	}
