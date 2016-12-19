@@ -24,6 +24,7 @@ import javax.swing.SwingUtilities;
 
 
 public class GUI {
+	
 	private JFrame frame = new JFrame("My Foodora");
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();
@@ -39,6 +40,7 @@ public class GUI {
 	JRadioButton radio_customer = new JRadioButton("Customer", true);
 	JRadioButton radio_courier = new JRadioButton("Courier");
 	JRadioButton radio_restaurant = new JRadioButton("Restaurant");
+	JRadioButton radio_manager = new JRadioButton("Manager");
 	ButtonGroup user_type_group = new ButtonGroup();
 	
 	// panels when user register and add info
@@ -48,6 +50,7 @@ public class GUI {
 	JPanel customer_specific_info = new JPanel();
 	JPanel courier_specific_info = new JPanel();
 	JPanel restaurant_specific_info = new JPanel();
+	JPanel manager_specific_info = new JPanel();
 
 
 	/*********************************************************/
@@ -82,9 +85,9 @@ public class GUI {
 		surname.setText("Insert your surname");
 		JTextField phoneNum = new JTextField(15);
 		phoneNum.setText("Insert your phone number");
+		
 		courier_specific_info.add(surname);
 		courier_specific_info.add(phoneNum);
-		
 	}
 	public void fillLoginPanel() {
 		login_panel.setBackground(Color.green);

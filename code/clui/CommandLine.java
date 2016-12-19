@@ -53,10 +53,15 @@ public class CommandLine {
 		if (!args[0].equals("") && args.length != command_hm.get(input[0]).intValue()) {
 			return "Wrong number of arguments for this command !";
 		}
+		for(String arg : args) {
+			if(Character.isWhitespace(arg.charAt(0)) || Character.isWhitespace(arg.charAt(arg.length()-1)))
+				return "Please avoid blanks in the beginning or the end of an input field";
+		}
 		try {
 			cmd_processor.processCmd(new Command(input[0], args));
-		} catch (Exception e) {
 			
+		} catch (Exception e) {
+			e.getMessage();
 		}
 		return input[0] + " command executed.";
 	}

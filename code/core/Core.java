@@ -142,7 +142,7 @@ public class Core{
 	 * 		   or null if not
 	 */
 	public String logIn(String username){
-		String output="Not valid username";
+		String output="Not a valid username!";
 		if (users.containsKey(username)){
 			current_user = users.get(username);
 			if (current_user instanceof Courier){

@@ -2,10 +2,12 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -22,32 +24,62 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import user_interface.GUI;
 
-public class GUI {
+public class GUIStartFrame {
+	
+	private static GUIStartFrame instance;
+
 	private JFrame frame = new JFrame("My Foodora");
+	
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();
 	JPanel welcome_message_panel = new JPanel();
-	JPanel login_panel = new JPanel();
 	
-	JLabel label1 = new JLabel("Hello World !");
-
-	// home button
-	JButton home_button = new JButton("GO TO HOME");
+	JPanel address_panel = new JPanel();
+	JPanel login_panel = new JPanel();
 	
 	// radio buttons for user to register
 	JRadioButton radio_customer = new JRadioButton("Customer", true);
 	JRadioButton radio_courier = new JRadioButton("Courier");
 	JRadioButton radio_restaurant = new JRadioButton("Restaurant");
+	JRadioButton radio_manager = new JRadioButton("Manager");
 	ButtonGroup user_type_group = new ButtonGroup();
 	
+	// buttons 
+	
+	JButton logIn_button = new JButton("LOG IN");
+	JButton	home_button = new JButton("GO TO HOME");
+	JButton goToRegister_button = new JButton("GO TO REGISTER");
+	JButton backToRegister_button = new JButton("GO BACK");
+	JButton createAccount_button = new JButton("CREATE ACCOUNT");
+	JButton goToLogIn_button = new JButton("GO TO LOG IN");
+	
+	
+
+
+	
 	// panels when user register and add info
-	JPanel register_panel = new JPanel();
+	JPanel register_panel_info = new JPanel();
+	
 	JPanel user_global_info = new JPanel();
 	JPanel user_specific_info = new JPanel();
+	
 	JPanel customer_specific_info = new JPanel();
 	JPanel courier_specific_info = new JPanel();
 	JPanel restaurant_specific_info = new JPanel();
+	JPanel manager_specific_info = new JPanel();
+	
+	/*********************************************************/
+	// HelpFunctions
+	
+	private static GUIStartFrame getInstance() {
+		if(instance == null){
+			instance = new GUIStartFrame();
+		}
+		return instance;
+	}
+	
 
 
 	/*********************************************************/
@@ -75,17 +107,73 @@ public class GUI {
 	    user_global_info.add(user_specific_info, BorderLayout.CENTER);
 	}
 	
-	public void fillUsersSpecificInfosPanel() {
+	private void fillAddressInfosPanel() {
+		
+		JTextField xCoordinate = new JTextField(15);
+		xCoordinate.setText("Insert xCoordinate");
+		JTextField yCoordinate = new JTextField(15);
+		yCoordinate.setText("Insert yCoordinate");
+		
+		address_panel.add(xCoordinate);
+		address_panel.add(yCoordinate);
+	}
+	
+	public void fillCourierSpecificInfosPanel() {
+		courier_specific_info.setLayout(new BorderLayout());
+		courier_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 		courier_specific_info.setBackground(Color.green);
 		
 		JTextField surname = new JTextField(15);
 		surname.setText("Insert your surname");
 		JTextField phoneNum = new JTextField(15);
 		phoneNum.setText("Insert your phone number");
-		courier_specific_info.add(surname);
-		courier_specific_info.add(phoneNum);
 		
+		courier_specific_info.add(surname,BorderLayout.NORTH);
+		courier_specific_info.add(phoneNum,BorderLayout.NORTH);
+		courier_specific_info.add(address_panel, BorderLayout.SOUTH);
 	}
+	
+	public void fillManagerSpecificInfosPanel() {
+		manager_specific_info.setLayout(new BorderLayout());
+		manager_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
+		manager_specific_info.setBackground(Color.green);
+		
+		JTextField surname = new JTextField(15);
+		surname.setText("Insert your surname");
+		JTextField phoneNum = new JTextField(15);
+		phoneNum.setText("Insert your phone number");
+		
+		manager_specific_info.add(surname,BorderLayout.NORTH);
+		manager_specific_info.add(phoneNum,BorderLayout.NORTH);
+		manager_specific_info.add(address_panel, BorderLayout.SOUTH);
+	}
+	
+	public void fillCustomerSpecificInfosPanel() {
+		customer_specific_info.setLayout(new BorderLayout());
+		customer_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
+		customer_specific_info.setBackground(Color.green);
+		
+		JTextField surname = new JTextField(15);
+		surname.setText("Insert your surname");
+		JTextField phoneNum = new JTextField(15);
+		phoneNum.setText("Insert your phone number");
+		JTextField emailAddress = new JTextField(15);
+		phoneNum.setText("Insert your Email address");
+		
+		customer_specific_info.add(surname,BorderLayout.NORTH);
+		customer_specific_info.add(phoneNum,BorderLayout.NORTH);
+		customer_specific_info.add(emailAddress,BorderLayout.NORTH);
+		customer_specific_info.add(address_panel, BorderLayout.SOUTH);
+	}
+	
+	public void fillRestaurantSpecificInfosPanel() {
+		restaurant_specific_info.setLayout(new BorderLayout());
+		restaurant_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
+		restaurant_specific_info.setBackground(Color.green);
+		
+		restaurant_specific_info.add(address_panel, BorderLayout.SOUTH);
+	}
+	
 	public void fillLoginPanel() {
 		login_panel.setBackground(Color.green);
 		login_panel.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
@@ -94,6 +182,7 @@ public class GUI {
 		username.setPreferredSize(new Dimension(150, 30));
 		username.setForeground(Color.BLUE);
 		username.setText("Insert your username");
+		//TODO find a function that deletes the text when clicked on 
 
 		JTextField password = new JTextField(20);
 		password.setPreferredSize(new Dimension(150, 30));
@@ -101,26 +190,27 @@ public class GUI {
 		password.setText("Insert your password");
 		
 		
-		JButton button_login = new JButton("LOG IN");
-		
 		login_panel.add(username, BorderLayout.NORTH);
 		login_panel.add(password, BorderLayout.CENTER);
-		login_panel.add(button_login, BorderLayout.CENTER);
+		
 		
 	}
 	
 	public void fillRegisterPanel() {
-		register_panel.setBackground(Color.red);
-		register_panel.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
+		register_panel_info.setBackground(Color.red);
+		register_panel_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
 		
 		user_type_group.add(radio_restaurant);
 		user_type_group.add(radio_courier);
 		user_type_group.add(radio_customer);
+		user_type_group.add(radio_manager);
+		
 		JPanel user_type = new JPanel();
 		user_type.setBackground(Color.red);
 		user_type.add(radio_customer);
 		user_type.add(radio_courier);
 		user_type.add(radio_restaurant);
+		user_type.add(radio_manager);
 		
 		JTextField username = new JTextField(15);
 		username.setForeground(Color.BLUE);
@@ -130,45 +220,18 @@ public class GUI {
 		password.setForeground(Color.BLUE);
 		password.setText("Insert a password");
 		
-		JButton button_register = new JButton("CREATE ACCOUNT");
-		button_register.addActionListener(new WhatAccountType());
-		
-		register_panel.add(user_type, BorderLayout.NORTH);
-		register_panel.add(username, BorderLayout.NORTH);
-		register_panel.add(password, BorderLayout.CENTER);
-		register_panel.add(button_register, BorderLayout.CENTER);
-
-	}
-	
-	private class WhatAccountType implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			user_specific_info.removeAll();
-			if (radio_customer.isSelected()){
-				user_specific_info.add(customer_specific_info);
-			} else if (radio_courier.isSelected()){
-				user_specific_info.add(courier_specific_info);
-			} else if (radio_restaurant.isSelected()){
-				user_specific_info.add(restaurant_specific_info);
-			}
-			user_global_info.add(home_button, BorderLayout.SOUTH);
-			setCurrentPanel(user_global_info);
-		}
+		register_panel_info.add(user_type, BorderLayout.NORTH);
+		register_panel_info.add(username, BorderLayout.NORTH);
+		register_panel_info.add(password, BorderLayout.CENTER);
 	}
 	
 	public void fillWelcomePanel() {
-		JButton button_login = new JButton("LOG IN");
-		JButton button_register = new JButton("REGISTER");
-
 		welcome_panel.setBackground(Color.orange);
 		welcome_panel.setBorder(BorderFactory.createTitledBorder("Welcome"));
 		welcome_panel.setLayout(new BorderLayout());
 
 		welcome_button_panel.setBackground(Color.orange);
-		welcome_button_panel.add(button_login, BorderLayout.CENTER);
-		welcome_button_panel.add(button_register, BorderLayout.CENTER);
-	    	
-		button_login.addActionListener(new LoginButton());
-		button_register.addActionListener(new RegisterButton());
+		
 		
 		JTextField program_name = new JTextField(31);
 	    Font font = new Font("SansSerif", Font.BOLD, 12);
@@ -188,12 +251,19 @@ public class GUI {
 
 		welcome_panel.add(welcome_message_panel, BorderLayout.NORTH);
 		welcome_panel.add(welcome_scrollPane, BorderLayout.CENTER);
-		welcome_panel.add(welcome_button_panel, BorderLayout.SOUTH);
-
-//		welcome_panel.add(button_login, BorderLayout.WEST);
-//		welcome_panel.add(button_register, BorderLayout.EAST);
-    	
+		welcome_panel.add(welcome_button_panel, BorderLayout.SOUTH); 
+		
+		//Buttons
+		welcome_button_panel.add(goToLogIn_button, BorderLayout.CENTER);
+		welcome_button_panel.add(goToRegister_button, BorderLayout.CENTER);
    	}
+	
+	/*********************************************************/
+	
+	
+	
+	
+	
 	
 	/*********************************************************/
 	/* Functions */
@@ -206,24 +276,25 @@ public class GUI {
 	public void initSettings(){
         home_button.addActionListener(new HomeButton());
         
-        /* Menu bar */
-    	JMenuBar menubar = new JMenuBar();
-    	JMenu menu1 = new JMenu("Menu 42");
-    	JMenuItem item1 = new JMenuItem("Item66");
-    	menu1.add(item1);
-    	menubar.add(menu1);
-    	frame.setJMenuBar(menubar);
         
         fillWelcomePanel();
         fillRegisterPanel();
         fillLoginPanel();
-        
         fillUserGlobalInfoPanel();
-        fillUsersSpecificInfosPanel();
+        fillCourierSpecificInfosPanel();
+        fillAddressInfosPanel();
         
         setCurrentPanel(welcome_panel);
         
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	
+    	
+    	goToLogIn_button.addActionListener(new GoToLoginButton());
+    	home_button.addActionListener(new HomeButton());
+    	goToRegister_button.addActionListener(new GoToRegisterButton());
+    	backToRegister_button.addActionListener(new GoBackToRegisterButton());
+    	createAccount_button.addActionListener(new WhatAccountType());
+    	
 	}
    
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
@@ -236,17 +307,46 @@ public class GUI {
         });
     }
 	
-	private class LoginButton implements ActionListener {
+	/*********************************************************/
+	/* ActionListeners */
+	
+	private class WhatAccountType implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			user_specific_info.removeAll();
+			if (radio_customer.isSelected()){
+				user_specific_info.add(customer_specific_info);
+			} else if (radio_courier.isSelected()){
+				user_specific_info.add(courier_specific_info);
+			} else if (radio_restaurant.isSelected()){
+				user_specific_info.add(restaurant_specific_info);
+			}
+			user_global_info.add(home_button, BorderLayout.SOUTH);
+			user_global_info.add(backToRegister_button, BorderLayout.SOUTH);
+			setCurrentPanel(user_global_info);
+		}
+	}
+	
+	private class GoToLoginButton implements ActionListener {
 		public void actionPerformed(ActionEvent e){
 			login_panel.add(home_button, BorderLayout.SOUTH);
+			login_panel.add(logIn_button, BorderLayout.SOUTH);
 			setCurrentPanel(login_panel);
 		}
 	}
 	
-	private class RegisterButton implements ActionListener {
+	private class GoToRegisterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e){
-			register_panel.add(home_button, BorderLayout.SOUTH);
-			setCurrentPanel(register_panel);
+			register_panel_info.add(home_button, BorderLayout.SOUTH);
+			register_panel_info.add(createAccount_button, BorderLayout.SOUTH);
+			setCurrentPanel(register_panel_info);
+		}
+	}
+	
+	private class GoBackToRegisterButton implements ActionListener {
+		public void actionPerformed(ActionEvent e){
+			register_panel_info.add(home_button, BorderLayout.SOUTH);
+			register_panel_info.add(createAccount_button, BorderLayout.SOUTH);
+			setCurrentPanel(register_panel_info);
 		}
 	}
 	
@@ -256,11 +356,14 @@ public class GUI {
 		}
 	}
 
-	public static void main(String[] args) {
-		GUI GUI = new GUI();
-		GUI.open(0, 0, 600, 400);
-	}
 	
-   
+	/*********************************************************/
+	/* Launch */
+	public static void main(String[] args) {
+		GUIStartFrame gui = GUIStartFrame.getInstance();
+		gui.open(0, 0, 600, 400);
+	}
+
+	
 
 }
