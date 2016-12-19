@@ -59,7 +59,7 @@ public class CommandProcessor {
 		core.logOut();
 	}
 
-	private static CommandProcessor INSTANCE = new CommandProcessor();
+	private static final CommandProcessor INSTANCE = new CommandProcessor();
 
 	public static CommandProcessor getInstance() {
 		return INSTANCE;

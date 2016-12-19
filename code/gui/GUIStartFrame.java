@@ -26,8 +26,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.junit.experimental.theories.Theories;
 
-
+import clui.CommandProcessor;
 import core.Core;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
@@ -45,10 +46,12 @@ public class GUIStartFrame {
 	
 	private static Core core = new Core();
 	private static GUIStartFrame instance;
-	private JFrame frame = new JFrame("My Foodora");
+	private static JFrame frame = new JFrame("My Foodora");
+	private static GUIUserFrame currentLogInUser;
 	
 	private HashMap<String, String> passwordUserMap = new HashMap<>();
-	
+
+
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();
 	JPanel welcome_message_panel = new JPanel();
@@ -63,7 +66,6 @@ public class GUIStartFrame {
 	ButtonGroup user_type_group = new ButtonGroup();
 	
 	// buttons 
-	
 	JButton logIn_button = new JButton("LOG IN");
 	JButton	home_button = new JButton("GO TO HOME");
 	JButton goToRegister_button = new JButton("GO TO REGISTER");
@@ -95,16 +97,6 @@ public class GUIStartFrame {
 	String passwortConf;
 	String name;
  
-	
-	
-	
-	
-	
-	
-	
-
-
-	
 	// panels when user register and add info
 	JPanel register_panel_info = new JPanel();
 	
@@ -118,7 +110,7 @@ public class GUIStartFrame {
 	/*********************************************************/
 	// HelpFunctions
 	
-	private static GUIStartFrame getInstance() {
+	public static GUIStartFrame getInstance() {
 		if(instance == null){
 			instance = new GUIStartFrame();
 			core.logIn("root"); // login with manager to add lists
@@ -127,11 +119,36 @@ public class GUIStartFrame {
 			core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
 			core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
 			core.logOut();
+			
+			// For testing
+			
 		}
 		return instance;
 	}
 	
+	public static JFrame getFrame() {
+		return frame;
+	}
 
+	public static void setFrame(JFrame frame) {
+		GUIStartFrame.frame = frame;
+	}
+	
+	public static GUIUserFrame getCurrentLogInUser() {
+		return currentLogInUser;
+	}
+
+	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
+		GUIStartFrame.currentLogInUser = currentLogInUser;
+	}
+	
+	public HashMap<String, String> getPasswordUserMap() {
+		return passwordUserMap;
+	}
+
+	public void setPasswordUserMap(HashMap<String, String> passwordUserMap) {
+		this.passwordUserMap = passwordUserMap;
+	}
 
 	/*********************************************************/
 	/* Fill panels */
@@ -303,6 +320,10 @@ public class GUIStartFrame {
 		}
 	}
 	
+	public void goToHomePage() {
+		setCurrentPanel(welcome_panel);
+	}
+	
 	private void goToLogInPanel(){
 		
 		login_panel.add(home_button, BorderLayout.SOUTH);
@@ -422,7 +443,7 @@ public class GUIStartFrame {
 	
 	private class HomeButton implements ActionListener {
 		public void actionPerformed(ActionEvent e){
-			setCurrentPanel(welcome_panel);
+			goToHomePage();
 		}
 	}
 	
@@ -504,14 +525,15 @@ public class GUIStartFrame {
 				System.out.println(current_user.getName());
 				
 				if (current_user instanceof Courier){
-					//TODO new Function 
+					setCurrentLogInUser(new GUICourierFrame());
 				} else if (current_user instanceof Customer){
-					//TODO new Function 
+					setCurrentLogInUser(new GUICustomerFrame());
 				} else if (current_user instanceof Manager){
-					//TODO new Function
+					setCurrentLogInUser(new GUIManagerFrame());
 				} else if (current_user instanceof Restaurant){
-					//TODO new Function
+					setCurrentLogInUser(new GUIRestaurantFrame());
 				}
+				currentLogInUser.getInstance(current_user);
 			}
 		}
 	}
@@ -523,7 +545,36 @@ public class GUIStartFrame {
 		
 		GUIStartFrame gui = GUIStartFrame.getInstance();
 		gui.open(0, 0, 600, 400);
+		
+		// For testing
+		/**********************
+		 * Restaurant
+		 * username: r1
+		 * code: aoeu
+		 * 
+		 * Courier
+		 * username: dagit
+		 * code: aoeu
+		 * 
+		 * Customer
+		 * username: cuspvp23
+		 * code: aoeu
+		 * 
+		 * Manager
+		 * username: john45
+		 * code: aoeu
+		 * 
+		 * 
+		 */
+		
+		gui.getPasswordUserMap().put("r1", "aoeu");
+		gui.getPasswordUserMap().put("dagit", "aoeu");
+		gui.getPasswordUserMap().put("cuspvp23", "aoeu");
+		gui.getPasswordUserMap().put("john45", "aoeu");
+	
 	}
+
+	
 
 	
 
