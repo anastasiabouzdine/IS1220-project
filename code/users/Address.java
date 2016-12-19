@@ -1,5 +1,7 @@
 package users;
 
+import java.util.Arrays;
+
 /**
  * Class that represents a 2-dim address.
  * 
@@ -32,14 +34,9 @@ public class Address {
 	 * @param address 	a String in the form of [xCoordinate;yCoordinate]
 	 */
 	public Address(String address) {
-		System.out.println("try to register address");
-		//@John I changed the code to address.length() - 1 because I think it is better to avoid blanks before every entry
-		//Remember the discussion we had about the parameter input of the address for all the users? haha
 		String[] coord = address.trim().substring(1, address.length() - 1).split(";");
-		System.out.println(coord[0] + " " + coord[1]);
 		this.xCoordinate = Integer.parseInt(coord[0]);
 		this.yCoordinate = Integer.parseInt(coord[1]);
-		System.out.println("succeeded in registering address");
 	}
 
 	public double calculateDistance(Address address){

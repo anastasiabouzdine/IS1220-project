@@ -2,7 +2,6 @@ package clui;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -53,9 +52,9 @@ public class CommandLine {
 		if (!args[0].equals("") && args.length != command_hm.get(input[0]).intValue()) {
 			return "Wrong number of arguments for this command !";
 		}
-		for(String arg : args) {
-			if(Character.isWhitespace(arg.charAt(0)) || Character.isWhitespace(arg.charAt(arg.length()-1)))
-				return "Please avoid blanks in the beginning or the end of an input field";
+		// remove white spaces around arguments
+		for(int i = 0; i < args.length; i++) {
+			args[i] = args[i].trim();
 		}
 		try {
 			cmd_processor.processCmd(new Command(input[0], args));
