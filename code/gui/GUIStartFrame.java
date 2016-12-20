@@ -1,12 +1,15 @@
 package gui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.security.KeyStore.PrivateKeyEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,9 +55,7 @@ public class GUIStartFrame {
 	private HashMap<String, String> passwordUserMap = new HashMap<>();
 
 
-	JPanel welcome_panel = new JPanel();
-	JPanel welcome_button_panel = new JPanel();
-	JPanel welcome_message_panel = new JPanel();
+	
 	
 	JPanel address_panel = new JPanel();
 	JPanel login_panel = new JPanel();
@@ -98,11 +99,12 @@ public class GUIStartFrame {
 	String name;
  
 	// panels when user register and add info
+	JPanel welcome_panel = new JPanel();
+	JPanel welcome_button_panel = new JPanel();
+	JPanel welcome_message_panel = new JPanel();
 	JPanel register_panel_info = new JPanel();
-	
 	JPanel user_global_info = new JPanel();
 	JPanel user_specific_info = new JPanel();
-	
 	JPanel customer_specific_info = new JPanel();
 	JPanel courier_specific_info = new JPanel();
 	JPanel restaurant_specific_info = new JPanel();
@@ -126,28 +128,36 @@ public class GUIStartFrame {
 		return instance;
 	}
 	
+	
 	public static JFrame getFrame() {
 		return frame;
 	}
-
 	public static void setFrame(JFrame frame) {
 		GUIStartFrame.frame = frame;
 	}
-	
 	public static GUIUserFrame getCurrentLogInUser() {
 		return currentLogInUser;
 	}
-
 	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
 		GUIStartFrame.currentLogInUser = currentLogInUser;
 	}
-	
 	public HashMap<String, String> getPasswordUserMap() {
 		return passwordUserMap;
 	}
-
 	public void setPasswordUserMap(HashMap<String, String> passwordUserMap) {
 		this.passwordUserMap = passwordUserMap;
+	}
+	public JPanel getLogin_panel() {
+		return login_panel;
+	}
+	public JPanel getRegister_panel_info() {
+		return register_panel_info;
+	}
+	public JPanel getWelcome_panel() {
+		return welcome_panel;
+	}
+	public static Core getCore() {
+		return core;
 	}
 
 	/*********************************************************/
@@ -539,12 +549,21 @@ public class GUIStartFrame {
 	}
 
 	
-	/*********************************************************/
+	/**
+	 * @throws AWTException *******************************************************/
 	/* Launch */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AWTException {
 		
 		GUIStartFrame gui = GUIStartFrame.getInstance();
 		gui.open(0, 0, 600, 400);
+		
+		
+//		GUIStartFrameTest.checkIfClickGoToButtonsWork();
+//		GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
+//		GUIStartFrameTest.checkIfCourierCanBeRegistered();
+//		GUIStartFrameTest.checkIfCustomerCanBeRegistered();
+		
+		
 		
 		// For testing
 		/**********************
