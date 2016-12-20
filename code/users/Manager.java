@@ -21,11 +21,33 @@ package users;
 public class Manager extends User {
 		
 	private String surname;
-		
+	
+	/**
+	 * Class constructor. 
+	 * 	
+	 * @param name			 	name of manager
+	 * @param surname	 		surname of manager
+	 * @param username 	 		log-in name of manager
+	 */
 	public Manager(String name, String surname, String username){
 		super(name, username);
 		this.surname = surname;
 	}
+	
+	/**
+	 * Class constructor with password. 
+	 * 	
+	 * @param name			 	name of manager
+	 * @param surname	 		surname of manager
+	 * @param username 	 		log-in name of manager
+	 * @param password			password of manager
+	 */
+	public Manager(String name, String surname, String username, String password){
+		super(name, username, password);
+		this.surname = surname;
+	}
+	
+	
 
 	
 	@Override

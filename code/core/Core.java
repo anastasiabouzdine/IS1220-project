@@ -134,6 +134,41 @@ public class Core{
 	}
 
 	/**
+	 * This method includes password safety and allows registered users to log in and changes the current user to the user 
+	 * having completed the log in. New messages are printed out if user logs in.
+	 * 
+	 * @param username registered username that is saved in the system.
+	 * @return a String containing a welcome message if the login was successful
+	 * 		   or null if not
+	 */
+	public String logIn(String username, String password){
+		String output="Not a valid username!";
+		if (users.containsKey(username)){
+			if(users.get(username).getPassword().equals(password)){
+				current_user = users.get(username);
+				if (current_user instanceof Courier){
+					current_courier = (Courier) current_user;
+					output = "Successfully logged in as a Courier !";
+				} else if (current_user instanceof Customer){
+					current_customer = (Customer) current_user;
+					output = "Successfully logged in as a Customer !";
+				} else if (current_user instanceof Manager){
+					current_manager = (Manager) current_user;
+					output = "Successfully logged in as a Manager !";
+				} else if (current_user instanceof Restaurant){
+					current_restaurant = (Restaurant) current_user;
+					output = "Successfully logged in as a Restaurant !";
+				}
+				current_user.checkMessages(); 
+			}
+			else {
+				output="Wrong password. Please try again";
+			}
+		}
+		return output;
+	}
+	
+	/**
 	 * This method allows registered users to log in and changes the current user to the user 
 	 * having completed the log in. New messages are printed out if user logs in.
 	 * 
@@ -144,21 +179,21 @@ public class Core{
 	public String logIn(String username){
 		String output="Not a valid username!";
 		if (users.containsKey(username)){
-			current_user = users.get(username);
-			if (current_user instanceof Courier){
-				current_courier = (Courier) current_user;
-				output = "Successfully logged in as a Courier !";
-			} else if (current_user instanceof Customer){
-				current_customer = (Customer) current_user;
-				output = "Successfully logged in as a Customer !";
-			} else if (current_user instanceof Manager){
-				current_manager = (Manager) current_user;
-				output = "Successfully logged in as a Manager !";
-			} else if (current_user instanceof Restaurant){
-				current_restaurant = (Restaurant) current_user;
-				output = "Successfully logged in as a Restaurant !";
-			}
-			current_user.checkMessages(); 
+				current_user = users.get(username);
+				if (current_user instanceof Courier){
+					current_courier = (Courier) current_user;
+					output = "Successfully logged in as a Courier !";
+				} else if (current_user instanceof Customer){
+					current_customer = (Customer) current_user;
+					output = "Successfully logged in as a Customer !";
+				} else if (current_user instanceof Manager){
+					current_manager = (Manager) current_user;
+					output = "Successfully logged in as a Manager !";
+				} else if (current_user instanceof Restaurant){
+					current_restaurant = (Restaurant) current_user;
+					output = "Successfully logged in as a Restaurant !";
+				}
+				current_user.checkMessages(); 
 		}
 		return output;
 	}

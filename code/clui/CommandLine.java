@@ -71,6 +71,8 @@ public class CommandLine {
 		}
 		try {
 			cmd_processor.processCmd(new Command(command, args));
+//			for(int i=0; i < args.length; i++)
+//				System.out.println(args[i]);
 		} catch (Exception e) {
 			e.getMessage();
 		}

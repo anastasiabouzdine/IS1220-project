@@ -6,13 +6,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.security.KeyStore.PrivateKeyEntry;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -29,8 +25,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import org.junit.experimental.theories.Theories;
 
+import clui.Command;
 import clui.CommandProcessor;
 import core.Core;
 import exceptions.AlreadyUsedUsernameException;
@@ -47,16 +43,13 @@ import users.User;
 
 public class GUIStartFrame {
 	
-	private static Core core = new Core();
 	private static GUIStartFrame instance;
 	private static JFrame frame = new JFrame("My Foodora");
 	private static GUIUserFrame currentLogInUser;
 	
-	private HashMap<String, String> passwordUserMap = new HashMap<>();
+	private static CommandProcessor cmd_processor = CommandProcessor.getInstance();
 
 
-	
-	
 	JPanel address_panel = new JPanel();
 	JPanel login_panel = new JPanel();
 	
@@ -89,14 +82,16 @@ public class GUIStartFrame {
 	
 	// String to register
 	String surname; 
-	int xCoordinate;
-	int yCoordinate;
+	String address;
 	String phoneNum;
 	String emailAddress;
 	String username;
 	String passwort;
 	String passwortConf;
 	String name;
+	
+	
+	
  
 	// panels when user register and add info
 	JPanel welcome_panel = new JPanel();
@@ -115,13 +110,6 @@ public class GUIStartFrame {
 	public static GUIStartFrame getInstance() {
 		if(instance == null){
 			instance = new GUIStartFrame();
-			core.logIn("root"); // login with manager to add lists
-			core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
-			core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
-			core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
-			core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
-			core.logOut();
-			
 			// For testing
 			
 		}
@@ -141,11 +129,8 @@ public class GUIStartFrame {
 	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
 		GUIStartFrame.currentLogInUser = currentLogInUser;
 	}
-	public HashMap<String, String> getPasswordUserMap() {
-		return passwordUserMap;
-	}
-	public void setPasswordUserMap(HashMap<String, String> passwordUserMap) {
-		this.passwordUserMap = passwordUserMap;
+	public static CommandProcessor getCmd_processor() {
+		return cmd_processor;
 	}
 	public JPanel getLogin_panel() {
 		return login_panel;
@@ -155,9 +140,6 @@ public class GUIStartFrame {
 	}
 	public JPanel getWelcome_panel() {
 		return welcome_panel;
-	}
-	public static Core getCore() {
-		return core;
 	}
 
 	/*********************************************************/
@@ -457,140 +439,102 @@ public class GUIStartFrame {
 		}
 	}
 	
+	
 	private class RegisterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			
-			xCoordinate = Integer.parseInt(xCoordinate_JTF.getText());
-			yCoordinate = Integer.parseInt(yCoordinate_JTF.getText());
+			address = new StringBuilder().append(xCoordinate_JTF.getText()).append(",").append(yCoordinate_JTF.getText()).toString();
 			name = name_JTF.getText();
-			
-			Address address = new Address(xCoordinate, yCoordinate);
+			Command command =null;
 			
 			if(customer_specific_info.isShowing()){
 				surname = surname_JTF.getText();
 				emailAddress = emailAddress_JTF.getText();
 				phoneNum = phoneNum_JTF.getText();
 				
-				Customer customer = new Customer(name, surname, address, phoneNum, emailAddress, username);
-				try {
-					core.register(customer);
-				} catch (AlreadyUsedUsernameException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				System.out.println("Customer");
-				
+				String[] commandArgsCust = {surname,name,username,address,passwort};
+				command = new Command("registerCustomer", commandArgsCust);
 			}
 			else if(courier_specific_info.isShowing()){
 				surname = surname_JTF.getText();
 				phoneNum = phoneNum_JTF.getText();
 				
-				Courier courier = new Courier(name, surname, address, phoneNum, username);
-				
-				try {
-					core.register(courier);
-				} catch (AlreadyUsedUsernameException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				System.out.println("Courier");
+				String[] commandArgsCour = {surname,name,username,address,passwort};
+				command = new Command("registerCourier", commandArgsCour);
 			}
 			else if(restaurant_specific_info.isShowing()){
 				
-				Restaurant restaurant = new Restaurant(name, address, username);
-				
-				try {
-					core.register(restaurant);
-				} catch (AlreadyUsedUsernameException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				System.out.println("Restaurant");
+				String[] commandArgsRest = {name,username,address,passwort};
+				command = new Command("registerRestaurant", commandArgsRest);
 			}
-			passwordUserMap.put(username, passwort);
+			
+			try {
+				cmd_processor.processCmd(command);
+			} catch (Exception ex) {
+				ex.getMessage();
+			}
 			goToLogInPanel();
 		}
 	
 	}
 	
 	private class LoginButton implements ActionListener {
+//		@SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e){
+			Core core = cmd_processor.getCore();
 			username = username_JTF.getText();
 			String code = password_JTF.getText();
 			
-			if(!passwordUserMap.containsKey(username)){
-				//TODO PopUp
-				goToRegisterPanel();
+			String[] commandArgsLogIn = {username,code};
+			
+			try {
+				cmd_processor.processCmd(new Command("login", commandArgsLogIn));
+			} catch (Exception ex) {
+				ex.getMessage();
 			}
-			else if(!passwordUserMap.get(username).equals(code)){
-				System.out.println("Wrong Password !!!");
-				//TODO popUp
-			}
-			else{
-				System.out.println(core.logIn(username));
-				User current_user = core.getCurrent_user();
-				System.out.println(current_user.getName());
-				
-				if (current_user instanceof Courier){
+
+			User current_user = core.getCurrent_user();
+			if (current_user == null) {
+				System.out.println("No log in!");
+			} else {
+
+				if (current_user instanceof Courier) {
 					setCurrentLogInUser(new GUICourierFrame());
-				} else if (current_user instanceof Customer){
+				} else if (current_user instanceof Customer) {
 					setCurrentLogInUser(new GUICustomerFrame());
-				} else if (current_user instanceof Manager){
+				} else if (current_user instanceof Manager) {
 					setCurrentLogInUser(new GUIManagerFrame());
-				} else if (current_user instanceof Restaurant){
+				} else if (current_user instanceof Restaurant) {
 					setCurrentLogInUser(new GUIRestaurantFrame());
 				}
 				currentLogInUser.getInstance(current_user);
 			}
 		}
 	}
+	
 
 	
 	/**
-	 * @throws AWTException *******************************************************/
+	 * @throws AWTException 
+	 * @throws AlreadyUsedUsernameException *******************************************************/
 	/* Launch */
-	public static void main(String[] args) throws AWTException {
+	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
 		
 		GUIStartFrame gui = GUIStartFrame.getInstance();
 		gui.open(0, 0, 600, 400);
 		
+		//Register Tests - can be run all together
+		GUIStartFrameTest.checkIfClickGoToButtonsWork();
+		GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
+		GUIStartFrameTest.checkIfCourierCanBeRegistered();
+		GUIStartFrameTest.checkIfCustomerCanBeRegistered();
 		
-//		GUIStartFrameTest.checkIfClickGoToButtonsWork();
-//		GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
-//		GUIStartFrameTest.checkIfCourierCanBeRegistered();
-//		GUIStartFrameTest.checkIfCustomerCanBeRegistered();
-		
-		
-		
-		// For testing
-		/**********************
-		 * Restaurant
-		 * username: r1
-		 * code: aoeu
-		 * 
-		 * Courier
-		 * username: dagit
-		 * code: aoeu
-		 * 
-		 * Customer
-		 * username: cuspvp23
-		 * code: aoeu
-		 * 
-		 * Manager
-		 * username: john45
-		 * code: aoeu
-		 * 
-		 * 
-		 */
-		
-		gui.getPasswordUserMap().put("r1", "aoeu");
-		gui.getPasswordUserMap().put("dagit", "aoeu");
-		gui.getPasswordUserMap().put("cuspvp23", "aoeu");
-		gui.getPasswordUserMap().put("john45", "aoeu");
-	
+		//Log-in Tests - please run only one test at a time - if not they will fail
+//		GUIStartFrameTest.checkIfCourierLogInWorks();
+//		GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
+//		GUIStartFrameTest.checkIfRestaurantLogInWorks();
+//		GUIStartFrameTest.checkIfManagerLogInWorks();
+//		GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 
 	

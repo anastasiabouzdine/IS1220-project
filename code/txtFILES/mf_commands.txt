@@ -1,7 +1,8 @@
 -------
 registerRestaurant
-3
+4
 name
+username
 address
 password
 -------

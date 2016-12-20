@@ -26,6 +26,7 @@ import users.*;
 
 public class CommandProcessor {
 	private Core core;
+
 	private String current_name;
 	private String[] current_args;
 
@@ -146,14 +147,16 @@ public class CommandProcessor {
 		String username = current_args[2].trim();
 		String address = current_args[3];
 		String password = current_args[4];
-
-		Customer c = new Customer(firstName, lastName, new Address(address), "00000000", "null@null.null", username);
+		//TODO email address and tel.number should be inserted as well right? 
+		Customer c = new Customer(lastName, firstName, new Address(address), "00000000", "null@null.null", username, password);
 		try {
 			core.register(c);
 		} catch (AlreadyUsedUsernameException e) {
 			System.out.println("! This username is already taken ! ");
 		}
 	}
+	
+//	public Courier(String name, String surname, Address position, String phoneNumber, String username){
 
 	// WAIT FOR NEW REQUIREMENTS (command might change)
 	public void registerCourier() {
@@ -162,8 +165,17 @@ public class CommandProcessor {
 		String username = current_args[2];
 		String position = current_args[3];
 		String password = current_args[4];
-
+		//TODO email address and tel.number should be inserted as well right? 
+		
+		Courier c = new Courier(lastName, firstName, new Address(position), "00000000", username, password);
+		try {
+			core.register(c);
+		} catch (AlreadyUsedUsernameException e) {
+			System.out.println("! This username is already taken ! ");
+		}
 	}
+
+	
 
 	public void addDishRestaurantMenu() {
 		String dishName = current_args[0];
@@ -180,9 +192,11 @@ public class CommandProcessor {
 	}
 
 	public void login() {
+		
+		String password = current_args[1];
 		String username = current_args[0];
-		String info = core.logIn(username);
-		System.out.println(info);
+		String info = core.logIn(username, password);
+		System.out.println(info); //has to change!!! maybe sent all string to a ArrayList and either print them out or make popUps
 	}
 
 	// WAIT FOR NEW REQ. WITH HALF- AND FULLMEALS
@@ -360,6 +374,12 @@ public class CommandProcessor {
 	 */
 	public void logout() {
 		core.logOut();
+	}
+	
+	/**************************************************/
+	/* getters and setters */
+	public Core getCore() {
+		return core;
 	}
 
 
