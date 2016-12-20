@@ -165,6 +165,7 @@ public class GUIStartFrame {
 	    user_global_info.add(ask_info, BorderLayout.NORTH);
 		user_global_info.add(name_JTF, BorderLayout.NORTH);
 	    user_global_info.add(user_specific_info, BorderLayout.CENTER);
+	    frame.add(user_global_info);
 	}
 	
 	private void fillAddressInfosPanel() {	
@@ -193,6 +194,7 @@ public class GUIStartFrame {
 	public void fillLoginPanel() {
 		login_panel.setBackground(Color.green);
 		login_panel.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
+		frame.add(login_panel);
 	}
 	
 	public void fillRegisterPanel() {
@@ -208,12 +210,12 @@ public class GUIStartFrame {
 		user_type.add(radio_customer);
 		user_type.add(radio_courier);
 		user_type.add(radio_restaurant);
-		
-		
 		register_panel_info.add(user_type, BorderLayout.NORTH);
+		frame.add(register_panel_info);
 	}
 	
 	public void fillWelcomePanel() {
+		
 		welcome_panel.setBackground(Color.orange);
 		welcome_panel.setBorder(BorderFactory.createTitledBorder("Welcome"));
 		welcome_panel.setLayout(new BorderLayout());
@@ -244,6 +246,7 @@ public class GUIStartFrame {
 		//Buttons
 		welcome_button_panel.add(goToLogIn_button, BorderLayout.CENTER);
 		welcome_button_panel.add(goToRegister_button, BorderLayout.CENTER);
+		frame.add(welcome_panel);
    	}
 	
 	/*********************************************************/
@@ -287,10 +290,7 @@ public class GUIStartFrame {
     	backToRegister_button.addActionListener(new GoBackToRegisterButton());
     	createAccount_button.addActionListener(new WhatAccountType());
     	register_button.addActionListener(new RegisterButton());
-    	logIn_button.addActionListener(new LoginButton());
-    	
-    	
-    	
+    	logIn_button.addActionListener(new LoginButton());	
 	}
    
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
@@ -524,15 +524,15 @@ public class GUIStartFrame {
 		gui.open(0, 0, 600, 400);
 		
 		//Register Tests - can be run all together
-		GUIStartFrameTest.checkIfClickGoToButtonsWork();
-		GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
-		GUIStartFrameTest.checkIfCourierCanBeRegistered();
-		GUIStartFrameTest.checkIfCustomerCanBeRegistered();
+//		GUIStartFrameTest.checkIfClickGoToButtonsWork();
+//		GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
+//		GUIStartFrameTest.checkIfCourierCanBeRegistered();
+//		GUIStartFrameTest.checkIfCustomerCanBeRegistered();
 		
 		//Log-in Tests - please run only one test at a time - if not they will fail
 //		GUIStartFrameTest.checkIfCourierLogInWorks();
 //		GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-//		GUIStartFrameTest.checkIfRestaurantLogInWorks();
+		GUIStartFrameTest.checkIfRestaurantLogInWorks();
 //		GUIStartFrameTest.checkIfManagerLogInWorks();
 //		GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}

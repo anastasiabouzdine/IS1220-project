@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -52,6 +54,35 @@ public class GUICourierFrame extends GUIUserFrame {
 		}
 			
 		return null;
+	}
+	
+	private class CourierActionInfo extends UserActionInfo{
+
+		public CourierActionInfo(String name, String desc) {
+			super(name, desc);
+		}
+		
+		
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			{
+				
+		        switch (name) {
+		            case "menu1Action" :
+		                // do something for menuItem1
+		                break;
+		            case "menu2Action":
+		                // do something for menuItem2
+		                break;
+		            case "menu3Action":
+		                // do something for menuItem3
+		                break;
+		        }
+		    }
+			
+		}
+		
 	}
 	
 }
