@@ -28,13 +28,18 @@ public abstract class GUIUserFrame {
 	//Frames
 	private JFrame frame;
 	private JMenuBar menuBar = new JMenuBar();
-	private JMenu settingsMenu = new JMenu("Settings");
+	private JMenu settingMenu = new JMenu("Settings");
 	private JMenu infoMenu = new JMenu("Information");
 	
 	private JPanel infoPanel = new JPanel();
-	private JTextField infoTextField = new JTextField("Information");
+	private JPanel infoSubPanel = new JPanel();
+	private JTextField infoTextFieldDesc = new JTextField();
+	private JTextField infoTextFieldValue = new JTextField();
+	
 	private JPanel settingPanel = new JPanel();
-	private JTextField settingTextField = new JTextField("Settings");
+	private JPanel setSubPanel = new JPanel();
+	private JTextField setTextFieldDesc = new JTextField();
+	private JTextField setTextFieldValue = new JTextField();
 	
 	//Panels
 	JPanel welcome_panel = new JPanel();
@@ -43,6 +48,8 @@ public abstract class GUIUserFrame {
 	
 	//Buttons
 	JButton logOut_button = new JButton("LOG OUT");
+	JButton home_button = new JButton("GO HOME");
+	
 		
 	
 	public abstract GUIUserFrame getInstance(User user);
@@ -62,18 +69,62 @@ public abstract class GUIUserFrame {
 	
 	/**************************************************/
 	//fill panels
-	
 	public void fillInfoPanel(){
-		infoPanel.add(infoTextField);
+		infoPanel.setBorder(BorderFactory.createTitledBorder("Information"));
+		infoPanel.setLayout(new BorderLayout());
+		infoPanel.setBackground(Color.CYAN);
+		infoTextFieldDesc.setEditable(false);
+		infoTextFieldValue.setEditable(false);
+		infoSubPanel.setBackground(Color.WHITE);
+		infoSubPanel.add(infoTextFieldDesc, BorderLayout.CENTER);
+		infoSubPanel.add(infoTextFieldValue, BorderLayout.CENTER);
+		infoPanel.add(infoSubPanel);
+		frame.add(infoPanel);
 	}
 	
-	public void fillSettingPanel(){
-		settingPanel.add(settingTextField);
+	public void fillInfoPanel(String descr, String value){
+		infoTextFieldDesc.setText(descr);
+		infoTextFieldValue.setText(value);
+		infoPanel.add(home_button, BorderLayout.SOUTH);
 	}
 	
-	public void fillAndSetMenuBar(){
+	private void fillInfoMenuWithFunction(User user) {
+		infoMenu.add(new UserActionInfoBasic("name", "show current name", user));
+		infoMenu.add(new UserActionInfoBasic("username", "show current username", user));
+		infoMenu.add(new UserActionInfoBasic("ID", "show current ID", user));
+		infoMenu.add(new UserActionInfoBasic("password", "show current password", user));
+	}
+
+	public void fillSetPanel() {
+		settingPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
+		settingPanel.setLayout(new BorderLayout());
+		settingPanel.setBackground(Color.GREEN);
+		setTextFieldDesc.setEditable(false);
+		setSubPanel.setBackground(Color.WHITE);
+		setSubPanel.add(setTextFieldDesc, BorderLayout.CENTER);
+		setSubPanel.add(setTextFieldValue, BorderLayout.CENTER);
+		settingPanel.add(setSubPanel);
+		frame.add(settingPanel);
+	}
+
+	public void fillSetPanel(String descr, String value) {
+		setTextFieldDesc.setText(descr);
+		setTextFieldValue.setText(value);
+		settingPanel.add(home_button, BorderLayout.SOUTH);
+	}
+
+	private void fillSetMenuWithFunction(User user) {
+		settingMenu.add(new UserActionSettingBasic("set name", "change current name", user));
+		settingMenu.add(new UserActionSettingBasic("set username", "change current username", user));
+		settingMenu.add(new UserActionSettingBasic("set ID", "change current ID", user));
+		settingMenu.add(new UserActionSettingBasic("set password", "change current password", user));
+	}
+	
+	public void fillAndSetMenuBar(User user){
+		fillInfoMenuWithFunction(user);
+		fillSetMenuWithFunction(user);
 		menuBar.add(infoMenu);
-		menuBar.add(settingsMenu);
+		menuBar.add(settingMenu);
 		frame.add(menuBar);
 		frame.setJMenuBar(menuBar);
 	}
@@ -107,6 +158,10 @@ public abstract class GUIUserFrame {
 		
 		//Buttons
 		welcome_button_panel.add(logOut_button, BorderLayout.CENTER);
+		home_button.addActionListener((ActionEvent e)->{
+			setCurrentPanel(welcome_panel);
+		});
+		
 		frame.add(welcome_panel);
    	}
 	
@@ -115,19 +170,16 @@ public abstract class GUIUserFrame {
 	public void setCurrentPanel(JPanel panel) {
 	    getFrame().setContentPane(panel);  	
 	    getFrame().setVisible(true);
-	}
-	
-	public void addUserActionToList(UserActionInfo action){
-		infoMenu.add(action);
-	}
-		
+	}	
 	
 	/**************************************************/
 	//Initialize functions
 	public void initGUIRest(User user, Color color1, Color color2, String welcomeText, String programText) {
 		setFrame(new JFrame("Welcome " + user.getName()));	
 		fillWelcomePanel(user, color1, color2, welcomeText, programText);
-		fillAndSetMenuBar();
+		fillInfoPanel();
+		fillSetPanel();
+		fillAndSetMenuBar(user);
 		setCurrentPanel(welcome_panel);
 		logOut_button.addActionListener((ActionEvent e) -> {
 			frame.setVisible(false);
@@ -135,6 +187,92 @@ public abstract class GUIUserFrame {
 			GUIStartFrame.getInstance().goToHomePage();
 			GUIStartFrame.getFrame().setVisible(true);
 		});
+	}
+	
+	
+
+	@SuppressWarnings("serial")
+	private class UserActionInfoBasic extends AbstractAction {
+
+		String choice;
+		User user;
+
+		public UserActionInfoBasic(String choice, String desc, User user) {
+			super(choice);
+			this.choice = choice;
+			this.user = user;
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+			String descr = null;
+			String value = null;
+			
+			switch (choice) {
+            case "name" :
+            	descr = "Your name: ";
+            	value = user.getName();
+                break;
+            case "username":
+            	descr = "Your username: ";
+            	value = user.getUsername();
+                break;
+            case "ID":
+            	descr = "Your ID: ";
+            	value =  Integer.toString(user.getID());
+                break;
+            case "password":
+            	descr = "Your password: ";
+            	value = user.getPassword();
+                break;
+        }
+			fillInfoPanel(descr,value);
+			setCurrentPanel(infoPanel);
+		}
+	}
+	
+	@SuppressWarnings("serial")
+	private class UserActionSettingBasic extends AbstractAction {
+
+		String choice;
+		User user;
+
+		public UserActionSettingBasic(String choice, String desc, User user) {
+			super(choice);
+			this.choice = choice;
+			this.user = user;
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+			String descr = null;
+			String value = null;
+			
+			switch (choice) {
+            case "set name" :
+            	descr = "Set your new name: ";
+            	value = user.getName();
+                break;
+            case "set username":
+            	descr = "Set your new username: ";
+            	value = user.getUsername();
+                break;
+            case "set ID":
+            	descr = "Set your new ID: ";
+            	value =  Integer.toString(user.getID());
+                break;
+            case "set password":
+            	descr = "Set your new password: ";
+            	value = user.getPassword();
+                break;
+        }
+			fillSetPanel(descr,value);
+			setCurrentPanel(settingPanel);
+		}
 	}
 	
 	
@@ -190,11 +328,11 @@ public abstract class GUIUserFrame {
 	}
 
 	public JMenu getSettingsMenu() {
-		return settingsMenu;
+		return settingMenu;
 	}
 
 	public void setSettingsMenu(JMenu settingsMenu) {
-		this.settingsMenu = settingsMenu;
+		this.settingMenu = settingsMenu;
 	}
 
 	public JMenu getInfoMenu() {
