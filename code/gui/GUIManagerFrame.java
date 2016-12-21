@@ -47,7 +47,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.manager = (Manager) user;
-			initGUIRest(manager, Color.orange, Color.yellow, "Chill die Base", "Just Dwaggit...");
+			initGUIRest(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}

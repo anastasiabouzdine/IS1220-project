@@ -48,7 +48,7 @@ public class GUICourierFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.courier = (Courier) user;
-			initGUIRest(courier, Color.orange, Color.yellow, "Chill die Base", "Just Dwaggit...");
+			initGUIRest(courier, Color.orange, Color.yellow, "Courier Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}

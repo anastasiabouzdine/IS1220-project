@@ -45,7 +45,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.restaurant = (Restaurant) user;
-			initGUIRest(restaurant, Color.orange, Color.yellow, "Chill die Base", "Just Dwaggit...");
+			initGUIRest(restaurant, Color.orange, Color.yellow, "Restaurant Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}

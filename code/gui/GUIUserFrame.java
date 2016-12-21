@@ -38,6 +38,7 @@ public abstract class GUIUserFrame {
 	
 	private JPanel settingPanel = new JPanel();
 	private JPanel setSubPanel = new JPanel();
+	private JPanel setButtonPanel = new JPanel();
 	private JTextField setTextFieldDesc = new JTextField();
 	private JTextField setTextFieldValue = new JTextField();
 	
@@ -49,6 +50,8 @@ public abstract class GUIUserFrame {
 	//Buttons
 	JButton logOut_button = new JButton("LOG OUT");
 	JButton home_button = new JButton("GO HOME");
+	JButton save_button = new JButton("SAVE");
+	private int currentSettingShow= 0;
 	
 		
 	
@@ -101,22 +104,24 @@ public abstract class GUIUserFrame {
 		settingPanel.setBackground(Color.GREEN);
 		setTextFieldDesc.setEditable(false);
 		setSubPanel.setBackground(Color.WHITE);
+		setTextFieldValue.setColumns(12);
 		setSubPanel.add(setTextFieldDesc, BorderLayout.CENTER);
 		setSubPanel.add(setTextFieldValue, BorderLayout.CENTER);
 		settingPanel.add(setSubPanel);
+		settingPanel.add(setButtonPanel,BorderLayout.SOUTH);
 		frame.add(settingPanel);
 	}
 
 	public void fillSetPanel(String descr, String value) {
 		setTextFieldDesc.setText(descr);
 		setTextFieldValue.setText(value);
-		settingPanel.add(home_button, BorderLayout.SOUTH);
+		setButtonPanel.add(home_button);
+		setButtonPanel.add(save_button);
 	}
 
 	private void fillSetMenuWithFunction(User user) {
 		settingMenu.add(new UserActionSettingBasic("set name", "change current name", user));
 		settingMenu.add(new UserActionSettingBasic("set username", "change current username", user));
-		settingMenu.add(new UserActionSettingBasic("set ID", "change current ID", user));
 		settingMenu.add(new UserActionSettingBasic("set password", "change current password", user));
 	}
 	
@@ -131,7 +136,7 @@ public abstract class GUIUserFrame {
 	
 	public void fillWelcomePanel(User user, Color color1, Color color2, String welcomeText, String programText) {
 		welcome_panel.setBackground(color1);
-		welcome_panel.setBorder(BorderFactory.createTitledBorder("Welcome " + user.getName()));
+		welcome_panel.setBorder(BorderFactory.createTitledBorder(welcomeText));
 		welcome_panel.setLayout(new BorderLayout());
 
 		welcome_button_panel.setBackground(color1);
@@ -149,7 +154,7 @@ public abstract class GUIUserFrame {
 	    JTextArea welcome_text = new JTextArea();
 	    JScrollPane welcome_scrollPane = new JScrollPane();
 	    welcome_scrollPane.setViewportView(welcome_text);
-	    welcome_text.setText(programText);
+	    welcome_text.setText("Welcome " + user.getName());
 	    welcome_text.setBackground(color2);
 
 		welcome_panel.add(welcome_message_panel, BorderLayout.NORTH);
@@ -187,6 +192,25 @@ public abstract class GUIUserFrame {
 			GUIStartFrame.getInstance().goToHomePage();
 			GUIStartFrame.getFrame().setVisible(true);
 		});
+		
+		save_button.addActionListener((ActionEvent e) -> {
+			String value = setTextFieldValue.getText();
+			String message = "Changes could not be saved!";
+			if(currentSettingShow == 1) {
+				user.setName(value);
+				message = "New name succesfully saved!";
+			}
+			else if(currentSettingShow == 2){
+				GUIStartFrame.getCmd_processor().getCore().setUsername(user, value);
+				message = "New username succesfully saved!";
+			}
+			else if(currentSettingShow == 3){
+				user.setPassword(value);
+				message = "New password succesfully saved!";
+			}
+			//TODO Pop-Up String saved
+			System.out.println(message);
+		});
 	}
 	
 	
@@ -213,7 +237,7 @@ public abstract class GUIUserFrame {
 			switch (choice) {
             case "name" :
             	descr = "Your name: ";
-            	value = user.getName();
+            	value = user.getName(); 
                 break;
             case "username":
             	descr = "Your username: ";
@@ -256,18 +280,17 @@ public abstract class GUIUserFrame {
             case "set name" :
             	descr = "Set your new name: ";
             	value = user.getName();
+            	setCurrentSettingShow(1);
                 break;
             case "set username":
             	descr = "Set your new username: ";
             	value = user.getUsername();
-                break;
-            case "set ID":
-            	descr = "Set your new ID: ";
-            	value =  Integer.toString(user.getID());
+            	setCurrentSettingShow(2);
                 break;
             case "set password":
             	descr = "Set your new password: ";
             	value = user.getPassword();
+            	setCurrentSettingShow(3);
                 break;
         }
 			fillSetPanel(descr,value);
@@ -389,6 +412,14 @@ public abstract class GUIUserFrame {
 
 	public void setLogOut_button(JButton logOut_button) {
 		this.logOut_button = logOut_button;
+	}
+
+	public int getCurrentSettingShow() {
+		return currentSettingShow;
+	}
+
+	public void setCurrentSettingShow(int currentSettingShow) {
+		this.currentSettingShow = currentSettingShow;
 	}
 
 	

@@ -46,7 +46,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.customer = (Customer) user;
-			initGUIRest(customer, Color.orange, Color.yellow, "Chill die Base", "Just Dwaggit...");
+			initGUIRest(customer, Color.orange, Color.yellow, "Customer Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}

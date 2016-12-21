@@ -873,6 +873,23 @@ public class Core{
 	/* Getters and Setter */
 	
 	/**
+	 * Changes username of certain User.
+	 *
+	 * @param user	a User that is currently added to the system
+	 * @param username	new username that the user has
+	 */
+	public void setUsername(User user, String username) {
+		if(current_user != null){
+			String oldUsername = user.getUsername();
+			users.remove(oldUsername);
+			user.setUsername(username);
+			users.put(username, user);
+		}else{
+			unauthorizedCommand();
+		}
+	}
+	
+	/**
 	 * Returns the restaurant object corresponding to the name given as input
 	 * or null if the restaurant is not in the restaurant list.
 	 * @param name a String containing the restaurant name
