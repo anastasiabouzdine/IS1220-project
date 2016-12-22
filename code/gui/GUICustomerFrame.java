@@ -21,6 +21,8 @@ import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import core.Core;
+import gui.GUIUserFrame.UserActionInfoBasic;
+import gui.GUIUserFrame.UserActionSettingBasic;
 import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import users.Customer;
 import users.Restaurant;
@@ -46,6 +48,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.customer = (Customer) user;
+			fillAndSetMenuBarCustomer(user);
 			initGUIRest(customer, Color.orange, Color.yellow, "Customer Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -54,29 +57,23 @@ public class GUICustomerFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private class CourierActionInfo extends UserActionInfo{
-
-		public CourierActionInfo(String name, String desc) {
-			super(name, desc);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			switch (name) {
-            case "":
-                // do something for menuItem1
-                break;
-            case "menu2Action":
-                // do something for menuItem2
-                break;
-            case "menu3Action":
-                // do something for menuItem3
-                break;
-        }
-			
-		}
-		
+	private void fillInfoMenuWithFunctionCustomer(User user) {
+		getInfoMenu().add(new UserActionInfoBasic("address", "show current address", user));
+		getInfoMenu().add(new UserActionInfoBasic("surname", "show current surname", user));
+		getInfoMenu().add(new UserActionInfoBasic("phoneNumb", "show current phone number", user));
+		getInfoMenu().add(new UserActionInfoBasic("emailAddress", "show current email address", user));
+	}
+	
+	private void fillSetMenuWithFunctionCustomer(User user) {
+		getSettingMenu().add(new UserActionSettingBasic("address", "change current address", user));
+		getSettingMenu().add(new UserActionSettingBasic("surname", "change current surname", user));
+		getSettingMenu().add(new UserActionSettingBasic("phoneNumb", "change current phone number", user));
+		getSettingMenu().add(new UserActionSettingBasic("emailAddress", "change current email address", user));
+	}
+	
+	public void fillAndSetMenuBarCustomer(User user){
+		fillInfoMenuWithFunctionCustomer(user);
+		fillSetMenuWithFunctionCustomer(user);
 	}
 	
 }

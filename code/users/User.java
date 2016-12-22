@@ -2,6 +2,7 @@ package users;
 
 import java.util.Stack;
 
+
 /**
  * The class <code>User</code> allows to create different users
  * for the MyFoodora system.
@@ -15,8 +16,12 @@ import java.util.Stack;
 public abstract class User {
 
 	private String name;
+	private String surname;
+	private String emailAddress;
+	private String phoneNumb;
 	private String username;
 	private String password;
+	private Address address;
 	private int ID;
 	private static int counter;
 	private Stack<String> messageBox = new Stack<String>(); 
@@ -27,9 +32,13 @@ public abstract class User {
 	 * @param name			 	name of user
 	 * @param username 	 		log-in name of user
 	 */
-	protected User(String name, String username){
+	protected User(String name, String username, String surname, Address address, String phoneNumb, String emailAddress){
 		this.name = name;
 		this.username = username;
+		this.surname = surname;
+		this.address = address;
+		this.phoneNumb = phoneNumb;
+		this.emailAddress = emailAddress;
 		this.ID = ++counter;
 	}
 	
@@ -40,8 +49,8 @@ public abstract class User {
 	 * @param username 	 		log-in name of user
 	 * @param password 	 		password of user
 	 */
-	protected User(String name, String username, String password) {
-		this(name, username);
+	protected User(String name, String username, String surname, Address address, String phoneNumb, String emailAddress, String password) {
+		this(name, username, surname, address, phoneNumb, emailAddress);
 		this.password = password;
 	}
 	
@@ -167,6 +176,64 @@ public abstract class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * @return the emailAddress
+	 */
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	/**
+	 * @param emailAddress the emailAddress to set
+	 */
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * @return the phoneNumb
+	 */
+	public String getPhoneNumb() {
+		return phoneNumb;
+	}
+
+	/**
+	 * @param phoneNumb the phoneNumb to set
+	 */
+	public void setPhoneNumb(String phoneNumb) {
+		this.phoneNumb = phoneNumb;
+	}
+
+
 	
 	
 	

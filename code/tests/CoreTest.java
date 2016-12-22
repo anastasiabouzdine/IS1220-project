@@ -66,7 +66,7 @@ public class CoreTest {
 		mf1.addUser(e);
 		assertTrue(mf1.logIn(e.getUsername()) != null);
 		mf1.removeUser(e);
-		assertTrue(mf1.logIn(e.getUsername()).equals("Not valid username"));
+		assertTrue(mf1.logIn(e.getUsername()).equals("Not a valid username!"));
 		assertTrue(!mf1.getCourierList().contains(e));
 		try {
 			mf1.addUser(e);
@@ -86,7 +86,7 @@ public class CoreTest {
 
 	@Test
 	public void logInWithUnknownUser() {
-		assertTrue(mf1.logIn("unknown user 42").equals("Not valid username"));
+		assertTrue(mf1.logIn("unknown user 42").equals("Not a valid username!"));
 		System.out.println("TEST logInWithUnknownUser : DONE\n");
 	}
 	

@@ -1,6 +1,10 @@
 package clui;
 
+import java.net.SocketAddress;
 import java.util.ArrayList;
+
+import com.sun.accessibility.internal.resources.accessibility;
+import com.sun.xml.internal.ws.api.pipe.PipelineAssembler;
 
 import core.Core;
 import core.Order;
@@ -114,8 +118,12 @@ public class CommandProcessor {
 			showTotalProfit();
 		} else if (current_name.equals("logout")) {
 			logout();
-		} 
+		} else if (current_name.equals("setAddress")) {
+			setAddress();
+		}
 	}
+
+	
 
 	/**************************************************/
 	/* Apply commands to core */
@@ -374,6 +382,20 @@ public class CommandProcessor {
 	 */
 	public void logout() {
 		core.logOut();
+	}
+	
+	/**
+	 * Sets new address of user.
+	 */
+	public void setAddress() {
+		int xCoord;
+		int yCoord;
+		String[] coordinates = current_args[0].split(",");
+		
+		xCoord = Integer.parseInt(coordinates[0]);
+		yCoord = Integer.parseInt(coordinates[1]);
+		core.getCurrent_user().getAddress().setxCoordinate(xCoord);
+		core.getCurrent_user().getAddress().setyCoordinate(yCoord);	
 	}
 	
 	/**************************************************/

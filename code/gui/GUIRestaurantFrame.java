@@ -21,6 +21,8 @@ import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import core.Core;
+import gui.GUIUserFrame.UserActionInfoBasic;
+import gui.GUIUserFrame.UserActionSettingBasic;
 import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import users.Restaurant;
 import users.User;
@@ -45,6 +47,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.restaurant = (Restaurant) user;
+			fillAndSetMenuBarRest(user);
 			initGUIRest(restaurant, Color.orange, Color.yellow, "Restaurant Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -53,30 +56,20 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private class RestaurantActionInfo extends UserActionInfo{
-
-		public RestaurantActionInfo(String name, String desc) {
-			super(name, desc);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			fillInfoPanel();
-			switch (name) {
-            case "":
-                // do something for menuItem1
-                break;
-            case "menu2Action":
-                // do something for menuItem2
-                break;
-            case "menu3Action":
-                // do something for menuItem3
-                break;
-        }
-			
-		}
-		
+	
+	private void fillInfoMenuWithFunctionRest(User user) {
+		getInfoMenu().add(new UserActionInfoBasic("address", "show current address", user));
+	}
+	
+	private void fillSetMenuWithFunctionRest(User user) {
+		getSettingMenu().add(new UserActionSettingBasic("address", "change current address", user));
+	}
+	
+	public void fillAndSetMenuBarRest(User user){
+		fillInfoMenuWithFunctionRest(user);
+		fillSetMenuWithFunctionRest(user);
 	}
 	
 }
+
+	

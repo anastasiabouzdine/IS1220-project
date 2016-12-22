@@ -77,12 +77,21 @@ public class Address {
 
 
 	/************************************************************
+//	 * Overridden methods
+//	 * toString, hashCode and equals  
+//	 */
+//	@Override
+//	public String toString() {
+//		return "Address [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
+//	}
+	
+	/** 
 	 * Overridden methods
 	 * toString, hashCode and equals  
 	 */
 	@Override
 	public String toString() {
-		return "Address [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
+		return xCoordinate + "," + yCoordinate;
 	}
 
 

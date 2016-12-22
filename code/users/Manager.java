@@ -19,8 +19,6 @@ package users;
  */
 
 public class Manager extends User {
-		
-	private String surname;
 	
 	/**
 	 * Class constructor. 
@@ -30,8 +28,7 @@ public class Manager extends User {
 	 * @param username 	 		log-in name of manager
 	 */
 	public Manager(String name, String surname, String username){
-		super(name, username);
-		this.surname = surname;
+		super(name, username, surname, null, null, null);
 	}
 	
 	/**
@@ -43,8 +40,7 @@ public class Manager extends User {
 	 * @param password			password of manager
 	 */
 	public Manager(String name, String surname, String username, String password){
-		super(name, username, password);
-		this.surname = surname;
+		super(name, username, surname, null, null, null, password);
 	}
 	
 	
@@ -58,21 +54,6 @@ public class Manager extends User {
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
 
-
-	/**
-	 * @return the surname
-	 */
-	public String getSurname() {
-		return surname;
-	}
-
-
-	/**
-	 * @param surname the surname to set
-	 */
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
 	
 	
 	

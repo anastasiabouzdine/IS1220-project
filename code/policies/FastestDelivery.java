@@ -68,7 +68,7 @@ public class FastestDelivery implements DeliveryPolicy {
 		
 		courierDistanceList.clear();
 		for(Courier courier: courierList) {
-			double distance = courier.getPosition().calculateDistance(address);
+			double distance = courier.getAddress().calculateDistance(address);
 			courierDistanceList.add(distance);
 		}
 	}

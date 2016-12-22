@@ -31,7 +31,6 @@ import restaurantSetUp.Starter;
 
 public class Restaurant extends User {
 		
-	private Address address;
 	private double discountFactor; // discount factor is set by default to 5%
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
@@ -47,8 +46,7 @@ public class Restaurant extends User {
 	 * @param username 	 		log-in name of restaurant
 	 */
 	public Restaurant(String name, Address address, String username) {
-		super(name, username);
-		this.address = address;
+		super(name, username, null, address, null, null); 
 		this.discountFactor = 0.05;
 		this.specDiscFact = 0.1;
 		this.menu = new Menu();
@@ -64,8 +62,7 @@ public class Restaurant extends User {
 	 * @param password 			password of restaurant
 	 */
 	public Restaurant(String name, Address address, String username, String password) {
-		super(name, username, password);
-		this.address = address;
+		super(name, username, null, address, null, null, password);
 		this.discountFactor = 0.05;
 		this.specDiscFact = 0.1;
 		this.menu = new Menu();
@@ -207,22 +204,6 @@ public class Restaurant extends User {
 
 	
 	/************************************************************/
-	/* Getters and Setters */
-
-	/**
-	 * @return the address
-	 */
-	public Address getAddress() {
-		return address;
-	}
-
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
 	/**
 	 * @return the discountFactor
 	 */

@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import clui.Command;
 import users.User;
 
 public abstract class GUIUserFrame {
@@ -120,16 +121,16 @@ public abstract class GUIUserFrame {
 	}
 
 	private void fillSetMenuWithFunction(User user) {
-		settingMenu.add(new UserActionSettingBasic("set name", "change current name", user));
-		settingMenu.add(new UserActionSettingBasic("set username", "change current username", user));
-		settingMenu.add(new UserActionSettingBasic("set password", "change current password", user));
+		getSettingMenu().add(new UserActionSettingBasic("name", "change current name", user));
+		getSettingMenu().add(new UserActionSettingBasic("username", "change current username", user));
+		getSettingMenu().add(new UserActionSettingBasic("password", "change current password", user));
 	}
 	
 	public void fillAndSetMenuBar(User user){
 		fillInfoMenuWithFunction(user);
 		fillSetMenuWithFunction(user);
 		menuBar.add(infoMenu);
-		menuBar.add(settingMenu);
+		menuBar.add(getSettingMenu());
 		frame.add(menuBar);
 		frame.setJMenuBar(menuBar);
 	}
@@ -208,6 +209,28 @@ public abstract class GUIUserFrame {
 				user.setPassword(value);
 				message = "New password succesfully saved!";
 			}
+			else if(currentSettingShow == 4){
+				user.setSurname(value);
+				message = "New surname succesfully saved!";
+			}
+			else if(currentSettingShow == 5){
+				String[] valueAddress = {value};
+				try{
+					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
+					message = "New address succesfully saved!";
+				}catch(NumberFormatException fex){
+            		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
+            	}
+			}
+			else if(currentSettingShow == 6){
+				user.setPhoneNumb(value);
+				message = "New phoneNumb succesfully saved!";
+			}
+			else if(currentSettingShow == 7){
+				user.setEmailAddress(value);
+				message = "New emailAddress succesfully saved!";
+			}
+			
 			//TODO Pop-Up String saved
 			System.out.println(message);
 		});
@@ -216,7 +239,7 @@ public abstract class GUIUserFrame {
 	
 
 	@SuppressWarnings("serial")
-	private class UserActionInfoBasic extends AbstractAction {
+	class UserActionInfoBasic extends AbstractAction {
 
 		String choice;
 		User user;
@@ -251,6 +274,23 @@ public abstract class GUIUserFrame {
             	descr = "Your password: ";
             	value = user.getPassword();
                 break;
+            case "surname":
+            	descr = "Your surname: ";
+            	value = user.getSurname();
+                break;
+            case "address":
+            	descr = "Your address: ";
+            	value = user.getAddress().toString();
+                break;
+            case "phoneNumb":
+            	descr = "Your phone number: ";
+            	value = user.getPhoneNumb();
+                break;
+            case "emailAddress":
+            	descr = "Your email address: ";
+            	value = user.getEmailAddress();
+                break;
+                
         }
 			fillInfoPanel(descr,value);
 			setCurrentPanel(infoPanel);
@@ -258,7 +298,7 @@ public abstract class GUIUserFrame {
 	}
 	
 	@SuppressWarnings("serial")
-	private class UserActionSettingBasic extends AbstractAction {
+	class UserActionSettingBasic extends AbstractAction {
 
 		String choice;
 		User user;
@@ -277,20 +317,40 @@ public abstract class GUIUserFrame {
 			String value = null;
 			
 			switch (choice) {
-            case "set name" :
+            case "name" :
             	descr = "Set your new name: ";
             	value = user.getName();
             	setCurrentSettingShow(1);
                 break;
-            case "set username":
+            case "username":
             	descr = "Set your new username: ";
             	value = user.getUsername();
             	setCurrentSettingShow(2);
                 break;
-            case "set password":
+            case "password":
             	descr = "Set your new password: ";
             	value = user.getPassword();
             	setCurrentSettingShow(3);
+                break;
+            case "surname":
+            	descr = "Set your new surname: ";
+            	value = user.getSurname();
+            	setCurrentSettingShow(4);
+                break;
+            case "address":
+            	descr = "Set your new address in the format \"xCoord,yCoord\": ";
+            	value = user.getAddress().toString();
+            	setCurrentSettingShow(5);
+                break;
+            case "phoneNumb":
+            	descr = "Set your new phone number: ";
+            	value = user.getPhoneNumb();
+            	setCurrentSettingShow(6);
+                break;
+            case "emailAddress":
+            	descr = "Set your new email address: ";
+            	value = user.getEmailAddress();
+            	setCurrentSettingShow(7);
                 break;
         }
 			fillSetPanel(descr,value);
@@ -299,6 +359,7 @@ public abstract class GUIUserFrame {
 	}
 	
 	
+	@SuppressWarnings("serial")
 	abstract class UserActionSetting extends AbstractAction {
 
 		String name;
@@ -315,6 +376,7 @@ public abstract class GUIUserFrame {
 		
 	}
 	
+	@SuppressWarnings("serial")
 	abstract class UserActionInfo extends AbstractAction {
 
 		String name;
@@ -351,11 +413,11 @@ public abstract class GUIUserFrame {
 	}
 
 	public JMenu getSettingsMenu() {
-		return settingMenu;
+		return getSettingMenu();
 	}
 
 	public void setSettingsMenu(JMenu settingsMenu) {
-		this.settingMenu = settingsMenu;
+		this.setSettingMenu(settingsMenu);
 	}
 
 	public JMenu getInfoMenu() {
@@ -420,6 +482,14 @@ public abstract class GUIUserFrame {
 
 	public void setCurrentSettingShow(int currentSettingShow) {
 		this.currentSettingShow = currentSettingShow;
+	}
+
+	public JMenu getSettingMenu() {
+		return settingMenu;
+	}
+
+	public void setSettingMenu(JMenu settingMenu) {
+		this.settingMenu = settingMenu;
 	}
 
 	

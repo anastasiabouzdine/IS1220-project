@@ -533,8 +533,8 @@ public class GUIStartFrame {
 //		GUIStartFrameTest.checkIfCourierLogInWorks();
 //		GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
 //		GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		GUIStartFrameTest.checkIfManagerLogInWorks();
-//		GUIStartFrameTest.checkIfCustomerLogInWorks();
+//		GUIStartFrameTest.checkIfManagerLogInWorks();
+		GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 
 	

@@ -22,6 +22,8 @@ import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import core.Core;
+import gui.GUIUserFrame.UserActionInfoBasic;
+import gui.GUIUserFrame.UserActionSettingBasic;
 import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import users.Courier;
 import users.Customer;
@@ -48,6 +50,7 @@ public class GUICourierFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.courier = (Courier) user;
+			fillAndSetMenuBarCourier(user);
 			initGUIRest(courier, Color.orange, Color.yellow, "Courier Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -56,33 +59,21 @@ public class GUICourierFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private class CourierActionInfo extends UserActionInfo{
-
-		public CourierActionInfo(String name, String desc) {
-			super(name, desc);
-		}
-		
-		
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			{
-				
-		        switch (name) {
-		            case "menu1Action" :
-		                // do something for menuItem1
-		                break;
-		            case "menu2Action":
-		                // do something for menuItem2
-		                break;
-		            case "menu3Action":
-		                // do something for menuItem3
-		                break;
-		        }
-		    }
-			
-		}
-		
+	private void fillInfoMenuWithFunctionCourier(User user) {
+		getInfoMenu().add(new UserActionInfoBasic("address", "show current address", user));
+		getInfoMenu().add(new UserActionInfoBasic("surname", "show current surname", user));
+		getInfoMenu().add(new UserActionInfoBasic("phoneNumb", "show current phone number", user));
+	}
+	
+	private void fillSetMenuWithFunctionCourier(User user) {
+		getSettingMenu().add(new UserActionSettingBasic("address", "change current address", user));
+		getSettingMenu().add(new UserActionSettingBasic("surname", "change current surname", user));
+		getSettingMenu().add(new UserActionSettingBasic("phoneNumb", "change current phone number", user));
+	}
+	
+	public void fillAndSetMenuBarCourier(User user){
+		fillInfoMenuWithFunctionCourier(user);
+		fillSetMenuWithFunctionCourier(user);
 	}
 	
 }

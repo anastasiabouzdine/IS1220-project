@@ -21,6 +21,8 @@ import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 import com.sun.org.apache.xml.internal.security.Init;
 
 import core.Core;
+import gui.GUIUserFrame.UserActionInfoBasic;
+import gui.GUIUserFrame.UserActionSettingBasic;
 import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import users.Manager;
 import users.Customer;
@@ -47,6 +49,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.manager = (Manager) user;
+			 fillAndSetMenuBarManager(user);
 			initGUIRest(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -55,27 +58,16 @@ public class GUIManagerFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private class ManagerActionInfo extends UserActionInfo{
-
-		public ManagerActionInfo(String name, String desc) {
-			super(name, desc);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			switch (name) {
-            case "":
-                // do something for menuItem1
-                break;
-            case "menu2Action":
-                // do something for menuItem2
-                break;
-            case "menu3Action":
-                // do something for menuItem3
-                break;
-        }
-			
-		}
+	private void fillInfoMenuWithFunctionManager(User user) {
+		getInfoMenu().add(new UserActionInfoBasic("surname", "show current surname", user));
+	}
+	
+	private void fillSetMenuWithFunctionManager(User user) {
+		getSettingMenu().add(new UserActionSettingBasic("surname", "change current surname", user));
+	}
+	
+	public void fillAndSetMenuBarManager(User user){
+		fillInfoMenuWithFunctionManager(user);
+		fillSetMenuWithFunctionManager(user);
 	}
 }

@@ -21,12 +21,8 @@ import core.Order;
 
 public class Courier extends User {
 	
-	private String surname;
-	private Address position;
-	private String phoneNumber;
 	private int nbOfDeliveredOrders;
 	private boolean available; //true = on duty; false = off duty
-	
 	private LinkedList<Order> listOfReceivedOrders; 
 	
 	
@@ -40,10 +36,7 @@ public class Courier extends User {
 	 * @param	username	a String containing the username
 	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username){
-		super(name, username);
-		this.surname = surname;
-		this.position = position;
-		this.phoneNumber = phoneNumber;
+		super(name, username, surname, position, phoneNumber, null);
 		this.nbOfDeliveredOrders = 0;
 		this.available = true;
 		listOfReceivedOrders = new LinkedList<Order>();
@@ -60,10 +53,7 @@ public class Courier extends User {
 	 * @param	password	a String containing the password
 	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username, String password){
-		super(name, username, password);
-		this.surname = surname;
-		this.position = position;
-		this.phoneNumber = phoneNumber;
+		super(name, username, surname, position, phoneNumber, null, password);
 		this.nbOfDeliveredOrders = 0;
 		this.available = true;
 		listOfReceivedOrders = new LinkedList<Order>();
@@ -115,56 +105,6 @@ public class Courier extends User {
 	
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
-	
-	
-
-	/**
-	 * @return the surname
-	 */
-	public String getSurname() {
-		return surname;
-	}
-
-
-	/**
-	 * @param surname the surname to set
-	 */
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-
-	/**
-	 * @return the position
-	 */
-	public Address getPosition() {
-		return position;
-	}
-
-
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(Address position) {
-		this.position = position;
-	}
-
-
-	/**
-	 * @return the phoneNumber
-	 */
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-
-	/**
-	 * @param phoneNumber the phoneNumber to set
-	 */
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 
 	/**
 	 * @return the nbOfDeliveredOrders
