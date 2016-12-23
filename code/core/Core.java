@@ -584,9 +584,9 @@ public class Core{
 	 * @param	rest	as type of Restaurant
 	 * @return	new Order
 	 */
-	public Order createNewOrder(Customer cust, Restaurant rest){
+	public Order createNewOrder(Restaurant rest){
 		if (current_customer != null){
-			return new Order(cust, rest);
+			return new Order(current_customer, rest);
 		} else {
 			unauthorizedCommand();
 			return null;
@@ -739,13 +739,17 @@ public class Core{
 	/* Most/least selling restaurant and active courier */
 
 	/**
-	 * Returns the most or least selling <code>Restaurant</code> in terms of number of <code>Order</code>.
-	 * @param 	most	a <code>boolean</code> whose value is true to get the most selling Restaurant,
-	 * 					false to get the least selling one
-	 * @return	the <code>Restaurant</code> following the criteria of the argument
+	 * Returns an ArrayList of restaurants sorted in decreasing (or increasing depending on
+	 * input boolean value) order w r t the number of delivered orders.
+	 * @param 	most	a <code>boolean</code> whose value is true (false) to get the most restaurants
+	 * 					sorted in decreasing (increasing) order w.r.t. the number of delivered orders
+	 * @return	an <code>ArrayList<Restaurant></code> following the criteria of the argument
 	 */
 	public Restaurant getMostOrLeastSellingRestaurant(boolean most){
 		if(current_manager != null){
+//			ArrayList<Restaurant> restaurant_top = new ArrayList<Restaurant>();
+			
+			// [r1_id, r1_nbOfOrders, r2_id, r2_nbOfOrders, ...]
 			int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID() + 1];
 			int max = 0; int min = savedOrders.size();
 			Restaurant best_seller = null; 

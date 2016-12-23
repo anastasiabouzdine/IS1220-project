@@ -162,7 +162,7 @@ public class CoreTest {
 		mf1.logOut();
 		mf1.logIn("cuspvp23");
 		
-		Order order1 = mf1.createNewOrder(list_customer.get(0), rest1);
+		Order order1 = mf1.createNewOrder(rest1);
 		order1.addMeal(list_hmeal.get(0), 3);
 		placeOrder(order1);
 		
@@ -170,7 +170,7 @@ public class CoreTest {
 		mf1.logIn("cuspvp23");
 		
 		mf1.setDeliveryPolicyToFairOcc();
-		Order order2 = mf1.createNewOrder(list_customer.get(0), list_restaurant.get(0));
+		Order order2 = mf1.createNewOrder(list_restaurant.get(0));
 		order2.addMeal(list_hmeal.get(0), 3);
 		placeOrder(order2);
 		
@@ -230,7 +230,7 @@ public class CoreTest {
 	
 	@Test
 	public void checkFidPlan() {
-		Customer cust = list_customer.get(4);
+		Customer cust = list_customer.get(4); // username : cuscatiad
 		cust.setFidCardToPoints();
 		assertEquals(cust.getNumberOfFidelityPoints(), 0);
 		mf1.setCourierList(list_courier);
@@ -240,18 +240,18 @@ public class CoreTest {
 		mf1.setServiceFee(2.5);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cuscatiad");
 
-		Order order1 = mf1.createNewOrder(cust, rest1);
+		Order order1 = mf1.createNewOrder(rest1);
 		order1.addDish(list_mainDish.get(0), 150);
 		placeOrder(order1);
 		// 150*8.3 = 1245 --> 124 points and reduction applied for next order
 		assertEquals(cust.getNumberOfFidelityPoints(), 124);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cuscatiad");
 		
-		Order order2 = mf1.createNewOrder(cust, rest1);
+		Order order2 = mf1.createNewOrder(rest1);
 		order2.addDish(list_mainDish.get(0), 40);
 		// 40*8.3*90% = 332 - 33.2 = 298.8 --> 124 - 100 + 29 = 53
 		placeOrder(order2);
@@ -450,23 +450,23 @@ public class CoreTest {
 		mf1.setServiceFee(2.5);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusmi2"); // username of customer at index 2
 
-		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
+		Order order1 = mf1.createNewOrder(rest1);
 		order1.addDish(list_mainDish.get(0), 3);
 		placeOrder(order1);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusjohoeu"); // username of customer at index 3
 
-		Order order2 = mf1.createNewOrder(list_customer.get(3), rest3);
+		Order order2 = mf1.createNewOrder(rest3);
 		order2.addDish(list_mainDish.get(1), 2);
 		placeOrder(order2);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cuscatiad"); // username of customer at index 4
 
-		Order order3 = mf1.createNewOrder(list_customer.get(4), rest1);
+		Order order3 = mf1.createNewOrder(rest1);
 		order3.addDish(list_mainDish.get(2), 1);
 		placeOrder(order3);
 		// Treat the three placed orders : two for rest1 and one for rest2
@@ -494,9 +494,9 @@ public class CoreTest {
 		mf1.setServiceFee(2.5);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusmi2"); // username of customer at index 2
 
-		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
+		Order order1 = mf1.createNewOrder(rest1);
 		order1.addMeal(hm3, 4);
 		order1.addMeal(hm1, 4);
 		order1.addMeal(hm1, 3);
@@ -504,9 +504,9 @@ public class CoreTest {
 		placeOrder(order1);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusjohoeu"); // username of customer at index 3
 
-		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
+		Order order2 = mf1.createNewOrder(rest2);
 		order2.addMeal(hm2, 1);
 		order2.addMeal(hm4, 3);
 
@@ -541,9 +541,9 @@ public class CoreTest {
 		mf1.setServiceFee(2.5);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusmi2"); // username of customer at index 2
 
-		Order order1 = mf1.createNewOrder(list_customer.get(2), rest1);
+		Order order1 = mf1.createNewOrder(rest1);
 		order1.addDish(d1, 4);
 		order1.addDish(d3, 4);
 		order1.addDish(d4, 5);
@@ -551,9 +551,9 @@ public class CoreTest {
 		placeOrder(order1);
 		
 		mf1.logOut();
-		mf1.logIn("cuspvp23");
+		mf1.logIn("cusjohoeu"); // username of customer at index 3
 		
-		Order order2 = mf1.createNewOrder(list_customer.get(3), rest2);
+		Order order2 = mf1.createNewOrder(rest2);
 		order2.addDish(d2, 1);
 		order2.addDish(d5, 9);
 		placeOrder(order2);
