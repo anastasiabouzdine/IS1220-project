@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -64,6 +66,35 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	public void fillAndSetMenuBarRest(User user){
 		fillInfoMenuWithFunctionRest(user);
 		fillSetMenuWithFunctionRest(user);
+	}
+	
+	@SuppressWarnings("serial")
+	private class UserActionInfoBasicRest extends UserActionInfoBasic {
+
+		public UserActionInfoBasicRest(String choice, String desc, User user) {
+			super(choice, desc, user);
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+			String descr = null;
+			String value = null;
+			
+			switch (choice) {
+            case "menus" :
+            	String descr1 = "Starters :"; 
+            	String descr2 = "Main dishes :"; 
+            	String descr3 = "Desserts :"; 
+            	
+                break;
+            
+                
+        }
+			fillInfoPanel(descr,value);
+			setCurrentPanel(getInfoPanel());
+		}
 	}
 	
 }

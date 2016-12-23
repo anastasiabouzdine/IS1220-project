@@ -145,7 +145,9 @@ public class Restaurant extends User {
 			System.out.println("Restaurant does not offer this meal");
 			throw new NullPointerException();
 		}
-
+		else if(isMealSpecial(meal)) {
+			return Order.round2(meal.getPrice()*(1-getSpecDiscFact()));
+		}
 		return Order.round2(meal.getPrice()*(1-getDiscountFactor()));
 	}
 

@@ -225,7 +225,7 @@ public class CommandProcessor {
 		Meal meal = core.getCurrent_restaurant().getMealByName(mealName);
 		if (meal != null) {
 			System.out.println(meal.toString());
-			;
+			//TODO The meal being shown will not have the real price on it because the discount factor is not applied;
 		} else {
 			System.out.println("! This meal does not exist !");
 		}
@@ -362,6 +362,7 @@ public class CommandProcessor {
 			for(Dish d : r.getMenu().getListOfDessert()) {
 				System.out.println(d.toString());
 			}
+			//TODO can't use that function for gui if it is only printed out 
 		}
 	}
 	public void showTotalProfit() {
