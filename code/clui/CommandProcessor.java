@@ -2,6 +2,7 @@ package clui;
 
 import java.net.SocketAddress;
 import java.util.ArrayList;
+import java.util.List;
 
 import core.Core;
 import core.Order;
@@ -33,6 +34,9 @@ public class CommandProcessor {
 
 	private AbstractFactory dish_factory = FactoryProducer.getFactory("dish");
 	private AbstractFactory meal_factory = FactoryProducer.getFactory("meal");
+	
+	private Order current_order;
+	private Meal current_meal;
 
 	/*
 	 * ArrayList<FullMeal> list_fmeal =
@@ -124,7 +128,6 @@ public class CommandProcessor {
 	/* Apply commands to core */
 
 
-	// WAIT FOR NEW REQUIREMENTS (bad design from project requirements)
 	/**
 	 * Adds a restaurant to the system with given name, username, address and
 	 * password, recalling that the address must have the syntax "xCoord,yCoord".
@@ -143,15 +146,19 @@ public class CommandProcessor {
 		}
 	}
 
-	// WAIT FOR NEW REQUIREMENTS (command might change)
+
+	/**
+	 * Adds a customer to the system with given firstname, lastname, username, address and
+	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 */
 	public void registerCustomer() {
 		String firstName = current_args[0];
 		String lastName = current_args[1];
 		String username = current_args[2].trim();
 		String address = current_args[3];
 		String password = current_args[4];
-		//TODO email address and tel.number should be inserted as well right? 
-		Customer c = new Customer(lastName, firstName, new Address(address), "00000000", "null@null.null", username, password);
+		
+		Customer c = new Customer(firstName, lastName, new Address(address), "00000000", "null@null.null", username, password);
 		try {
 			core.register(c);
 		} catch (AlreadyUsedUsernameException e) {
@@ -159,18 +166,18 @@ public class CommandProcessor {
 		}
 	}
 
-	//	public Courier(String name, String surname, Address position, String phoneNumber, String username){
-
-	// WAIT FOR NEW REQUIREMENTS (command might change)
+	/**
+	 * Adds a courier to the system with given firstname, lastname, username, address and
+	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 */
 	public void registerCourier() {
 		String firstName = current_args[0];
 		String lastName = current_args[1];
 		String username = current_args[2];
 		String position = current_args[3];
 		String password = current_args[4];
-		//TODO email address and tel.number should be inserted as well right? 
 
-		Courier c = new Courier(lastName, firstName, new Address(position), "00000000", username, password);
+		Courier c = new Courier(firstName, lastName, new Address(position), "00000000", username, password);
 		try {
 			core.register(c);
 		} catch (AlreadyUsedUsernameException e) {
@@ -178,35 +185,51 @@ public class CommandProcessor {
 		}
 	}
 
+	/**
+	 * Adds a dish with given dishname, category, foodtype and
+	 * price, to the menu of the current logged in restaurant.
+	 */
 	public void addDishRestaurantMenu() {
 		String dishName = current_args[0];
 		String dishCategory = current_args[1];
-		double unitPrice = Double.parseDouble(current_args[2]);
+		String foodCategory = current_args[2];
+		double unitPrice = Double.parseDouble(current_args[3]);
 
 		if (dishCategory.equals("starter")){
-			core.getCurrent_restaurant().addStarter(new Starter(dishName, unitPrice));
+			core.getCurrent_restaurant().addStarter(new Starter(dishName, unitPrice, foodCategory));
 		} else if (dishCategory.equals("maindish")) {
-			core.getCurrent_restaurant().addMainDish(new MainDish(dishName, unitPrice));
+			core.getCurrent_restaurant().addMainDish(new MainDish(dishName, unitPrice, foodCategory));
 		} else if (dishCategory.equals("dessert")) {
-			core.getCurrent_restaurant().addDessert(new Dessert(dishName, unitPrice));
+			core.getCurrent_restaurant().addDessert(new Dessert(dishName, unitPrice, foodCategory));
 		}
 	}
-
+	
+	/**
+	 * Allows the a user to log in.
+	 */
 	public void login() {
 		String password = current_args[1];
 		String username = current_args[0];
 		String info = core.logIn(username, password);
-		System.out.println(info); //has to change!!! maybe sent all string to a ArrayList and either print them out or make popUps
+		System.out.println(info);
 	}
 
-	// WAIT FOR NEW REQ. WITH HALF- AND FULLMEALS
+	/**
+	 * Adds a meal with given name and given type to the proposed items
+	 * of the current restaurant.
+	 */
 	public void createMeal() {
 		String mealName = current_args[0];
+		String mealType = current_args[1];
 
-		//		Meal m = meal_factory.getMeal("fullmeal", mealName);
+		Meal m = meal_factory.getMeal(mealType, mealName);
+		core.getCurrent_restaurant().addMeal(m);
 	}
 
-	// WAIT FOR REQ. WITH HALF- AND FULLMEALS
+	/**
+	 * Adds a dish that already exists in the restaurant list of dishes
+	 * to a meal that is already in the restaurant list of meals.
+	 */
 	public void addDish2Meal() {
 		String dishName = current_args[0];
 		String mealName = current_args[1];
@@ -214,6 +237,12 @@ public class CommandProcessor {
 		Restaurant r = core.getCurrent_restaurant();
 		Dish d = r.getDishByName(dishName);
 		Meal m = r.getMealByName(mealName);
+		if (m instanceof FullMeal) {
+			FullMeal fm = (FullMeal) m;
+			List<Dish> ld = fm.getListOfDish();
+			ld.add(d);
+			fm.setListOfDish(ld);
+		}
 	}
 
 	/**
@@ -225,16 +254,21 @@ public class CommandProcessor {
 		Meal meal = core.getCurrent_restaurant().getMealByName(mealName);
 		if (meal != null) {
 			System.out.println(meal.toString());
-			//TODO The meal being shown will not have the real price on it because the discount factor is not applied;
+			System.out.println("Note that the price will be lower depending on the applied fidelity plan.");
 		} else {
 			System.out.println("! This meal does not exist !");
 		}
 	}
 
+	
 	public void saveMeal() {
 		String mealName = current_args[0];
 	}
 
+	/**
+	 * Sets the special offer meal of the week of the current logged in
+	 * restaurant to the given meal.
+	 */
 	public void setSpecialOffer() {
 		String mealName = current_args[0];
 
@@ -255,13 +289,21 @@ public class CommandProcessor {
 
 	// WAIT FOR NEW REQ. (see above function)
 	public void createOrder() {
-		String customerName = current_args[0];
 		String restaurantName = current_args[0];
-		String orderName = current_args[0];
+		
+		current_order = core.createNewOrder(core.findRestaurantByName(restaurantName));
+	}
+	
+	public void addItem2Order() {
+		String itemName = current_args[0];
 	}
 
 	// WAIT FOR NEW REQ. (see above function)
 	public void endOrder() {
+		String date = current_args[0];
+		
+		core.placeNewOrder(current_order);
+		current_order = null;
 	}
 
 
@@ -362,7 +404,6 @@ public class CommandProcessor {
 			for(Dish d : r.getMenu().getListOfDessert()) {
 				System.out.println(d.toString());
 			}
-			//TODO can't use that function for gui if it is only printed out 
 		}
 	}
 	public void showTotalProfit() {

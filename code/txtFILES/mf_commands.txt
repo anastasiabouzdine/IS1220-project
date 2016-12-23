@@ -26,6 +26,7 @@ addDishRestaurantMenu
 3
 dishName
 dishCategory
+foodCategory
 unitPrice
 -------
 login
@@ -34,8 +35,9 @@ username
 password
 -------
 createMeal
-1
+2
 mealName
+mealType
 -------
 addDish2Meal
 2
@@ -59,10 +61,12 @@ removeFromSpecialOffer
 mealName
 -------
 createOrder
-3
-customerName
+1
 restaurantName
-orderName
+-------
+addItem2Order
+1
+itemName
 -------
 endOrder
 0
