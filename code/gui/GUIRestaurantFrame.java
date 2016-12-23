@@ -17,13 +17,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
-import com.sun.org.apache.xml.internal.security.Init;
-
 import core.Core;
 import gui.GUIUserFrame.UserActionInfoBasic;
 import gui.GUIUserFrame.UserActionSettingBasic;
-import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
 import users.Restaurant;
 import users.User;
 
