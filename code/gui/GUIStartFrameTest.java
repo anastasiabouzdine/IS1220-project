@@ -127,10 +127,10 @@ public class GUIStartFrameTest {
 		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		try{Thread.sleep(500);}catch(InterruptedException e){}
 		
-		GUIStartFrame.getCmd_processor().getCore().logIn("root");
-		User user = GUIStartFrame.getCmd_processor().getCore().getUsers().get("r8");
-		System.out.println("Test register Restaurant was " + GUIStartFrame.getCmd_processor().getCore().getRestaurantList().contains(user));
-		GUIStartFrame.getCmd_processor().getCore().logOut();
+		GUIStartFrame.getCore().logIn("root");
+		User user = GUIStartFrame.getCore().getUsers().get("r8");
+		System.out.println("Test register Restaurant was " + GUIStartFrame.getCore().getRestaurantList().contains(user));
+		GUIStartFrame.getCore().logOut();
 		
 		try{Thread.sleep(500);}catch(InterruptedException e){}
 		bot.mouseMove(210,100);
@@ -177,10 +177,10 @@ public static void checkIfCourierCanBeRegistered() throws AWTException {
 		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		try{Thread.sleep(500);}catch(InterruptedException e){}
 		
-		GUIStartFrame.getCmd_processor().getCore().logIn("root");
-		User user = GUIStartFrame.getCmd_processor().getCore().getUsers().get("c8");
-		System.out.println("Test register Courier was " + GUIStartFrame.getCmd_processor().getCore().getCourierList().contains(user));
-		GUIStartFrame.getCmd_processor().getCore().logOut();
+		GUIStartFrame.getCore().logIn("root");
+		User user = GUIStartFrame.getCore().getUsers().get("c8");
+		System.out.println("Test register Courier was " + GUIStartFrame.getCore().getCourierList().contains(user));
+		GUIStartFrame.getCore().logOut();
 		
 		try{Thread.sleep(500);}catch(InterruptedException e){}
 		bot.mouseMove(210,100);
@@ -228,10 +228,10 @@ public static void checkIfCustomerCanBeRegistered() throws AWTException {
 	bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 	try{Thread.sleep(500);}catch(InterruptedException e){}
 	
-	GUIStartFrame.getCmd_processor().getCore().logIn("root");
-	User user = GUIStartFrame.getCmd_processor().getCore().getUsers().get("cus8");
-	System.out.println("Test register Customer was " + GUIStartFrame.getCmd_processor().getCore().getCustomerList().contains(user));
-	GUIStartFrame.getCmd_processor().getCore().logOut();
+	GUIStartFrame.getCore().logIn("root");
+	User user = GUIStartFrame.getCore().getUsers().get("cus8");
+	System.out.println("Test register Customer was " + GUIStartFrame.getCore().getCustomerList().contains(user));
+	GUIStartFrame.getCore().logOut();
 	
 	try{Thread.sleep(500);}catch(InterruptedException e){}
 	bot.mouseMove(210,100);
@@ -246,7 +246,7 @@ public static void checkIfCourierLogInWorks() throws AWTException, AlreadyUsedUs
 	
 	Address address = new Address(3,4);
 	Courier courier = new Courier("aoeu", "tnhd", address, "56789", "c8", "code");
-	GUIStartFrame.getCmd_processor().getCore().register(courier);
+	GUIStartFrame.getCore().register(courier);
 	
 	try{Thread.sleep(1000);}catch(InterruptedException e){}
 	Robot bot = new Robot();
@@ -277,7 +277,7 @@ public static void checkIfCourierLogInFailsWithWrongLogIn() throws AWTException,
 	
 	Address address = new Address(3,4);
 	Courier courier = new Courier("aoeu", "tnhd", address, "56789", "c8", "code");
-	GUIStartFrame.getCmd_processor().getCore().register(courier);
+	GUIStartFrame.getCore().register(courier);
 	
 	try{Thread.sleep(1000);}catch(InterruptedException e){}
 	Robot bot = new Robot();
@@ -308,7 +308,7 @@ public static void checkIfCustomerLogInWorks() throws AWTException, AlreadyUsedU
 	
 	Address address = new Address(3,4);
 	Customer customer = new Customer("aoeu", "tnhd", address, "56789", "nth@nhsn", "cus8", "code");
-	GUIStartFrame.getCmd_processor().getCore().register(customer);
+	GUIStartFrame.getCore().register(customer);
 	
 	try{Thread.sleep(1000);}catch(InterruptedException e){}
 	Robot bot = new Robot();
@@ -338,7 +338,7 @@ public static void checkIfCustomerLogInWorks() throws AWTException, AlreadyUsedU
 public static void checkIfManagerLogInWorks() throws AWTException, AlreadyUsedUsernameException {
 	
 	Manager manager = new Manager("aoeu", "tnhd", "m8", "code");
-	GUIStartFrame.getCmd_processor().getCore().register(manager);
+	GUIStartFrame.getCore().register(manager);
 	
 	try{Thread.sleep(1000);}catch(InterruptedException e){}
 	Robot bot = new Robot();
@@ -366,10 +366,6 @@ public static void checkIfManagerLogInWorks() throws AWTException, AlreadyUsedUs
 }
 
 public static void checkIfRestaurantLogInWorks() throws AWTException, AlreadyUsedUsernameException {
-	
-	Address address = new Address(3,4);
-	Restaurant restaurant = new Restaurant("aoeu", address, "res8", "code");
-	GUIStartFrame.getCmd_processor().getCore().register(restaurant);
 	
 	try{Thread.sleep(1000);}catch(InterruptedException e){}
 	Robot bot = new Robot();

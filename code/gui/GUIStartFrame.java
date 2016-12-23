@@ -8,7 +8,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -33,7 +34,9 @@ import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
 import parsers.ParseCustomers;
 import parsers.ParseManagers;
+import parsers.ParseMeals;
 import parsers.ParseRestaurants;
+import restaurantSetUp.Meal;
 import users.Address;
 import users.Courier;
 import users.Customer;
@@ -47,7 +50,7 @@ public class GUIStartFrame {
 	private static JFrame frame = new JFrame("My Foodora");
 	private static GUIUserFrame currentLogInUser;
 	
-	private static CommandProcessor cmd_processor = CommandProcessor.getInstance();
+	private static Core core;
 
 
 	JPanel address_panel = new JPanel();
@@ -82,7 +85,7 @@ public class GUIStartFrame {
 	
 	// String to register
 	String surname; 
-	String address;
+	Address address;
 	String phoneNum;
 	String emailAddress;
 	String username;
@@ -112,6 +115,32 @@ public class GUIStartFrame {
 			instance = new GUIStartFrame();
 			// For testing
 			
+			core = new Core();
+			
+			core.logIn("root"); // login with manager to add lists
+			core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
+			core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
+			core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
+			core.logOut();
+			
+			Address address = new Address(3,4);
+			Restaurant restaurant = new Restaurant("aoeu", address, "res8", "code");
+			
+			try {
+				core.register(restaurant);
+			} catch (AlreadyUsedUsernameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			core.logIn("root");
+			for(Meal meal : ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt"))
+				core.getRestaurantList().get(0).addMeal(meal);
+			
+			for(Meal meal : ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt"))
+				core.getRestaurantList().get(0).addMeal(meal);
+			
+			core.logOut();
 		}
 		return instance;
 	}
@@ -129,9 +158,6 @@ public class GUIStartFrame {
 	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
 		GUIStartFrame.currentLogInUser = currentLogInUser;
 	}
-	public static CommandProcessor getCmd_processor() {
-		return cmd_processor;
-	}
 	public JPanel getLogin_panel() {
 		return login_panel;
 	}
@@ -141,6 +167,11 @@ public class GUIStartFrame {
 	public JPanel getWelcome_panel() {
 		return welcome_panel;
 	}
+
+	public static Core getCore() {
+		return core;
+	}
+
 
 	/*********************************************************/
 	/* Fill panels */
@@ -443,35 +474,29 @@ public class GUIStartFrame {
 	private class RegisterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			
-			address = new StringBuilder().append(xCoordinate_JTF.getText()).append(",").append(yCoordinate_JTF.getText()).toString();
-			name = name_JTF.getText();
-			Command command =null;
 			
+			address = new Address(Integer.parseInt(xCoordinate_JTF.getText()), Integer.parseInt(yCoordinate_JTF.getText()));
+			name = name_JTF.getText();
+			try {
 			if(customer_specific_info.isShowing()){
 				surname = surname_JTF.getText();
 				emailAddress = emailAddress_JTF.getText();
 				phoneNum = phoneNum_JTF.getText();
 				
-				String[] commandArgsCust = {surname,name,username,address,passwort};
-				command = new Command("registerCustomer", commandArgsCust);
+				core.register(new Customer(name, surname, address, phoneNum, emailAddress, username));
 			}
 			else if(courier_specific_info.isShowing()){
 				surname = surname_JTF.getText();
 				phoneNum = phoneNum_JTF.getText();
 				
-				String[] commandArgsCour = {surname,name,username,address,passwort};
-				command = new Command("registerCourier", commandArgsCour);
+				core.register(new Courier(name, surname, address, phoneNum, username));
 			}
 			else if(restaurant_specific_info.isShowing()){
 				
-				String[] commandArgsRest = {name,username,address,passwort};
-				command = new Command("registerRestaurant", commandArgsRest);
+				core.register(new Restaurant(name, address, username));
 			}
-			
-			try {
-				cmd_processor.processCmd(command);
 			} catch (Exception ex) {
-				ex.getMessage();
+				//TODO pop up
 			}
 			goToLogInPanel();
 		}
@@ -481,14 +506,12 @@ public class GUIStartFrame {
 	private class LoginButton implements ActionListener {
 //		@SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e){
-			Core core = cmd_processor.getCore();
+			
 			username = username_JTF.getText();
 			String code = password_JTF.getText();
 			
-			String[] commandArgsLogIn = {username,code};
-			
 			try {
-				cmd_processor.processCmd(new Command("login", commandArgsLogIn));
+				core.logIn(username, code);
 			} catch (Exception ex) {
 				ex.getMessage();
 			}
@@ -532,7 +555,7 @@ public class GUIStartFrame {
 		//Log-in Tests - please run only one test at a time - if not they will fail
 //		GUIStartFrameTest.checkIfCourierLogInWorks();
 //		GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-//		GUIStartFrameTest.checkIfRestaurantLogInWorks();
+		GUIStartFrameTest.checkIfRestaurantLogInWorks();
 //		GUIStartFrameTest.checkIfManagerLogInWorks();
 //		GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}

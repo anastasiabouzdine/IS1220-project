@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,8 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import core.Core;
-import gui.GUIUserFrame.UserActionInfoBasic;
-import gui.GUIUserFrame.UserActionSettingBasic;
 import users.Manager;
 import users.Customer;
 import users.Restaurant;
@@ -46,7 +46,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 			GUIStartFrame.getFrame().setVisible(false);
 			this.manager = (Manager) user;
 			 fillAndSetMenuBarManager(user);
-			initGUIRest(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
+			initGUI(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}
@@ -55,15 +55,80 @@ public class GUIManagerFrame extends GUIUserFrame {
 	}
 	
 	private void fillInfoMenuWithFunctionManager(User user) {
-		getInfoMenu().add(new UserActionInfoBasic("surname", "show current surname", user));
+		getInfoMenu().add(new UserActionInfoBasicManager("surname", "show current surname", user));
 	}
 	
 	private void fillSetMenuWithFunctionManager(User user) {
-		getSettingMenu().add(new UserActionSettingBasic("surname", "change current surname", user));
+		getSettingMenu().add(new UserActionSettingBasicManager("surname", "change current surname", user));
 	}
 	
 	public void fillAndSetMenuBarManager(User user){
 		fillInfoMenuWithFunctionManager(user);
 		fillSetMenuWithFunctionManager(user);
+	}
+	
+	private class UserActionInfoBasicManager extends AbstractAction {
+
+		String choice;
+		User user;
+
+		public UserActionInfoBasicManager(String choice, String desc, User user) {
+			super(choice);
+			this.choice = choice;
+			this.user = user;
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+			String descr = null;
+			String value = null;
+			
+			switch (choice) {
+            case "surname":
+            	descr = "Your surname: ";
+            	value = user.getSurname();
+                break;
+            case "address":
+            	descr = "Your address: ";
+            	value = user.getAddress().toString();
+                break;     
+        }
+			fillInfoPanel(descr,value);
+			setCurrentPanel(getInfoPanel());
+		}
+	}
+	
+	private class UserActionSettingBasicManager extends AbstractAction {
+
+		String choice;
+		User user;
+
+		public UserActionSettingBasicManager(String choice, String desc, User user) {
+			super(choice);
+			this.choice = choice;
+			this.user = user;
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e){
+			
+			String descr = null;
+			String value = null;
+			
+			switch (choice) {
+            
+            case "surname":
+            	descr = "Set your new surname: ";
+            	value = user.getSurname();
+            	setCurrentSettingShow(4);
+                break;
+           
+        }
+			fillSetPanel(descr,value);
+			setCurrentPanel(getSettingPanel());
+		}
 	}
 }

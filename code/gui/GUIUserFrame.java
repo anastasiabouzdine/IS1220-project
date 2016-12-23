@@ -79,17 +79,20 @@ public abstract class GUIUserFrame {
 		infoPanel.setBackground(Color.CYAN);
 		infoTextFieldDesc.setEditable(false);
 		infoTextFieldValue.setEditable(false);
-		infoSubPanel.setBackground(Color.WHITE);
-		infoSubPanel.add(infoTextFieldDesc, BorderLayout.CENTER);
-		infoSubPanel.add(infoTextFieldValue, BorderLayout.CENTER);
-		infoPanel.add(infoSubPanel);
+		getInfoSubPanel().setBackground(Color.WHITE);
+		infoPanel.add(getInfoSubPanel());
 		frame.add(infoPanel);
 	}
 	
 	public void fillInfoPanel(String descr, String value){
+		infoPanel.removeAll();
 		infoTextFieldDesc.setText(descr);
 		infoTextFieldValue.setText(value);
+		getInfoSubPanel().add(infoTextFieldDesc, BorderLayout.CENTER);
+		getInfoSubPanel().add(infoTextFieldValue, BorderLayout.CENTER);
+		infoPanel.add(getInfoSubPanel());
 		infoPanel.add(home_button, BorderLayout.SOUTH);
+		
 	}
 	
 	private void fillInfoMenuWithFunction(User user) {
@@ -180,7 +183,7 @@ public abstract class GUIUserFrame {
 	
 	/**************************************************/
 	//Initialize functions
-	public void initGUIRest(User user, Color color1, Color color2, String welcomeText, String programText) {
+	public void initGUI(User user, Color color1, Color color2, String welcomeText, String programText) {
 		setFrame(new JFrame("Welcome " + user.getName()));	
 		fillWelcomePanel(user, color1, color2, welcomeText, programText);
 		fillInfoPanel();
@@ -202,7 +205,7 @@ public abstract class GUIUserFrame {
 				message = "New name succesfully saved!";
 			}
 			else if(currentSettingShow == 2){
-				GUIStartFrame.getCmd_processor().getCore().setUsername(user, value);
+				GUIStartFrame.getCore().setUsername(user, value);
 				message = "New username succesfully saved!";
 			}
 			else if(currentSettingShow == 3){
@@ -216,8 +219,8 @@ public abstract class GUIUserFrame {
 			else if(currentSettingShow == 5){
 				String[] valueAddress = {value};
 				try{
-					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
-					message = "New address succesfully saved!";
+//					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
+//					message = "New address succesfully saved!";
 				}catch(NumberFormatException fex){
             		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
             	}
@@ -239,7 +242,7 @@ public abstract class GUIUserFrame {
 	
 
 	@SuppressWarnings("serial")
-	class UserActionInfoBasic extends AbstractAction {
+	private class UserActionInfoBasic extends AbstractAction {
 
 		String choice;
 		User user;
@@ -252,53 +255,36 @@ public abstract class GUIUserFrame {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e){
-			
+		public void actionPerformed(ActionEvent e) {
+
 			String descr = null;
 			String value = null;
-			
+
 			switch (choice) {
-            case "name" :
-            	descr = "Your name: ";
-            	value = user.getName(); 
-                break;
-            case "username":
-            	descr = "Your username: ";
-            	value = user.getUsername();
-                break;
-            case "ID":
-            	descr = "Your ID: ";
-            	value =  Integer.toString(user.getID());
-                break;
-            case "password":
-            	descr = "Your password: ";
-            	value = user.getPassword();
-                break;
-            case "surname":
-            	descr = "Your surname: ";
-            	value = user.getSurname();
-                break;
-            case "address":
-            	descr = "Your address: ";
-            	value = user.getAddress().toString();
-                break;
-            case "phoneNumb":
-            	descr = "Your phone number: ";
-            	value = user.getPhoneNumb();
-                break;
-            case "emailAddress":
-            	descr = "Your email address: ";
-            	value = user.getEmailAddress();
-                break;
-                
-        }
-			fillInfoPanel(descr,value);
+			case "name":
+				descr = "Your name: ";
+				value = user.getName();
+				break;
+			case "username":
+				descr = "Your username: ";
+				value = user.getUsername();
+				break;
+			case "ID":
+				descr = "Your ID: ";
+				value = Integer.toString(user.getID());
+				break;
+			case "password":
+				descr = "Your password: ";
+				value = user.getPassword();
+				break;
+			}
+			fillInfoPanel(descr, value);
 			setCurrentPanel(infoPanel);
 		}
 	}
 	
 	@SuppressWarnings("serial")
-	class UserActionSettingBasic extends AbstractAction {
+	private class UserActionSettingBasic extends AbstractAction {
 
 		String choice;
 		User user;
@@ -331,26 +317,6 @@ public abstract class GUIUserFrame {
             	descr = "Set your new password: ";
             	value = user.getPassword();
             	setCurrentSettingShow(3);
-                break;
-            case "surname":
-            	descr = "Set your new surname: ";
-            	value = user.getSurname();
-            	setCurrentSettingShow(4);
-                break;
-            case "address":
-            	descr = "Set your new address in the format \"xCoord,yCoord\": ";
-            	value = user.getAddress().toString();
-            	setCurrentSettingShow(5);
-                break;
-            case "phoneNumb":
-            	descr = "Set your new phone number: ";
-            	value = user.getPhoneNumb();
-            	setCurrentSettingShow(6);
-                break;
-            case "emailAddress":
-            	descr = "Set your new email address: ";
-            	value = user.getEmailAddress();
-            	setCurrentSettingShow(7);
                 break;
         }
 			fillSetPanel(descr,value);
@@ -490,6 +456,14 @@ public abstract class GUIUserFrame {
 
 	public void setSettingMenu(JMenu settingMenu) {
 		this.settingMenu = settingMenu;
+	}
+
+	public JPanel getInfoSubPanel() {
+		return infoSubPanel;
+	}
+
+	public void setInfoSubPanel(JPanel infoSubPanel) {
+		this.infoSubPanel = infoSubPanel;
 	}
 
 	
