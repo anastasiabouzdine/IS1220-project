@@ -21,10 +21,14 @@ import restaurantSetUp.Meal;
  */
 public class Customer extends User implements Observer{
 
+	private String surname;
+	private Address address;
+	private String email;
+	private String phoneNumber;
 	private boolean beNotified = true;
-	
+
 	private FidCardPlan fidCardPlan;
-	
+
 	/**
 	 * Class constructor. 
 	 * 	
@@ -37,10 +41,14 @@ public class Customer extends User implements Observer{
 	 */
 	public Customer(String name, String surname, Address address, String phoneNumber,
 			String email, String username){
-		super(name, username, surname, address, phoneNumber, email);
+		super(name, username);
+		this.surname = surname;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
-	
+
 	/**
 	 * Class constructor with password. 
 	 * 	
@@ -54,10 +62,14 @@ public class Customer extends User implements Observer{
 	 */
 	public Customer(String name, String surname, Address address, String phoneNumber,
 			String email, String username, String password){
-		super(name, username, surname, address, phoneNumber, email, password);
+		super(name, username, password);
+		this.surname = surname;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		this.fidCardPlan = new FidCardPlanBasic();
 	}
-	
+
 	/*********************************************************************/
 	/* Fidelity card plans */
 
@@ -75,7 +87,7 @@ public class Customer extends User implements Observer{
 	public FidCardPlan getFidCardPlan() {
 		return fidCardPlan;
 	}
-	
+
 	public void setFidCardToBasic() {
 		FidCardPlanBasic basic = new FidCardPlanBasic();
 		setFidCardPlan(basic);
@@ -88,7 +100,7 @@ public class Customer extends User implements Observer{
 		FidCardPlanLottery lottery = new FidCardPlanLottery();
 		setFidCardPlan(lottery);
 	}
-	
+
 	/**
 	 * Returns the number of fidelity points if the customer is subscribed to the FidelityPoints plan,
 	 * 0 if not.
@@ -101,7 +113,7 @@ public class Customer extends User implements Observer{
 		} 
 		return 0;
 	}
-	
+
 	/**
 	 * Add fidelity points if the customer is subscribed to the FidelityPoints plan.
 	 * @param n an int representing the number of fidelity points to add
@@ -113,11 +125,11 @@ public class Customer extends User implements Observer{
 			temp_fid.setPoints(temp_fid.getPoints() + n);
 		} 
 	}
-	
+
 	public void changeNotifyConsensus(){
 		setBeNotified(!beNotified);
 	}
-	
+
 	/*********************************************************************/
 
 	public void update(Restaurant restaurant){
@@ -134,10 +146,10 @@ public class Customer extends User implements Observer{
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + getName() + ", surname=" + getSurname() + ", username=" + getUsername() + "]";
+		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + "]";
 	}
 
-	
+
 	/*********************************************************************/
 	/* Getters and Setter */ // no setter for the ID, nor for the COUNTER !
 
@@ -154,7 +166,62 @@ public class Customer extends User implements Observer{
 	public void setBeNotified(boolean beNotified) {
 		this.beNotified = beNotified;
 	}
-	
 
-	
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the phoneNumber
+	 */
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
 };

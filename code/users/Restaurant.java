@@ -30,14 +30,18 @@ import restaurantSetUp.Starter;
  */
 
 public class Restaurant extends User {
-		
+
+	private Address address;
+	private String surname;
+	private String emailAddress;
+	private String phoneNumb;
 	private double discountFactor; // discount factor is set by default to 5%
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
 	private Meal specialMeal;
 	private List<Meal> listOfMeal; 
 
-	
+
 	/**
 	 * Class constructor. 
 	 * 	
@@ -46,13 +50,14 @@ public class Restaurant extends User {
 	 * @param username 	 		log-in name of restaurant
 	 */
 	public Restaurant(String name, Address address, String username) {
-		super(name, username, null, address, null, null); 
+		super(name, username);
+		this.address = address;
 		this.discountFactor = 0.05;
 		this.specDiscFact = 0.1;
 		this.menu = new Menu();
 		this.listOfMeal = new ArrayList<Meal>();
 	}
-	
+
 	/**
 	 * Class constructor with password. 
 	 * 	
@@ -62,30 +67,31 @@ public class Restaurant extends User {
 	 * @param password 			password of restaurant
 	 */
 	public Restaurant(String name, Address address, String username, String password) {
-		super(name, username, null, address, null, null, password);
+		super(name, username, password);
+		this.address = address;
 		this.discountFactor = 0.05;
 		this.specDiscFact = 0.1;
 		this.menu = new Menu();
 		this.listOfMeal = new ArrayList<Meal>();
 	}
-		
+
 	/************************************************************/
 	/* Auxiliaries function */
-	
+
 	/**
 	 * @param	starter	will be added to the restaurant's menu 
 	 */
 	public void addStarter(Starter starter){
 		menu.addStarter(starter);
 	}
-	
+
 	/**
 	 * @param	mainDish	will be added to the restaurant's menu  
 	 */
 	public void addMainDish(MainDish mainDish){
 		menu.addMainDish(mainDish);
 	}
-	
+
 	/**
 	 * @param	dessert		will be added to the restaurant's menu
 	 */
@@ -139,10 +145,10 @@ public class Restaurant extends User {
 			System.out.println("Restaurant does not offer this meal");
 			throw new NullPointerException();
 		}
-		
-			return Order.round2(meal.getPrice()*(1-getDiscountFactor()));
+
+		return Order.round2(meal.getPrice()*(1-getDiscountFactor()));
 	}
-	
+
 	/**
 	 * @param	meal	is a Meal 
 	 * @return 	true or false depending on whether the meal is the special meal of the week
@@ -157,8 +163,8 @@ public class Restaurant extends User {
 		} 
 		return false;		
 	}
-	
-	
+
+
 	/**
 	 * Return the Meal with given mealName, null if this restaurant has not that meal.
 	 * @param mealName a String containing the name of the meal
@@ -172,7 +178,7 @@ public class Restaurant extends User {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Return the Dish with given dishName, null if this restaurant has not that dish.
 	 * @param dishName a String containing the name of the dish
@@ -202,7 +208,7 @@ public class Restaurant extends User {
 		return "Restaurant [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
 	}
 
-	
+
 	/************************************************************/
 	/**
 	 * @return the discountFactor
@@ -277,5 +283,77 @@ public class Restaurant extends User {
 	public void setListOfMeal(List<Meal> listOfMeal) {
 		this.listOfMeal = listOfMeal;
 	}
+
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * @return the emailAddress
+	 */
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	/**
+	 * @param emailAddress the emailAddress to set
+	 */
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * @return the phoneNumb
+	 */
+	public String getPhoneNumb() {
+		return phoneNumb;
+	}
+
+	/**
+	 * @param phoneNumb the phoneNumb to set
+	 */
+	public void setPhoneNumb(String phoneNumb) {
+		this.phoneNumb = phoneNumb;
+	}
+
+	/**
+	 * @return the specialMeal
+	 */
+	public Meal getSpecialMeal() {
+		return specialMeal;
+	}
+
+	/**
+	 * @param specialMeal the specialMeal to set
+	 */
+	public void setSpecialMeal(Meal specialMeal) {
+		this.specialMeal = specialMeal;
+	}
+
+
 
 };

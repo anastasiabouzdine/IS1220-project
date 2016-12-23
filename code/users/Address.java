@@ -7,11 +7,11 @@ package users;
  * @author Patrick von Platen
  */
 public class Address {
-	
+
 	private int xCoordinate;
 	private int yCoordinate;
-	
-	
+
+
 	/**
 	 * Class constructor.
 	 * 
@@ -23,7 +23,7 @@ public class Address {
 		this.xCoordinate = xCoordinate;
 		this.yCoordinate = yCoordinate;
 	}
-	
+
 	/**
 	 * More flexible constructor which allows the input to be a String
 	 * in the form of [xCoordinate;yCoordinate].
@@ -40,7 +40,7 @@ public class Address {
 	public double calculateDistance(Address address){
 		return Math.sqrt(Math.pow((this.xCoordinate-address.xCoordinate),2) + Math.pow((this.yCoordinate-address.yCoordinate),2));
 	}
-	
+
 	/************************************************************/
 	/* Getters and Setters */
 
@@ -80,11 +80,11 @@ public class Address {
 //	 * Overridden methods
 //	 * toString, hashCode and equals  
 //	 */
-//	@Override
-//	public String toString() {
-//		return "Address [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
-//	}
-	
+	//	@Override
+	//	public String toString() {
+	//		return "Address [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";
+	//	}
+
 	/** 
 	 * Overridden methods
 	 * toString, hashCode and equals  
@@ -124,6 +124,6 @@ public class Address {
 			return false;
 		return true;
 	}
-	
-	
+
+
 };

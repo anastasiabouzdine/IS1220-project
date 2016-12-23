@@ -115,17 +115,15 @@ public class CommandProcessor {
 			showTotalProfit();
 		} else if (current_name.equals("logout")) {
 			logout();
-		} else if (current_name.equals("setAddress")) {
-			setAddress();
 		}
 	}
 
-	
+
 
 	/**************************************************/
 	/* Apply commands to core */
 
-	
+
 	// WAIT FOR NEW REQUIREMENTS (bad design from project requirements)
 	/**
 	 * Adds a restaurant to the system with given name, username, address and
@@ -144,7 +142,7 @@ public class CommandProcessor {
 			System.out.println("! This username is already taken ! ");
 		}
 	}
-	
+
 	// WAIT FOR NEW REQUIREMENTS (command might change)
 	public void registerCustomer() {
 		String firstName = current_args[0];
@@ -160,8 +158,8 @@ public class CommandProcessor {
 			System.out.println("! This username is already taken ! ");
 		}
 	}
-	
-//	public Courier(String name, String surname, Address position, String phoneNumber, String username){
+
+	//	public Courier(String name, String surname, Address position, String phoneNumber, String username){
 
 	// WAIT FOR NEW REQUIREMENTS (command might change)
 	public void registerCourier() {
@@ -171,7 +169,7 @@ public class CommandProcessor {
 		String position = current_args[3];
 		String password = current_args[4];
 		//TODO email address and tel.number should be inserted as well right? 
-		
+
 		Courier c = new Courier(lastName, firstName, new Address(position), "00000000", username, password);
 		try {
 			core.register(c);
@@ -180,13 +178,11 @@ public class CommandProcessor {
 		}
 	}
 
-	
-
 	public void addDishRestaurantMenu() {
 		String dishName = current_args[0];
 		String dishCategory = current_args[1];
 		double unitPrice = Double.parseDouble(current_args[2]);
-		
+
 		if (dishCategory.equals("starter")){
 			core.getCurrent_restaurant().addStarter(new Starter(dishName, unitPrice));
 		} else if (dishCategory.equals("maindish")) {
@@ -197,7 +193,6 @@ public class CommandProcessor {
 	}
 
 	public void login() {
-		
 		String password = current_args[1];
 		String username = current_args[0];
 		String info = core.logIn(username, password);
@@ -324,14 +319,14 @@ public class CommandProcessor {
 		}
 		core.logOut();
 	}
-	
+
 	public void showCourierDeliveries() {
-		
+
 	}
 	public void showRestaurantTop() {
-		
+
 	}
-	
+
 	/**
 	 * Display the list of registered customers.
 	 */
@@ -340,13 +335,13 @@ public class CommandProcessor {
 			System.out.println(c.toString());
 		}
 	}
-	
+
 	/**
 	 * Display the list of meals and dishes of a given restaurant.
 	 */
 	public void showMenuItem() {
 		String restaurantName = current_args[0];
-		
+
 		Restaurant r = core.findRestaurantByName(restaurantName);
 		if (r == null) {
 			System.out.println("! This restaurant is not valid !");
@@ -380,21 +375,8 @@ public class CommandProcessor {
 	public void logout() {
 		core.logOut();
 	}
-	
-	/**
-	 * Sets new address of user.
-	 */
-	public void setAddress() {
-		int xCoord;
-		int yCoord;
-		String[] coordinates = current_args[0].split(",");
-		
-		xCoord = Integer.parseInt(coordinates[0]);
-		yCoord = Integer.parseInt(coordinates[1]);
-		core.getCurrent_user().getAddress().setxCoordinate(xCoord);
-		core.getCurrent_user().getAddress().setyCoordinate(yCoord);	
-	}
-	
+
+
 	/**************************************************/
 	/* getters and setters */
 	public Core getCore() {
