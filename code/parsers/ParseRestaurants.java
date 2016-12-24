@@ -42,7 +42,7 @@ public class ParseRestaurants {
 				y = Integer.parseInt(scan.nextLine());
 				address = new Address(x, y);
 				username = scan.nextLine();
-				restaurant = new Restaurant(name, address, username);
+				restaurant = new Restaurant(name, address, username, "passw");
 				restaurant_list.add(restaurant);
 			}
 			scan.close();

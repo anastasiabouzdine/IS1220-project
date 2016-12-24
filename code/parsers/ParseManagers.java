@@ -39,7 +39,7 @@ public class ParseManagers {
 				name = scan.nextLine();
 				surname = scan.nextLine();
 				username = scan.nextLine();
-				manager = new Manager(name, surname, username);
+				manager = new Manager(name, surname, username, "passw");
 				manager_list.add(manager);
 			}
 			scan.close();

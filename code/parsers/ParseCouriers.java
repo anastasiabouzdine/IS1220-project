@@ -47,7 +47,7 @@ public class ParseCouriers {
 				address = new Address(x, y);
 				phoneNumber = scan.nextLine();
 				username = scan.nextLine();
-				courier = new Courier(name, surname, address, phoneNumber, username);
+				courier = new Courier(name, surname, address, phoneNumber, username, "passw");
 				courier_list.add(courier);
 			}
 			scan.close();

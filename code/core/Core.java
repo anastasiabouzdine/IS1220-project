@@ -103,7 +103,7 @@ public class Core{
 		this.dateAfter = Calendar.getInstance();
 		this.dateBefore = Calendar.getInstance();
 	}
-	
+
 	/*********************************************************************/
 	/**
 	 * This method allows unregistered clients to register themselves.
@@ -167,7 +167,7 @@ public class Core{
 		}
 		return output;
 	}
-	
+
 	/**
 	 * This method allows registered users to log in and changes the current user to the user 
 	 * having completed the log in. New messages are printed out if user logs in.
@@ -179,21 +179,21 @@ public class Core{
 	public String logIn(String username){
 		String output="Not a valid username!";
 		if (users.containsKey(username)){
-				current_user = users.get(username);
-				if (current_user instanceof Courier){
-					current_courier = (Courier) current_user;
-					output = "Successfully logged in as a Courier !";
-				} else if (current_user instanceof Customer){
-					current_customer = (Customer) current_user;
-					output = "Successfully logged in as a Customer !";
-				} else if (current_user instanceof Manager){
-					current_manager = (Manager) current_user;
-					output = "Successfully logged in as a Manager !";
-				} else if (current_user instanceof Restaurant){
-					current_restaurant = (Restaurant) current_user;
-					output = "Successfully logged in as a Restaurant !";
-				}
-				current_user.checkMessages(); 
+			current_user = users.get(username);
+			if (current_user instanceof Courier){
+				current_courier = (Courier) current_user;
+				output = "Successfully logged in as a Courier !";
+			} else if (current_user instanceof Customer){
+				current_customer = (Customer) current_user;
+				output = "Successfully logged in as a Customer !";
+			} else if (current_user instanceof Manager){
+				current_manager = (Manager) current_user;
+				output = "Successfully logged in as a Manager !";
+			} else if (current_user instanceof Restaurant){
+				current_restaurant = (Restaurant) current_user;
+				output = "Successfully logged in as a Restaurant !";
+			}
+			current_user.checkMessages(); 
 		}
 		return output;
 	}
@@ -366,7 +366,7 @@ public class Core{
 		int holder = getMealSort(meal);
 		if(holder != 0)
 			mealHeap.remove(mealSort);	
-		
+
 		mealHeap.add(new MealSort(meal, count+holder, rest));
 	}
 
@@ -531,7 +531,7 @@ public class Core{
 				order.setPriceFinal(order.getPriceInter() + this.serviceFee);
 				savedOrders.add(order); // order is saved
 				updateSystem("[Order ID : "+ order.getID() + "] " + courier + " will proceed with the order. Order has been saved.");
-				
+
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
 				List<Dish> order_dishes = order.getDishes();
@@ -577,7 +577,7 @@ public class Core{
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Creates a new order.
 	 * @param	cust	as type of Customer	
@@ -598,7 +598,7 @@ public class Core{
 	 * @param	order	of type order
 	 */
 	public void placeNewOrder(Order order){
-	 
+
 		if (current_customer != null){
 			this.receivedOrders.add(order);
 			update(this.current_customer,"Your order has succesfully been placed.");
@@ -747,8 +747,8 @@ public class Core{
 	 */
 	public Restaurant getMostOrLeastSellingRestaurant(boolean most){
 		if(current_manager != null){
-//			ArrayList<Restaurant> restaurant_top = new ArrayList<Restaurant>();
-			
+			//			ArrayList<Restaurant> restaurant_top = new ArrayList<Restaurant>();
+
 			// [r1_id, r1_nbOfOrders, r2_id, r2_nbOfOrders, ...]
 			int[] nbOrders = new int[restaurantList.get(restaurantList.size()-1).getID() + 1];
 			int max = 0; int min = savedOrders.size();
@@ -814,7 +814,7 @@ public class Core{
 	/*********************************************************************/
 	/* Policy setters to respective policies */
 
-    
+
 	public void setDeliveryPolicyToFastDeliv(){
 		if(current_manager != null){
 			this.dPolicy = new FastestDelivery();
@@ -870,12 +870,12 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
-	
-	
+
+
 
 	/*********************************************************************/
 	/* Getters and Setter */
-	
+
 	/**
 	 * Changes username of certain User.
 	 *
@@ -892,7 +892,7 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
-	
+
 	/**
 	 * Returns the restaurant object corresponding to the name given as input
 	 * or null if the restaurant is not in the restaurant list.
@@ -908,7 +908,7 @@ public class Core{
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @return the name
 	 */
@@ -1080,7 +1080,7 @@ public class Core{
 			unauthorizedCommand();
 		}
 	}
-    
+
 	/**
 	 * @param markupPercentage the markupPercentage to set
 	 */
@@ -1107,8 +1107,8 @@ public class Core{
 
 	/**
 	 * @param year the year to set
-     * @param month the month to set
-     * @param date the date to set
+	 * @param month the month to set
+	 * @param date the date to set
 	 */
 	public void setDateAfter(int year, int month, int date) {
 		if(current_manager != null){
@@ -1147,8 +1147,8 @@ public class Core{
 
 	/**
 	 * @param year the year to set
-     * @param month the month to set
-     * @param date the date to set
+	 * @param month the month to set
+	 * @param date the date to set
 	 */
 	public void setDateBefore(int year, int month, int date) {
 		dateBefore.clear();
@@ -1167,7 +1167,7 @@ public class Core{
 			return null;
 		}
 	}
-    
+
 	/**
 	 * @param users the users to set
 	 */
@@ -1331,7 +1331,7 @@ public class Core{
 	}
 
 	/* MISC Getters and Setters */ 
-	
+
 	/**
 	 * @return the savedOrders
 	 */
