@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.sun.glass.ui.Menu;
 
 import clui.Command;
 import clui.CommandProcessor;
@@ -33,6 +34,7 @@ import core.Core;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
 import parsers.ParseCustomers;
+import parsers.ParseDishes;
 import parsers.ParseManagers;
 import parsers.ParseMeals;
 import parsers.ParseRestaurants;
@@ -139,6 +141,10 @@ public class GUIStartFrame {
 			
 			for(Meal meal : ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt"))
 				core.getRestaurantList().get(0).addMeal(meal);
+			
+			core.getRestaurantList().get(0).getMenu().setListOfStarter(ParseDishes.parseStarter("src/txtFILES/starters.txt"));
+			core.getRestaurantList().get(0).getMenu().setListOfMainDish(ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt"));
+			core.getRestaurantList().get(0).getMenu().setListOfDessert(ParseDishes.parseDessert("src/txtFILES/desserts.txt"));
 			
 			core.logOut();
 		}

@@ -21,6 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import clui.Command;
 import users.User;
 
@@ -212,27 +214,28 @@ public abstract class GUIUserFrame {
 				user.setPassword(value);
 				message = "New password succesfully saved!";
 			}
-			else if(currentSettingShow == 4){
-				user.setSurname(value);
-				message = "New surname succesfully saved!";
-			}
-			else if(currentSettingShow == 5){
-				String[] valueAddress = {value};
-				try{
-//					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
-//					message = "New address succesfully saved!";
-				}catch(NumberFormatException fex){
-            		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
-            	}
-			}
-			else if(currentSettingShow == 6){
-				user.setPhoneNumb(value);
-				message = "New phoneNumb succesfully saved!";
-			}
-			else if(currentSettingShow == 7){
-				user.setEmailAddress(value);
-				message = "New emailAddress succesfully saved!";
-			}
+			//TODO 
+//			else if(currentSettingShow == 4){
+//				user.setSurname(value);
+//				message = "New surname succesfully saved!";
+//			}
+//			else if(currentSettingShow == 5){
+//				String[] valueAddress = {value};
+//				try{
+////					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
+////					message = "New address succesfully saved!";
+//				}catch(NumberFormatException fex){
+//            		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
+//            	}
+//			}
+//			else if(currentSettingShow == 6){
+//				user.setPhoneNumb(value);
+//				message = "New phoneNumb succesfully saved!";
+//			}
+//			else if(currentSettingShow == 7){
+//				user.setEmailAddress(value);
+//				message = "New emailAddress succesfully saved!";
+//			}
 			
 			//TODO Pop-Up String saved
 			System.out.println(message);

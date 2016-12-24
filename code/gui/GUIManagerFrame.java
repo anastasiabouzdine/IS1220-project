@@ -45,7 +45,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.manager = (Manager) user;
-			 fillAndSetMenuBarManager(user);
+			 fillAndSetMenuBarManager(manager);
 			initGUI(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -54,80 +54,76 @@ public class GUIManagerFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private void fillInfoMenuWithFunctionManager(User user) {
-		getInfoMenu().add(new UserActionInfoBasicManager("surname", "show current surname", user));
+	private void fillInfoMenuWithFunctionManager(Manager manager) {
+		getInfoMenu().add(new managerActionInfoBasicManager("surname", "show current surname", manager));
 	}
-	
-	private void fillSetMenuWithFunctionManager(User user) {
-		getSettingMenu().add(new UserActionSettingBasicManager("surname", "change current surname", user));
+
+	private void fillSetMenuWithFunctionManager(Manager manager) {
+		getSettingMenu().add(new managerActionSettingBasicManager("surname", "change current surname", manager));
 	}
-	
-	public void fillAndSetMenuBarManager(User user){
-		fillInfoMenuWithFunctionManager(user);
-		fillSetMenuWithFunctionManager(user);
+
+	public void fillAndSetMenuBarManager(Manager manager) {
+		fillInfoMenuWithFunctionManager(manager);
+		fillSetMenuWithFunctionManager(manager);
 	}
-	
-	private class UserActionInfoBasicManager extends AbstractAction {
+
+	private class managerActionInfoBasicManager extends AbstractAction {
 
 		String choice;
-		User user;
+		Manager manager;
 
-		public UserActionInfoBasicManager(String choice, String desc, User user) {
+		public managerActionInfoBasicManager(String choice, String desc, Manager manager) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.manager = manager;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e){
-			
+		public void actionPerformed(ActionEvent e) {
+
 			String descr = null;
 			String value = null;
-			
+
 			switch (choice) {
-            case "surname":
-            	descr = "Your surname: ";
-            	value = user.getSurname();
-                break;
-            case "address":
-            	descr = "Your address: ";
-            	value = user.getAddress().toString();
-                break;     
-        }
-			fillInfoPanel(descr,value);
+			case "surname":
+				descr = "Your surname: ";
+				value = manager.getSurname();
+				break;
+			}
+			fillInfoPanel(descr, value);
 			setCurrentPanel(getInfoPanel());
 		}
 	}
-	
-	private class UserActionSettingBasicManager extends AbstractAction {
+
+	private class managerActionSettingBasicManager extends AbstractAction {
 
 		String choice;
-		User user;
+		Manager manager;
 
-		public UserActionSettingBasicManager(String choice, String desc, User user) {
+		public managerActionSettingBasicManager(String choice, String desc, Manager manager) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.manager = manager;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e){
-			
+		public void actionPerformed(ActionEvent e) {
+
 			String descr = null;
 			String value = null;
-			
+
 			switch (choice) {
-            
-            case "surname":
-            	descr = "Set your new surname: ";
-            	value = user.getSurname();
-            	setCurrentSettingShow(4);
-                break;
-           
-        }
-			fillSetPanel(descr,value);
+
+			case "surname":
+				descr = "Set your new surname: ";
+				value = manager.getSurname();
+				setCurrentSettingShow(4);
+				break;
+
+			}
+			fillSetPanel(descr, value);
 			setCurrentPanel(getSettingPanel());
 		}
 	}

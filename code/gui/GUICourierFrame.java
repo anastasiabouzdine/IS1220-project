@@ -46,7 +46,7 @@ public class GUICourierFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.courier = (Courier) user;
-			fillAndSetMenuBarCourier(user);
+			fillAndSetMenuBarCourier(courier);
 			initGUI(courier, Color.orange, Color.yellow, "Courier Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -55,32 +55,32 @@ public class GUICourierFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private void fillInfoMenuWithFunctionCourier(User user) {
-		getInfoMenu().add(new UserActionInfoBasicCour("address", "show current address", user));
-		getInfoMenu().add(new UserActionInfoBasicCour("surname", "show current surname", user));
-		getInfoMenu().add(new UserActionInfoBasicCour("phoneNumb", "show current phone number", user));
+	private void fillInfoMenuWithFunctionCourier(Courier courier) {
+		getInfoMenu().add(new courierActionInfoBasicCour("address", "show current address", courier));
+		getInfoMenu().add(new courierActionInfoBasicCour("surname", "show current surname", courier));
+		getInfoMenu().add(new courierActionInfoBasicCour("phoneNumb", "show current phone number", courier));
 	}
 	
-	private void fillSetMenuWithFunctionCourier(User user) {
-		getSettingMenu().add(new UserActionSettingBasicCour("address", "change current address", user));
-		getSettingMenu().add(new UserActionSettingBasicCour("surname", "change current surname", user));
-		getSettingMenu().add(new UserActionSettingBasicCour("phoneNumb", "change current phone number", user));
+	private void fillSetMenuWithFunctionCourier(Courier courier) {
+		getSettingMenu().add(new courierActionSettingBasicCour("address", "change current address", courier));
+		getSettingMenu().add(new courierActionSettingBasicCour("surname", "change current surname", courier));
+		getSettingMenu().add(new courierActionSettingBasicCour("phoneNumb", "change current phone number", courier));
 	}
 	
-	public void fillAndSetMenuBarCourier(User user){
-		fillInfoMenuWithFunctionCourier(user);
-		fillSetMenuWithFunctionCourier(user);
+	public void fillAndSetMenuBarCourier(Courier courier){
+		fillInfoMenuWithFunctionCourier(courier);
+		fillSetMenuWithFunctionCourier(courier);
 	}
 	
-	private class UserActionInfoBasicCour extends AbstractAction {
+	private class courierActionInfoBasicCour extends AbstractAction {
 
 		String choice;
-		User user;
+		Courier courier;
 
-		public UserActionInfoBasicCour(String choice, String desc, User user) {
+		public courierActionInfoBasicCour(String choice, String desc, Courier courier) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.courier = courier;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
@@ -93,15 +93,15 @@ public class GUICourierFrame extends GUIUserFrame {
 			switch (choice) {
             case "surname":
             	descr = "Your surname: ";
-            	value = user.getSurname();
+            	value = courier.getSurname();
                 break;
             case "address":
             	descr = "Your address: ";
-            	value = user.getAddress().toString();
+            	value = courier.getAddress().toString();
                 break;
             case "phoneNumb":
             	descr = "Your phone number: ";
-            	value = user.getPhoneNumb();
+            	value = courier.getPhoneNumber();
                 break;  
         }
 			fillInfoPanel(descr,value);
@@ -110,15 +110,15 @@ public class GUICourierFrame extends GUIUserFrame {
 	}
 	
 	
-	private class UserActionSettingBasicCour extends AbstractAction {
+	private class courierActionSettingBasicCour extends AbstractAction {
 
 		String choice;
-		User user;
+		Courier courier;
 
-		public UserActionSettingBasicCour(String choice, String desc, User user) {
+		public courierActionSettingBasicCour(String choice, String desc, Courier courier) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.courier = courier;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
@@ -132,17 +132,17 @@ public class GUICourierFrame extends GUIUserFrame {
             
             case "surname":
             	descr = "Set your new surname: ";
-            	value = user.getSurname();
+            	value = courier.getSurname();
             	setCurrentSettingShow(4);
                 break;
             case "address":
             	descr = "Set your new address in the format \"xCoord,yCoord\": ";
-            	value = user.getAddress().toString();
+            	value = courier.getAddress().toString();
             	setCurrentSettingShow(5);
                 break;
             case "phoneNumb":
             	descr = "Set your new phone number: ";
-            	value = user.getPhoneNumb();
+            	value = courier.getPhoneNumber();
             	setCurrentSettingShow(6);
                 break;
           

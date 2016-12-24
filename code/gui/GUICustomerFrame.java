@@ -44,7 +44,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 			
 			GUIStartFrame.getFrame().setVisible(false);
 			this.customer = (Customer) user;
-			fillAndSetMenuBarCustomer(user);
+			fillAndSetMenuBarCustomer(customer);
 			initGUI(customer, Color.orange, Color.yellow, "Customer Area", "Just Dwaggit...");
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -53,34 +53,34 @@ public class GUICustomerFrame extends GUIUserFrame {
 		return null;
 	}
 	
-	private void fillInfoMenuWithFunctionCustomer(User user) {
-		getInfoMenu().add(new UserActionInfoBasicCust("address", "show current address", user));
-		getInfoMenu().add(new UserActionInfoBasicCust("surname", "show current surname", user));
-		getInfoMenu().add(new UserActionInfoBasicCust("phoneNumb", "show current phone number", user));
-		getInfoMenu().add(new UserActionInfoBasicCust("emailAddress", "show current email address", user));
+	private void fillInfoMenuWithFunctionCustomer(Customer customer) {
+		getInfoMenu().add(new customerActionInfoBasicCust("address", "show current address", customer));
+		getInfoMenu().add(new customerActionInfoBasicCust("surname", "show current surname", customer));
+		getInfoMenu().add(new customerActionInfoBasicCust("phoneNumb", "show current phone number", customer));
+		getInfoMenu().add(new customerActionInfoBasicCust("emailAddress", "show current email address", customer));
 	}
 	
-	private void fillSetMenuWithFunctionCustomer(User user) {
-		getSettingMenu().add(new UserActionSettingBasicCust("address", "change current address", user));
-		getSettingMenu().add(new UserActionSettingBasicCust("surname", "change current surname", user));
-		getSettingMenu().add(new UserActionSettingBasicCust("phoneNumb", "change current phone number", user));
-		getSettingMenu().add(new UserActionSettingBasicCust("emailAddress", "change current email address", user));
+	private void fillSetMenuWithFunctionCustomer(Customer customer) {
+		getSettingMenu().add(new customerActionSettingBasicCust("address", "change current address", customer));
+		getSettingMenu().add(new customerActionSettingBasicCust("surname", "change current surname", customer));
+		getSettingMenu().add(new customerActionSettingBasicCust("phoneNumb", "change current phone number", customer));
+		getSettingMenu().add(new customerActionSettingBasicCust("emailAddress", "change current email address", customer));
 	}
 	
-	public void fillAndSetMenuBarCustomer(User user){
-		fillInfoMenuWithFunctionCustomer(user);
-		fillSetMenuWithFunctionCustomer(user);
+	public void fillAndSetMenuBarCustomer(Customer customer){
+		fillInfoMenuWithFunctionCustomer(customer);
+		fillSetMenuWithFunctionCustomer(customer);
 	}
 	
-	private class UserActionInfoBasicCust extends AbstractAction {
+	private class customerActionInfoBasicCust extends AbstractAction {
 
 		String choice;
-		User user;
+		Customer customer;
 
-		public UserActionInfoBasicCust(String choice, String desc, User user) {
+		public customerActionInfoBasicCust(String choice, String desc, Customer customer) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.customer = customer;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
@@ -93,19 +93,19 @@ public class GUICustomerFrame extends GUIUserFrame {
 			switch (choice) {
             case "surname":
             	descr = "Your surname: ";
-            	value = user.getSurname();
+            	value = customer.getSurname();
                 break;
             case "address":
             	descr = "Your address: ";
-            	value = user.getAddress().toString();
+            	value = customer.getAddress().toString();
                 break;
             case "phoneNumb":
             	descr = "Your phone number: ";
-            	value = user.getPhoneNumb();
+            	value = customer.getPhoneNumber();
                 break;
             case "emailAddress":
             	descr = "Your email address: ";
-            	value = user.getEmailAddress();
+            	value = customer.getEmail();
                 break;
                 
         }
@@ -116,15 +116,15 @@ public class GUICustomerFrame extends GUIUserFrame {
 	
 	
 	
-	private class UserActionSettingBasicCust extends AbstractAction {
+	private class customerActionSettingBasicCust extends AbstractAction {
 
 		String choice;
-		User user;
+		Customer customer;
 
-		public UserActionSettingBasicCust(String choice, String desc, User user) {
+		public customerActionSettingBasicCust(String choice, String desc, Customer customer) {
 			super(choice);
 			this.choice = choice;
-			this.user = user;
+			this.customer = customer;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
@@ -137,22 +137,22 @@ public class GUICustomerFrame extends GUIUserFrame {
 			switch (choice) {
             case "surname":
             	descr = "Set your new surname: ";
-            	value = user.getSurname();
+            	value = customer.getSurname();
             	setCurrentSettingShow(4);
                 break;
             case "address":
             	descr = "Set your new address in the format \"xCoord,yCoord\": ";
-            	value = user.getAddress().toString();
+            	value = customer.getAddress().toString();
             	setCurrentSettingShow(5);
                 break;
             case "phoneNumb":
             	descr = "Set your new phone number: ";
-            	value = user.getPhoneNumb();
+            	value = customer.getPhoneNumber();
             	setCurrentSettingShow(6);
                 break;
             case "emailAddress":
             	descr = "Set your new email address: ";
-            	value = user.getEmailAddress();
+            	value = customer.getEmail();
             	setCurrentSettingShow(7);
                 break;
         }
