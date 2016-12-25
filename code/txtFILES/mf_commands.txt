@@ -23,7 +23,7 @@ position
 password
 -------
 addDishRestaurantMenu
-3
+4
 dishName
 dishCategory
 foodCategory
@@ -67,6 +67,11 @@ restaurantName
 addItem2Order
 1
 itemName
+-------
+addNbItem2Order
+2
+itemName
+quantity
 -------
 endOrder
 0
