@@ -92,7 +92,7 @@ public class OrderTest {
 		r1.addMeal(hm1);
 		r1.addMeal(fm1);
 		
-		r1.setSpecMeal(fm1);
+		r1.setSpecialMeal(fm1);
 		
 		assertTrue(order1.isFidCardPlanBasic());
 		

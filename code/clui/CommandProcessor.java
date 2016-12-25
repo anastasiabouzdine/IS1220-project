@@ -284,7 +284,7 @@ public class CommandProcessor {
 	public void removeFromSpecialOffer() {
 		String mealName = current_args[0];
 
-		core.getCurrent_restaurant().setSpecMeal(null);
+		core.getCurrent_restaurant().setSpecialMeal(null);
 	}
 
 	// WAIT FOR NEW REQ. (see above function)

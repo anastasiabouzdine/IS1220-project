@@ -81,6 +81,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
+			
 
 			String descr = null;
 			String value = null;

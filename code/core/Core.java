@@ -281,7 +281,7 @@ public class Core{
 	 */
 	public void setSpecialMeal(Meal meal){
 		if (current_restaurant != null) {
-			current_restaurant.setSpecMeal(meal);
+			current_restaurant.setSpecialMeal(meal);
 			notifyCustomersOfSpecialOffer();
 		} else {
 			unauthorizedCommand();

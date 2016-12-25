@@ -33,5 +33,16 @@ public class MealFactory extends AbstractFactory{
 	public Dish getDish(String dishType, String dishName, double dishPrice){
 		return null;
 	}
+
+
+	/**
+	 * NOT TO USE METHOD, SEE <code>DishFactory</code> to get a Dish,
+	 * this method returns null as we have to extend the <code>AbstractFactory</code> class.
+	 * 
+	 */
+	@Override
+	public Dish getDish(String string, String text, double price, String text2) {
+		return null;
+	}
 	
 }

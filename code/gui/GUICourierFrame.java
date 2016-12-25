@@ -87,6 +87,8 @@ public class GUICourierFrame extends GUIUserFrame {
 		@Override
 		public void actionPerformed(ActionEvent e){
 			
+			
+			
 			String descr = null;
 			String value = null;
 			

@@ -134,7 +134,7 @@ public class Customer extends User implements Observer{
 
 	public void update(Restaurant restaurant){
 		if (beNotified){
-			Meal specialMealOfTheWeek = restaurant.getSpecMeal();
+			Meal specialMealOfTheWeek = restaurant.getSpecialMeal();
 			double mealPrice = Order.round2(specialMealOfTheWeek.getPrice()*(1-restaurant.getSpecDiscFact()));
 			String info = restaurant.getName() + " has put the meal "
 					+ specialMealOfTheWeek.getName() + " at a price of " 

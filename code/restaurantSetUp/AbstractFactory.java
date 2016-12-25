@@ -14,4 +14,6 @@ public abstract class AbstractFactory {
 	
 	public abstract Meal getMeal(String mealType, String mealName);
 
+	public abstract Dish getDish(String string, String text, double price, String text2);
+
 }

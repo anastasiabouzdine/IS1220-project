@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -43,6 +44,7 @@ public abstract class GUIUserFrame {
 	private JTextField setTextFieldDesc = new JTextField();
 	private JTextField setTextFieldValue = new JTextField();
 	
+	
 	//Panels
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();
@@ -51,8 +53,9 @@ public abstract class GUIUserFrame {
 	//Buttons
 	JButton logOut_button = new JButton("LOG OUT");
 	JButton home_button = new JButton("GO HOME");
-	JButton save_button = new JButton("SAVE");
+	JButton save_button;
 	private int currentSettingShow= 0;
+	
 	
 		
 	
@@ -74,7 +77,7 @@ public abstract class GUIUserFrame {
 	/**************************************************/
 	//fill panels
 	public void fillInfoPanel(){
-		infoPanel.setBorder(BorderFactory.createTitledBorder("Information"));
+		getInfoPanel().setBorder(BorderFactory.createTitledBorder("Information"));
 		infoPanel.setLayout(new BorderLayout());
 		infoPanel.setBackground(Color.CYAN);
 		infoTextFieldDesc.setEditable(false);
@@ -106,23 +109,27 @@ public abstract class GUIUserFrame {
 		settingPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
 		settingPanel.setLayout(new BorderLayout());
 		settingPanel.setBackground(Color.GREEN);
-		setTextFieldDesc.setEditable(false);
-		setSubPanel.setBackground(Color.WHITE);
+		getSetTextFieldDesc().setEditable(false);
+		getSetSubPanel().setBackground(Color.WHITE);
 		setTextFieldValue.setColumns(12);
-		setSubPanel.add(setTextFieldDesc, BorderLayout.CENTER);
-		setSubPanel.add(setTextFieldValue, BorderLayout.CENTER);
-		settingPanel.add(setSubPanel);
-		settingPanel.add(setButtonPanel,BorderLayout.SOUTH);
 		frame.add(settingPanel);
 	}
 
 	public void fillSetPanel(String descr, String value) {
-		setTextFieldDesc.setText(descr);
+		
+		settingPanel.removeAll();
+		getSetTextFieldDesc().setText(descr);
 		setTextFieldValue.setText(value);
-		setButtonPanel.add(home_button);
-		setButtonPanel.add(save_button);
+		getSetSubPanel().removeAll();
+		getSetSubPanel().add(getSetTextFieldDesc(), BorderLayout.CENTER);
+		getSetSubPanel().add(setTextFieldValue, BorderLayout.CENTER);
+		settingPanel.add(getSetSubPanel());
+		getSetButtonPanel().removeAll();
+		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(save_button);
+		getSettingPanel().add(getSetButtonPanel(),BorderLayout.SOUTH);
 	}
-
+	
 	private void fillSetMenuWithFunction(User user) {
 		getSettingMenu().add(new UserActionSettingBasic("name", "change current name", user));
 		getSettingMenu().add(new UserActionSettingBasic("username", "change current username", user));
@@ -197,33 +204,34 @@ public abstract class GUIUserFrame {
 			GUIStartFrame.getFrame().setVisible(true);
 		});
 		
-		save_button.addActionListener((ActionEvent e) -> {
-			String value = setTextFieldValue.getText();
-			String message = "Changes could not be saved!";
-			if(currentSettingShow == 1) {
-				user.setName(value);
-				message = "New name succesfully saved!";
-			}
-			else if(currentSettingShow == 2){
-				GUIStartFrame.getCore().setUsername(user, value);
-				message = "New username succesfully saved!";
-			}
-			else if(currentSettingShow == 3){
-				user.setPassword(value);
-				message = "New password succesfully saved!";
-			}
+//		save_button = new JButton("SAVE");
+//		save_button.addActionListener((ActionEvent e) -> {
+//			String value = setTextFieldValue.getText();
+//			String message = "Changes could not be saved!";
+//			if(currentSettingShow == 1) {
+//				user.setName(value);
+//				message = "New name succesfully saved!";
+//			}
+//			else if(currentSettingShow == 2){
+//				GUIStartFrame.getCore().setUsername(user, value);
+//				message = "New username succesfully saved!";
+//			}
+//			else if(currentSettingShow == 3){
+//				user.setPassword(value);
+//				message = "New password succesfully saved!";
+//			}
 			//TODO 
 //			else if(currentSettingShow == 4){
 //				user.setSurname(value);
 //				message = "New surname succesfully saved!";
 //			}
 //			else if(currentSettingShow == 5){
-//				String[] valueAddress = {value};
 //				try{
-////					GUIStartFrame.getCmd_processor().processCmd(new Command("setAddress", valueAddress));
-////					message = "New address succesfully saved!";
+//					int xCoord = Integer.parseInt(setTextFieldXInt.getText());
+//					int yCoord = Integer.parseInt(setTextFieldYInt.getText());
 //				}catch(NumberFormatException fex){
 //            		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
+//            		//TODO pop up
 //            	}
 //			}
 //			else if(currentSettingShow == 6){
@@ -236,8 +244,9 @@ public abstract class GUIUserFrame {
 //			}
 			
 			//TODO Pop-Up String saved
-			System.out.println(message);
-		});
+//			System.out.println(message);
+//		});
+		
 	}
 	
 	
@@ -298,29 +307,41 @@ public abstract class GUIUserFrame {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e){
-			
+		public void actionPerformed(ActionEvent e) {
+
 			String descr = null;
 			String value = null;
-			
+
 			switch (choice) {
-            case "name" :
-            	descr = "Set your new name: ";
-            	value = user.getName();
-            	setCurrentSettingShow(1);
-                break;
-            case "username":
-            	descr = "Set your new username: ";
-            	value = user.getUsername();
-            	setCurrentSettingShow(2);
-                break;
-            case "password":
-            	descr = "Set your new password: ";
-            	value = user.getPassword();
-            	setCurrentSettingShow(3);
-                break;
-        }
-			fillSetPanel(descr,value);
+			case "name":
+				descr = "Set your new name: ";
+				value = user.getName();
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e2) -> {
+					String value2 = setTextFieldValue.getText();
+					user.setName(value2);
+				});
+				break;
+			case "username":
+				descr = "Set your new username: ";
+				value = user.getUsername();
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e2) -> {
+					String value2 = setTextFieldValue.getText();
+					GUIStartFrame.getCore().setUsername(user, value2);
+				});
+				break;
+			case "password":
+				descr = "Set your new password: ";
+				value = user.getPassword();
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e2) -> {
+					String value2 = setTextFieldValue.getText();
+					user.setPassword(value2);
+				});
+				break;
+			}
+			fillSetPanel(descr, value);
 			setCurrentPanel(settingPanel);
 		}
 	}
@@ -465,6 +486,44 @@ public abstract class GUIUserFrame {
 
 	public void setInfoSubPanel(JPanel infoSubPanel) {
 		this.infoSubPanel = infoSubPanel;
+	}
+
+	/**
+	 * @return the save_button
+	 */
+	public JButton getSave_button() {
+		return save_button;
+	}
+
+	/**
+	 * @param save_button the save_button to set
+	 */
+	public void setSave_button(JButton save_button) {
+		this.save_button = save_button;
+	}
+
+	public JTextField getSetTextFieldDesc() {
+		return setTextFieldDesc;
+	}
+
+	public void setSetTextFieldDesc(JTextField setTextFieldDesc) {
+		this.setTextFieldDesc = setTextFieldDesc;
+	}
+
+	public JPanel getSetSubPanel() {
+		return setSubPanel;
+	}
+
+	public void setSetSubPanel(JPanel setSubPanel) {
+		this.setSubPanel = setSubPanel;
+	}
+
+	public JPanel getSetButtonPanel() {
+		return setButtonPanel;
+	}
+
+	public void setSetButtonPanel(JPanel setButtonPanel) {
+		this.setButtonPanel = setButtonPanel;
 	}
 
 	

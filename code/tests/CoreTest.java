@@ -157,7 +157,7 @@ public class CoreTest {
 		
 		rest1.addMeal(list_hmeal.get(0));
 		rest1.addMeal(list_hmeal.get(1));
-		rest1.setSpecMeal(list_hmeal.get(1));
+		rest1.setSpecialMeal(list_hmeal.get(1));
 		
 		mf1.logOut();
 		mf1.logIn("cuspvp23");
