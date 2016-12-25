@@ -48,7 +48,7 @@ public class ParseCustomers {
 				email = scan.nextLine();
 				phoneNumber = scan.nextLine();
 				username = scan.nextLine();
-				customer = new Customer(name, surname, address, phoneNumber, email, username, "passw");
+				customer = new Customer(name, surname, address, phoneNumber, email, username, "password");
 				cust_list.add(customer);
 			}
 			scan.close();

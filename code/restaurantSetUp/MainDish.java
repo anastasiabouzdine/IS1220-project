@@ -39,7 +39,7 @@ public class MainDish extends Dish {
 	
 	@Override
 	public String toString() {
-		return "MainDish [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
+		return "MainDish [" + getName() + ", " + getPrice() + ", " + getType() + "]";
 	}
 
 };

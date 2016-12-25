@@ -207,7 +207,7 @@ public class Restaurant extends User {
 
 	@Override
 	public String toString() {
-		return "Restaurant [getUsername()=" + getUsername() + ", getName()=" + getName() + "]";
+		return "Restaurant [username=" + getUsername() + ", name=" + getName() + "]";
 	}
 
 
@@ -253,24 +253,6 @@ public class Restaurant extends User {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 	}
-
-//	/**
-//	 * @return the specialMeal
-//	 */
-//	public Meal getSpecMeal() {
-//		return specialMeal;
-//	}
-//
-//	/**
-//	 * @param specMeal 	the specMeal to set
-//	 */
-//	public void setSpecMeal(Meal specMeal) {
-//		if(!(listOfMeal.contains(specMeal))) {
-//			System.out.println("Restaurant does not offer this meal");
-//			throw new NullPointerException();
-//		}
-//		this.specialMeal = specMeal;
-//	}
 
 	/**
 	 * @return the listOfMeal

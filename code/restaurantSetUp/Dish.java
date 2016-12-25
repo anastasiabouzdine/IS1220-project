@@ -34,7 +34,7 @@ public abstract class Dish {
 
 	@Override
 	public String toString() {
-		return "Dish [name=" + name + ", price=" + price + ", type=" + type + "]";
+		return "Dish [" + name + ", price=" + price + ", type=" + type + "]";
 	}
 	
 	@Override

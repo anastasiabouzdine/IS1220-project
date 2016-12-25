@@ -111,7 +111,7 @@ public abstract class Meal {
 
 	@Override
 	public String toString() {
-		return "Meal [name=" + name+ "]";
+		return "Meal [" + name + ", " + listOfDish + "]";
 	}
 	
 	@Override
