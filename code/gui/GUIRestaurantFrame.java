@@ -45,16 +45,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	private JPanel buttPanel = new JPanel();
 	private JPanel scrollPanel = new JPanel();
 	private JPanel dishPanel = new JPanel();
-	private JPanel buttPanel = new JPanel();
-	private JPanel scrollPanel = new JPanel();
-	private JPanel dishPanel = new JPanel();
-
-
-	private JPanel buttPanel = new JPanel();
-	private JPanel scrollPanel = new JPanel();
-	private JPanel dishPanel = new JPanel();
-
-
 	private JPanel panAddMeal1 = new JPanel();
 	private JPanel panAddMeal2 = new JPanel();
 	private JPanel panAddMeal3 = new JPanel();
@@ -62,7 +52,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	private JPanel addRemovePanel = new JPanel();
 	private JPanel dishLabelPanel = new JPanel(new GridLayout(0, 1));
 	private JPanel dishValuePanel = new JPanel(new GridLayout(0, 1));
-
 
 	//JMenu
 	private JMenu addRemoveMenu = new JMenu("Add / Remove");
@@ -77,8 +66,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	private JScrollPane jScrollPaneSpecMeal;
 
 	//JList
-	private JList<Meal> jListMealSetSpec = new JList<>();
-	private JList<Meal> jListMealSetSpec = new JList<>();
 	private JList<Meal> jListMealSetSpec = new JList<>();
 
 	//JTextField
@@ -97,28 +84,20 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	//Helper to easily display meals
 	private GUIDisplayMealDish mealDishDisplay = new GUIDisplayMealDish();
 
-	//Buttons
+	//Combo box
 	private String[] food_types = {"standard", "vegetarian", "glutenfree"}; 
 	private JComboBox<String> comboBox_foodType = new JComboBox<String>(food_types);
-	private GUIDisplayMealDish mealDishDisplay = new GUIDisplayMealDish();
-
-	//	private Button selectButton = new Button("SELECT");
-	private String[] food_types = {"standard", "vegetarian", "glutenfree"}; 
-	private JComboBox<String> comboBox_foodType = new JComboBox<String>(food_types); 
-
-	private GUIDisplayMealDish mealDishDisplay = new GUIDisplayMealDish();
-
-	//	private Button selectButton = new Button("SELECT");
+	
+	//Buttons
 	private Button deleteButton;
 	private Button createMealButton = new Button("CREATE MEAL");
 	private Button createDishButton;
 	
-	
+	//Factory
+	private AbstractFactory dishMealFactory;
 
 	/*************************************************/
 	// Constructor
-	
-	private AbstractFactory dishFactory;
 	
 	public GUIRestaurantFrame() {
 		super();
@@ -207,15 +186,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		dishPanel.add(dishValuePanel, BorderLayout.LINE_END);
 	}
 
-	private void fillAddDishPanel() {
-		nameDishT.setText("insert name");
-		priceDishT.setText("insert price");
-
-		addRemovePanel.removeAll();
-		addRemovePanel.add(createDishButton, BorderLayout.NORTH);
-		addRemovePanel.add(dishPanel, BorderLayout.SOUTH);
-	}
-
 	private void fillAddMealPanelInit(Restaurant rest){
 		
 		panAddMeal1.setPreferredSize(new Dimension(180, 250));
@@ -278,6 +248,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		fillSettingMenuInit(rest);
 		fillAddRemoveMenuInit(rest);
 		getMenuBar().add(addRemoveMenu);
+	}
 
 	private void fillAddMealPanelValues(Restaurant rest){
 
@@ -317,16 +288,8 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		addRemovePanel.setLayout(new BorderLayout());
 		addRemovePanel.setBackground(Color.magenta);
 	}
-	
-	private void fillAndSetMenuBarRest(Restaurant rest) {
-		fillInfoMenu(rest);
-		fillSettingMenu(rest);
-		fillAddRemoveMenu(rest);
-		getMenuBar().add(addRemoveMenu);
 
-	}
-
-	private void fillAddRemoveMenu(Restaurant rest) {
+	private void fillAddRemoveMenuInit(Restaurant rest) {
 		removeDish.add(new RestActionAddRemove("remove starter", "remove a starter dish from the menu", rest));
 		removeDish.add(new RestActionAddRemove("remove main dish", "remove a main dish dish from the menu", rest));
 		removeDish.add(new RestActionAddRemove("remove dessert", "remove a dessert dish from the menu", rest));
@@ -350,7 +313,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		getInfoMenu().add(dishMenu);
 	}
 
-	private void fillSettingMenu(Restaurant rest){
+	private void fillSettingMenuInit(Restaurant rest){
 		getSettingMenu().add(new UserActionSettingBasicRest("address", "change current address", rest));
 		getSettingMenu().add(new UserActionSettingBasicRest("special meal", "change current special meal", rest));
 	}
@@ -368,40 +331,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		addRemovePanel.add(dishPanel, BorderLayout.SOUTH);
 	}
 
-	private void fillAddMealPanelValues(Restaurant rest) {
-
-		getInfoPanel().removeAll();
-		getInfoPanel().setLayout(new BorderLayout());
-
-		jScrollMeal1 = new JScrollPane(mealDishDisplay.getjListStarter());
-		jScrollMeal2 = new JScrollPane(mealDishDisplay.getjListMainDish());
-		jScrollMeal3 = new JScrollPane(mealDishDisplay.getjListDessert());
-
-		jScrollMeal1.setPreferredSize(new Dimension(170, 240));
-		jScrollMeal2.setPreferredSize(new Dimension(170, 240));
-		jScrollMeal3.setPreferredSize(new Dimension(170, 240));
-
-		panAddMeal1.removeAll();
-		panAddMeal2.removeAll();
-		panAddMeal3.removeAll();
-		panAddMeal1.add(jScrollMeal1);
-		panAddMeal2.add(jScrollMeal2);
-		panAddMeal3.add(jScrollMeal3);
-
-		createMeal.removeAll();
-		createMeal.add(panAddMeal1, BorderLayout.WEST);
-		createMeal.add(panAddMeal2, BorderLayout.CENTER);
-		createMeal.add(panAddMeal3, BorderLayout.EAST);
-
-		filladdButtonPanel();
-
-		addRemovePanel.removeAll();
-		addRemovePanel.add(createMeal, BorderLayout.SOUTH);
-		addRemovePanel.add(buttPanel, BorderLayout.NORTH);
-
-	}
-
-	private void fillInfoPanelScroll(JList jlist){
+	private void fillInfoPanelScroll(JList<?> jlist){
 		getInfoPanel().removeAll();
 		getInfoPanel().setLayout(new BorderLayout());
 		jScrollMeal = new JScrollPane(jlist);
@@ -410,7 +340,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		getInfoPanel().add(scrollPanel, BorderLayout.SOUTH);
 	}
 
-	private void fillAddRemovePanelScroll(JList jlist){
+	private void fillAddRemovePanelScroll(JList<?> jlist){
 		addRemovePanel.removeAll();
 		addRemovePanel.setLayout(new BorderLayout());
 		jScrollMeal = new JScrollPane(jlist);
@@ -632,22 +562,23 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				createDishButton = new Button("CREATE STARTER");
 				createDishButton.addActionListener((ActionEvent e1)->{
 
-					dishFactory = FactoryProducer.getFactory("Dish");
+					dishMealFactory = FactoryProducer.getFactory("Dish");
 
 					try{
 						double price=0;
 						price = Double.parseDouble(priceDishT.getText());
 
-						Starter starter = (Starter) dishFactory.getDish("Starter", nameDishT.getText(), price ,
+						Starter starter = (Starter) dishMealFactory.getDish("Starter", nameDishT.getText(), price ,
 								(String)comboBox_foodType.getSelectedItem());
 
 						rest.addStarter(starter);
+						setCurrentPanel(welcome_panel);
 					} catch (NumberFormatException e2){
 						//TODO pop up
 						String message = "Please insert a number with two digits for the price.";
 						System.out.println(message);
 					}
-					setCurrentPanel(welcome_panel);
+					
 				});
 				fillAddDishPanel();
 
@@ -658,22 +589,23 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				createDishButton.addActionListener((ActionEvent e1) -> {
 
 
-					dishFactory = FactoryProducer.getFactory("Dish");
+					dishMealFactory = FactoryProducer.getFactory("Dish");
 
 					try{
 						double price=0;
 						price = Double.parseDouble(priceDishT.getText());
 
-						MainDish mainDish = (MainDish) dishFactory.getDish("Starter", nameDishT.getText(), price ,
+						MainDish mainDish = (MainDish) dishMealFactory.getDish("Starter", nameDishT.getText(), price ,
 								(String)comboBox_foodType.getSelectedItem());
 
 						rest.addMainDish(mainDish);
+						setCurrentPanel(welcome_panel);
 					} catch (NumberFormatException e2){
 						//TODO pop up
 						String message = "Please insert a number with two digits for the price.";
 						System.out.println(message);
 					}
-					setCurrentPanel(welcome_panel);
+					
 				});
 
 				fillAddDishPanel();
@@ -684,29 +616,27 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				createDishButton = new Button("CREATE DESSERT");
 				createDishButton.addActionListener((ActionEvent e1)->{
 
-					dishFactory = FactoryProducer.getFactory("Dish");
+					dishMealFactory = FactoryProducer.getFactory("Dish");
 
 					try{
 						double price=0;
 						price = Double.parseDouble(priceDishT.getText());
-						Dessert dessert = (Dessert) dishFactory.getDish("Starter", nameDishT.getText(), price ,
+						Dessert dessert = (Dessert) dishMealFactory.getDish("Starter", nameDishT.getText(), price ,
 								(String)comboBox_foodType.getSelectedItem());
 
 						rest.addDessert(dessert);
+						setCurrentPanel(welcome_panel);
 					} catch (NumberFormatException e2){
 						//TODO pop up
 						String message = "Please insert a number with two digits for the price.";
 						System.out.println(message);
 					}
-					setCurrentPanel(welcome_panel);
 				});
 
 				fillAddDishPanel();
 
 				break;
 			case "remove starter":
-
-				descr = "remove a starter by a double click: ";
 
 				mealDishDisplay.filljListStarter(rest);
 				fillAddRemovePanelScroll(mealDishDisplay.getjListStarter());
@@ -721,8 +651,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				});
 				break;
 			case "remove main dish":
-
-				descr = "remove a main dish by a double click: ";
 
 				mealDishDisplay.filljListMainDish(rest);
 				fillAddRemovePanelScroll(mealDishDisplay.getjListMainDish());
