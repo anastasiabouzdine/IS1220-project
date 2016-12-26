@@ -35,7 +35,7 @@ public class Dessert extends Dish {
 
 	@Override
 	public String toString() {
-		return "Dessert [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
+		return "Dessert [" + getName() + ", " + getPrice() + ", " + getType() + "]";
 	}
 	
 };

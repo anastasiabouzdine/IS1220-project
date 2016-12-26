@@ -35,6 +35,6 @@ public class Starter extends Dish {
 
 	@Override
 	public String toString() {
-		return "Starter [getName()=" + getName() + ", getType()=" + getType() + ", getPrice()=" + getPrice() + "]";
+		return "Starter [" + getName() + ", " + getPrice() + ", " + getType() + "]";
 	}
 }

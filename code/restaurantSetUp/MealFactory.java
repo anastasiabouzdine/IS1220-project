@@ -41,7 +41,7 @@ public class MealFactory extends AbstractFactory{
 	 * 
 	 */
 	@Override
-	public Dish getDish(String string, String text, double price, String text2) {
+	public Dish getDish(String dishType, String dishName, double price, String foodType) {
 		return null;
 	}
 	

@@ -1,0 +1,58 @@
+\subsection{What differs from requirements ?} % (fold)
+\label{sub:what_differs_from_requirements}
+
+\paragraph{Meal creation in commandline} % (fold)
+\label{par:meal_creation_in_commandline}
+The first command line command which has been subject to a change
+was the \lstinline|createMeal| command. It's new form is
+\begin{center}
+  \lstinline|createMeal <mealName> <mealType>|
+\end{center}
+this change allows the restaurant to specify immediately which type of meal
+he wants to create, it can either be a fullmeal or a halfmeal.
+This prevents the system from failing in case the \lstinline|addDish2Meal|
+is never called after this one.
+The restaurant will immediately know which type of dishes he has to add
+to the meal in order to stay relevant with the mealtype he gave. 
+% paragraph meal_creation_in_commandline (end)
+
+\paragraph{Order creation in commandline} % (fold)
+\label{par:order_creation_in_commandline}
+Then, we changed the \lstinline|createOrder| command. It's new form is
+\begin{center}
+  \lstinline|createOrder <restaurantName>|
+\end{center}
+This is justified by the fact that naming an order by the customer
+has is of no use in our project nor in reality as the system
+handles the assignement of a unique ID of the order.
+One can then respond that having an ordername allows to handle
+multiple orders at the same time by the same customer,
+which is indeed true but of no use either.
+An order isn't restricted to a certain amount of dishes
+or meals and thus a logged in customer will only
+have to handle (create, add items to it and then end it)
+the \emph{current order}.
+% paragraph order_creation_in_commandline (end)
+
+\paragraph{Add an item to order with a quantity} % (fold)
+\label{par:add_an_item_to_order_with_a_quantity}
+A new method called \lstinline|addNbItem2Order| has been implemented
+in case the customer wants to order the same item more than once
+and doesn't want to rewrite the same command multiple times.
+This case scenario is useful in reality for group orders.
+% paragraph add_an_item_to_order_with_a_quantity (end)
+
+\paragraph{No need to specify the username for \texttt{onDuty}
+and \texttt{offDuty} methods} % (fold)
+\label{par:no_need_to_specify_the_username_for_lstinline_onduty_and_lstinline_offduty_methods}
+As this function is used by the currently logged in courier,
+our implementation of the core allows to keep track of the logged in user
+and the latter doesn't need to specify his own username when changing his status.
+% paragraph no_need_to_specify_the_username_for_lstinline_onduty_and_lstinline_offduty_methods (end)
+
+\paragraph{Use of \texttt{showMenuItem} by any type of user} % (fold)
+\label{par:use_of_lstinline_showmenuitem_by_any_type_of_user}
+
+% paragraph use_of_lstinline_showmenuitem_by_any_type_of_user (end)
+
+% subsection what_differs_from_requirements (end)

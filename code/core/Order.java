@@ -34,15 +34,13 @@ public class Order {
 	private double profitFinal;
 	private double priceInter;
 	private double priceFinal;
-	private final Calendar date;
+	private Calendar date;
 
 	/**
-	 * Constructor of an order.
+	 * Class constructor.
 	 * 
-	 * @param customer
-	 *            customer that has initialised the order
-	 * @param restaurant
-	 *            restaurant the user has ordered at
+	 * @param customer 		customer that has initialised the order
+	 * @param restaurant 	restaurant the user has ordered at
 	 */
 	public Order(Customer customer, Restaurant restaurant) {
 		this.ID = (++counter);
@@ -53,16 +51,61 @@ public class Order {
 		quantity = new ArrayList<Integer>();
 		this.date = Calendar.getInstance();
 	}
-
-	// add Meal and add Dish functions
-	public void addMeal(Meal m, int q) {
-		meals.add(m);
-		quantity.add(q);
+	
+	/**
+	 * Class constructor with given date.
+	 * 
+	 * @param customer 		customer that has initialised the order
+	 * @param restaurant	restaurant the user has ordered at
+	 * @param date			date at which the order has been put
+	 */
+	public Order(Customer customer, Restaurant restaurant, Calendar date) {
+		this.ID = (++counter);
+		this.customer = customer;
+		this.restaurant = restaurant;
+		meals = new ArrayList<Meal>();
+		dishes = new ArrayList<Dish>();
+		quantity = new ArrayList<Integer>();
+		this.date = date;
 	}
 
+
+	/**
+	 * Add a given number of a given meal to the order.
+	 * @param m		a Meal object corresponding to the meal to be added to the order
+	 * @param q		an int corresponding to the quantity of meals to add to the order
+	 */
+	public void addMeal(Meal m, int q) {
+		boolean alreadyInList = false;
+		for(int i = 0; i < meals.size(); i++) {
+			if (m.equals(meals.get(i))) {
+				quantity.set(i, quantity.get(i) + q);
+				alreadyInList = true;
+			}
+		}
+		if (!alreadyInList) {
+			meals.add(m);
+			quantity.add(q);
+		}
+	}
+
+	/**
+	 * Add a given number of a given dish to the order.
+	 * @param m		a Dish object corresponding to the dish to be added to the order
+	 * @param q		an int corresponding to the quantity of dishes to add to the order
+	 */
 	public void addDish(Dish m, int q) {
-		dishes.add(m);
-		quantity.add(q);
+		boolean alreadyInList = false;
+		for(int i = 0; i < dishes.size(); i++) {
+			if (m.equals(dishes.get(i))) {
+				quantity.set(i, quantity.get(i) + q);
+				alreadyInList = true;
+			}
+		}
+		if (!alreadyInList) {
+			dishes.add(m);
+			quantity.add(q);
+		}
 	}
 
 	/*********************************************************************/
@@ -119,7 +162,8 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant + ", courier=" + courier
-				+ "]";
+				+ ", date="+ date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)
+				+ "/"+date.get(Calendar.YEAR)+ "]";
 	}
 
 	/*********************************************************************/
@@ -149,7 +193,7 @@ public class Order {
 
 	/*********************************************************************/
 	/* Getters and Setter */
-	// no set ID! no set Date!
+	// no set ID!
 
 	/**
 	 * @return the customer
@@ -299,12 +343,21 @@ public class Order {
 	public static int getCounter() {
 		return counter;
 	}
-
+	
 	/**
 	 * @return the date
 	 */
 	public Calendar getDate() {
 		return date;
 	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+	
+	
 
 }

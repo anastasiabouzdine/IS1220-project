@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.junit.Test;
 
@@ -32,6 +33,12 @@ public class OrderTest {
 	public void createOrder() {
 		Order order1 = list_order.get(0);
 		assertTrue(order1 != null);
+	}
+	
+	@Test
+	public void creatOrderWithDate() {
+		Order o = new Order(null, null, Calendar.getInstance());
+		System.out.println(o);
 	}
 	
 	@Test 
@@ -73,9 +80,7 @@ public class OrderTest {
 		order1.addMeal(fm1,3);
 		
 		double a = 0.95*3*(4.3 + 8.3 + 4.3 + 8.3 + 4.3);
-		System.out.println(a);
-		System.out.println(order1.getPrice());
-
+		
 		assertEquals(a, order1.getPrice(), 0.1);
 	}
 	
@@ -100,9 +105,6 @@ public class OrderTest {
 		order1.addMeal(fm1,3);
 		
 		double a = Math.round(3*(4.3 + 8.3 + 4.3)*90 + 3*(8.3 + 4.3)*95)/100.0;
-		
-		System.out.println(a);
-		System.out.println(order1.getPrice());
 		
 		assertEquals(order1.getPrice(), a, 0.01);
 	}

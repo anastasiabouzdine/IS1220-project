@@ -35,15 +35,16 @@ public class DishFactory extends AbstractFactory {
 	 * @param dishType	  a string containing the type of the Dish
 	 * @param dishName	  a string containing the name of the Dish
 	 * @param dishPrice   a double for the price of the Dish
+	 * @param foodType    a string containing the type of food of the Dish
 	 * 
 	 */
-	public Dish getDish(String dishType, String name, double price, String type){
+	public Dish getDish(String dishType, String name, double price, String foodType){
 		if (dishType.equalsIgnoreCase("STARTER")){
-			return new Starter(name, price, type);
+			return new Starter(name, price, foodType);
 		} else if (dishType.equalsIgnoreCase("MAINDISH")){
-			return new MainDish(name, price, type);
+			return new MainDish(name, price, foodType);
 		} else if (dishType.equalsIgnoreCase("DESSERT")){
-			return new Dessert(name, price, type);
+			return new Dessert(name, price, foodType);
 		}
 		return null;		
 	}

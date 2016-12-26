@@ -18,8 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import javafx.scene.control.SelectionMode;
-
 import java.awt.MenuItem;
 
 import restaurantSetUp.Dessert;

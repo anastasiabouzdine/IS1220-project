@@ -546,7 +546,7 @@ public class GUIStartFrame {
 		// fail
 		// GUIStartFrameTest.checkIfCourierLogInWorks();
 		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-		GUIStartFrameTest.checkIfRestaurantLogInWorks();
+//		GUIStartFrameTest.checkIfRestaurantLogInWorks();
 		// GUIStartFrameTest.checkIfManagerLogInWorks();
 		// GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
