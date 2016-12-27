@@ -1,3 +1,3 @@
 login "r4" "password"
-addDishRestaurantMenu "PainEtBeurre" "starter" "4.2"
+addDishRestaurantMenu "PainEtBeurre" "starter" "vegetarian" "4.3"
 logout
