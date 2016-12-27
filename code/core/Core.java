@@ -266,10 +266,10 @@ public class Core {
 				} else if (e instanceof Customer) {
 					Customer customer_e = (Customer) e;
 					this.customerList.remove(customer_e);
-				} else if (current_user instanceof Manager) {
+				} else if (e instanceof Manager) {
 					Manager manager_e = (Manager) e;
 					this.managerList.remove(manager_e);
-				} else if (current_user instanceof Restaurant) {
+				} else if (e instanceof Restaurant) {
 					Restaurant restaurant_e = (Restaurant) e;
 					this.restaurantList.remove(restaurant_e);
 				}
