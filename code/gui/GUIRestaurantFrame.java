@@ -105,8 +105,9 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	}
 
 
+
 	/*************************************************/
-	//Init functions
+	// Initialize functions
 
 	@Override
 	public GUIUserFrame getInstance(User user) {
@@ -127,8 +128,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		return null;
 	}
 
-	/*************************************************/
-	// Initialize functions
 
 	private void initRest(Restaurant rest) {
 

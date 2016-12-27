@@ -45,6 +45,13 @@ public abstract class GUIUserFrame {
 	private JTextField setTextFieldValue = new JTextField();
 	
 	
+	/**
+	 * @return the setTextFieldValue
+	 */
+	public JTextField getSetTextFieldValue() {
+		return setTextFieldValue;
+	}
+
 	//Panels
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();

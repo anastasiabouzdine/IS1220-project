@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.AWTException;
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -59,16 +60,18 @@ public class GUIStartFrame {
 	JRadioButton radio_customer = new JRadioButton("Customer", true);
 	JRadioButton radio_courier = new JRadioButton("Courier");
 	JRadioButton radio_restaurant = new JRadioButton("Restaurant");
+	static JRadioButton radio_manager = new JRadioButton("Manager");
 	ButtonGroup user_type_group = new ButtonGroup();
 
 	// buttons
 	JButton logIn_button = new JButton("LOG IN");
-	JButton home_button = new JButton("GO TO HOME");
+	static JButton home_button = new JButton("GO TO HOME");
 	JButton goToRegister_button = new JButton("GO TO REGISTER");
 	JButton backToRegister_button = new JButton("GO BACK");
 	JButton createAccount_button = new JButton("CREATE ACCOUNT");
 	JButton goToLogIn_button = new JButton("GO TO LOG IN");
 	JButton register_button = new JButton("REGISTER");
+	static Button addUserButton = new Button("ADD USER");
 
 	// Textfields to register
 	JTextField surname_JTF = new JTextField(15);
@@ -95,12 +98,16 @@ public class GUIStartFrame {
 	JPanel welcome_panel = new JPanel();
 	JPanel welcome_button_panel = new JPanel();
 	JPanel welcome_message_panel = new JPanel();
-	JPanel register_panel_info = new JPanel();
-	JPanel user_global_info = new JPanel();
+	static JPanel register_panel_info = new JPanel();
+	static JPanel user_global_info = new JPanel();
 	JPanel user_specific_info = new JPanel();
 	JPanel customer_specific_info = new JPanel();
 	JPanel courier_specific_info = new JPanel();
 	JPanel restaurant_specific_info = new JPanel();
+	JPanel manager_specific_info = new JPanel();
+	
+	//Manager for add User button
+	static GUIUserFrame manager;
 
 	/*********************************************************/
 	// HelpFunctions
@@ -226,6 +233,12 @@ public class GUIStartFrame {
 		restaurant_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 		restaurant_specific_info.setBackground(Color.green);
 	}
+	
+	public void fillManagerSpecificInfosPanel() {
+		manager_specific_info.setLayout(new BorderLayout());
+		manager_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
+		manager_specific_info.setBackground(Color.green);
+	}
 
 	public void fillLoginPanel() {
 		login_panel.setBackground(Color.green);
@@ -240,12 +253,14 @@ public class GUIStartFrame {
 		user_type_group.add(radio_restaurant);
 		user_type_group.add(radio_courier);
 		user_type_group.add(radio_customer);
+		user_type_group.add(radio_manager);
 
 		JPanel user_type = new JPanel();
 		user_type.setBackground(Color.red);
 		user_type.add(radio_customer);
 		user_type.add(radio_courier);
 		user_type.add(radio_restaurant);
+		user_type.add(radio_manager);
 		register_panel_info.add(user_type, BorderLayout.NORTH);
 		frame.add(register_panel_info);
 	}
@@ -305,6 +320,7 @@ public class GUIStartFrame {
 		fillCourierSpecificInfosPanel();
 		fillCustomerSpecificInfosPanel();
 		fillRestaurantSpecificInfosPanel();
+		fillManagerSpecificInfosPanel();
 
 		setCurrentPanel(welcome_panel);
 
@@ -317,6 +333,47 @@ public class GUIStartFrame {
 		createAccount_button.addActionListener(new WhatAccountType());
 		register_button.addActionListener(new RegisterButton());
 		logIn_button.addActionListener(new LoginButton());
+		
+		addUserButton.addActionListener((ActionEvent e) -> {
+
+			name = name_JTF.getText();
+			try {
+				if (customer_specific_info.isShowing()) {
+					surname = surname_JTF.getText();
+					emailAddress = emailAddress_JTF.getText();
+					phoneNum = phoneNum_JTF.getText();
+
+					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
+							Integer.parseInt(yCoordinate_JTF.getText()));
+
+					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, passwort));
+				} else if (courier_specific_info.isShowing()) {
+					surname = surname_JTF.getText();
+					phoneNum = phoneNum_JTF.getText();
+
+					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
+							Integer.parseInt(yCoordinate_JTF.getText()));
+
+					core.addUser(new Courier(name, surname, address, phoneNum, username, passwort));
+				} else if (restaurant_specific_info.isShowing()) {
+
+					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
+							Integer.parseInt(yCoordinate_JTF.getText()));
+
+					core.addUser(new Restaurant(name, address, username, passwort));
+				} else if (manager_specific_info.isShowing()) {
+
+					surname = surname_JTF.getText();
+					core.addUser(new Manager(name, surname, username, passwort));
+				}
+				manager.setCurrentPanel(manager.welcome_panel);
+				user_global_info.remove(addUserButton);
+				register_panel_info.remove(((GUIManagerFrame) manager).getGoBackfromAddUserButton());
+			} catch (Exception ex) {
+				// TODO pop up
+			}
+
+		});
 	}
 
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
@@ -361,9 +418,9 @@ public class GUIStartFrame {
 		setCurrentPanel(login_panel);
 	}
 
-	private void goToRegisterPanel() {
-		register_panel_info.add(home_button, BorderLayout.SOUTH);
+	public void goToRegisterPanel() {
 		register_panel_info.add(createAccount_button, BorderLayout.SOUTH);
+		register_panel_info.add(home_button, BorderLayout.SOUTH);
 
 		register_panel_info.add(username_JTF, BorderLayout.NORTH);
 		register_panel_info.add(password_JTF, BorderLayout.CENTER);
@@ -390,6 +447,12 @@ public class GUIStartFrame {
 			username = username_JTF.getText();
 			passwort = password_JTF.getText();
 			passwortConf = passwordConf_JTF.getText();
+			
+			if(radio_manager.isVisible())
+				register_button.setVisible(false);
+			else
+				register_button.setVisible(true);
+			
 
 			if (checkIfPassWordIsEqual(passwort, passwortConf)) {
 
@@ -425,10 +488,17 @@ public class GUIStartFrame {
 
 					restaurant_specific_info.add(address_panel, BorderLayout.SOUTH);
 
+				} else if (radio_manager.isSelected()) {
+
+					user_specific_info.add(manager_specific_info);
+
+					manager_specific_info.add(surname_JTF, BorderLayout.SOUTH);
+
 				}
 				user_global_info.add(home_button, BorderLayout.SOUTH);
 				user_global_info.add(backToRegister_button, BorderLayout.SOUTH);
-				user_global_info.add(register_button, BorderLayout.SOUTH);
+				if(!radio_manager.isVisible())
+					user_global_info.add(register_button, BorderLayout.SOUTH);
 
 				setCurrentPanel(user_global_info);
 			} else {
@@ -447,6 +517,8 @@ public class GUIStartFrame {
 	private class GoToRegisterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			goToRegisterPanel();
+			home_button.setVisible(true);
+			radio_manager.setVisible(false);
 		}
 	}
 
@@ -546,8 +618,8 @@ public class GUIStartFrame {
 		// fail
 		// GUIStartFrameTest.checkIfCourierLogInWorks();
 		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-		GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		// GUIStartFrameTest.checkIfManagerLogInWorks();
+		// GUIStartFrameTest.checkIfRestaurantLogInWorks();
+		 GUIStartFrameTest.checkIfManagerLogInWorks();
 		// GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 
