@@ -190,7 +190,7 @@ public class GUIStartFrame {
 	/* Fill panels */
 	public void fillUserGlobalInfoPanel() {
 		user_global_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
-		user_global_info.setBackground(Color.red);
+		user_global_info.setBackground(Color.gray);
 
 		JTextField ask_info = new JTextField(23);
 		Font font = new Font("SansSerif", Font.BOLD, 12);
@@ -203,7 +203,7 @@ public class GUIStartFrame {
 		name_JTF.setForeground(Color.BLUE);
 		name_JTF.setText("Insert your name");
 
-		user_specific_info.setBackground(Color.green);
+		user_specific_info.setBackground(Color.gray);
 
 		user_global_info.add(ask_info, BorderLayout.NORTH);
 		user_global_info.add(name_JTF, BorderLayout.NORTH);
@@ -219,19 +219,19 @@ public class GUIStartFrame {
 	public void fillCourierSpecificInfosPanel() {
 		courier_specific_info.setLayout(new BorderLayout());
 		courier_specific_info.setBorder(BorderFactory.createEmptyBorder(50, 80, 50, 80));
-		courier_specific_info.setBackground(Color.green);
+		courier_specific_info.setBackground(Color.gray);
 	}
 
 	public void fillCustomerSpecificInfosPanel() {
 		customer_specific_info.setLayout(new BorderLayout());
 		customer_specific_info.setBorder(BorderFactory.createEmptyBorder(50, 80, 50, 80));
-		customer_specific_info.setBackground(Color.green);
+		customer_specific_info.setBackground(Color.gray);
 	}
 
 	public void fillRestaurantSpecificInfosPanel() {
 		restaurant_specific_info.setLayout(new BorderLayout());
 		restaurant_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
-		restaurant_specific_info.setBackground(Color.green);
+		restaurant_specific_info.setBackground(Color.gray);
 	}
 	
 	public void fillManagerSpecificInfosPanel() {
@@ -247,7 +247,7 @@ public class GUIStartFrame {
 	}
 
 	public void fillRegisterPanel() {
-		register_panel_info.setBackground(Color.red);
+		register_panel_info.setBackground(Color.gray);
 		register_panel_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
 
 		user_type_group.add(radio_restaurant);
@@ -256,7 +256,7 @@ public class GUIStartFrame {
 		user_type_group.add(radio_manager);
 
 		JPanel user_type = new JPanel();
-		user_type.setBackground(Color.red);
+		user_type.setBackground(Color.gray);
 		user_type.add(radio_customer);
 		user_type.add(radio_courier);
 		user_type.add(radio_restaurant);
