@@ -30,26 +30,6 @@ public class Customer extends User implements Observer{
 	private FidCardPlan fidCardPlan;
 
 	/**
-	 * Class constructor. 
-	 * 	
-	 * @param name			 	name of customer
-	 * @param surname		 	surname of customer
-	 * @param address 	 		an Address object containing the address of the customer 
-	 * @param phonNumber		phone number of customer
-	 * @param email			 	email of customer
-	 * @param username 	 		log-in name of customer
-	 */
-	public Customer(String name, String surname, Address address, String phoneNumber,
-			String email, String username){
-		super(name, username);
-		this.surname = surname;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.fidCardPlan = new FidCardPlanBasic();
-	}
-
-	/**
 	 * Class constructor with password. 
 	 * 	
 	 * @param name			 	name of customer

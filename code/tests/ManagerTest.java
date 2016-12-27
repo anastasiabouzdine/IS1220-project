@@ -14,14 +14,14 @@ public class ManagerTest {
 	
 	@Test
 	public void createManager(){
-		Manager man1 = new Manager(name, surname, username);
+		Manager man1 = new Manager(name, surname, username, "password");
 		assertNotNull(man1);
 	}
 	
 	@Test
 	public void verifyTwoManagersHaveDifferentIds(){
-		Manager man1 = new Manager(name, surname, username);
-		Manager man2 = new Manager("Roland", "Stat", "rStat2");
+		Manager man1 = new Manager(name, surname, username, "password");
+		Manager man2 = new Manager("Roland", "Stat", "rStat2", "password");
 		assertNotEquals(man1.getID(), man2.getID());
 	}
 }

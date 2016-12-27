@@ -269,12 +269,14 @@ public class CoreTest {
 	public void mostAndLeastSellingRestaurant() {
 		make3orders();
 		Restaurant temp_restaurant;
+		System.out.println("###" + core.getMostOrLeastSellingRestaurants(false));
 		// Most selling
-		temp_restaurant = core.getMostOrLeastSellingRestaurant(true);
+		temp_restaurant = core.getMostOrLeastSellingRestaurants(true).get(0);
 		assertTrue(temp_restaurant.equals(rest1));
-		// Least selling
-		temp_restaurant = core.getMostOrLeastSellingRestaurant(false);
-		assertTrue(temp_restaurant.equals(rest3));
+		// Least selling can be all restaurants except rest1 and rest3 who sold at least an order
+		temp_restaurant = core.getMostOrLeastSellingRestaurants(false).get(0);
+		assertNotEquals(temp_restaurant, rest3);
+		assertNotEquals(temp_restaurant, rest1);
 
 		System.out.println("TEST mostAndLeastSellingRestaurant : DONE\n");
 	}
@@ -289,13 +291,20 @@ public class CoreTest {
 
 		Courier temp_courier;
 		// Most active
-		temp_courier = core.getMostOrLeastActiveCourier(true);
+		temp_courier = core.getMostOrLeastActiveCouriers(true).get(0);
 		assertTrue(temp_courier != null);
 		// Least active
-		temp_courier = core.getMostOrLeastActiveCourier(false);
+		temp_courier = core.getMostOrLeastActiveCouriers(false).get(0);
 		assertTrue(temp_courier != null);
 
 		System.out.println("TEST mostOrLeastActiveCourier : DONE\n");
+	}
+	
+	@Test
+	public void checkIfRestaurantOrderCounterWorksWithTreatedOrders() {
+		assertEquals(rest1.getNbOfDeliveredOrders(), 0);
+		make3orders(); // 2 orders for rest1 !
+		assertEquals(rest1.getNbOfDeliveredOrders(), 2);
 	}
 
 	/*********************************************************************/

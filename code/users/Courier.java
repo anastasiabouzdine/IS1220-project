@@ -30,25 +30,6 @@ public class Courier extends User {
 
 
 	/**
-	 * Class constructor. 
-	 * 
-	 * @param	name 		a String containing the name
-	 * @param	surname		a String containing the surname
-	 * @param	position	an Address object a String containing the position
-	 * @param	phoneNumber a String containing the phonenumber
-	 * @param	username	a String containing the username
-	 */	
-	public Courier(String name, String surname, Address position, String phoneNumber, String username){
-		super(name, username);
-		this.surname = surname;
-		this.position = position;
-		this.phoneNumber = phoneNumber;
-		this.nbOfDeliveredOrders = 0;
-		this.available = true;
-		listOfReceivedOrders = new LinkedList<Order>();
-	}
-
-	/**
 	 * Class constructor with password. 
 	 * 
 	 * @param	name 		a String containing the name

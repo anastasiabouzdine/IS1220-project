@@ -40,23 +40,7 @@ public class Restaurant extends User {
 	private Menu menu;
 	private Meal specialMeal;
 	private List<Meal> listOfMeal; 
-
-
-	/**
-	 * Class constructor. 
-	 * 	
-	 * @param name			 	name of restaurant
-	 * @param address 	 		an Address object containing the address of the restaurant 
-	 * @param username 	 		log-in name of restaurant
-	 */
-	public Restaurant(String name, Address address, String username) {
-		super(name, username);
-		this.address = address;
-		this.discountFactor = 0.05;
-		this.specDiscFact = 0.1;
-		this.menu = new Menu();
-		this.listOfMeal = new ArrayList<Meal>();
-	}
+	private int nbOfDeliveredOrders;
 
 	/**
 	 * Class constructor with password. 
@@ -204,7 +188,7 @@ public class Restaurant extends User {
 		}
 		return null;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Restaurant [username=" + getUsername() + ", name=" + getName() + "]";
@@ -336,6 +320,20 @@ public class Restaurant extends User {
 	 */
 	public void setSpecialMeal(Meal specialMeal) {
 		this.specialMeal = specialMeal;
+	}
+
+	/**
+	 * @return the nbOfDeliveredOrders
+	 */
+	public int getNbOfDeliveredOrders() {
+		return nbOfDeliveredOrders;
+	}
+
+	/**
+	 * @param nbOfDeliveredOrders the nbOfDeliveredOrders to set
+	 */
+	public void setNbOfDeliveredOrders(int numberOfDeliveredOrders) {
+		this.nbOfDeliveredOrders = numberOfDeliveredOrders;
 	}
 
 

@@ -205,20 +205,15 @@ public class CommandProcessor {
 		String foodCategory = current_args[2];
 		try {
 			double unitPrice = Double.parseDouble(current_args[3]);
-
-			try {
-				if (dishCategory.equals("starter")){
-					core.getCurrent_restaurant().addStarter((Starter)
-							dish_factory.getDish("starter", dishName, unitPrice, foodCategory));
-				} else if (dishCategory.equals("maindish")) {
-					core.getCurrent_restaurant().addMainDish((MainDish)
-							dish_factory.getDish("maindish", dishName, unitPrice, foodCategory));
-				} else if (dishCategory.equals("dessert")) {
-					core.getCurrent_restaurant().addDessert((Dessert)
-							dish_factory.getDish("dessert", dishName, unitPrice, foodCategory));
-				}
-			} catch (NullPointerException e) {
-				System.out.println("! Command not available for this type of user !");
+			if (dishCategory.equals("starter")){
+				core.getCurrent_restaurant().addStarter((Starter)
+						dish_factory.getDish("starter", dishName, unitPrice, foodCategory));
+			} else if (dishCategory.equals("maindish")) {
+				core.getCurrent_restaurant().addMainDish((MainDish)
+						dish_factory.getDish("maindish", dishName, unitPrice, foodCategory));
+			} else if (dishCategory.equals("dessert")) {
+				core.getCurrent_restaurant().addDessert((Dessert)
+						dish_factory.getDish("dessert", dishName, unitPrice, foodCategory));
 			}
 		} catch (NumberFormatException e){
 			System.out.println("! Please enter a valid double for the price !");
@@ -509,18 +504,26 @@ public class CommandProcessor {
 
 	}
 
-	// TODO
+	/**
+	 * For the currently logged on myFoodora manager to display the list of couriers
+	 * sorted in decreasing order w r t the number of completed deliveries.
+	 */
 	public void showCourierDeliveries() {
-
-	}
-	
-	// TODO
-	public void showRestaurantTop() {
-
+		System.out.println("Couriers sorted in decreasing order w.r.t. the number of completed deliveries");
+		System.out.println(core.getMostOrLeastActiveCouriers(true));
 	}
 
 	/**
-	 * Display the list of registered customers.
+	 * For the currently logged on myFoodora manager to display the list of restaurant
+	 * sorted in decreasing order w r t  the number of delivered orders.
+	 */
+	public void showRestaurantTop() {
+		System.out.println("Restaurants sorted in decreasing order w.r.t. the number of completed orders");
+		System.out.println(core.getMostOrLeastSellingRestaurants(true));
+	}
+
+	/**
+	 * For the currently logged on myFoodora manager to display the list of customers.
 	 */
 	public void showCustomers() {
 		if (core.getCurrent_manager() != null) {
@@ -559,7 +562,7 @@ public class CommandProcessor {
 			}
 		}
 	}
-	
+
 	// TODO
 	public void showTotalProfit() {
 		String beginDate = current_args[0];

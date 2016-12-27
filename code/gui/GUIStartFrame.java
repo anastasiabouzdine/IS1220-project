@@ -90,7 +90,7 @@ public class GUIStartFrame {
 	String phoneNum;
 	String emailAddress;
 	String username;
-	String passwort;
+	String password;
 	String passwortConf;
 	String name;
 
@@ -346,7 +346,7 @@ public class GUIStartFrame {
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, passwort));
+					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, password));
 				} else if (courier_specific_info.isShowing()) {
 					surname = surname_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
@@ -354,17 +354,17 @@ public class GUIStartFrame {
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Courier(name, surname, address, phoneNum, username, passwort));
+					core.addUser(new Courier(name, surname, address, phoneNum, username, password));
 				} else if (restaurant_specific_info.isShowing()) {
 
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Restaurant(name, address, username, passwort));
+					core.addUser(new Restaurant(name, address, username, password));
 				} else if (manager_specific_info.isShowing()) {
 
 					surname = surname_JTF.getText();
-					core.addUser(new Manager(name, surname, username, passwort));
+					core.addUser(new Manager(name, surname, username, password));
 				}
 				manager.setCurrentPanel(manager.welcome_panel);
 				user_global_info.remove(addUserButton);
@@ -446,7 +446,7 @@ public class GUIStartFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			username = username_JTF.getText();
-			passwort = password_JTF.getText();
+			password = password_JTF.getText();
 			passwortConf = passwordConf_JTF.getText();
 			
 			if(radio_manager.isVisible())
@@ -455,7 +455,7 @@ public class GUIStartFrame {
 				register_button.setVisible(true);
 			
 
-			if (checkIfPassWordIsEqual(passwort, passwortConf)) {
+			if (checkIfPassWordIsEqual(password, passwortConf)) {
 
 				user_specific_info.removeAll();
 
@@ -549,15 +549,15 @@ public class GUIStartFrame {
 					emailAddress = emailAddress_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
 
-					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username));
+					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username, password));
 				} else if (courier_specific_info.isShowing()) {
 					surname = surname_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
 
-					core.register(new Courier(name, surname, address, phoneNum, username));
+					core.register(new Courier(name, surname, address, phoneNum, username, password));
 				} else if (restaurant_specific_info.isShowing()) {
 
-					core.register(new Restaurant(name, address, username));
+					core.register(new Restaurant(name, address, username, password));
 				}
 			} catch (Exception ex) {
 				// TODO pop up

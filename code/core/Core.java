@@ -89,7 +89,7 @@ public class Core {
 		this.managerList = new ArrayList<Manager>();
 		this.restaurantList = new ArrayList<Restaurant>();
 
-		Manager root = new Manager("system", "admin", "root");
+		Manager root = new Manager("system", "admin", "root", "root_password");
 		users.put("root", root);
 		managerList.add(root);
 
@@ -573,11 +573,11 @@ public class Core {
 
 				} else {
 					for (int i = 0; i < order_dishes.size(); i++) // count of dishes is updated
-						// updated
 						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
 					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the dish(es): "
 							+ order_dishes + "to be picked up shortly by: " + courier.getName() + ".");
 				}
+				order_restaurant.setNbOfDeliveredOrders(1 + order_restaurant.getNbOfDeliveredOrders());
 				Customer order_customer = order.getCustomer();
 				order_customer.addFidelityPoints(Math.floorDiv((int) order.getPriceInter(), 10));
 				update(order_customer,
@@ -810,41 +810,26 @@ public class Core {
 	 * 
 	 * @param most
 	 *            a <code>boolean</code> whose value is true (false) to get the
-	 *            most restaurants sorted in decreasing (increasing) order
+	 *            restaurants sorted in decreasing (increasing) order
 	 *            w.r.t. the number of delivered orders
-	 * @return an <code>ArrayList<Restaurant></code> following the criteria of
+	 * @return an <code>ArrayList</code> of <code>Restaurant</code>following the criteria of
 	 *         the argument
 	 */
-	public Restaurant getMostOrLeastSellingRestaurant(boolean most) {
+	public ArrayList<Restaurant> getMostOrLeastSellingRestaurants(boolean most) {
 		if (current_manager != null) {
-			// ArrayList<Restaurant> restaurant_top = new
-			// ArrayList<Restaurant>();
+			ArrayList<Restaurant> restaurant_top_list = new ArrayList<Restaurant>(restaurantList);
 
-			// [r1_id, r1_nbOfOrders, r2_id, r2_nbOfOrders, ...]
-			int[] nbOrders = new int[restaurantList.get(restaurantList.size() - 1).getID() + 1];
-			int max = 0;
-			int min = savedOrders.size();
-			Restaurant best_seller = null;
-			Restaurant least_seller = null;
-			Restaurant current_r;
-			for (Order o : savedOrders) {
-				current_r = o.getRestaurant();
-				nbOrders[current_r.getID()]++;
-				if (most && nbOrders[current_r.getID()] > max) {
-					max = nbOrders[current_r.getID()];
-					best_seller = current_r;
+			Collections.sort(restaurant_top_list, new Comparator<Restaurant>() {
+				@Override
+				public int compare(Restaurant r1, Restaurant r2) {
+					return r1.getNbOfDeliveredOrders() - r2.getNbOfDeliveredOrders();
 				}
+			});
+			
+			if (most) {
+				Collections.reverse(restaurant_top_list);
 			}
-			if (!most) {
-				for (Order o : savedOrders) {
-					current_r = o.getRestaurant();
-					if (nbOrders[current_r.getID()] < min) {
-						min = nbOrders[current_r.getID()];
-						least_seller = current_r;
-					}
-				}
-			}
-			return (most ? best_seller : least_seller);
+			return restaurant_top_list;
 		} else {
 			unauthorizedCommand();
 			return null;
@@ -852,34 +837,32 @@ public class Core {
 	}
 
 	/**
-	 * Returns the most or least active <code>Courier</code> in terms of number
-	 * of <code>Order</code>. Note that this method has a random factor in it
-	 * (the courier accepting or not to deliver an offer) and isn't thus
-	 * guaranteed to give the same output for the same argument.
+	 * Returns an ArrayList of couriers sorted in decreasing (or increasing
+	 * depending on input boolean value) order w r t the number of delivered
+	 * orders.
 	 * 
 	 * @param most
-	 *            a <code>boolean</code> whose value is true to get the most
-	 *            active Courier, false to get the least active one
-	 * @return the <code>Courier</code> following the criteria of the argument
+	 *            a <code>boolean</code> whose value is true (false) to get the
+	 *            couriers sorted in decreasing (increasing) order
+	 *            w.r.t. the number of delivered orders
+	 * @return  an <code>ArrayList</code> of <code>Courier</code> following the criteria of
+	 *         the argument
 	 */
-	public Courier getMostOrLeastActiveCourier(boolean most) {
+	public ArrayList<Courier> getMostOrLeastActiveCouriers(boolean most) {
 		if (current_manager != null) {
-			Courier most_active = null;
-			Courier least_active = null;
-			int max = 0;
-			int min = savedOrders.size();
-			for (Courier c : courierList) {
-				if (most && c.getNbOfDeliveredOrders() > max) {
-					max = c.getNbOfDeliveredOrders();
-					most_active = c;
-				}
-				if (!most && c.getNbOfDeliveredOrders() > 0 && c.getNbOfDeliveredOrders() < min) {
-					min = c.getNbOfDeliveredOrders();
-					least_active = c;
-				}
+			ArrayList<Courier> courier_top_list = new ArrayList<Courier>(courierList);
 
+			Collections.sort(courier_top_list, new Comparator<Courier>() {
+				@Override
+				public int compare(Courier c1, Courier c2) {
+					return c1.getNbOfDeliveredOrders() - c2.getNbOfDeliveredOrders();
+				}
+			});
+			
+			if (most) {
+				Collections.reverse(courier_top_list);
 			}
-			return (most ? most_active : least_active);
+			return courier_top_list;
 		} else {
 			unauthorizedCommand();
 			return null;
