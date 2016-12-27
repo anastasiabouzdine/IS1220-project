@@ -277,7 +277,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		filladdButtonPanel();
 
 		addRemovePanel.removeAll();
-		addRemovePanel.add(createMeal,BorderLayout.SOUTH);
+		addRemovePanel.add(createMeal,BorderLayout.CENTER);
 		addRemovePanel.add(buttPanel, BorderLayout.NORTH);
 
 	}
@@ -327,7 +327,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 
 		addRemovePanel.removeAll();
 		addRemovePanel.add(createDishButton, BorderLayout.NORTH);
-		addRemovePanel.add(dishPanel, BorderLayout.SOUTH);
+		addRemovePanel.add(dishPanel, BorderLayout.CENTER);
 	}
 
 	private void fillInfoPanelScroll(JList<?> jlist){
@@ -336,7 +336,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		jScrollMeal = new JScrollPane(jlist);
 		scrollPanel.removeAll();
 		scrollPanel.add(jScrollMeal);
-		getInfoPanel().add(scrollPanel, BorderLayout.SOUTH);
+		getInfoPanel().add(scrollPanel, BorderLayout.CENTER);
 	}
 
 	private void fillAddRemovePanelScroll(JList<?> jlist){
@@ -345,7 +345,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		jScrollMeal = new JScrollPane(jlist);
 		scrollPanel.removeAll();
 		scrollPanel.add(jScrollMeal);
-		addRemovePanel.add(scrollPanel, BorderLayout.SOUTH);
+		addRemovePanel.add(scrollPanel, BorderLayout.CENTER);
 	}
 
 	private void fillDeleteButtonPanel(){
@@ -426,21 +426,25 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				mealDishDisplay.fillPanelMealShow(rest);
 				mealDishDisplay.getjListMealShow().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				fillInfoPanelScroll(mealDishDisplay.getjListMealShow());
+				getInfoPanel().add(home_button, BorderLayout.SOUTH);
 				break;
 			case "starter":
 
 				mealDishDisplay.filljListStarter(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListStarter());
+				getInfoPanel().add(home_button, BorderLayout.SOUTH);
 				break;
 			case "main dish":
 
 				mealDishDisplay.filljListMainDish(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListMainDish());
+				getInfoPanel().add(home_button, BorderLayout.SOUTH);
 				break;
 			case "dessert":
 
 				mealDishDisplay.filljListDessert(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListDessert());
+				getInfoPanel().add(home_button, BorderLayout.SOUTH);
 				break;
 			}
 			setCurrentPanel(getInfoPanel());
@@ -496,7 +500,8 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				scrollPanel.removeAll();
 				scrollPanel.add(jScrollPaneSpecMeal);
 				getSettingPanel().removeAll();
-				getSettingPanel().add(scrollPanel);
+				getSettingPanel().add(scrollPanel,BorderLayout.CENTER);
+				getSettingPanel().add(home_button,BorderLayout.SOUTH);
 
 				break;
 			}
@@ -679,6 +684,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				});
 				break;
 			}
+			addRemovePanel.add(home_button,BorderLayout.SOUTH);
 			setCurrentPanel(addRemovePanel);
 		}
 	}

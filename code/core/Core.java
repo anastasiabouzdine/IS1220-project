@@ -752,7 +752,7 @@ public class Core {
 	 *      I thought a hashMap is good in this case because we don't have to
 	 *      use the function contains all the time
 	 * 
-	 * @return average income per customer over a given period of time
+	 * @return average profit per customer over a given period of time
 	 */
 	public double calcAverageProfit() {
 		if (current_manager != null) {
@@ -767,6 +767,33 @@ public class Core {
 				}
 			}
 			return Order.round2(calcTotalProfit() / (double) nb_customers_who_ordered);
+		} else {
+			unauthorizedCommand();
+			return 0;
+		}
+	}
+	
+	/**
+	 * @see dateBefore and dateAfter have to be set before calling this function
+	 * 
+	 *      I thought a hashMap is good in this case because we don't have to
+	 *      use the function contains all the time
+	 * 
+	 * @return average income per customer over a given period of time
+	 */
+	public double calcAverageIncome() {
+		if (current_manager != null) {
+			int nb_customers_who_ordered = 0;
+			int temp_id = 0;
+			boolean[] ordered_at_least_once = new boolean[customerList.get(customerList.size() - 1).getID() + 1];
+			for (Order o : savedOrders) {
+				temp_id = o.getCustomer().getID();
+				if (!ordered_at_least_once[temp_id]) {
+					ordered_at_least_once[temp_id] = true;
+					nb_customers_who_ordered++;
+				}
+			}
+			return Order.round2(calcTotalIncome() / (double) nb_customers_who_ordered);
 		} else {
 			unauthorizedCommand();
 			return 0;

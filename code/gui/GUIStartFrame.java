@@ -400,6 +400,7 @@ public class GUIStartFrame {
 
 	private void goToLogInPanel() {
 
+		home_button.setVisible(true);
 		login_panel.add(home_button, BorderLayout.SOUTH);
 		login_panel.add(logIn_button, BorderLayout.SOUTH);
 
@@ -618,8 +619,8 @@ public class GUIStartFrame {
 		// fail
 		// GUIStartFrameTest.checkIfCourierLogInWorks();
 		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-		// GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		 GUIStartFrameTest.checkIfManagerLogInWorks();
+		 GUIStartFrameTest.checkIfRestaurantLogInWorks();
+//		 GUIStartFrameTest.checkIfManagerLogInWorks();
 		// GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 

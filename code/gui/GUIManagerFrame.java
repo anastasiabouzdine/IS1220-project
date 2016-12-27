@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 import org.junit.experimental.theories.Theories;
 
 import core.Core;
+import policies.DeliveryCostProfit;
 import policies.DishSort;
 import policies.FastestDelivery;
 import policies.MarkupProfit;
@@ -48,7 +49,9 @@ public class GUIManagerFrame extends GUIUserFrame {
 	private Manager manager;
 	
 	private JPanel userManagePanel = new JPanel();
+	private JPanel profitPanel = new JPanel();
 	private JPanel profitRelatedPanel = new JPanel();
+	
 	
 	//JMenu
 	private JMenu userManageMenu = new JMenu("Manage Users");
@@ -58,6 +61,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 	//Button
 	private Button goBackfromAddUserButton = new Button("GO BACK");
 	private Button removeDeActivateButton;
+	private Button simulateButton = new Button("SIMULATE");
 	
 	private JList<Manager> jListManagerShow = new JList<>();
 	private JList<Customer> jListCustomerShow = new JList<>();
@@ -72,6 +76,20 @@ public class GUIManagerFrame extends GUIUserFrame {
 	private JPanel panCourier = new JPanel();
 	private JPanel panRestaurant = new JPanel();
 	private JPanel userPanel = new JPanel();
+	
+	//TextField
+	private JTextField descrT = new JTextField();
+	private JTextField valueT = new JTextField();
+	
+	private JTextField descrInput2T = new JTextField();
+	private JTextField valueInput2T = new JTextField("");
+	private JPanel input2Panel = new JPanel();
+	
+	private JTextField descrInput3T = new JTextField();
+	private JTextField valueInput3T = new JTextField("");
+	private JPanel input3Panel = new JPanel();
+	
+	private JPanel inputPanel = new JPanel();
 	
 	//Radio Buttons
 	ButtonGroup sort_policy_group = new ButtonGroup();
@@ -185,8 +203,10 @@ public class GUIManagerFrame extends GUIUserFrame {
 		userPanel.add(panRestaurant,BorderLayout.EAST);
 
 		userManagePanel.removeAll();
-		userManagePanel.add(userPanel,BorderLayout.SOUTH);
+		userManagePanel.add(userPanel,BorderLayout.CENTER);
 		userManagePanel.add(removeDeActivateButton,BorderLayout.NORTH);
+		
+		userManagePanel.add(home_button, BorderLayout.SOUTH);
 		setCurrentPanel(userManagePanel);
 	}
 	
@@ -309,10 +329,25 @@ public class GUIManagerFrame extends GUIUserFrame {
 			policy_type.add(radio_fairDeliv);
 			
 		}
-		
+		getSettingPanel().removeAll();
 		getSettingPanel().add(policy_type,BorderLayout.NORTH);
+		getSetButtonPanel().removeAll();
 		getSetButtonPanel().add(save_button,BorderLayout.SOUTH);
+		getSetButtonPanel().add(home_button,BorderLayout.SOUTH);
+		getSettingPanel().add(getSetButtonPanel());
 		setCurrentPanel(getSettingPanel());
+	}
+	
+	private void fillManagerActionProfit(String descr, String value) {
+		profitRelatedPanel.removeAll();
+		descrT.setText(descr);
+		descrT.setEditable(false);
+		valueT.setText(value);
+		profitRelatedPanel.add(descrT,BorderLayout.WEST);
+		profitRelatedPanel.add(valueT,BorderLayout.CENTER);
+		profitPanel.add(profitRelatedPanel,BorderLayout.NORTH);
+		profitPanel.add(home_button,BorderLayout.SOUTH);
+		setCurrentPanel(profitPanel);
 	}
 	/*************************************************/
 	//Init functions
@@ -339,11 +374,48 @@ public class GUIManagerFrame extends GUIUserFrame {
 		fillUserManagePanelInit();
 		fillProfitRelatedPanelInit();
 		initRadioButtons();
+		initProfitPanel();
 		
 		goBackfromAddUserButton.addActionListener((ActionEvent e) -> {
 			setCurrentPanel(welcome_panel);
 			GUIStartFrame.register_panel_info.remove(goBackfromAddUserButton);
 		});
+		
+		simulateButton.addActionListener((ActionEvent e) -> {
+			String message;
+			try {
+				double profit = core.simulateProfit(Double.parseDouble(valueT.getText()), 
+						Double.parseDouble(valueInput2T.getText()), Double.parseDouble(valueInput3T.getText()));
+				System.out.println(profit);
+			} catch (NumberFormatException e2) {
+				message = "Please fill out all input fields with doubles.";
+				System.out.println(message);
+			} 
+			// TODO: pop up
+			
+		});
+	}
+	
+	private void initProfitPanel(){
+		valueT.setColumns(10);
+		valueInput2T.setColumns(5);
+		valueInput3T.setColumns(5);
+		input2Panel.add(descrInput2T);
+		input2Panel.add(valueInput2T);
+		input2Panel.setBackground(Color.ORANGE);
+		
+		input3Panel.add(descrInput3T);
+		input3Panel.add(valueInput3T);
+		input3Panel.setBackground(Color.ORANGE);
+		
+		inputPanel.setLayout(new BorderLayout());
+		inputPanel.add(input2Panel,BorderLayout.EAST);
+		inputPanel.add(input3Panel,BorderLayout.WEST);
+		inputPanel.setBackground(Color.ORANGE);
+		
+		descrInput2T.setEditable(false);
+		descrInput2T.setEditable(false);
+		
 	}
 	
 	private void initRadioButtons(){
@@ -378,6 +450,13 @@ public class GUIManagerFrame extends GUIUserFrame {
 		userManageMenu.add(new ManagerActionUserManagement("activate", "activating an existing user", manager));
 		userManageMenu.add(new ManagerActionUserManagement("deactivate", "deactivating an existing user", manager));
 	}
+	
+	private void fillUserProfitMenuWithFunctionInit(){
+		profitMenu.add(new ManagerActionProfit("simulate", "simulate the profit"));
+		profitMenu.add(new ManagerActionProfit("average income per customer", "see average income per customer"));
+		profitMenu.add(new ManagerActionProfit("total income", "see total income"));
+		profitMenu.add(new ManagerActionProfit("total profit", "see total profit"));
+	}
 
 	private void fillAndSetMenuBarManagerInit(Manager manager) {
 		fillInfoMenuWithFunctionManagerInit(manager);
@@ -385,6 +464,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 		fillUserManagMenuWithFunctionManagerInit(manager);
 		fillUserManagePanelInit();
 		fillProfitRelatedPanelInit();
+		fillUserProfitMenuWithFunctionInit();
 		getMenuBar().add(userManageMenu);
 		getMenuBar().add(profitMenu);
 	}
@@ -396,9 +476,9 @@ public class GUIManagerFrame extends GUIUserFrame {
 	}
 	
 	private void fillProfitRelatedPanelInit() {
-		profitRelatedPanel.setBorder(BorderFactory.createTitledBorder("Revenue and profit"));
-		profitRelatedPanel.setLayout(new BorderLayout());
-		profitRelatedPanel.setBackground(Color.orange);
+		profitPanel.setBorder(BorderFactory.createTitledBorder("Revenue and profit"));
+		profitPanel.setLayout(new BorderLayout());
+		profitPanel.setBackground(Color.orange);
 	}
 	
 	
@@ -547,8 +627,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 			
 			case "simulation policy":
 				
-				fillSetPanelRadioPolicy("target");
-				
+				save_button = new JButton("SAVE");
 				save_button.addActionListener((ActionEvent e3) -> {
 
 					if(radio_markupProfit.isSelected())
@@ -558,12 +637,12 @@ public class GUIManagerFrame extends GUIUserFrame {
 					else 
 						core.setTargetProfitPolicyToDelivCostProf();
 				});
+				fillSetPanelRadioPolicy("target");
 				
 				break;
 			case "sort policy":
 				
-				fillSetPanelRadioPolicy("sort");
-
+				save_button = new JButton("SAVE");
 				save_button.addActionListener((ActionEvent e3) -> {
 
 					if(radio_sortMeal.isSelected())
@@ -571,12 +650,12 @@ public class GUIManagerFrame extends GUIUserFrame {
 					else 
 						core.setSortPolicyToDishSort();
 				});
+				fillSetPanelRadioPolicy("sort");
 				
 				break;
 			case "delivery policy":
 				
-				fillSetPanelRadioPolicy("delivery");
-
+				save_button = new JButton("SAVE");
 				save_button.addActionListener((ActionEvent e3) -> {
 
 					if(radio_fastDeliv.isSelected())
@@ -584,6 +663,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 					else 
 						core.setDeliveryPolicyToFairOcc();
 				});
+				fillSetPanelRadioPolicy("delivery");
 				
 				break;
 				
@@ -643,6 +723,93 @@ public class GUIManagerFrame extends GUIUserFrame {
 			}
 		}
 	}
+	
+	private class ManagerActionProfit extends AbstractAction {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		String choice;
+
+		public ManagerActionProfit(String choice, String desc) {
+			super(choice);
+			this.choice = choice;
+			putValue(Action.SHORT_DESCRIPTION, desc);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			String descr=null;
+			String value=null;
+
+			switch (choice) {
+
+			case "simulate":
+				profitPanel.removeAll();
+				
+				String string;
+				String decr2 = "Insert ";
+				String decr3 = "Insert ";
+				
+				if(core.getTpPolicy() instanceof MarkupProfit){
+					string = "markup percentage";
+					decr2 += "delivery cost";
+					decr3 += "service fee";
+					
+				}
+				else if(core.getTpPolicy() instanceof DeliveryCostProfit) {
+					string = "delivery cost";
+					decr2 += "markup percentage";
+					decr3 += "service fee";
+					
+					
+				} else {
+					string = "service fee";
+					decr2 += "markup percentage";
+					decr3 += "delivery cost";
+					
+				}
+				descr = "Insert the profit to simulate the " + string;
+				value = "";
+				valueT.setEditable(true);
+				descrInput2T.setText(decr2);
+				descrInput3T.setText(decr3);
+				
+				inputPanel.add(simulateButton,BorderLayout.SOUTH);
+				profitPanel.add(inputPanel,BorderLayout.CENTER);
+				
+				break;
+			case "average income per customer":
+				profitPanel.removeAll();
+				
+				descr = "The average income per customer is: ";
+				value = Double.toString(core.calcAverageIncome());
+				valueT.setEditable(false);
+				
+				break;
+			case "total income":
+				profitPanel.removeAll();
+				
+				descr = "The total income is: ";
+				value = Double.toString(core.calcTotalIncome());
+				valueT.setEditable(false);
+				
+				break;
+			case "total profit":
+				profitPanel.removeAll();
+				
+				descr = "The total profit is: ";
+				value = Double.toString(core.calcTotalProfit());
+				valueT.setEditable(false);
+				
+				break;
+			}
+			fillManagerActionProfit(descr, value);
+		}
+	}
+	
 
 	/**
 	 * @return the instance
