@@ -153,16 +153,16 @@ public class Core {
 				current_user = users.get(username);
 				if (current_user instanceof Courier) {
 					current_courier = (Courier) current_user;
-					output = "Successfully logged in as a Courier !";
+					output = "Successfully logged in as a Courier ! (" + current_courier.toString() + ")";
 				} else if (current_user instanceof Customer) {
 					current_customer = (Customer) current_user;
-					output = "Successfully logged in as a Customer !";
+					output = "Successfully logged in as a Customer ! (" + current_customer.toString() + ")";
 				} else if (current_user instanceof Manager) {
 					current_manager = (Manager) current_user;
-					output = "Successfully logged in as a Manager !";
+					output = "Successfully logged in as a Manager ! (" + current_manager.toString() + ")";
 				} else if (current_user instanceof Restaurant) {
 					current_restaurant = (Restaurant) current_user;
-					output = "Successfully logged in as a Restaurant !";
+					output = "Successfully logged in as a Restaurant ! (" + current_restaurant.toString() + ")";
 				}
 				current_user.checkMessages();
 			} else {
@@ -522,7 +522,9 @@ public class Core {
 	}
 
 	/**
-	 * Treat new orders. this is one of the most important functions in the
+	 * Treat new order, meaning it tries to associate a courier to the 
+	 * order, compute the price and message every user related to the order.
+	 * This is one of the most important functions in the
 	 * core: it treats new orders that were received by the system: 1) it takes
 	 * the latest order from the queue (LIFO principle) 2) according to its
 	 * policy a list of the given couriers is given 3) a loop is implemented
@@ -530,14 +532,16 @@ public class Core {
 	 * does that randomly in our case) 4) either no courier has been found (then
 	 * the order is disregarded) 5) or the courier accepts and all the data is
 	 * saved and updated respectively This function is private because it is
-	 * only used by the function placeOrder()
+	 * only used by the function placeOrder().
+	 * 
+	 * @return the courier that treated the last put order, null if none was found 
 	 */
-	private void treatNewOrders() {
+	private Courier treatNewOrder() {
+		Courier courier = null;
 		while (receivedOrders.size() != 0) {
 			Order order = this.receivedOrders.removeFirst();
 			// get ordered list of couriers according to the chosen policy
 			ArrayList<Courier> currentList = this.dPolicy.howToDeliver(courierList, order.getRestaurant().getAddress());
-			Courier courier = null;
 			// while no courier has been found yet or until there are couriers
 			while (order.getCourier() == null && !currentList.isEmpty()) {
 				courier = currentList.get(0);
@@ -585,6 +589,7 @@ public class Core {
 								+ order.getPriceFinal() + " and will be carried out as soon as possible.");
 			}
 		}
+		return courier;
 	}
 
 	/*********************************************************************/
@@ -631,19 +636,22 @@ public class Core {
 	}
 
 	/**
-	 * Places a new order in the queue of new orders.
+	 * Places a new order in the queue of new orders and returns assigned courier.
 	 * 
 	 * @param order
 	 *            of type order
+	 * @return the <code>Courier</code> that is assigned to deliver the order, null if none was found
 	 */
-	public void placeNewOrder(Order order) {
+	public Courier placeNewOrder(Order order) {
+		Courier c = null;
 		if (current_customer != null) {
 			this.receivedOrders.add(order);
 			update(this.current_customer, "Your order has succesfully been placed.");
-			treatNewOrders();
+			c = treatNewOrder();
 		} else {
 			unauthorizedCommand();
 		}
+		return c;
 	}
 
 	/*********************************************************************/

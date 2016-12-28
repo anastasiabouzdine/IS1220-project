@@ -98,6 +98,9 @@ showRestaurantTop
 showCustomers
 0
 -------
+showRestaurants
+0
+-------
 showMenuItem
 1
 restaurantName

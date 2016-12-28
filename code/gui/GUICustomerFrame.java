@@ -27,8 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
-import com.sun.corba.se.impl.orbutil.fsm.GuardedAction;
-
 import core.Core;
 import core.Order;
 import restaurantSetUp.Dish;

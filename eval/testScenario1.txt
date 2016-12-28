@@ -1,0 +1,49 @@
+registerRestaurant "ChezAlice" "alice" "1,2" "alicepass"
+registerRestaurant "ChezBob" "bob" "3,4" "bobpass"
+registerRestaurant "ChezClément" "clement" "5,6" "clementpass"
+
+registerCustomer "John" "Doe" "johndoe" "11,1" "johndoepass"
+registerCustomer "Monsieur" "Durand" "durand" "1,12" "durandpass"
+registerCustomer "Bruce" "Wayne" "wayne" "6,6" "waynepass"
+
+registerCourier "John" "Delivre" "johndelivre" "5,5" "johndelivrepass"
+registerCourier "Leo" "Vinci" "leovinci" "10,10" "leovincipass"
+registerCourier "Donald" "Duck" "donaldduck" "15,15" "donaldduckpass"
+
+login "root" "root_password"
+showCustomers
+showRestaurants
+logout
+
+login "alice" "alicepass"
+addDishRestaurantMenu "Salad" "starter" "glutenfree" "2.0"
+addDishRestaurantMenu "Tomatoes" "starter" "vegetarian" "2.5"
+addDishRestaurantMenu "Rice" "maindish" "vegetarian" "10.0"
+addDishRestaurantMenu "Steak" "maindish" "standard" "17.0"
+addDishRestaurantMenu "Icecream" "dessert" "glutenfree" "7.5"
+addDishRestaurantMenu "Chocolate" "dessert" "standard" "8.5"
+logout
+
+login "bob" "bobpass"
+addDishRestaurantMenu "Carpaccio" "starter" "standard" "5.0"
+addDishRestaurantMenu "OignonSoup" "starter" "vegetarian" "3.0"
+addDishRestaurantMenu "Noodles" "maindish" "vegetarian" "12.0"
+addDishRestaurantMenu "Potatoes" "maindish" "vegetarian" "12.5"
+addDishRestaurantMenu "WhiteCheese" "dessert" "vegetarian" "5.5"
+addDishRestaurantMenu "CremeBrulee" "dessert" "vegetarian" "6.5"
+logout
+
+login "clement" "clementpass"
+addDishRestaurantMenu "Bruschetta" "starter" "vegetarian" "4.5"
+addDishRestaurantMenu "JambonParme" "starter" "standard" "5.5"
+addDishRestaurantMenu "Hamburger" "maindish" "standard" "14.5"
+addDishRestaurantMenu "Fajitas" "maindish" "standard" "13.5"
+addDishRestaurantMenu "Oranges" "dessert" "vegetarian" "3.5"
+addDishRestaurantMenu "FruitSalad" "dessert" "vegetarian" "4.0"
+logout
+
+
+
+
+
+

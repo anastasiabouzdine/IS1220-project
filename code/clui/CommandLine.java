@@ -43,7 +43,8 @@ public class CommandLine {
 		}
 		String[] input = s.trim().split(" ");
 		if (input[0].equals("runtest")) {
-			launchFromFile("./eval/" + input[1].substring(1, input[1].length()-1));
+			
+			launchFromFile("./eval/" + (input[1].replaceAll("\"+","")));
 			return "";
 		}
 		if (input.length == 0) { return ""; }
@@ -71,8 +72,6 @@ public class CommandLine {
 		}
 		try {
 			cmd_processor.processCmd(new Command(command, args));
-//			for(int i=0; i < args.length; i++)
-//				System.out.println(args[i]);
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -109,8 +108,10 @@ public class CommandLine {
 			scan = new Scanner(file);
 			while (scan.hasNextLine()){
 				s = scan.nextLine();
-				inputInfo = getInputInfoAndProcessCmd(s);
-				System.out.println("[CL-info] " + inputInfo);
+				if (!s.isEmpty()) {
+					inputInfo = getInputInfoAndProcessCmd(s);
+					System.out.println("[CL-info] " + inputInfo);
+				}
 			}
 			System.out.println("[CL-info] End of commands from " + filename + "\n");
 		} catch (Exception e) {

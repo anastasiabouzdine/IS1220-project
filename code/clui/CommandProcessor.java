@@ -1,6 +1,5 @@
 package clui;
 
-import java.net.SocketAddress;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,18 +13,12 @@ import core.Order;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
 import parsers.ParseCustomers;
-import parsers.ParseDishes;
 import parsers.ParseManagers;
-import parsers.ParseMeals;
-import parsers.ParseOrders;
 import parsers.ParseRestaurants;
 import restaurantSetUp.AbstractFactory;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
-import restaurantSetUp.DishFactory;
 import restaurantSetUp.FactoryProducer;
-import restaurantSetUp.FullMeal;
-import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
@@ -44,30 +37,16 @@ public class CommandProcessor {
 
 	private ArrayList<Meal> potential_meals = new ArrayList<Meal>();
 
-	/*
-	 * ArrayList<FullMeal> list_fmeal =
-	 * ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
-	 * ArrayList<HalfMeal> list_hmeal =
-	 * ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
-	 * ArrayList<Starter> list_starter =
-	 * ParseDishes.parseStarter("src/txtFILES/starters.txt");
-	 * ArrayList<MainDish> list_mainDish =
-	 * ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
-	 * ArrayList<Dessert> list_dessert =
-	 * ParseDishes.parseDessert("src/txtFILES/desserts.txt"); ArrayList<Order>
-	 * list_orders = ParseOrders.parseOrders();
-	 */
-
 	/**************************************************/
 	/* Singleton pattern */
 	private CommandProcessor() {
 		core = new Core();
 
 		core.logIn("root"); // login with manager to add lists
-		core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
-		core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
-		core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
-		core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
+		// core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
+		// core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
+		// core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
+		// core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
 		core.logOut();
 	}
 
@@ -83,89 +62,90 @@ public class CommandProcessor {
 
 		switch (current_name.toUpperCase()) {
 		case "REGISTERCUSTOMER":
-			registerCustomer(); 
+			registerCustomer();
 			break;
 		case "REGISTERCOURIER":
-			registerCourier(); 
+			registerCourier();
 			break;
 		case "REGISTERRESTAURANT":
-			registerRestaurant(); 
+			registerRestaurant();
 			break;
 		case "ADDDISHRESTAURANTMENU":
-			addDishRestaurantMenu(); 
+			addDishRestaurantMenu();
 			break;
 		case "LOGIN":
-			login(); 
+			login();
 			break;
 		case "CREATEMEAL":
-			createMeal(); 
+			createMeal();
 			break;
 		case "ADDDISH2MEAL":
-			addDish2Meal(); 
+			addDish2Meal();
 			break;
 		case "SHOWMEAL":
-			showMeal(); 
+			showMeal();
 			break;
 		case "SAVEMEAL":
-			saveMeal(); 
+			saveMeal();
 			break;
 		case "SETSPECIALOFFER":
-			setSpecialOffer(); 
+			setSpecialOffer();
 			break;
 		case "REMOVEFROMSPECIALOFFER":
-			removeFromSpecialOffer(); 
+			removeFromSpecialOffer();
 			break;
 		case "CREATEORDER":
-			createOrder(); 
+			createOrder();
 			break;
 		case "ADDITEM2ORDER":
-			addItem2Order(); 
+			addItem2Order();
 			break;
 		case "ADDNBITEM2ORDER":
-			addNbItem2Order(); 
+			addNbItem2Order();
 			break;
 		case "ENDORDER":
-			endOrder(); 
+			endOrder();
 			break;
 		case "ONDUTY":
 			onDuty();
 			break;
 		case "OFFDUTY":
-			offDuty(); 
+			offDuty();
 			break;
 		case "ASSOCIATECARD":
-			associateCard(); 
+			associateCard();
 			break;
 		case "SHOWCOURIERDELIVERIES":
-			showCourierDeliveries(); 
+			showCourierDeliveries();
 			break;
 		case "SHOWRESTAURANTTOP":
-			showRestaurantTop(); 
+			showRestaurantTop();
 			break;
 		case "SHOWCUSTOMERS":
-			showCustomers(); 
+			showCustomers();
+			break;
+		case "SHOWRESTAURANTS":
+			showRestaurants();
 			break;
 		case "SHOWMENUITEM":
-			showMenuItem(); 
+			showMenuItem();
 			break;
 		case "SHOWTOTALPROFIT":
-			showTotalProfit(); 
+			showTotalProfit();
 			break;
 		case "LOGOUT":
-			logout(); 
+			logout();
 			break;
 		}
 	}
 
-
-
 	/**************************************************/
 	/* Apply commands to core */
 
-
 	/**
 	 * Adds a restaurant to the system with given name, username, address and
-	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 * password, recalling that the address must have the syntax
+	 * "xCoord,yCoord".
 	 */
 	public void registerRestaurant() {
 		String name = current_args[0];
@@ -181,10 +161,10 @@ public class CommandProcessor {
 		}
 	}
 
-
 	/**
-	 * Adds a customer to the system with given firstname, lastname, username, address and
-	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 * Adds a customer to the system with given firstname, lastname, username,
+	 * address and password, recalling that the address must have the syntax
+	 * "xCoord,yCoord".
 	 */
 	public void registerCustomer() {
 		String firstName = current_args[0];
@@ -193,7 +173,8 @@ public class CommandProcessor {
 		String address = current_args[3];
 		String password = current_args[4];
 
-		Customer c = new Customer(firstName, lastName, new Address(address), "00000000", "null@null.null", username, password);
+		Customer c = new Customer(firstName, lastName, new Address(address),
+				"00000000", "null@null.null", username, password);
 		try {
 			core.register(c);
 		} catch (AlreadyUsedUsernameException e) {
@@ -202,8 +183,9 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Adds a courier to the system with given firstname, lastname, username, address and
-	 * password, recalling that the address must have the syntax "xCoord,yCoord".
+	 * Adds a courier to the system with given firstname, lastname, username,
+	 * address and password, recalling that the address must have the syntax
+	 * "xCoord,yCoord".
 	 */
 	public void registerCourier() {
 		String firstName = current_args[0];
@@ -221,26 +203,27 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Adds a dish with given dishname, category, foodtype and
-	 * price, to the menu of the current logged in restaurant.
+	 * Adds a dish with given dishname, category, foodtype and price, to the
+	 * menu of the current logged in restaurant.
 	 */
 	public void addDishRestaurantMenu() {
 		String dishName = current_args[0];
-		String dishCategory = current_args[1];
-		String foodCategory = current_args[2];
+		String dishCategory = current_args[1].toLowerCase();
+		String foodCategory = current_args[2].toLowerCase();
+
 		try {
 			double unitPrice = Double.parseDouble(current_args[3]);
-			if (dishCategory.equals("starter")){
-				core.getCurrent_restaurant().addStarter((Starter)
-						dish_factory.getDish("starter", dishName, unitPrice, foodCategory));
+			if (dishCategory.equals("starter")) {
+				core.getCurrent_restaurant()
+				.addStarter((Starter) dish_factory.getDish("starter", dishName, unitPrice, foodCategory));
 			} else if (dishCategory.equals("maindish")) {
-				core.getCurrent_restaurant().addMainDish((MainDish)
-						dish_factory.getDish("maindish", dishName, unitPrice, foodCategory));
+				core.getCurrent_restaurant()
+				.addMainDish((MainDish) dish_factory.getDish("maindish", dishName, unitPrice, foodCategory));
 			} else if (dishCategory.equals("dessert")) {
-				core.getCurrent_restaurant().addDessert((Dessert)
-						dish_factory.getDish("dessert", dishName, unitPrice, foodCategory));
+				core.getCurrent_restaurant()
+				.addDessert((Dessert) dish_factory.getDish("dessert", dishName, unitPrice, foodCategory));
 			}
-		} catch (NumberFormatException e){
+		} catch (NumberFormatException e) {
 			System.out.println("! Please enter a valid double for the price !");
 		}
 	}
@@ -256,8 +239,8 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Potentially creates a meal with given name and given type to the proposed items
-	 * of the current logged in restaurant.
+	 * Potentially creates a meal with given name and given type to the proposed
+	 * items of the current logged in restaurant.
 	 */
 	public void createMeal() {
 		String mealName = current_args[0];
@@ -268,13 +251,11 @@ public class CommandProcessor {
 		} else {
 			System.out.println("! Command not available for this type of user !");
 		}
-
-
 	}
 
 	/**
-	 * Adds a dish that already exists in the restaurant list of dishes
-	 * to a meal that is already in the restaurant list of meals.
+	 * Adds a dish that already exists in the restaurant list of dishes to a
+	 * meal that is already in the restaurant list of meals.
 	 */
 	public void addDish2Meal() {
 		String dishName = current_args[0];
@@ -283,7 +264,7 @@ public class CommandProcessor {
 		try {
 			boolean found = false;
 			Meal m = null;
-			for(int i = 0; i < potential_meals.size(); i++) {
+			for (int i = 0; i < potential_meals.size(); i++) {
 				m = potential_meals.get(i);
 				if (m.getName().equalsIgnoreCase(mealName)) {
 					List<Dish> ld = m.getListOfDish();
@@ -293,7 +274,8 @@ public class CommandProcessor {
 				}
 			}
 			if (!found) {
-				System.out.println("! This meal was not created, please do it using createMeal <mealName> <mealType> !");
+				System.out
+				.println("! This meal was not created, please do it using createMeal <mealName> <mealType> !");
 			}
 		} catch (NullPointerException e) {
 			System.out.println("! Command not available for this type of user !");
@@ -308,10 +290,10 @@ public class CommandProcessor {
 
 		try {
 			String meal_print = null;
-			// look for the meal in his already saved meals 
+			// look for the meal in his already saved meals
 			meal_print = core.getCurrent_restaurant().getMealByName(mealName).toString();
 			// look for the meal in the potential meals list
-			for(Meal m : potential_meals) {
+			for (Meal m : potential_meals) {
 				if (m.getName().equalsIgnoreCase(mealName)) {
 					meal_print = "Not saved yet - " + m.toString();
 				}
@@ -328,8 +310,8 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Allows to save one of the pending meals with given meal name
-	 * to the currently logged in restaurant list of meals.
+	 * Allows to save one of the pending meals with given meal name to the
+	 * currently logged in restaurant list of meals.
 	 */
 	public void saveMeal() {
 		String mealName = current_args[0];
@@ -337,7 +319,7 @@ public class CommandProcessor {
 		try {
 			boolean found = false;
 			Meal m = null;
-			for(int i = 0; i < potential_meals.size(); i++) {
+			for (int i = 0; i < potential_meals.size(); i++) {
 				m = potential_meals.get(i);
 				if (m.getName().equalsIgnoreCase(mealName)) {
 					core.getCurrent_restaurant().addMeal(m);
@@ -348,15 +330,14 @@ public class CommandProcessor {
 			if (!found) {
 				System.out.println("! No meal corresponds to the given meal name !");
 			}
-
 		} catch (NullPointerException e) {
 			System.out.println("! Command not available for this type of user !");
 		}
 	}
 
 	/**
-	 * Sets the special offer meal of the week of the logged in
-	 * restaurant to the given meal.
+	 * Sets the special offer meal of the week of the logged in restaurant to
+	 * the given meal.
 	 */
 	public void setSpecialOffer() {
 		String mealName = current_args[0];
@@ -374,8 +355,8 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Sets the special offer meal of the week of the logged in restaurant
-	 * to null.
+	 * Sets the special offer meal of the week of the logged in restaurant to
+	 * null.
 	 */
 	public void removeFromSpecialOffer() {
 		String mealName = current_args[0];
@@ -391,7 +372,6 @@ public class CommandProcessor {
 			System.out.println("! Command not available for this type of user !");
 		}
 	}
-
 
 	public void createOrder() {
 		String restaurantName = current_args[0];
@@ -427,7 +407,8 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Add the given item (meal or dish) with given quantity to the current order.
+	 * Add the given item (meal or dish) with given quantity to the current
+	 * order.
 	 */
 	public void addNbItem2Order() {
 		String itemName = current_args[0];
@@ -455,8 +436,8 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Saves and treat the current order for the currently logged on customer
-	 * at a given date.
+	 * Saves and treat the current order for the currently logged on customer at
+	 * a given date.
 	 */
 	public void endOrder() {
 		String string_date = current_args[0];
@@ -491,7 +472,7 @@ public class CommandProcessor {
 	/**
 	 * Set the state of the logged in courier to off-duty.
 	 */
-	public void offDuty() {		
+	public void offDuty() {
 		try {
 			core.getCurrent_courier().setAvailable(false);
 		} catch (NullPointerException e) {
@@ -530,40 +511,56 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * For the currently logged on myFoodora manager to display the list of couriers
-	 * sorted in decreasing order w r t the number of completed deliveries.
+	 * For the currently logged on myFoodora manager to display the list of
+	 * couriers sorted in decreasing order w r t the number of completed
+	 * deliveries.
 	 */
 	public void showCourierDeliveries() {
 		System.out.println("Couriers sorted in decreasing order w.r.t. the number of completed deliveries");
 		ArrayList<Courier> best_c = core.getMostOrLeastActiveCouriers(true);
 		Courier c = null;
-		for(int i = 0; i < best_c.size(); i++){
+		for (int i = 0; i < best_c.size(); i++) {
 			c = best_c.get(i);
 			System.out.println(c.getNbOfDeliveredOrders() + " orders by " + c.toString());
 		}
 	}
 
 	/**
-	 * For the currently logged on myFoodora manager to display the list of restaurant
-	 * sorted in decreasing order w r t  the number of delivered orders.
+	 * For the currently logged on myFoodora manager to display the list of
+	 * restaurant sorted in decreasing order w r t the number of delivered
+	 * orders.
 	 */
 	public void showRestaurantTop() {
 		System.out.println("Restaurants sorted in decreasing order w.r.t. the number of completed orders");
 		ArrayList<Restaurant> best_r = core.getMostOrLeastSellingRestaurants(true);
 		Restaurant r = null;
-		for(int i = 0; i < best_r.size(); i++){
+		for (int i = 0; i < best_r.size(); i++) {
 			r = best_r.get(i);
 			System.out.println(r.getNbOfDeliveredOrders() + " orders by " + r.toString());
 		}
 	}
 
 	/**
-	 * For the currently logged on myFoodora manager to display the list of customers.
+	 * For the currently logged on myFoodora manager to display the list of
+	 * customers.
 	 */
 	public void showCustomers() {
 		if (core.getCurrent_manager() != null) {
-			for(Customer c : core.getCustomerList())
+			for (Customer c : core.getCustomerList())
 				System.out.println(c.toString());
+		} else {
+			System.out.println("! Command not available for this type of user !");
+		}
+	}
+
+	/**
+	 * For the currently logged on myFoodora manager to display the list of
+	 * restaurants.
+	 */
+	public void showRestaurants() {
+		if (core.getCurrent_manager() != null) {
+			for (Restaurant r : core.getRestaurantList())
+				System.out.println(r.toString());
 		} else {
 			System.out.println("! Command not available for this type of user !");
 		}
@@ -580,19 +577,19 @@ public class CommandProcessor {
 			System.out.println("! This restaurant is not valid !");
 		} else {
 			System.out.println("--- Meals ---");
-			for(Meal m : r.getListOfMeal()) {
+			for (Meal m : r.getListOfMeal()) {
 				System.out.println(m.toString());
 			}
 			System.out.println("--- Starters ---");
-			for(Dish d : r.getMenu().getListOfStarter()) {
+			for (Dish d : r.getMenu().getListOfStarter()) {
 				System.out.println(d.toString());
 			}
 			System.out.println("--- Maindishes ---");
-			for(Dish d : r.getMenu().getListOfMainDish()) {
+			for (Dish d : r.getMenu().getListOfMainDish()) {
 				System.out.println(d.toString());
 			}
 			System.out.println("--- Desserts ---");
-			for(Dish d : r.getMenu().getListOfDessert()) {
+			for (Dish d : r.getMenu().getListOfDessert()) {
 				System.out.println(d.toString());
 			}
 		}
@@ -613,13 +610,16 @@ public class CommandProcessor {
 
 	/**
 	 * Returns a Calendar object parsed from input date in format dd/mm/yyyy.
-	 * @param string_date		a string containing the date to be parsed in the form dd/mm/yyyy
-	 * @return		a Calendar object representing the parsed date
+	 * 
+	 * @param string_date
+	 *            a string containing the date to be parsed in the form
+	 *            dd/mm/yyyy
+	 * @return a Calendar object representing the parsed date
 	 * @throws ParseException
 	 */
 	public static Calendar parseDateFromString(String string_date) throws ParseException {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = (Date)formatter.parse(string_date); 
+		Date date = (Date) formatter.parse(string_date);
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
