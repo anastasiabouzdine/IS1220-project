@@ -81,54 +81,79 @@ public class CommandProcessor {
 		current_name = cmd.getName();
 		current_args = cmd.getArgs();
 
-		if (current_name.equals("registerCustomer")) {
-			registerCustomer();
-		} else if (current_name.equals("registerCourier")) {
-			registerCourier();
-		} else if (current_name.equals("registerRestaurant")) {
-			registerRestaurant();
-		} else if (current_name.equals("addDishRestaurantMenu")) {
-			addDishRestaurantMenu();
-		} else if (current_name.equals("login")) {
-			login();
-		} else if (current_name.equals("createMeal")) {
-			createMeal();
-		} else if (current_name.equals("addDish2Meal")) {
-			addDish2Meal();
-		} else if (current_name.equals("showMeal")) {
-			showMeal();
-		} else if (current_name.equals("saveMeal")) {
-			saveMeal();
-		} else if (current_name.equals("setSpecialOffer")) {
-			setSpecialOffer();
-		} else if (current_name.equals("removeFromSpecialOffer")) {
-			removeFromSpecialOffer();
-		} else if (current_name.equals("createOrder")) {
-			createOrder();
-		} else if (current_name.equals("addItem2Order")) {
-			addItem2Order();
-		} else if (current_name.equals("addNbItem2Order")) {
-			addNbItem2Order();
-		} else if (current_name.equals("endOrder")) {
-			endOrder();
-		} else if (current_name.equals("onDuty")) {
+		switch (current_name.toUpperCase()) {
+		case "REGISTERCUSTOMER":
+			registerCustomer(); 
+			break;
+		case "REGISTERCOURIER":
+			registerCourier(); 
+			break;
+		case "REGISTERRESTAURANT":
+			registerRestaurant(); 
+			break;
+		case "ADDDISHRESTAURANTMENU":
+			addDishRestaurantMenu(); 
+			break;
+		case "LOGIN":
+			login(); 
+			break;
+		case "CREATEMEAL":
+			createMeal(); 
+			break;
+		case "ADDDISH2MEAL":
+			addDish2Meal(); 
+			break;
+		case "SHOWMEAL":
+			showMeal(); 
+			break;
+		case "SAVEMEAL":
+			saveMeal(); 
+			break;
+		case "SETSPECIALOFFER":
+			setSpecialOffer(); 
+			break;
+		case "REMOVEFROMSPECIALOFFER":
+			removeFromSpecialOffer(); 
+			break;
+		case "CREATEORDER":
+			createOrder(); 
+			break;
+		case "ADDITEM2ORDER":
+			addItem2Order(); 
+			break;
+		case "ADDNBITEM2ORDER":
+			addNbItem2Order(); 
+			break;
+		case "ENDORDER":
+			endOrder(); 
+			break;
+		case "ONDUTY":
 			onDuty();
-		} else if (current_name.equals("offDuty")) {
-			offDuty();
-		} else if (current_name.equals("associateCard")) {
-			associateCard();
-		} else if (current_name.equals("showCourierDeliveries")) {
-			showCourierDeliveries();
-		} else if (current_name.equals("showRestaurantTop")) {
-			showRestaurantTop();
-		} else if (current_name.equals("showCustomers")) {
-			showCustomers();
-		} else if (current_name.equals("showMenuItem")) {
-			showMenuItem();
-		} else if (current_name.equals("showTotalProfit")) {
-			showTotalProfit();
-		} else if (current_name.equals("logout")) {
-			logout();
+			break;
+		case "OFFDUTY":
+			offDuty(); 
+			break;
+		case "ASSOCIATECARD":
+			associateCard(); 
+			break;
+		case "SHOWCOURIERDELIVERIES":
+			showCourierDeliveries(); 
+			break;
+		case "SHOWRESTAURANTTOP":
+			showRestaurantTop(); 
+			break;
+		case "SHOWCUSTOMERS":
+			showCustomers(); 
+			break;
+		case "SHOWMENUITEM":
+			showMenuItem(); 
+			break;
+		case "SHOWTOTALPROFIT":
+			showTotalProfit(); 
+			break;
+		case "LOGOUT":
+			logout(); 
+			break;
 		}
 	}
 
@@ -510,7 +535,12 @@ public class CommandProcessor {
 	 */
 	public void showCourierDeliveries() {
 		System.out.println("Couriers sorted in decreasing order w.r.t. the number of completed deliveries");
-		System.out.println(core.getMostOrLeastActiveCouriers(true));
+		ArrayList<Courier> best_c = core.getMostOrLeastActiveCouriers(true);
+		Courier c = null;
+		for(int i = 0; i < best_c.size(); i++){
+			c = best_c.get(i);
+			System.out.println(c.getNbOfDeliveredOrders() + " orders by " + c.toString());
+		}
 	}
 
 	/**
@@ -519,7 +549,12 @@ public class CommandProcessor {
 	 */
 	public void showRestaurantTop() {
 		System.out.println("Restaurants sorted in decreasing order w.r.t. the number of completed orders");
-		System.out.println(core.getMostOrLeastSellingRestaurants(true));
+		ArrayList<Restaurant> best_r = core.getMostOrLeastSellingRestaurants(true);
+		Restaurant r = null;
+		for(int i = 0; i < best_r.size(); i++){
+			r = best_r.get(i);
+			System.out.println(r.getNbOfDeliveredOrders() + " orders by " + r.toString());
+		}
 	}
 
 	/**
