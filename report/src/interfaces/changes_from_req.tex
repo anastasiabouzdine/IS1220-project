@@ -4,11 +4,9 @@
 \paragraph{Meal creation in commandline} % (fold)
 \label{par:meal_creation_in_commandline}
 The first command line command which has been subject to a change
-was the \lstinline|createMeal| command. It's new form is
-\begin{center}
-  \lstinline|createMeal <mealName> <mealType>|
-\end{center}
-this change allows the restaurant to specify immediately which type of meal
+was the \lstinline|createMeal| command. Its new form is
+\lstinline|createMeal <mealName> <mealType>|
+which allows the restaurant to specify immediately which type of meal
 he wants to create, it can either be a fullmeal or a halfmeal.
 This prevents the system from failing in case the \lstinline|addDish2Meal|
 is never called after this one.
@@ -19,9 +17,7 @@ to the meal in order to stay relevant with the mealtype he gave.
 \paragraph{Order creation in commandline} % (fold)
 \label{par:order_creation_in_commandline}
 Then, we changed the \lstinline|createOrder| command. It's new form is
-\begin{center}
-  \lstinline|createOrder <restaurantName>|
-\end{center}
+\lstinline|createOrder <restaurantName>|.
 This is justified by the fact that naming an order by the customer
 has is of no use in our project nor in reality as the system
 handles the assignement of a unique ID of the order.
@@ -34,13 +30,26 @@ have to handle (create, add items to it and then end it)
 the \emph{current order}.
 % paragraph order_creation_in_commandline (end)
 
-\paragraph{Add an item to order with a quantity} % (fold)
+\paragraph{Adding an item to order with a quantity} % (fold)
 \label{par:add_an_item_to_order_with_a_quantity}
-A new method called \lstinline|addNbItem2Order| has been implemented
+A method called \lstinline|addNbItem2Order| has been added
 in case the customer wants to order the same item more than once
 and doesn't want to rewrite the same command multiple times.
 This case scenario is useful in reality for group orders.
 % paragraph add_an_item_to_order_with_a_quantity (end)
+
+\paragraph{Merge of \texttt{endOrder} and \texttt{findDeliverer} methods} % (fold)
+\label{par:merge_of_endorder_and_finddeliverer}
+This choice is not about optimisation nor better representation of reality,
+but only to how we implemented the \Core.
+In the latter, we designed the order handling in a way that once an order
+is placed, it is automatically treated, meaning the system finds a courier
+following the delivery policy.
+Finding the deliverer can thus only be made once an order \emph{really}
+added the list of orders of the \Core.
+Therefore, the \lstinline|endOrder| will take care of finding the courier
+and showing it on screen, replacing the use of \lstinline|findDeliverer|.
+% paragraph merge_of (end)
 
 \paragraph{No need to specify the username for \texttt{onDuty}
 and \texttt{offDuty} methods} % (fold)
@@ -52,7 +61,12 @@ and the latter doesn't need to specify his own username when changing his status
 
 \paragraph{Use of \texttt{showMenuItem} by any type of user} % (fold)
 \label{par:use_of_lstinline_showmenuitem_by_any_type_of_user}
-
+Instead of just being accessible to the mangare, showing all the menu
+items can be done by any type of user.
+This choice is motivated on one side as it is useful for both the customer
+to have a list of what he can order and for the restaurant to remember what
+is in its own menu, and on the other side as it describes reality in a better
+as a menu card is something public that anyone can view.
 % paragraph use_of_lstinline_showmenuitem_by_any_type_of_user (end)
 
 % subsection what_differs_from_requirements (end)
