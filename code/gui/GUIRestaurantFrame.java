@@ -137,7 +137,8 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 
 		mealDishDisplay.setTextFields(rest);
 		mealDishDisplay.getGoBack_button()
-				.addActionListener(new UserActionInfoBasicRest("meals", "show all full meals", rest));
+		.addActionListener(new UserActionInfoBasicRest("meals", "show all full meals", rest));
+		
 		mealDishDisplay.getjListMealShow().addMouseListener(new MouseAdapter() {
 
 			public void mouseClicked(MouseEvent evt) {
@@ -146,7 +147,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					int index = list.locationToIndex(evt.getPoint());
 					Meal meal = rest.getListOfMeal().get(index);
 					JPanel dishPanel1 = mealDishDisplay.display(meal, rest);
-					getFrame().add(dishPanel1);
+					getFrame().add(dishPanel1);				
 					setCurrentPanel(dishPanel1);
 				}
 			}

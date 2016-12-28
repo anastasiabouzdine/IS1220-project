@@ -40,7 +40,7 @@ public class GUIDisplayMealDish {
 	private JPanel mealValuePanel = new JPanel(new GridLayout(0, 1));
 	private JPanel dishPanel = new JPanel();
 
-	private Button goBack_button = new Button("GO BACK");
+	private Button goBack_button;
 
 	private JFormattedTextField starterDesc = new JFormattedTextField("Starter: ");
 	private JFormattedTextField mainDishDesc = new JFormattedTextField("Main Dish: ");
@@ -234,5 +234,12 @@ public class GUIDisplayMealDish {
 	 */
 	public JList<Meal> getjListMealRemove() {
 		return jListMealRemove;
+	}
+
+	/**
+	 * @param goBack_button the goBack_button to set
+	 */
+	public void setGoBack_button(Button goBack_button) {
+		this.goBack_button = goBack_button;
 	}
 }
