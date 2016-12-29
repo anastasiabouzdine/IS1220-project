@@ -522,19 +522,20 @@ public class Core {
 	}
 
 	/**
-	 * Treat new order, meaning it tries to associate a courier to the 
-	 * order, compute the price and message every user related to the order.
-	 * This is one of the most important functions in the
-	 * core: it treats new orders that were received by the system: 1) it takes
-	 * the latest order from the queue (LIFO principle) 2) according to its
-	 * policy a list of the given couriers is given 3) a loop is implemented
-	 * that waits until a courier accepts or declines the order (the courier
-	 * does that randomly in our case) 4) either no courier has been found (then
-	 * the order is disregarded) 5) or the courier accepts and all the data is
-	 * saved and updated respectively This function is private because it is
-	 * only used by the function placeOrder().
+	 * Treat new order, meaning it tries to associate a courier to the order,
+	 * compute the price and message every user related to the order. This is
+	 * one of the most important functions in the core: it treats new orders
+	 * that were received by the system: 1) it takes the latest order from the
+	 * queue (LIFO principle) 2) according to its policy a list of the given
+	 * couriers is given 3) a loop is implemented that waits until a courier
+	 * accepts or declines the order (the courier does that randomly in our
+	 * case) 4) either no courier has been found (then the order is disregarded)
+	 * 5) or the courier accepts and all the data is saved and updated
+	 * respectively This function is private because it is only used by the
+	 * function placeOrder().
 	 * 
-	 * @return the courier that treated the last put order, null if none was found 
+	 * @return the courier that treated the last put order, null if none was
+	 *         found
 	 */
 	private Courier treatNewOrder() {
 		Courier courier = null;
@@ -547,8 +548,8 @@ public class Core {
 				courier = currentList.get(0);
 				if (courier.isAvailable() && users.containsKey(courier.getUsername())) {
 					courier.addNewOrder(order); // courier receives order
-					update(courier, "[Order ID : " + order.getID() + "] You have received a new order. "
-							+ "Please respond whether you can carry out the order or not.");
+					update(courier, "[Order ID : " + order.getID() + "] There is a new order, "
+							+ "please respond whether you can carry out the order or not.");
 					// courier decides randomly if he accepts or declines
 					courier.replyRandom();
 				}
@@ -562,6 +563,7 @@ public class Core {
 			} else {
 				order.setProfitFinal(order.getPrice() * this.markupPercentage + this.serviceFee - this.deliveryCost);
 				order.setPriceFinal(order.getPriceInter() + this.serviceFee);
+				
 				savedOrders.add(order); // order is saved
 				updateSystem("[Order ID : " + order.getID() + "] " + courier
 						+ " will proceed with the order. Order has been saved.");
@@ -569,9 +571,11 @@ public class Core {
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
 				List<Dish> order_dishes = order.getDishes();
+
 				if (!order_meals.isEmpty()) {
-					for (int i = 0; i < order_meals.size(); i++) // count of meal is updated
+					for (int i = 0; i < order_meals.size(); i++) { // count of meal is updated
 						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
+					}
 					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the meal(s): "
 							+ order_meals + " to be picked up shortly by: " + courier.getName() + ".");
 
@@ -587,6 +591,9 @@ public class Core {
 				update(order_customer,
 						"[Order ID : " + order.getID() + "] Your order has been accepted " + "for the price of "
 								+ order.getPriceFinal() + " and will be carried out as soon as possible.");
+				update(courier, "[Order ID : " + order.getID() + "] Please deliver this order from"
+						+ " restaurant "+order_restaurant.getName()+ " to customer " + order_customer.getName()
+						+ " at address " + order_customer.getAddress().toString() +".");
 			}
 		}
 		return courier;
@@ -636,11 +643,13 @@ public class Core {
 	}
 
 	/**
-	 * Places a new order in the queue of new orders and returns assigned courier.
+	 * Places a new order in the queue of new orders and returns assigned
+	 * courier.
 	 * 
 	 * @param order
 	 *            of type order
-	 * @return the <code>Courier</code> that is assigned to deliver the order, null if none was found
+	 * @return the <code>Courier</code> that is assigned to deliver the order,
+	 *         null if none was found
 	 */
 	public Courier placeNewOrder(Order order) {
 		Courier c = null;
@@ -780,7 +789,7 @@ public class Core {
 			return 0;
 		}
 	}
-	
+
 	/**
 	 * @see dateBefore and dateAfter have to be set before calling this function
 	 * 
@@ -818,10 +827,10 @@ public class Core {
 	 * 
 	 * @param most
 	 *            a <code>boolean</code> whose value is true (false) to get the
-	 *            restaurants sorted in decreasing (increasing) order
-	 *            w.r.t. the number of delivered orders
-	 * @return an <code>ArrayList</code> of <code>Restaurant</code>following the criteria of
-	 *         the argument
+	 *            restaurants sorted in decreasing (increasing) order w.r.t. the
+	 *            number of delivered orders
+	 * @return an <code>ArrayList</code> of <code>Restaurant</code>following the
+	 *         criteria of the argument
 	 */
 	public ArrayList<Restaurant> getMostOrLeastSellingRestaurants(boolean most) {
 		if (current_manager != null) {
@@ -833,7 +842,7 @@ public class Core {
 					return r1.getNbOfDeliveredOrders() - r2.getNbOfDeliveredOrders();
 				}
 			});
-			
+
 			if (most) {
 				Collections.reverse(restaurant_top_list);
 			}
@@ -851,10 +860,10 @@ public class Core {
 	 * 
 	 * @param most
 	 *            a <code>boolean</code> whose value is true (false) to get the
-	 *            couriers sorted in decreasing (increasing) order
-	 *            w.r.t. the number of delivered orders
-	 * @return  an <code>ArrayList</code> of <code>Courier</code> following the criteria of
-	 *         the argument
+	 *            couriers sorted in decreasing (increasing) order w.r.t. the
+	 *            number of delivered orders
+	 * @return an <code>ArrayList</code> of <code>Courier</code> following the
+	 *         criteria of the argument
 	 */
 	public ArrayList<Courier> getMostOrLeastActiveCouriers(boolean most) {
 		if (current_manager != null) {
@@ -866,7 +875,7 @@ public class Core {
 					return c1.getNbOfDeliveredOrders() - c2.getNbOfDeliveredOrders();
 				}
 			});
-			
+
 			if (most) {
 				Collections.reverse(courier_top_list);
 			}
@@ -937,7 +946,43 @@ public class Core {
 	}
 
 	/*********************************************************************/
-	/* Getters and Setter */
+	/* Users related getters and setters */
+
+	/**
+	 * Returns the restaurant object corresponding to the name given as input or
+	 * null if the restaurant is not in the restaurant list.
+	 * 
+	 * @param name
+	 *            a String containing the restaurant name
+	 * @return the restaurant object corresponding to the name or null if the
+	 *         restaurant is not in the restaurant list
+	 */
+	public Restaurant findRestaurantByName(String name) {
+		for (Restaurant r : restaurantList) {
+			if (r.getName().equalsIgnoreCase(name)) {
+				return r;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the customer object corresponding to the name given as input or
+	 * null if the customer is not in the customer list.
+	 * 
+	 * @param name
+	 *            a String containing the customer name
+	 * @return the customer object corresponding to the name or null if the
+	 *         customer is not in the customer list
+	 */
+	public Customer findCustomerByName(String name) {
+		for (Customer c : customerList) {
+			if (c.getName().equalsIgnoreCase(name)) {
+				return c;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Changes username of certain User.
@@ -956,24 +1001,6 @@ public class Core {
 		} else {
 			unauthorizedCommand();
 		}
-	}
-
-	/**
-	 * Returns the restaurant object corresponding to the name given as input or
-	 * null if the restaurant is not in the restaurant list.
-	 * 
-	 * @param name
-	 *            a String containing the restaurant name
-	 * @return the restaurant object corresponding to the name or null if the
-	 *         restaurant is not in the restaurant list
-	 */
-	public Restaurant findRestaurantByName(String name) {
-		for (Restaurant r : restaurantList) {
-			if (r.getName().equals(name)) {
-				return r;
-			}
-		}
-		return null;
 	}
 
 	/**

@@ -139,8 +139,6 @@ public class Order {
 			for (int i = 0; i < meals.size(); i++) {
 				if (restaurant.isMealSpecial(meals.get(i))) {
 					price += quantity.get(i) * meals.get(i).getPrice() * (1 - restaurant.getSpecDiscFact());
-					// price +=
-					// quantity.get(i)*restaurant.getPrice(meals.get(i))*(1.0-restaurant.getSpecDiscFact())/(1.0-restaurant.getDiscountFactor());
 				} else {
 					price += quantity.get(i) * restaurant.getPrice(meals.get(i));
 				}
@@ -163,7 +161,7 @@ public class Order {
 	public String toString() {
 		return "Order [ID=" + ID + ", customer=" + customer + ", restaurant=" + restaurant + ", courier=" + courier
 				+ ", date="+ date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)
-				+ "/"+date.get(Calendar.YEAR)+ "]";
+				+ "/"+date.get(Calendar.YEAR)+ ", dishes=" + dishes + ", meals=" + meals + "]";
 	}
 
 	/*********************************************************************/

@@ -74,7 +74,8 @@ itemName
 quantity
 -------
 endOrder
-0
+1
+string_date
 -------
 onDuty
 1

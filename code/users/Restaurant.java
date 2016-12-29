@@ -39,7 +39,7 @@ public class Restaurant extends User {
 	private double specDiscFact ;  // discount factor is set by default to 10%
 	private Menu menu;
 	private Meal specialMeal;
-	private List<Meal> listOfMeal; 
+	private ArrayList<Meal> listOfMeal; 
 	private int nbOfDeliveredOrders;
 
 	/**
@@ -142,7 +142,6 @@ public class Restaurant extends User {
 	public boolean isMealSpecial(Meal meal) {
 		if(!(listOfMeal.contains(meal))) {
 			System.out.println("Restaurant does not offer this meal");
-			throw new NullPointerException();
 		}
 		if(meal.equals(specialMeal)){
 			return true;
@@ -158,7 +157,7 @@ public class Restaurant extends User {
 	 */
 	public Meal getMealByName(String mealName) {
 		for(Meal m : listOfMeal){
-			if (m.getName().equals(mealName)){
+			if (m.getName().equalsIgnoreCase(mealName)){
 				return m;
 			}
 		}
@@ -172,17 +171,17 @@ public class Restaurant extends User {
 	 */
 	public Dish getDishByName(String dishName) {
 		for (Dish m : menu.getListOfStarter()){
-			if (m.getName().equals(dishName)){
+			if (m.getName().equalsIgnoreCase(dishName)){
 				return m;
 			}
 		}
 		for (Dish m : menu.getListOfMainDish()){
-			if (m.getName().equals(dishName)){
+			if (m.getName().equalsIgnoreCase(dishName)){
 				return m;
 			}
 		}
 		for (Dish m : menu.getListOfDessert()){
-			if (m.getName().equals(dishName)){
+			if (m.getName().equalsIgnoreCase(dishName)){
 				return m;
 			}
 		}
@@ -248,7 +247,7 @@ public class Restaurant extends User {
 	/**
 	 * @param listOfMeal the listOfMeal to set
 	 */
-	public void setListOfMeal(List<Meal> listOfMeal) {
+	public void setListOfMeal(ArrayList<Meal> listOfMeal) {
 		this.listOfMeal = listOfMeal;
 	}
 

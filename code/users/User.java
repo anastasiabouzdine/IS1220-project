@@ -59,11 +59,12 @@ public abstract class User {
 	 * This function allows to read new messages as soon as the user is logged in
 	 *  
 	 */
-	public void checkMessages(){ 
-		int amount = messageBox.size();
+	public void checkMessages(){
+		if (!messageBox.isEmpty())
+			System.out.println("+++ Your messagebox +++");
 		while(!messageBox.isEmpty()){
 			String message = messageBox.pop();
-			System.out.println(amount - messageBox.size() + ". message: " + message);
+			System.out.println("message " + (messageBox.size()+1) + " : " + message);
 		}
 	}
 

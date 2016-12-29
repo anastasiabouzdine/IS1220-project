@@ -1,6 +1,7 @@
 package clui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -43,7 +44,7 @@ public class CommandLine {
 		}
 		String[] input = s.trim().split(" ");
 		if (input[0].equals("runtest")) {
-			
+
 			launchFromFile("./eval/" + (input[1].replaceAll("\"+","")));
 			return "";
 		}
@@ -95,7 +96,7 @@ public class CommandLine {
 			System.out.println("End of program");
 			sc.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("! An error occured, please retry following specifications !");;
 		}
 	}
 
@@ -104,18 +105,23 @@ public class CommandLine {
 		Scanner scan = null;
 		String s, inputInfo;
 		try {
-			System.out.println("[CL-info] Reading commands from " + filename);
-			scan = new Scanner(file);
-			while (scan.hasNextLine()){
-				s = scan.nextLine();
-				if (!s.isEmpty()) {
-					inputInfo = getInputInfoAndProcessCmd(s);
-					System.out.println("[CL-info] " + inputInfo);
+			try {
+
+				System.out.println("[CL-info] Reading commands from " + filename);
+				scan = new Scanner(file);
+				while (scan.hasNextLine()){
+					s = scan.nextLine();
+					if (!s.isEmpty()) {
+						inputInfo = getInputInfoAndProcessCmd(s);
+						System.out.println("[CL-info] " + inputInfo);
+					}
 				}
+				System.out.println("[CL-info] End of commands from " + filename + "\n");
+			} catch (FileNotFoundException e) {
+				System.out.println("! Please enter a valid filename !");
 			}
-			System.out.println("[CL-info] End of commands from " + filename + "\n");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("! An error occured, please retry following specifications !");;
 		}
 	}
 

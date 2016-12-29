@@ -19,6 +19,8 @@ import restaurantSetUp.AbstractFactory;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FactoryProducer;
+import restaurantSetUp.FullMeal;
+import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
@@ -42,12 +44,12 @@ public class CommandProcessor {
 	private CommandProcessor() {
 		core = new Core();
 
-		core.logIn("root"); // login with manager to add lists
+//		core.logIn("root", "root_password"); // login with manager to add lists
 		// core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
 		// core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
 		// core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
 		// core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
-		core.logOut();
+//		core.logOut();
 	}
 
 	private static final CommandProcessor INSTANCE = new CommandProcessor();
@@ -236,12 +238,16 @@ public class CommandProcessor {
 
 	/**
 	 * Allows the a user to log in.
+	 * Note that the potential meals list is cleared in order to avoid
+	 * use of the latter by unwanted users.
 	 */
 	public void login() {
 		String password = current_args[1];
 		String username = current_args[0];
+		
 		String info = core.logIn(username, password);
 		System.out.println(info);
+		potential_meals.clear();
 	}
 
 	/**
@@ -267,23 +273,28 @@ public class CommandProcessor {
 		String dishName = current_args[0];
 		String mealName = current_args[1];
 
-		try {
+		if (core.getCurrent_restaurant() != null) {
 			boolean found = false;
 			Meal m = null;
 			for (int i = 0; i < potential_meals.size(); i++) {
 				m = potential_meals.get(i);
 				if (m.getName().equalsIgnoreCase(mealName)) {
 					List<Dish> ld = m.getListOfDish();
-					ld.add(core.getCurrent_restaurant().getDishByName(dishName));
-					m.setListOfDish(ld);
+					Dish input_dish = core.getCurrent_restaurant().getDishByName(dishName);
+					if (input_dish != null) {
+						ld.add(input_dish);
+						m.setListOfDish(ld);
+					} else {
+						System.out.println("! Please insert a valid dishname !");
+					}
 					found = true;
 				}
 			}
 			if (!found) {
 				System.out
-				.println("! This meal was not created, please do it using createMeal <mealName> <mealType> !");
+				.println("! This meal has first to be created, please do it using createMeal <mealName> <mealType> !");
 			}
-		} catch (NullPointerException e) {
+		} else {
 			System.out.println("! Command not available for this type of user !");
 		}
 	}
@@ -294,50 +305,53 @@ public class CommandProcessor {
 	public void showMeal() {
 		String mealName = current_args[0];
 
-		try {
-			String meal_print = null;
-			// look for the meal in his already saved meals
-			meal_print = core.getCurrent_restaurant().getMealByName(mealName).toString();
+		String meal_print = null;
+		// look for the meal in his already saved meals
+		Meal m_saved = core.getCurrent_restaurant().getMealByName(mealName);
+		if (m_saved != null) {
+			meal_print = m_saved.toString();
+		} else {
 			// look for the meal in the potential meals list
 			for (Meal m : potential_meals) {
 				if (m.getName().equalsIgnoreCase(mealName)) {
-					meal_print = "Not saved yet - " + m.toString();
+					meal_print = "Not saved yet : " + m.toString();
 				}
 			}
-			if (meal_print != null) {
-				System.out.println(meal_print.toString());
-				System.out.println("Note that the price will be lower depending on the applied fidelity plan.");
-			} else {
-				System.out.println("! This meal does not exist !");
-			}
-		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+		}
+		if (meal_print != null) {
+			System.out.println(meal_print.toString());
+			System.out.println("(Price may be lower than the sum of prices depending on the applied fidelity plan.)");
+		} else {
+			System.out.println("! This meal does not exist !");
 		}
 	}
 
 	/**
-	 * Allows to save one of the pending meals with given meal name to the
+	 * Allows the logged in restaurant to save one of the pending meals with given meal name to the
 	 * currently logged in restaurant list of meals.
+	 * Erasing the potential_meals list at each log in allows to only have a use of this
+	 * function by restaurants.
 	 */
 	public void saveMeal() {
 		String mealName = current_args[0];
 
-		try {
-			boolean found = false;
-			Meal m = null;
-			for (int i = 0; i < potential_meals.size(); i++) {
-				m = potential_meals.get(i);
-				if (m.getName().equalsIgnoreCase(mealName)) {
+		boolean found = false;
+		Meal m = null;
+		for (int i = 0; i < potential_meals.size(); i++) {
+			m = potential_meals.get(i);
+			if (m.getName().equalsIgnoreCase(mealName)) {
+				found = true;
+				if ((m instanceof HalfMeal && m.getListOfDish().size() == 2)
+						|| (m instanceof FullMeal && m.getListOfDish().size() == 3)) {
 					core.getCurrent_restaurant().addMeal(m);
 					potential_meals.remove(i);
-					found = true;
+				} else {
+					System.out.println("! Wrong number of dishes, please update meal to follow specifications ! (" + m.toString() + ")");
 				}
 			}
-			if (!found) {
-				System.out.println("! No meal corresponds to the given meal name !");
-			}
-		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+		}
+		if (!found) {
+			System.out.println("! No meal corresponds to the given meal name !");
 		}
 	}
 
@@ -452,7 +466,12 @@ public class CommandProcessor {
 			Calendar cal = parseDateFromString(string_date);
 			current_order.setDate(cal);
 			try {
-				core.placeNewOrder(current_order);
+				Courier deliverer = core.placeNewOrder(current_order);
+				if (deliverer != null) {
+					System.out.println("The courier in charge of your order is " + deliverer.toString());
+				} else {
+					System.out.println("No courier was found for your order.");
+				}
 				current_order = null;
 			} catch (NullPointerException e) {
 				System.out.println("! Command not available for this type of user !");
@@ -487,14 +506,14 @@ public class CommandProcessor {
 			core.logOut();
 		}
 	}
-	
+
 	/**
 	 * For the currently logged on manager to set the delivery policy
 	 * of the system to that passed as argument.
 	 */
 	public void setDeliveryPolicy() {
 		String dPolicy = current_args[0];
-		
+
 		switch (dPolicy.toLowerCase()) {
 		case "fairoccupation":
 			core.setDeliveryPolicyToFairOcc();
@@ -507,14 +526,14 @@ public class CommandProcessor {
 			break;
 		}
 	}
-	
+
 	/**
 	 * For the currently logged on manager to set the profit policy
 	 * of the system to that passed as argument.
 	 */
 	public void setProfitPolicy() {
 		String pPolicy = current_args[0];
-		
+
 		switch (pPolicy.toLowerCase()) {
 		case "deliverycost":
 			core.setTargetProfitPolicyToDelivCostProf();
@@ -539,9 +558,8 @@ public class CommandProcessor {
 		String username = current_args[0];
 		String cardType = current_args[1];
 
-		try {
-			core.logIn(username);
-			Customer c = core.getCurrent_customer();
+		if (core.getCurrent_manager() != null) {
+			Customer c = core.findCustomerByName(username);
 			if (cardType.equalsIgnoreCase("basic")) {
 				c.setFidCardToBasic();
 			} else if (cardType.equalsIgnoreCase("points")) {
@@ -552,12 +570,9 @@ public class CommandProcessor {
 				System.out.println("! Not a valid fidelity card type !");
 				System.out.println("Please choose between basic|points|lottery.");
 			}
-		} catch (NullPointerException e) {
+		} else {
 			System.out.println("! Command not available for this type of user !");
-		} finally {
-			core.logOut();
 		}
-
 	}
 
 	/**
@@ -626,6 +641,7 @@ public class CommandProcessor {
 		if (r == null) {
 			System.out.println("! This restaurant is not valid !");
 		} else {
+			System.out.println("+++ Menu of " + r.toString() + " +++");
 			System.out.println("--- Meals ---");
 			for (Meal m : r.getListOfMeal()) {
 				System.out.println(m.toString());

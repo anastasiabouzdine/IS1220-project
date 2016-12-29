@@ -1,0 +1,141 @@
+registerRestaurant "ChezAlice" "alice" "1,2" "alicepass"
+registerRestaurant "ChezBob" "bob" "3,4" "bobpass"
+registerRestaurant "ChezClement" "clement" "5,6" "clementpass"
+
+registerCustomer "John" "Doe" "johndoe" "11,1" "johndoepass"
+registerCustomer "Monsieur" "Durand" "durand" "1,12" "durandpass"
+registerCustomer "Bruce" "Wayne" "wayne" "6,6" "waynepass"
+
+registerCourier "Pedron" "Delivre" "pedrondelivre" "0,0" "pedrondelivrepass"
+registerCourier "Leo" "Vinci" "leovinci" "3,3" "leovincipass"
+registerCourier "Donald" "Duck" "donaldduck" "7,7" "donaldduckpass"
+
+login "root" "root_password"
+showCustomers
+showRestaurants
+logout
+
+login "alice" "alicepass"
+addDishRestaurantMenu "Salad" "starter" "glutenfree" "2.0"
+addDishRestaurantMenu "Tomatoes" "starter" "vegetarian" "2.5"
+addDishRestaurantMenu "Rice" "maindish" "vegetarian" "10.0"
+addDishRestaurantMenu "Steak" "maindish" "standard" "17.0"
+addDishRestaurantMenu "Icecream" "dessert" "glutenfree" "7.5"
+addDishRestaurantMenu "Chocolate" "dessert" "standard" "8.5"
+
+createMeal "SaladSteakChocolate" "fullmeal"
+addDish2Meal "Salad" "SaladSteakChocolate"
+addDish2Meal "Steak" "SaladSteakChocolate"
+addDish2Meal "Chocolate" "SaladSteakChocolate"
+createMeal "RiceTomatoes" "halfmeal"
+addDish2Meal "Tomatoes" "RiceTomatoes"
+addDish2Meal "Rice" "RiceTomatoes"
+createMeal "SteakIcecream" "halfmeal"
+addDish2Meal "Steak" "SteakIcecream"
+addDish2Meal "Icecream" "SteakIcecream"
+
+showMeal "SaladSteakChocolate"
+saveMeal "SaladSteakChocolate"
+saveMeal "RiceTomatoes"
+saveMeal "SteakIcecream"
+showMeal "RiceTomatoes"
+showMeal "SteakIcecream"
+logout
+
+login "bob" "bobpass"
+addDishRestaurantMenu "Carpaccio" "starter" "standard" "5.0"
+addDishRestaurantMenu "OignonSoup" "starter" "vegetarian" "3.0"
+addDishRestaurantMenu "Noodles" "maindish" "vegetarian" "12.0"
+addDishRestaurantMenu "Potatoes" "maindish" "vegetarian" "12.5"
+addDishRestaurantMenu "Cheese" "dessert" "vegetarian" "5.5"
+addDishRestaurantMenu "CremeBrulee" "dessert" "vegetarian" "6.5"
+
+createMeal "CarpaccioNoodlesCheese" "fullmeal"
+addDish2Meal "Carpaccio" "CarpaccioNoodlesCheese"
+addDish2Meal "Noodles" "CarpaccioNoodlesCheese"
+addDish2Meal "Cheese" "CarpaccioNoodlesCheese"
+createMeal "OignonSoupPotatoes" "halfmeal"
+addDish2Meal "OignonSoup" "OignonSoupPotatoes"
+addDish2Meal "Potatoes" "OignonSoupPotatoes"
+createMeal "NoodlesCremeBrulee" "halfmeal"
+addDish2Meal "Noodles" "NoodlesCremeBrulee"
+addDish2Meal "CremeBrulee" "NoodlesCremeBrulee"
+
+showMeal "CarpaccioNoodlesCheese"
+saveMeal "CarpaccioNoodlesCheese"
+saveMeal "OignonSoupPotatoes"
+saveMeal "NoodlesCremeBrulee"
+showMeal "OignonSoupPotatoes"
+showMeal "NoodlesCremeBrulee"
+logout
+
+login "clement" "clementpass"
+addDishRestaurantMenu "Bruschetta" "starter" "vegetarian" "4.5"
+addDishRestaurantMenu "JambonParme" "starter" "standard" "5.5"
+addDishRestaurantMenu "Hamburger" "maindish" "standard" "14.5"
+addDishRestaurantMenu "Fajitas" "maindish" "standard" "13.5"
+addDishRestaurantMenu "Oranges" "dessert" "vegetarian" "3.5"
+addDishRestaurantMenu "FruitSalad" "dessert" "vegetarian" "4.0"
+
+createMeal "BruschettaBurgerFruits" "fullmeal"
+addDish2Meal "Bruschetta" "BruschettaBurgerFruits"
+addDish2Meal "Hamburger" "BruschettaBurgerFruits"
+addDish2Meal "FruitSalad" "BruschettaBurgerFruits"
+createMeal "JambonFajitas" "halfmeal"
+addDish2Meal "JambonParme" "JambonFajitas"
+addDish2Meal "Fajitas" "JambonFajitas"
+createMeal "BurgerOranges" "halfmeal"
+addDish2Meal "Hamburger" "BurgerOranges"
+addDish2Meal "Oranges" "BurgerOranges"
+
+showMeal "BruschettaBurgerFruits"
+saveMeal "BruschettaBurgerFruits"
+saveMeal "JambonFajitas"
+saveMeal "BurgerOranges"
+showMeal "JambonFajitas"
+showMeal "BurgerOranges"
+logout
+
+login "johndoe" "johndoepass"
+showMenuItem "ChezAlice"
+
+createOrder "ChezAlice"
+addItem2Order "SaladSteakChocolate"
+endOrder "29/12/2016"
+logout
+
+login "durand" "durandpass"
+
+createOrder "ChezBob"
+addItem2Order "noodles"
+addItem2Order "potatoes"
+addItem2Order "cheese"
+endOrder "30/12/2016"
+logout
+
+login "wayne" "waynepass"
+
+createOrder "ChezClement"
+addItem2Order "JambonParme"
+addItem2Order "FruitSalad"
+endOrder "31/12/2016"
+logout
+
+login "pedrondelivre" "pedrondelivrepass"
+logout
+
+login "alice" "alicepass"
+logout
+
+login "bob" "bobpass"
+logout
+
+login "clement" "clementpass"
+logout
+
+login "leovinci" "leovincipass"
+logout 
+
+login "donaldduck" "donaldduckpass"
+logout
+
