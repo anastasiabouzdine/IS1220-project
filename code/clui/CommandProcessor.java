@@ -112,6 +112,12 @@ public class CommandProcessor {
 		case "OFFDUTY":
 			offDuty();
 			break;
+		case "SETDELIVERYPOLICY":
+			setDeliveryPolicy();
+			break;
+		case "SETPROFITPOLICY":
+			setProfitPolicy();
+			break;
 		case "ASSOCIATECARD":
 			associateCard();
 			break;
@@ -479,6 +485,50 @@ public class CommandProcessor {
 			System.out.println("! Command not available for this type of user !");
 		} finally {
 			core.logOut();
+		}
+	}
+	
+	/**
+	 * For the currently logged on manager to set the delivery policy
+	 * of the system to that passed as argument.
+	 */
+	public void setDeliveryPolicy() {
+		String dPolicy = current_args[0];
+		
+		switch (dPolicy.toLowerCase()) {
+		case "fairoccupation":
+			core.setDeliveryPolicyToFairOcc();
+			break;
+		case "fastest":
+			core.setDeliveryPolicyToFastDeliv();
+			break;
+		default:
+			System.out.println("! Please choose between \"fairOccution\" or \"fastest\" delivery policy !");
+			break;
+		}
+	}
+	
+	/**
+	 * For the currently logged on manager to set the profit policy
+	 * of the system to that passed as argument.
+	 */
+	public void setProfitPolicy() {
+		String pPolicy = current_args[0];
+		
+		switch (pPolicy.toLowerCase()) {
+		case "deliverycost":
+			core.setTargetProfitPolicyToDelivCostProf();
+			break;
+		case "markup":
+			core.setTargetProfitPolicyToMarkup();
+			break;
+		case "servicefee":
+			core.setTargetProfitPolicyToSerFeeProf();
+			break;
+		default:
+			System.out.println("! Please choose between \"deliveryCost\", \"markup\""
+					+ "or \"serviceFee\" profit policy !");
+			break;
 		}
 	}
 

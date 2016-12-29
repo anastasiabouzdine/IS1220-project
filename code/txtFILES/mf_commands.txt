@@ -84,6 +84,14 @@ offDuty
 1
 username
 -------
+setDeliveryPolicy
+1
+dPolicy
+-------
+setProfitPolicy
+1
+pPolicy
+-------
 associateCard
 2
 username
