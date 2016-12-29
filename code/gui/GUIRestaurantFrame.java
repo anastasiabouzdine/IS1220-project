@@ -136,6 +136,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		fillAddDishPanelInit();
 
 		mealDishDisplay.setTextFields(rest);
+		mealDishDisplay.setGoBack_button(new Button("GO BACK"));
 		mealDishDisplay.getGoBack_button()
 		.addActionListener(new UserActionInfoBasicRest("meals", "show all full meals", rest));
 		
@@ -496,6 +497,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				break;
 			case "special meal":
 
+				//TODO textfield that explains
 				fillPanelMealSetSpecial(rest);
 				jScrollPaneSpecMeal = new JScrollPane(jListMealSetSpec);
 				scrollPanel.removeAll();
@@ -528,14 +530,11 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 
 		public void actionPerformed(ActionEvent e) {
 
-	
-
-			// TODO add a descr if wanted
-
 			switch (choice) {
 
-			// TODO
 			case "add meal":
+				
+				// TODO add Textfield that explains
 
 				mealDishDisplay.filljListStarter(rest);
 				mealDishDisplay.filljListMainDish(rest);
@@ -671,7 +670,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				break;
 			case "remove dessert":
 
-				// TODO add Textfield that explains
 				mealDishDisplay.filljListDessert(rest);
 				fillAddRemovePanelScroll(mealDishDisplay.getjListDessert());
 

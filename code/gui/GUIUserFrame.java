@@ -209,51 +209,7 @@ public abstract class GUIUserFrame {
 			GUIStartFrame.setCurrentLogInUser(null);
 			GUIStartFrame.getInstance().goToHomePage();
 			GUIStartFrame.getFrame().setVisible(true);
-		});
-		
-//		save_button = new JButton("SAVE");
-//		save_button.addActionListener((ActionEvent e) -> {
-//			String value = setTextFieldValue.getText();
-//			String message = "Changes could not be saved!";
-//			if(currentSettingShow == 1) {
-//				user.setName(value);
-//				message = "New name succesfully saved!";
-//			}
-//			else if(currentSettingShow == 2){
-//				GUIStartFrame.getCore().setUsername(user, value);
-//				message = "New username succesfully saved!";
-//			}
-//			else if(currentSettingShow == 3){
-//				user.setPassword(value);
-//				message = "New password succesfully saved!";
-//			}
-			//TODO 
-//			else if(currentSettingShow == 4){
-//				user.setSurname(value);
-//				message = "New surname succesfully saved!";
-//			}
-//			else if(currentSettingShow == 5){
-//				try{
-//					int xCoord = Integer.parseInt(setTextFieldXInt.getText());
-//					int yCoord = Integer.parseInt(setTextFieldYInt.getText());
-//				}catch(NumberFormatException fex){
-//            		message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
-//            		//TODO pop up
-//            	}
-//			}
-//			else if(currentSettingShow == 6){
-//				user.setPhoneNumb(value);
-//				message = "New phoneNumb succesfully saved!";
-//			}
-//			else if(currentSettingShow == 7){
-//				user.setEmailAddress(value);
-//				message = "New emailAddress succesfully saved!";
-//			}
-			
-			//TODO Pop-Up String saved
-//			System.out.println(message);
-//		});
-		
+		});	
 	}
 	
 	

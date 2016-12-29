@@ -21,6 +21,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.MenuItem;
 
 import restaurantSetUp.Dessert;
+import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
 import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
@@ -35,6 +36,7 @@ public class GUIDisplayMealDish {
 	private JList<Starter> jListStarter = new JList<>();
 	private JList<MainDish> jListMainDish = new JList<>();
 	private JList<Dessert> jListDessert = new JList<>();
+	private JList<Dish> jListAllDish = new JList<>();
 
 	private JPanel mealLabelPanel = new JPanel(new GridLayout(0, 1));
 	private JPanel mealValuePanel = new JPanel(new GridLayout(0, 1));
@@ -75,6 +77,11 @@ public class GUIDisplayMealDish {
 			String addInfo = rest.isMealSpecial(fullMeal) ? "$ = special offer" : "$";
 			String price = rest.getPrice(fullMeal) + addInfo;
 
+			starterT.setColumns(30);
+			mainDishT.setColumns(30);
+			dessertT.setColumns(30);
+			priceT.setColumns(30);
+			
 			starterT.setText(starter);
 			mainDishT.setText(mainDish);
 			dessertT.setText(dessert);
@@ -123,7 +130,7 @@ public class GUIDisplayMealDish {
 		dishPanel.removeAll();
 		dishPanel.add(mealLabelPanel, BorderLayout.CENTER);
 		dishPanel.add(mealValuePanel, BorderLayout.LINE_END);
-		dishPanel.add(goBack_button);
+		dishPanel.add(goBack_button,BorderLayout.SOUTH);
 
 		return dishPanel;
 	}
@@ -186,6 +193,22 @@ public class GUIDisplayMealDish {
 		jListDessert.setModel(model);
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
+	public JList<Dish> filljListAllDishes(Restaurant rest){
+		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
+		
+		for (Starter start : rest.getMenu().getListOfStarter()) {
+			model.addElement(start);
+		}
+		for (MainDish mainDish : rest.getMenu().getListOfMainDish()) {
+			model.addElement(mainDish);
+		}
+		for (Dessert dessert: rest.getMenu().getListOfDessert()) {
+			model.addElement(dessert);
+		}
+		jListAllDish.setModel(model);
+		jListAllDish.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		return jListAllDish;
+	}
 
 	/**
 	 * @return the goBack_button
@@ -241,5 +264,12 @@ public class GUIDisplayMealDish {
 	 */
 	public void setGoBack_button(Button goBack_button) {
 		this.goBack_button = goBack_button;
+	}
+
+	/**
+	 * @return the jListAllDish
+	 */
+	public JList<Dish> getjListAllDish() {
+		return jListAllDish;
 	}
 }

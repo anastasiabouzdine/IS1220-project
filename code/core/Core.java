@@ -1348,7 +1348,7 @@ public class Core {
 	 * @return the restaurantList
 	 */
 	public ArrayList<Restaurant> getRestaurantList() {
-		if (current_manager != null) {
+		if (current_manager != null || current_customer != null) {
 			return restaurantList;
 		} else {
 			unauthorizedCommand();
