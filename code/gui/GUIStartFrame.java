@@ -27,15 +27,19 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import com.sun.j3d.utils.scenegraph.io.state.javax.media.j3d.OrderedGroupState;
+
 import clui.Command;
 import clui.CommandProcessor;
 import core.Core;
+import core.Order;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
 import parsers.ParseCustomers;
 import parsers.ParseDishes;
 import parsers.ParseManagers;
 import parsers.ParseMeals;
+import parsers.ParseOrders;
 import parsers.ParseRestaurants;
 import restaurantSetUp.Meal;
 import users.Address;
@@ -148,6 +152,9 @@ public class GUIStartFrame {
 					.setListOfMainDish(ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt"));
 			core.getRestaurantList().get(0).getMenu()
 					.setListOfDessert(ParseDishes.parseDessert("src/txtFILES/desserts.txt"));
+			
+			ArrayList<Order> orders = ParseOrders.parseOrders(core.getCustomerList(), core);
+			core.setSavedOrders(orders);
 
 			core.logOut();
 		}
@@ -617,10 +624,10 @@ public class GUIStartFrame {
 
 		// Log-in Tests - please run only one test at a time - if not they will
 		// fail
-		// GUIStartFrameTest.checkIfCourierLogInWorks();
+		 GUIStartFrameTest.checkIfCourierLogInWorks();
 		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
 //		 GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		 GUIStartFrameTest.checkIfManagerLogInWorks();
+//		 GUIStartFrameTest.checkIfManagerLogInWorks();
 //		 GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 

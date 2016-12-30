@@ -10,6 +10,7 @@ import parsers.*;
 import policies.DeliveryPolicy;
 import policies.FairOccupationDelivery;
 import policies.FastestDelivery;
+import core.Core;
 import core.Order;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.FullMeal;
@@ -17,17 +18,20 @@ import restaurantSetUp.HalfMeal;
 import restaurantSetUp.MainDish;
 import restaurantSetUp.Starter;
 import users.Courier;
+import users.Customer;
 import users.Restaurant;
 
 public class DeliveryPolicyTest {
 	
+	Core core = new Core();
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
 	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
 	ArrayList<MainDish> list_mainDish = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
 	ArrayList<Dessert> list_dessert = ParseDishes.parseDessert("src/txtFILES/desserts.txt");
 	ArrayList<Restaurant> list_restaurant = ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt");
-	ArrayList<Order> list_orders = ParseOrders.parseOrders();
+	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
+	ArrayList<Order> list_orders = ParseOrders.parseOrders(list_customer, core);
 	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	
 	

@@ -35,6 +35,8 @@ import javax.swing.SwingUtilities;
 
 import core.Core;
 import core.Order;
+import policies.FidCardPlanBasic;
+import policies.FidCardPlanPoints;
 import restaurantSetUp.Dish;
 import restaurantSetUp.Meal;
 import users.Customer;
@@ -54,24 +56,38 @@ public class GUICustomerFrame extends GUIUserFrame {
 	
 	private JList<Restaurant> restaurants = new JList<Restaurant>();
 	private JList<Dish> dishes;
+	private JList<Order> orders;
 	private JMenu orderMenu = new JMenu("New Order");
 	
 	private JScrollPane jScrollType;
+	private JScrollPane jScrollOrders;
 	
 	private JPanel orderPanel = new JPanel();
 	private JPanel scrollPanel = new JPanel();
-	private JToggleButton mealsToggleButton;
-	private JToggleButton menuToggleButton;
 	private JPanel menuMealsPanel = new JPanel();
 	private JPanel addToOrderPanel = new JPanel();
 	private JPanel finishOrderPanel = new JPanel();
+	private JPanel fidPlanPanel = new JPanel();
+	private JPanel notificationPanel = new JPanel();
+	
+	private JRadioButton fidPlanBasic = new JRadioButton("Basic");
+	private JRadioButton fidPlanPoints = new JRadioButton("Points");
+	private JRadioButton fidPlanLottery = new JRadioButton("Lottery");
+	private ButtonGroup fidPlan = new ButtonGroup();
+	
+	private JRadioButton notificationOff = new JRadioButton("Off");
+	private JRadioButton notificationOn = new JRadioButton("On");
+	private ButtonGroup notification = new ButtonGroup();
 	
 	private boolean isOrdering = false;
 	
+	private JToggleButton mealsToggleButton;
+	private JToggleButton menuToggleButton;
+	
 	private Button addToOrderButton;
-	private JTextField quantityTextField = new JTextField("quantity as int");
 	private Button finishOrderButton = new Button("FINISH ORDER");
 	
+	private JTextField quantityTextField = new JTextField("quantity as int");
 	
 	public GUICustomerFrame() {
 		super();
@@ -264,6 +280,52 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 		orderPanel.add(menuMealsPanel, BorderLayout.NORTH);
 		setCurrentPanel(orderPanel);
 	}
+	
+	private void setScrollOrdersPanel() {
+		getInfoPanel().removeAll();
+		ArrayList<Order> orders = core.getHistoryOfOrders();
+		DefaultListModel<Order> model = new DefaultListModel<Order>();
+		for(Order order : orders)
+			model.addElement(order);
+		try{
+		this.orders.setModel(model);
+		} catch(NullPointerException e) {
+			String message = "There are no orders saved for you";
+			//TODO Pop-up
+		}
+		jScrollOrders = new JScrollPane(this.orders);
+		getInfoPanel().add(jScrollOrders);
+	}
+	
+	private void fillSetPanelFidPlan(Customer cust) {
+		getSettingPanel().removeAll();
+		if(cust.getFidCardPlan() instanceof FidCardPlanBasic){
+			fidPlanBasic.setSelected(true);
+		} else if (cust.getFidCardPlan() instanceof FidCardPlanPoints) {
+			fidPlanPoints.setSelected(true);
+		} else {
+			fidPlanLottery.setSelected(true);
+		}
+		getSettingPanel().add(fidPlanPanel);
+		getSetButtonPanel().removeAll();
+		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(save_button);
+		getSettingPanel().add(getSetButtonPanel(),BorderLayout.SOUTH);
+	}
+	
+	private void fillSetPanelNotification(Customer cust) {
+		getSettingPanel().removeAll();
+		if(cust.isBeNotified()){
+			notificationOn.setSelected(true);
+		} else {
+			notificationOff.setSelected(true);
+		}
+		getSettingPanel().add(notificationPanel);
+		getSetButtonPanel().removeAll();
+		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(save_button);
+		getSettingPanel().add(getSetButtonPanel(),BorderLayout.SOUTH);
+	}
 
 
 	/*************************************************/
@@ -272,17 +334,13 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 	private void fillCustomerInit() {
 
 		fillorderPanelInit();
-//		mealDishDisplay.getGoBack_button()
-//				.addActionListener(new UserActionInfoBasicRest("meals", "show all full meals", rest));
+		initSetPanelFidPlan();
+		initSetPanelNotif();
 		finishOrderButton.addActionListener((ActionEvent e)-> {
 			String orderedFood = currentOrder.getDishes().isEmpty() ? currentOrder.getMeals().toString() 
 					: currentOrder.getDishes().toString();
 			double price = currentOrder.getPrice();
 			
-
-			
-			
-		
 		/**
 		 * TODO pop up:
 		 * {
@@ -319,6 +377,7 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 		getInfoMenu().add(new CustomerActionInfoBasicCust("surname", "show current surname", customer));
 		getInfoMenu().add(new CustomerActionInfoBasicCust("phoneNumb", "show current phone number", customer));
 		getInfoMenu().add(new CustomerActionInfoBasicCust("emailAddress", "show current email address", customer));
+		getInfoMenu().add(new CustomerActionInfoBasicCust("access history", "show old orders", customer));
 	}
 	
 	
@@ -327,6 +386,8 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 		getSettingMenu().add(new CustomerActionSettingBasicCust("surname", "change current surname", customer));
 		getSettingMenu().add(new CustomerActionSettingBasicCust("phoneNumb", "change current phone number", customer));
 		getSettingMenu().add(new CustomerActionSettingBasicCust("emailAddress", "change current email address", customer));
+		getSettingMenu().add(new CustomerActionSettingBasicCust("fidelity plan", "change current fidelity plan", customer));
+		getSettingMenu().add(new CustomerActionSettingBasicCust("notification", "change current notification settings", customer));
 	}
 	
 	private void fillcustomerActionOrder(Customer customer) {
@@ -345,6 +406,25 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 		orderPanel.setLayout(new BorderLayout());
 		orderPanel.setBackground(Color.ORANGE);
 	}
+	
+	private void initSetPanelFidPlan(){
+		fidPlan.add(fidPlanBasic);
+		fidPlan.add(fidPlanPoints);
+		fidPlan.add(fidPlanLottery);
+		fidPlanPanel.add(fidPlanBasic);
+		fidPlanPanel.add(fidPlanPoints);
+		fidPlanPanel.add(fidPlanLottery);
+	}
+	
+	private void initSetPanelNotif(){
+		notification.add(notificationOn);
+		notification.add(notificationOff);
+		notificationPanel.add(notificationOn);
+		notificationPanel.add(notificationOff);
+	}
+	
+	/*************************************************/
+	//Action classes
 	
 	private class CustomerActionInfoBasicCust extends AbstractAction {
 
@@ -370,33 +450,35 @@ private void fillMealMenuToogleButtons(Restaurant rest){
             case "surname":
             	descr = "Your surname: ";
             	value = customer.getSurname();
+            	fillInfoPanel(descr,value);
                 break;
             case "address":
             	descr = "Your address: ";
             	value = customer.getAddress().toString();
+            	fillInfoPanel(descr,value);
                 break;
             case "phoneNumb":
             	descr = "Your phone number: ";
             	value = customer.getPhoneNumber();
+            	fillInfoPanel(descr,value);
                 break;
             case "emailAddress":
             	descr = "Your email address: ";
             	value = customer.getEmail();
+            	fillInfoPanel(descr,value);
                 break;
            case "access history":
-        	   
+        	   setScrollOrdersPanel();
         	   //TODO
         	   
                break; 
         }
-			fillInfoPanel(descr,value);
+			
 			setCurrentPanel(getInfoPanel());
 		}
+
+		
 	}
-		
-		
-	
-	
 	
 	private class CustomerActionSettingBasicCust extends AbstractAction {
 
@@ -426,16 +508,27 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 					String value2 = getSetTextFieldValue().getText();
 					customer.setSurname(value2);
 				});
+				fillSetPanel(descr,value);
 				break;
 			case "address":
-				descr = "Set your new address in the format \"xCoord,yCoord\": ";
-				value = customer.getAddress().toString();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				descr = "Set your new address: ";
 
-					String value2 = getSetTextFieldValue().getText();
-					customer.setSurname(value2);
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e4) -> {
+
+					try{
+						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
+						int yCoord = Integer.parseInt(getSetTextFieldYInt().getText());
+						customer.getAddress().setxCoordinate(xCoord);
+						customer.getAddress().setyCoordinate(yCoord);
+						
+					} catch (NumberFormatException fex) {
+						String message = "Wrong Format! - Please write the address in the format \"xCoord,yCoord\"";
+						// TODO pop up
+					}
 				});
+				fillSetPanelAddress(descr, Integer.toString(customer.getAddress().getxCoordinate()),
+						Integer.toString(customer.getAddress().getyCoordinate()));
 				break;
 			case "phoneNumb":
 				descr = "Set your new phone number: ";
@@ -446,6 +539,7 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 					String value2 = getSetTextFieldValue().getText();
 					customer.setPhoneNumber(value2);
 				});
+				fillSetPanel(descr,value);
 				break;
 			case "emailAddress":
 				descr = "Set your new email address: ";
@@ -456,19 +550,35 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 					String value2 = getSetTextFieldValue().getText();
 					customer.setEmail(value2);
 				});
+				fillSetPanel(descr,value);
 				break;
 			case "fidelity plan":
 				
-				//TODO
-				
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e2) -> {
+					if(fidPlanBasic.isSelected()){
+						customer.setFidCardToBasic();
+					} else if (fidPlanPoints.isSelected()) {
+						customer.setFidCardToPoints();
+					} else if (fidPlanLottery.isSelected()) {
+						customer.setFidCardToLottery();
+					}
+				});
+				fillSetPanelFidPlan(customer);
 				break;
 			case "notification":
 				
-				//TODO
-				
+				save_button = new JButton("SAVE");
+				save_button.addActionListener((ActionEvent e2) -> {
+					if(notificationOn.isSelected()){
+						customer.setBeNotified(true);
+					} else if (notificationOff.isSelected()) {
+						customer.setBeNotified(false);
+					}
+				});
+				fillSetPanelNotification(customer);
 				break;
 			}
-			fillSetPanel(descr,value);
 			setCurrentPanel(getSettingPanel());
 		}
 	}

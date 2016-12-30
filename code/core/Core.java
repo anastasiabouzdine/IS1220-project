@@ -68,7 +68,7 @@ public class Core {
 	/* Profit-related information */
 	private double serviceFee = 2.50;
 	private double markupPercentage = 0.05;
-	private double deliveryCost = 4;
+	private double deliveryCost = 2;
 
 	/* PlaceHolder */
 	private Calendar dateAfter;
@@ -731,6 +731,8 @@ public class Core {
 	public double calcTotalIncome() {
 		if (current_manager != null) {
 			double sum = 0;
+			this.autoSetDateAfter();
+			this.autoSetDateBeforeOneMonthAgo();
 			for (Order order : this.savedOrders)
 				if (order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 					sum += order.getPriceFinal();
@@ -751,6 +753,8 @@ public class Core {
 	public double calcTotalProfit() {
 		if (current_manager != null) {
 			double sum = 0.0D;
+			this.autoSetDateAfter();
+			this.autoSetDateBeforeOneMonthAgo();
 			for (Order order : this.savedOrders) {
 				if (order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 					sum = Order.round2(sum + order.getProfitFinal());
@@ -810,6 +814,7 @@ public class Core {
 					nb_customers_who_ordered++;
 				}
 			}
+			System.out.println(calcTotalIncome());
 			return Order.round2(calcTotalIncome() / (double) nb_customers_who_ordered);
 		} else {
 			unauthorizedCommand();
@@ -1468,9 +1473,16 @@ public class Core {
 		}
 	}
 
+	/**
+	 * @param savedOrders the savedOrders to set
+	 */
+	public void setSavedOrders(ArrayList<Order> savedOrders) {
+		this.savedOrders = savedOrders;
+	}
+
 	/* static methods */
 	private static void unauthorizedCommand() {
-		// System.out.println("This command is not valid! Please try again");
+		 System.out.println("This command is not valid! Please try again");
 	}
 
 }

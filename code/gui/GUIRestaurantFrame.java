@@ -70,8 +70,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 
 	//JTextField
 	private JTextField mealName = new JTextField("insert new meal name");
-	private JTextField setTextFieldXInt = new JTextField();
-	private JTextField setTextFieldYInt = new JTextField();
 
 	//JFormatedTextField
 	private JFormattedTextField nameDish = new JFormattedTextField("Name: ");
@@ -372,22 +370,6 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 		jListMealSetSpec.setModel(model);
 	}
 
-	public void fillSetPanelAddress(String descr, String valueX, String valueY) {
-		getSettingPanel().removeAll();
-		getSetTextFieldDesc().setText(descr);
-		setTextFieldXInt.setText(valueX);
-		setTextFieldYInt.setText(valueY);
-		getSetSubPanel().removeAll();
-		getSetSubPanel().add(getSetTextFieldDesc(), BorderLayout.CENTER);
-		getSetSubPanel().add(setTextFieldXInt, BorderLayout.SOUTH);
-		getSetSubPanel().add(setTextFieldYInt, BorderLayout.SOUTH);
-		getSettingPanel().add(getSetSubPanel());
-		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
-		getSetButtonPanel().add(save_button);
-		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
-	}
-
 	/*************************************************/
 	// action classes
 
@@ -482,8 +464,8 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				save_button.addActionListener((ActionEvent e4) -> {
 
 					try{
-						int xCoord = Integer.parseInt(setTextFieldXInt.getText());
-						int yCoord = Integer.parseInt(setTextFieldYInt.getText());
+						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
+						int yCoord = Integer.parseInt(getSetTextFieldYInt().getText());
 						rest.getAddress().setxCoordinate(xCoord);
 						rest.getAddress().setyCoordinate(yCoord);
 						

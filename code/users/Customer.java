@@ -126,7 +126,7 @@ public class Customer extends User implements Observer{
 
 	@Override
 	public String toString() {
-		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + "]";
+		return "Customer [name=" + getName() + ", surname=" + surname + ", username=" + getUsername() + ", ID=" + getID() + "]";
 	}
 
 

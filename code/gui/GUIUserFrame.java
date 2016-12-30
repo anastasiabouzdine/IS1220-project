@@ -43,14 +43,9 @@ public abstract class GUIUserFrame {
 	private JPanel setButtonPanel = new JPanel();
 	private JTextField setTextFieldDesc = new JTextField();
 	private JTextField setTextFieldValue = new JTextField();
+	private JTextField setTextFieldXInt = new JTextField();
+	private JTextField setTextFieldYInt = new JTextField();
 	
-	
-	/**
-	 * @return the setTextFieldValue
-	 */
-	public JTextField getSetTextFieldValue() {
-		return setTextFieldValue;
-	}
 
 	//Panels
 	JPanel welcome_panel = new JPanel();
@@ -187,6 +182,22 @@ public abstract class GUIUserFrame {
 		
 		frame.add(welcome_panel);
    	}
+	
+	public void fillSetPanelAddress(String descr, String valueX, String valueY) {
+		getSettingPanel().removeAll();
+		getSetTextFieldDesc().setText(descr);
+		setTextFieldXInt.setText(valueX);
+		setTextFieldYInt.setText(valueY);
+		getSetSubPanel().removeAll();
+		getSetSubPanel().add(getSetTextFieldDesc(), BorderLayout.CENTER);
+		getSetSubPanel().add(setTextFieldXInt, BorderLayout.SOUTH);
+		getSetSubPanel().add(setTextFieldYInt, BorderLayout.SOUTH);
+		getSettingPanel().add(getSetSubPanel());
+		getSetButtonPanel().removeAll();
+		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(save_button);
+		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
+	}
 	
 	/**************************************************/
 	//help functions
@@ -487,6 +498,27 @@ public abstract class GUIUserFrame {
 
 	public void setSetButtonPanel(JPanel setButtonPanel) {
 		this.setButtonPanel = setButtonPanel;
+	}
+	
+	/**
+	 * @return the setTextFieldXInt
+	 */
+	public JTextField getSetTextFieldXInt() {
+		return setTextFieldXInt;
+	}
+
+	/**
+	 * @return the setTextFieldYInt
+	 */
+	public JTextField getSetTextFieldYInt() {
+		return setTextFieldYInt;
+	}
+
+	/**
+	 * @return the setTextFieldValue
+	 */
+	public JTextField getSetTextFieldValue() {
+		return setTextFieldValue;
 	}
 
 	

@@ -7,6 +7,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
+import core.Core;
 import core.Order;
 import parsers.*;
 import restaurantSetUp.Dessert;
@@ -20,6 +21,7 @@ import users.Restaurant;
 
 public class OrderTest {
 	
+	Core core = new Core();
 	ArrayList<FullMeal> list_fmeal = ParseMeals.parseFullMeals("src/txtFILES/fullMeals.txt");
 	ArrayList<HalfMeal> list_hmeal = ParseMeals.parseHalfMeals("src/txtFILES/halfMeals.txt");
 	ArrayList<Starter> list_starter = ParseDishes.parseStarter("src/txtFILES/starters.txt");
@@ -27,7 +29,7 @@ public class OrderTest {
 	ArrayList<Dessert> list_dessert = ParseDishes.parseDessert("src/txtFILES/desserts.txt");
 	ArrayList<Restaurant> list_restaurant = ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt");
 	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/courierList.txt");
-	ArrayList<Order> list_order = ParseOrders.parseOrders();
+	ArrayList<Order> list_order = ParseOrders.parseOrders(list_customer, core);
 
 	@Test
 	public void createOrder() {

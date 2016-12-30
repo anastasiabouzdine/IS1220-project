@@ -14,4 +14,4 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] update report presentation in introduction
 - [ ] implement the pop up window for new messages in GUI
 - [ ] implement the message box for all users in GUI
-- [ ] implement the courier in GUI
+- [x] implement the courier in GUI

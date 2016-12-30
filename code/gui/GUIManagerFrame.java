@@ -876,6 +876,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				profitPanel.removeAll();
 
 				descr = "The average income per customer is: ";
+				System.out.println(core.getCustomerList());
 				value = Double.toString(core.calcAverageIncome());
 				valueT.setEditable(false);
 
