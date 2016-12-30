@@ -189,6 +189,7 @@ public class GUIStartFrame {
 	/*********************************************************/
 	/* Fill panels */
 	public void fillUserGlobalInfoPanel() {
+		user_global_info.removeAll();
 		user_global_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
 		user_global_info.setBackground(Color.gray);
 
@@ -212,6 +213,7 @@ public class GUIStartFrame {
 	}
 
 	private void fillAddressInfosPanel() {
+		address_panel.removeAll();
 		address_panel.add(xCoordinate_JTF);
 		address_panel.add(yCoordinate_JTF);
 	}
@@ -466,7 +468,7 @@ public class GUIStartFrame {
 				yCoordinate_JTF.setText("Insert yCoordinate");
 
 				if (radio_customer.isSelected()) {
-
+					customer_specific_info.removeAll();
 					customer_specific_info.add(surname_JTF, BorderLayout.NORTH);
 					customer_specific_info.add(phoneNum_JTF, BorderLayout.WEST);
 					customer_specific_info.add(emailAddress_JTF, BorderLayout.EAST);
@@ -475,7 +477,7 @@ public class GUIStartFrame {
 					user_specific_info.add(customer_specific_info);
 
 				} else if (radio_courier.isSelected()) {
-
+					courier_specific_info.removeAll();
 					courier_specific_info.add(surname_JTF, BorderLayout.EAST);
 					courier_specific_info.add(address_panel, BorderLayout.CENTER);
 					courier_specific_info.add(phoneNum_JTF, BorderLayout.WEST);
@@ -484,23 +486,26 @@ public class GUIStartFrame {
 					user_specific_info.add(courier_specific_info);
 
 				} else if (radio_restaurant.isSelected()) {
+					restaurant_specific_info.removeAll();
+					restaurant_specific_info.add(address_panel, BorderLayout.SOUTH);
 
 					user_specific_info.add(restaurant_specific_info);
 
-					restaurant_specific_info.add(address_panel, BorderLayout.SOUTH);
-
 				} else if (radio_manager.isSelected()) {
-
-					user_specific_info.add(manager_specific_info);
+					manager_specific_info.removeAll();
 
 					manager_specific_info.add(surname_JTF, BorderLayout.SOUTH);
+					user_specific_info.add(manager_specific_info);
+
 
 				}
+				fillUserGlobalInfoPanel();
+
 				user_global_info.add(home_button, BorderLayout.SOUTH);
 				user_global_info.add(backToRegister_button, BorderLayout.SOUTH);
 				if(!radio_manager.isVisible())
 					user_global_info.add(register_button, BorderLayout.SOUTH);
-
+				
 				setCurrentPanel(user_global_info);
 			} else {
 				// TODO pop up window
@@ -599,29 +604,5 @@ public class GUIStartFrame {
 		}
 	}
 
-	/**
-	 * @throws AWTException
-	 * @throws AlreadyUsedUsernameException
-	 *******************************************************/
-	/* Launch */
-	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
-
-		GUIStartFrame gui = GUIStartFrame.getInstance();
-		gui.open(0, 0, 600, 400);
-
-		// Register Tests - can be run all together
-		// GUIStartFrameTest.checkIfClickGoToButtonsWork();
-		// GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
-		// GUIStartFrameTest.checkIfCourierCanBeRegistered();
-		// GUIStartFrameTest.checkIfCustomerCanBeRegistered();
-
-		// Log-in Tests - please run only one test at a time - if not they will
-		// fail
-		// GUIStartFrameTest.checkIfCourierLogInWorks();
-		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-//		 GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		 GUIStartFrameTest.checkIfManagerLogInWorks();
-//		 GUIStartFrameTest.checkIfCustomerLogInWorks();
-	}
 
 }
