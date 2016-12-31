@@ -21,6 +21,7 @@ public abstract class User {
 	private int ID;
 	private static int counter;
 	private Stack<String> messageBox = new Stack<String>(); 
+	public static String messageBoxGUI;
 
 	/**
 	 * Class constructor. 
@@ -60,11 +61,19 @@ public abstract class User {
 	 *  
 	 */
 	public void checkMessages(){
-		if (!messageBox.isEmpty())
+		messageBoxGUI = "";
+		if (!messageBox.isEmpty()){
 			System.out.println("+++ Your messagebox +++");
+			messageBoxGUI+= "\n +++ Your messagebox +++";
+		}
+		else{
+			System.out.println("No new messages");
+			messageBoxGUI+= "No new messages";
+		}
 		while(!messageBox.isEmpty()){
 			String message = messageBox.pop();
 			System.out.println("message " + (messageBox.size()+1) + " : " + message);
+			messageBoxGUI+="\n message " + (messageBox.size()+1) + " : " + message;
 		}
 	}
 

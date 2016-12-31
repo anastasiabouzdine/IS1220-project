@@ -73,6 +73,7 @@ public class Core {
 	/* PlaceHolder */
 	private Calendar dateAfter;
 	private Calendar dateBefore;
+	private String currentMessage;
 
 	/**
 	 * Class constructor.
@@ -498,8 +499,10 @@ public class Core {
 	 *            message that is to be transfered to the system
 	 */
 	private void updateSystem(String message) {
-		if (this.current_user instanceof Manager)
+		if (this.current_user instanceof Manager){
 			System.out.println(message);
+			currentMessage = message;
+		}
 		else
 			for (Manager manager : this.managerList)
 				manager.update(message);
@@ -515,9 +518,10 @@ public class Core {
 	 *            message that is to be transfered to the user
 	 */
 	private void update(User user, String message) {
-		if (this.current_user.equals(user))
+		if (this.current_user.equals(user)){
 			System.out.println(message);
-		else
+			currentMessage = message;
+		}else
 			user.update(message);
 	}
 
@@ -1066,7 +1070,7 @@ public class Core {
 	 * @return the serviceFee
 	 */
 	public double getServiceFee() {
-		if (current_manager != null) {
+		if (current_manager != null || current_customer !=null) {
 			return serviceFee;
 		} else {
 			unauthorizedCommand();
@@ -1478,6 +1482,13 @@ public class Core {
 	 */
 	public void setSavedOrders(ArrayList<Order> savedOrders) {
 		this.savedOrders = savedOrders;
+	}
+
+	/**
+	 * @return the currentMessage
+	 */
+	public String getCurrentMessage() {
+		return currentMessage;
 	}
 
 	/* static methods */

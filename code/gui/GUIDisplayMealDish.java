@@ -3,22 +3,15 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import java.awt.MenuItem;
 
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
@@ -58,7 +51,6 @@ public class GUIDisplayMealDish {
 	
 	private JMenu dishMenu = new JMenu("menu");
 
-	private Button selectButton = new Button("SELECT");
 
 	public GUIDisplayMealDish() {
 		super();
