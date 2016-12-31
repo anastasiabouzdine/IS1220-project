@@ -12,4 +12,11 @@ The project consists of two parts, the **core** and the **interface**.
 - [ ] use a `current_meal` and `current_order` in CLUI
 - [ ] add CLUI scenarios
 - [ ] update report presentation in introduction
+<<<<<<< HEAD
 
+=======
+- [ ] implement the pop up window for new messages in GUI
+- [ ] implement the message box for all users in GUI
+- [ ] implement the courier in GUI
+- [ ] use simpler printers than toString() in GUI
+>>>>>>> origin/master
