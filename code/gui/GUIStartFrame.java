@@ -569,31 +569,6 @@ public class GUIStartFrame {
 		}
 	}
 	
-	/**
-	 * @throws AWTException
-	 * @throws AlreadyUsedUsernameException
-	 *******************************************************/
-	/* Launch */
-	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
-
-		GUIStartFrame gui = GUIStartFrame.getInstance();
-		gui.open(0, 0, 600, 400);
-
-//		 Register Tests - can be run all together
-//		 GUIStartFrameTest.checkIfClickGoToButtonsWork();
-//		 GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
-//		 GUIStartFrameTest.checkIfCourierCanBeRegistered();
-//		 GUIStartFrameTest.checkIfCustomerCanBeRegistered();
-
-		// Log-in Tests - please run only one test at a time - if not they will
-		// fail
-		// GUIStartFrameTest.checkIfCourierLogInWorks();
-		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
-		// GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		// GUIStartFrameTest.checkIfManagerLogInWorks();
-		   GUIStartFrameTest.checkIfCustomerLogInWorks();
-	}
-
 	/*******************************************************/
 	/* Getters and Setters */
 
