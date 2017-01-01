@@ -37,6 +37,7 @@ import core.Core;
 import core.Order;
 import restaurantSetUp.Dish;
 import restaurantSetUp.Meal;
+import users.Address;
 import users.Customer;
 import users.Restaurant;
 import users.User;
@@ -434,7 +435,7 @@ private void fillMealMenuToogleButtons(Restaurant rest){
 				save_button.addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
-					customer.setSurname(value2);
+					customer.setAddress(new Address(value2));
 				});
 				break;
 			case "phoneNumb":

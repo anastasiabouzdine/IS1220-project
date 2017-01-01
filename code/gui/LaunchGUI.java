@@ -19,7 +19,7 @@ public class LaunchGUI {
 	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
 
 		GUIStartFrame gui = GUIStartFrame.getInstance();
-		gui.open(0, 0, 800, 600);
+		gui.open(0, 0, 600, 400);
 
 		// Register Tests - can be run all together
 		// GUIStartFrameTest.checkIfClickGoToButtonsWork();

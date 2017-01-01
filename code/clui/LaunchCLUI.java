@@ -11,7 +11,7 @@ import parsers.ParseCommands;
  * @author john
  *
  */
-public class LaunchCommandLine {
+public class LaunchCLUI {
 	
 	public static void main(String[] args) {
 		CommandLine CL = CommandLine.getInstance();
