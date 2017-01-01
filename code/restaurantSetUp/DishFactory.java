@@ -33,8 +33,8 @@ public class DishFactory extends AbstractFactory {
 	 * name and price.
 	 * 
 	 * @param dishType	  a string containing the type of the Dish
-	 * @param dishName	  a string containing the name of the Dish
-	 * @param dishPrice   a double for the price of the Dish
+	 * @param name	  a string containing the name of the Dish
+	 * @param price   a double for the price of the Dish
 	 * @param foodType    a string containing the type of food of the Dish
 	 * 
 	 */

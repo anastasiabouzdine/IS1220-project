@@ -661,10 +661,40 @@ public class CommandProcessor {
 		}
 	}
 
-	// TODO
+	/**
+	 * For the currently logged on myFoodora manager to show the
+	 * total profit of the system since creation if arguments are
+	 * null or within a time interval if not.
+	 */
 	public void showTotalProfit() {
 		String beginDate = current_args[0];
 		String endDate = current_args[1];
+		
+		Calendar bd = null;
+		Calendar ed = null;
+		if (beginDate != null) {
+			try {
+				bd = parseDateFromString(beginDate);
+			} catch (ParseException e) {
+				System.out.println("! Please insert date in the format dd/mm/yyyy !");
+			}
+		} else {
+			bd = core.getSavedOrders().get(0).getDate();
+		}
+		if (endDate != null) {
+			try {
+				ed = parseDateFromString(endDate);
+			} catch (ParseException e) {
+				System.out.println("! Please insert date in the format dd/mm/yyyy !");
+			}
+		} else {
+			ed = core.getSavedOrders().get(0).getDate();
+		}
+		core.setDateBeforeWithCalObject(bd);
+		core.setDateAfterWithCalObject(ed);
+		
+		double profit = core.calcTotalProfit();
+		System.out.println("Total profit = " + profit + ".");
 	}
 
 	/**

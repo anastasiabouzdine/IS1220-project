@@ -20,7 +20,7 @@ import clui.Command;
  * @author John de Wasseige
  * @author Patrick von Platen
  * 
- * @see #parseCouriers(String)
+ * @see #parseCommands(String)
  */
 
 public class ParseCommands {

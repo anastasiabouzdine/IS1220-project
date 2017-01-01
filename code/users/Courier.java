@@ -39,16 +39,6 @@ public class Courier extends User {
 	 * @param	username	a String containing the username
 	 * @param	password	a String containing the password
 	 */	
-	/**
-	 +	 * Class constructor with password. 
-	 +	 * 
-	 +	 * @param	name 		a String containing the name
-	 +	 * @param	surname		a String containing the surname
-	 +	 * @param	position	an Address object a String containing the position
-	 +	 * @param	phoneNumber a String containing the phonenumber
-	 +	 * @param	username	a String containing the username
-	 +	 * @param	password	a String containing the password
-	 +	 */	
 	public Courier(String name, String surname, Address position, String phoneNumber, String username, String password){
 		super(name, username, password);
 		this.surname = surname;

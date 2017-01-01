@@ -12,8 +12,8 @@ import exceptions.AlreadyUsedUsernameException;
 public class LaunchGUI {
 	
 	/**
-	 * @throws AWTException
-	 * @throws AlreadyUsedUsernameException
+	 * @throws AWTException		when an Abstract Window Toolkit exception has occurred
+	 * @throws AlreadyUsedUsernameException		if username is already used
 	 *******************************************************/
 	/* Launch */
 	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {

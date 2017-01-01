@@ -1234,6 +1234,17 @@ public class Core {
 			unauthorizedCommand();
 		}
 	}
+	
+	/**
+	 * @param cal a Calendar object 
+	 */
+	public void setDateAfterWithCalObject(Calendar cal) {
+		if (current_manager != null) {
+			dateAfter = cal;
+		} else {
+			unauthorizedCommand();
+		}
+	}
 
 	public void autoSetDateAfter() {
 		if (current_manager != null) {
@@ -1273,6 +1284,19 @@ public class Core {
 		dateBefore.clear();
 		dateBefore.set(year, month, date);
 	}
+	
+	/**
+	 * @param cal a Calendar object 
+	 */
+	public void setDateBeforeWithCalObject(Calendar cal) {
+		if (current_manager != null) {
+			dateBefore = cal;
+		} else {
+			unauthorizedCommand();
+		}
+	}
+	
+	
 
 	/* Getters and Setter for user lists */
 	/**

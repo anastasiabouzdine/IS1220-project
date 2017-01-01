@@ -329,7 +329,7 @@ public class Restaurant extends User {
 	}
 
 	/**
-	 * @param nbOfDeliveredOrders the nbOfDeliveredOrders to set
+	 * @param numberOfDeliveredOrders the nbOfDeliveredOrders to set
 	 */
 	public void setNbOfDeliveredOrders(int numberOfDeliveredOrders) {
 		this.nbOfDeliveredOrders = numberOfDeliveredOrders;

@@ -20,7 +20,7 @@ import users.Restaurant;
 * @author John de Wasseige
 * @author Patrick von Platen
 * 
-* @see #parseOrders()
+* @see #parseOrders(ArrayList, Core)
 */
 public class ParseOrders {
 	

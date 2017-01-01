@@ -35,6 +35,16 @@ public class CommandLine {
 
 	/**************************************************/
 	/* Methods */
+	
+	/**
+	 * This function is in charge of parsing the input of the user into
+	 * a command object and detecting if input is in the correct form,
+	 * if no problems appear, it will pass the command object 
+	 * to the command processor.
+	 * 
+	 * @param s		a string of the input command of the user
+	 * @return	a string containing information about the success of the parsing
+	 */
 	public String getInputInfoAndProcessCmd(String s) {
 		if (s.equals("stop")){
 			return s + " command executed.";
@@ -79,6 +89,12 @@ public class CommandLine {
 		return input[0] + " command executed.";
 	}
 
+	
+	/**
+	 * This function launches the command line interface
+	 * directly in the console and passes input to the 
+	 * <code>getInputInfoAndProcessCmd</code> method.
+	 */
 	public void launchFromInput() {
 		Scanner sc; 
 		String inputInfo, s = "";
@@ -100,6 +116,12 @@ public class CommandLine {
 		}
 	}
 
+	/**
+	 * Executes commands in the same fashion as <code>launchFromInput</code>
+	 * but this time the commands are parsed from a txt file.
+	 * 
+	 * @param filename	the name of the file containing the list of commands
+	 */
 	public void launchFromFile(String filename) {
 		File file = new File(filename);
 		Scanner scan = null;
