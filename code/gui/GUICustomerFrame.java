@@ -31,7 +31,6 @@ import policies.FidCardPlanBasic;
 import policies.FidCardPlanPoints;
 import restaurantSetUp.Dish;
 import restaurantSetUp.Meal;
-import users.Address;
 import users.Customer;
 import users.Restaurant;
 import users.User;
@@ -523,7 +522,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 				save_button = new JButton("SAVE");
 				save_button.addActionListener((ActionEvent e4) -> {
 
-                    try {
+					try {
 						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
 						int yCoord = Integer.parseInt(getSetTextFieldYInt().getText());
 						customer.getAddress().setxCoordinate(xCoord);

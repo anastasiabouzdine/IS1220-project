@@ -12,8 +12,8 @@ import exceptions.AlreadyUsedUsernameException;
 public class LaunchGUI {
 	
 	/**
-	 * @throws AWTException		when an Abstract Window Toolkit exception has occurred
-	 * @throws AlreadyUsedUsernameException		if username is already used
+	 * @throws AWTException
+	 * @throws AlreadyUsedUsernameException
 	 *******************************************************/
 	/* Launch */
 	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
@@ -29,11 +29,11 @@ public class LaunchGUI {
 
 		// Log-in Tests - please run only one test at a time - if not they will
 		// fail
-		// GUIStartFrameTest.checkIfCourierLogInWorks();
+//		 GUIStartFrameTest.checkIfCourierLogInWorks();
 		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
 //		 GUIStartFrameTest.checkIfRestaurantLogInWorks();
 //		 GUIStartFrameTest.checkIfManagerLogInWorks();
-//		 GUIStartFrameTest.checkIfCustomerLogInWorks();
+		 GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 
 }
