@@ -4,22 +4,17 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -27,16 +22,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import clui.Command;
-import clui.CommandProcessor;
 import core.Core;
+import core.Order;
 import exceptions.AlreadyUsedUsernameException;
 import parsers.ParseCouriers;
 import parsers.ParseCustomers;
 import parsers.ParseDishes;
 import parsers.ParseManagers;
 import parsers.ParseMeals;
-import parsers.ParseRestaurants;
+import parsers.ParseOrders;
 import restaurantSetUp.Meal;
 import users.Address;
 import users.Courier;
@@ -105,8 +99,8 @@ public class GUIStartFrame {
 	JPanel courier_specific_info = new JPanel();
 	JPanel restaurant_specific_info = new JPanel();
 	JPanel manager_specific_info = new JPanel();
-	
-	//Manager for add User button
+
+	// Manager for add User button
 	static GUIUserFrame manager;
 
 	/*********************************************************/
@@ -131,8 +125,6 @@ public class GUIStartFrame {
 			try {
 				core.register(restaurant);
 			} catch (AlreadyUsedUsernameException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 
 			core.logIn("root");
@@ -149,41 +141,12 @@ public class GUIStartFrame {
 			core.getRestaurantList().get(0).getMenu()
 					.setListOfDessert(ParseDishes.parseDessert("src/txtFILES/desserts.txt"));
 
+			ArrayList<Order> orders = ParseOrders.parseOrders(core.getCustomerList(), core);
+			core.setSavedOrders(orders);
+
 			core.logOut();
 		}
 		return instance;
-	}
-
-	public static JFrame getFrame() {
-		return frame;
-	}
-
-	public static void setFrame(JFrame frame) {
-		GUIStartFrame.frame = frame;
-	}
-
-	public static GUIUserFrame getCurrentLogInUser() {
-		return currentLogInUser;
-	}
-
-	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
-		GUIStartFrame.currentLogInUser = currentLogInUser;
-	}
-
-	public JPanel getLogin_panel() {
-		return login_panel;
-	}
-
-	public JPanel getRegister_panel_info() {
-		return register_panel_info;
-	}
-
-	public JPanel getWelcome_panel() {
-		return welcome_panel;
-	}
-
-	public static Core getCore() {
-		return core;
 	}
 
 	/*********************************************************/
@@ -235,7 +198,7 @@ public class GUIStartFrame {
 		restaurant_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 		restaurant_specific_info.setBackground(Color.gray);
 	}
-	
+
 	public void fillManagerSpecificInfosPanel() {
 		manager_specific_info.setLayout(new BorderLayout());
 		manager_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
@@ -305,6 +268,12 @@ public class GUIStartFrame {
 	/*********************************************************/
 	/* Functions */
 
+	public void popUpOkWindow(String message) {
+		Object[] options = { "OK" };
+		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE,
+				null, options, options[0]);
+	}
+
 	public void setCurrentPanel(JPanel panel) {
 		frame.setContentPane(panel);
 		frame.setVisible(true);
@@ -335,7 +304,7 @@ public class GUIStartFrame {
 		createAccount_button.addActionListener(new WhatAccountType());
 		register_button.addActionListener(new RegisterButton());
 		logIn_button.addActionListener(new LoginButton());
-		
+
 		addUserButton.addActionListener((ActionEvent e) -> {
 
 			name = name_JTF.getText();
@@ -372,7 +341,7 @@ public class GUIStartFrame {
 				user_global_info.remove(addUserButton);
 				register_panel_info.remove(((GUIManagerFrame) manager).getGoBackfromAddUserButton());
 			} catch (Exception ex) {
-				// TODO pop up
+				popUpOkWindow("Please use only integers for the address coordinates.");
 			}
 
 		});
@@ -409,7 +378,6 @@ public class GUIStartFrame {
 		username_JTF.setPreferredSize(new Dimension(150, 30));
 		username_JTF.setForeground(Color.BLUE);
 		username_JTF.setText("Insert your username");
-		// TODO find a function that deletes the text when clicked on
 
 		password_JTF.setPreferredSize(new Dimension(150, 30));
 		password_JTF.setForeground(Color.BLUE);
@@ -450,12 +418,11 @@ public class GUIStartFrame {
 			username = username_JTF.getText();
 			password = password_JTF.getText();
 			passwortConf = passwordConf_JTF.getText();
-			
-			if(radio_manager.isVisible())
+
+			if (radio_manager.isVisible())
 				register_button.setVisible(false);
 			else
 				register_button.setVisible(true);
-			
 
 			if (checkIfPassWordIsEqual(password, passwortConf)) {
 
@@ -503,13 +470,12 @@ public class GUIStartFrame {
 
 				user_global_info.add(home_button, BorderLayout.SOUTH);
 				user_global_info.add(backToRegister_button, BorderLayout.SOUTH);
-				if(!radio_manager.isVisible())
+				if (!radio_manager.isVisible())
 					user_global_info.add(register_button, BorderLayout.SOUTH);
 				
 				setCurrentPanel(user_global_info);
 			} else {
-				// TODO pop up window
-				System.out.println("Wrong password!!!");
+				popUpOkWindow("Different passwords! Please try again.");
 			}
 		}
 	}
@@ -564,8 +530,10 @@ public class GUIStartFrame {
 
 					core.register(new Restaurant(name, address, username, password));
 				}
-			} catch (Exception ex) {
-				// TODO pop up
+			} catch (AlreadyUsedUsernameException e2) {
+				popUpOkWindow("Username is already taken. Try a different one.");
+			} catch (NumberFormatException ex) {
+				popUpOkWindow("Please use only integers for the address coordinates.");
 			}
 			goToLogInPanel();
 		}
@@ -579,15 +547,12 @@ public class GUIStartFrame {
 			username = username_JTF.getText();
 			String code = password_JTF.getText();
 
-			try {
 				core.logIn(username, code);
-			} catch (Exception ex) {
-				ex.getMessage();
-			}
-
+			
 			User current_user = core.getCurrent_user();
 			if (current_user == null) {
-				System.out.println("No log in!");
+				popUpOkWindow("Wrong password or username! If you have forgotten your password or username, "
+						+ "\n please write a mail to john.de-wasseige@student.ecp.fr.");
 			} else {
 
 				if (current_user instanceof Courier) {
@@ -603,6 +568,65 @@ public class GUIStartFrame {
 			}
 		}
 	}
+	
+	/**
+	 * @throws AWTException
+	 * @throws AlreadyUsedUsernameException
+	 *******************************************************/
+	/* Launch */
+	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
 
+		GUIStartFrame gui = GUIStartFrame.getInstance();
+		gui.open(0, 0, 600, 400);
+
+//		 Register Tests - can be run all together
+//		 GUIStartFrameTest.checkIfClickGoToButtonsWork();
+//		 GUIStartFrameTest.checkIfRestaurantCanBeRegistered();
+//		 GUIStartFrameTest.checkIfCourierCanBeRegistered();
+//		 GUIStartFrameTest.checkIfCustomerCanBeRegistered();
+
+		// Log-in Tests - please run only one test at a time - if not they will
+		// fail
+		// GUIStartFrameTest.checkIfCourierLogInWorks();
+		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
+		// GUIStartFrameTest.checkIfRestaurantLogInWorks();
+		// GUIStartFrameTest.checkIfManagerLogInWorks();
+		   GUIStartFrameTest.checkIfCustomerLogInWorks();
+	}
+
+	/*******************************************************/
+	/* Getters and Setters */
+
+	public static JFrame getFrame() {
+		return frame;
+	}
+
+	public static void setFrame(JFrame frame) {
+		GUIStartFrame.frame = frame;
+	}
+
+	public static GUIUserFrame getCurrentLogInUser() {
+		return currentLogInUser;
+	}
+
+	public static void setCurrentLogInUser(GUIUserFrame currentLogInUser) {
+		GUIStartFrame.currentLogInUser = currentLogInUser;
+	}
+
+	public JPanel getLogin_panel() {
+		return login_panel;
+	}
+
+	public JPanel getRegister_panel_info() {
+		return register_panel_info;
+	}
+
+	public JPanel getWelcome_panel() {
+		return welcome_panel;
+	}
+
+	public static Core getCore() {
+		return core;
+	}
 
 }

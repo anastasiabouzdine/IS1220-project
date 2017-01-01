@@ -32,9 +32,9 @@ public class CoreTest {
 	ArrayList<MainDish> list_mainDish = ParseDishes.parseMainDish("src/txtFILES/mainDishes.txt");
 	ArrayList<Dessert> list_dessert = ParseDishes.parseDessert("src/txtFILES/desserts.txt");
 	ArrayList<Restaurant> list_restaurant = ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt");
-	ArrayList<Order> list_orders = ParseOrders.parseOrders();
-	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	ArrayList<Customer> list_customer = ParseCustomers.parseCustomers("src/txtFILES/customersList.txt");
+	ArrayList<Order> list_orders = ParseOrders.parseOrders(list_customer, core);
+	ArrayList<Courier> list_courier = ParseCouriers.parseCouriers("src/txtFILES/courierList.txt");
 	ArrayList<Manager> list_manager = ParseManagers.parseManagers("src/txtFILES/managersList.txt");
 
 	Restaurant rest1 = list_restaurant.get(0);

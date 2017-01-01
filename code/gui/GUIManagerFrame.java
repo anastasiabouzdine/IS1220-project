@@ -3,43 +3,30 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import org.junit.experimental.theories.Theories;
 
 import core.Core;
 import policies.DeliveryCostProfit;
 import policies.DishSort;
 import policies.FastestDelivery;
 import policies.MarkupProfit;
-import policies.MealSort;
 import policies.ServiceFeeProfit;
 import policies.SortPolicy;
-import restaurantSetUp.Meal;
 import users.Manager;
-import users.Address;
 import users.Courier;
 import users.Customer;
 import users.Restaurant;
@@ -111,9 +98,29 @@ public class GUIManagerFrame extends GUIUserFrame {
 	JRadioButton radio_serFeeProfit = new JRadioButton("Simulate service fee");
 	JRadioButton radio_markupProfit = new JRadioButton("Simulate markup percentage");
 
+	/*************************************************/
+	// Constructors
 	public GUIManagerFrame() {
 		super();
 		instance = this;
+	}
+
+	@Override
+	public GUIUserFrame getInstance(User user) {
+
+		if (user instanceof Manager) {
+			this.manager = (Manager) user;
+
+			initManager(manager);
+			GUIStartFrame.getFrame().setVisible(false);
+
+			initGUI(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
+			instance.open(0, 0, 600, 400);
+			popUpOkWindow(User.messageBoxGUI);
+			return instance;
+		}
+
+		return null;
 	}
 
 	/*************************************************/
@@ -419,23 +426,6 @@ public class GUIManagerFrame extends GUIUserFrame {
 	/*************************************************/
 	// Init functions
 
-	@Override
-	public GUIUserFrame getInstance(User user) {
-
-		if (user instanceof Manager) {
-			this.manager = (Manager) user;
-
-			initManager(manager);
-			GUIStartFrame.getFrame().setVisible(false);
-
-			initGUI(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
-			instance.open(0, 0, 600, 400);
-			return instance;
-		}
-
-		return null;
-	}
-
 	private void initManager(Manager manager) {
 		fillAndSetMenuBarManagerInit(manager);
 		fillUserManagePanelInit();
@@ -456,9 +446,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				System.out.println(profit);
 			} catch (NumberFormatException e2) {
 				message = "Please fill out all input fields with doubles.";
-				System.out.println(message);
+				popUpOkWindow(message);
 			}
-			// TODO: pop up
 
 		});
 	}
@@ -530,10 +519,10 @@ public class GUIManagerFrame extends GUIUserFrame {
 	}
 
 	private void fillUserManagMenuWithFunctionManagerInit(Manager manager) {
-		userManageMenu.add(new ManagerActionUserManagement("add", "adding a new user", manager));
-		userManageMenu.add(new ManagerActionUserManagement("remove", "removing a user", manager));
-		userManageMenu.add(new ManagerActionUserManagement("activate", "activating an existing user", manager));
-		userManageMenu.add(new ManagerActionUserManagement("deactivate", "deactivating an existing user", manager));
+		userManageMenu.add(new ManagerActionUserManagement("add", "adding a new user"));
+		userManageMenu.add(new ManagerActionUserManagement("remove", "removing a user"));
+		userManageMenu.add(new ManagerActionUserManagement("activate", "activating an existing user"));
+		userManageMenu.add(new ManagerActionUserManagement("deactivate", "deactivating an existing user"));
 	}
 
 	private void fillUserProfitMenuWithFunctionInit() {
@@ -669,8 +658,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 						Double makeupPercentage = Double.parseDouble(getSetTextFieldValue().getText());
 						core.setMarkupPercentage(makeupPercentage);
 					} catch (NumberFormatException e4) {
-						// TODO pop up
 						String message = "Please insert a double for the markup percentage";
+						popUpOkWindow(message);
 					}
 
 				});
@@ -691,8 +680,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 						Double serviceFee = Double.parseDouble(getSetTextFieldValue().getText());
 						core.setServiceFee(serviceFee);
 					} catch (NumberFormatException e4) {
-						// TODO pop up
 						String message = "Please insert a double for the service fee";
+						popUpOkWindow(message);
 					}
 
 				});
@@ -713,8 +702,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 						Double deliveryCost = Double.parseDouble(getSetTextFieldValue().getText());
 						core.setDeliveryCost(deliveryCost);
 					} catch (NumberFormatException e4) {
-						// TODO pop up
 						String message = "Please insert a double for the delivery cost";
+						popUpOkWindow(message);
 					}
 
 				});
@@ -776,12 +765,10 @@ public class GUIManagerFrame extends GUIUserFrame {
 		 */
 		private static final long serialVersionUID = 1L;
 		String choice;
-		Manager manager;
 
-		public ManagerActionUserManagement(String choice, String desc, Manager manager) {
+		public ManagerActionUserManagement(String choice, String desc) {
 			super(choice);
 			this.choice = choice;
-			this.manager = manager;
 			putValue(Action.SHORT_DESCRIPTION, desc);
 		}
 
@@ -876,6 +863,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				profitPanel.removeAll();
 
 				descr = "The average income per customer is: ";
+				System.out.println(core.getCustomerList());
 				value = Double.toString(core.calcAverageIncome());
 				valueT.setEditable(false);
 

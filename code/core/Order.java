@@ -22,7 +22,7 @@ import users.Restaurant;
 
 public class Order {
 	private int ID;
-	private static int counter;
+	private static int counter=0;
 	private Customer customer;
 	private Restaurant restaurant;
 	private ArrayList<Meal> meals;

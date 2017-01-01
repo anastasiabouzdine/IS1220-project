@@ -68,11 +68,12 @@ public class Core {
 	/* Profit-related information */
 	private double serviceFee = 2.50;
 	private double markupPercentage = 0.05;
-	private double deliveryCost = 4;
+	private double deliveryCost = 2;
 
 	/* PlaceHolder */
 	private Calendar dateAfter;
 	private Calendar dateBefore;
+	private String currentMessage;
 
 	/**
 	 * Class constructor.
@@ -498,8 +499,10 @@ public class Core {
 	 *            message that is to be transfered to the system
 	 */
 	private void updateSystem(String message) {
-		if (this.current_user instanceof Manager)
+		if (this.current_user instanceof Manager){
 			System.out.println(message);
+			currentMessage = message;
+		}
 		else
 			for (Manager manager : this.managerList)
 				manager.update(message);
@@ -515,9 +518,10 @@ public class Core {
 	 *            message that is to be transfered to the user
 	 */
 	private void update(User user, String message) {
-		if (this.current_user.equals(user))
+		if (this.current_user.equals(user)){
 			System.out.println(message);
-		else
+			currentMessage = message;
+		}else
 			user.update(message);
 	}
 
@@ -731,6 +735,8 @@ public class Core {
 	public double calcTotalIncome() {
 		if (current_manager != null) {
 			double sum = 0;
+			this.autoSetDateAfter();
+			this.autoSetDateBeforeOneMonthAgo();
 			for (Order order : this.savedOrders)
 				if (order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 					sum += order.getPriceFinal();
@@ -751,6 +757,8 @@ public class Core {
 	public double calcTotalProfit() {
 		if (current_manager != null) {
 			double sum = 0.0D;
+			this.autoSetDateAfter();
+			this.autoSetDateBeforeOneMonthAgo();
 			for (Order order : this.savedOrders) {
 				if (order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 					sum = Order.round2(sum + order.getProfitFinal());
@@ -810,6 +818,7 @@ public class Core {
 					nb_customers_who_ordered++;
 				}
 			}
+			System.out.println(calcTotalIncome());
 			return Order.round2(calcTotalIncome() / (double) nb_customers_who_ordered);
 		} else {
 			unauthorizedCommand();
@@ -1061,7 +1070,7 @@ public class Core {
 	 * @return the serviceFee
 	 */
 	public double getServiceFee() {
-		if (current_manager != null) {
+		if (current_manager != null || current_customer !=null) {
 			return serviceFee;
 		} else {
 			unauthorizedCommand();
@@ -1468,9 +1477,23 @@ public class Core {
 		}
 	}
 
+	/**
+	 * @param savedOrders the savedOrders to set
+	 */
+	public void setSavedOrders(ArrayList<Order> savedOrders) {
+		this.savedOrders = savedOrders;
+	}
+
+	/**
+	 * @return the currentMessage
+	 */
+	public String getCurrentMessage() {
+		return currentMessage;
+	}
+
 	/* static methods */
 	private static void unauthorizedCommand() {
-		// System.out.println("This command is not valid! Please try again");
+		 System.out.println("This command is not valid! Please try again");
 	}
 
 }
