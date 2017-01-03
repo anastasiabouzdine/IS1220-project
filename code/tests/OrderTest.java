@@ -45,7 +45,7 @@ public class OrderTest {
 	
 	@Test 
 	public void addMealToOrder() {
-		Order order1 = list_order.get(0);
+		Order order1 = new Order(null, null, Calendar.getInstance());
 		assertTrue(order1 != null);
 		HalfMeal hm1 = list_hmeal.get(0);
 		order1.addMeal(hm1,3);
@@ -56,7 +56,7 @@ public class OrderTest {
 	
 	@Test 
 	public void addDishToOrder() {
-		Order order1 = list_order.get(0);
+		Order order1 = new Order(null, null, Calendar.getInstance());
 		assertTrue(order1 != null);
 		Dish d1 = list_starter.get(0);
 		order1.addDish(d1,2);
@@ -67,7 +67,7 @@ public class OrderTest {
 	
 	@Test 
 	public void getPriceOfOrder() {
-		Order order1 = list_order.get(0);
+		Order order1 = new Order(list_customer.get(0), list_restaurant.get(0), Calendar.getInstance());
 		
 		assertTrue(order1 != null);
 		
@@ -88,7 +88,7 @@ public class OrderTest {
 	
 	@Test 
 	public void getPriceOfOrderWithSpecialMeal() {
-		Order order1 = list_order.get(0);
+		Order order1 = new Order(list_customer.get(0),  list_restaurant.get(0), Calendar.getInstance());
 		
 		assertTrue(order1 != null);
 		

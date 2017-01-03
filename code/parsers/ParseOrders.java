@@ -42,8 +42,10 @@ public class ParseOrders {
 				Order order = new Order(customer_list.get(i), restaurant_list.get(i));
 				order.addMeal(fullMeals.get(0), 1);
 				order.getPrice();
+				core.logIn("root");
 				order.setPriceFinal(order.getPriceInter() + core.getServiceFee());
 				order.setProfitFinal(order.getPriceFinal()*core.getMarkupPercentage() + core.getServiceFee() - core.getDeliveryCost());
+				core.logOut();
 				order_list.add(order);
 				i++;
 			}
