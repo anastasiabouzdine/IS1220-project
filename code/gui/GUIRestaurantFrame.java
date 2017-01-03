@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+
 
 import restaurantSetUp.AbstractFactory;
 import restaurantSetUp.Dessert;
@@ -115,10 +118,9 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 			GUIStartFrame.getFrame().setVisible(false);
 			this.restaurant = rest;
 			fillAndSetMenuBarRestInit(rest);
-			initGUI(restaurant, Color.orange, Color.yellow, "Restaurant Area", "Just Dwaggit...");
+			initGUI(restaurant, Color.red, Color.white, "Restaurant Area", User.messageBoxGUI);
 			initRest(restaurant);
 			instance.open(0, 0, 600, 400);
-			popUpOkWindow(User.messageBoxGUI);
 			return instance;
 		}
 
@@ -127,6 +129,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 
 	private void initRest(Restaurant rest) {
 
+		fillTextFieldsWithFocusInit();
 		fillAddMealPanelInit(rest);
 		fillAddRemovePanelInit();
 		fillAddDishPanelInit();
@@ -160,6 +163,46 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					rest.setSpecialMeal(meal);
 					setCurrentPanel(welcome_panel);
 				}
+			}
+		});
+	}
+
+	private void fillTextFieldsWithFocusInit() {
+
+		nameDishT.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				nameDishT.setText("");
+
+			}
+		});
+		priceDishT.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				priceDishT.setText("");
+
+			}
+		});
+		mealName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				mealName.setText("");
+
 			}
 		});
 	}

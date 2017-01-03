@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -139,7 +141,7 @@ public abstract class GUIUserFrame {
 		frame.setJMenuBar(menuBar);
 	}
 
-	public void fillWelcomePanel(User user, Color color1, Color color2, String welcomeText, String programText) {
+	public void fillWelcomePanel(User user, Color color1, Color color2, String welcomeText, String new_messages) {
 		welcome_panel.setBackground(color1);
 		welcome_panel.setBorder(BorderFactory.createTitledBorder(welcomeText));
 		welcome_panel.setLayout(new BorderLayout());
@@ -150,16 +152,16 @@ public abstract class GUIUserFrame {
 		Font font = new Font("SansSerif", Font.BOLD, 12);
 		program_name.setFont(font);
 		program_name.setBackground(color1);
-		program_name.setText(programText);
+		program_name.setText("Welcome " + user.getName());
 		program_name.setEditable(false);
 		welcome_message_panel.setBackground(color1);
 		welcome_message_panel.add(program_name);
 
-		JTextArea welcome_text = new JTextArea();
+		JTextArea messageBox = new JTextArea();
 		JScrollPane welcome_scrollPane = new JScrollPane();
-		welcome_scrollPane.setViewportView(welcome_text);
-		welcome_text.setText("Welcome " + user.getName());
-		welcome_text.setBackground(color2);
+		welcome_scrollPane.setViewportView(messageBox);
+		messageBox.setText("******************* Message Box ****************** \n\n" + new_messages);
+		messageBox.setBackground(color2);
 
 		welcome_panel.add(welcome_message_panel, BorderLayout.NORTH);
 		welcome_panel.add(welcome_scrollPane, BorderLayout.CENTER);
@@ -205,12 +207,13 @@ public abstract class GUIUserFrame {
 
 	/**************************************************/
 	// Initialize functions
-	public void initGUI(User user, Color color1, Color color2, String welcomeText, String programText) {
+	public void initGUI(User user, Color color1, Color color2, String welcomeText, String messageBox) {
 		setFrame(new JFrame("Welcome " + user.getName()));
-		fillWelcomePanel(user, color1, color2, welcomeText, programText);
+		fillWelcomePanel(user, color1, color2, welcomeText, messageBox);
 		fillInfoPanel();
 		fillSetPanel();
 		fillAndSetMenuBar(user);
+		fillInitTextfieldsWithFocus();
 		setCurrentPanel(welcome_panel);
 		logOut_button.addActionListener((ActionEvent e) -> {
 			frame.setVisible(false);
@@ -218,6 +221,42 @@ public abstract class GUIUserFrame {
 			GUIStartFrame.setCurrentLogInUser(null);
 			GUIStartFrame.getInstance().goToHomePage();
 			GUIStartFrame.getFrame().setVisible(true);
+		});
+	}
+
+	private void fillInitTextfieldsWithFocus() {
+		setTextFieldValue.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				setTextFieldValue.setText("");
+			}
+		});
+		setTextFieldYInt.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				setTextFieldYInt.setText("");
+			}
+		});
+		setTextFieldXInt.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				setTextFieldXInt.setText("");
+			}
 		});
 	}
 

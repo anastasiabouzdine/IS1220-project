@@ -30,9 +30,9 @@ public class LaunchGUI {
 		// Log-in Tests - please run only one test at a time - if not they will
 		// fail
 //		 GUIStartFrameTest.checkIfCourierLogInWorks();
-		// GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
+//		 GUIStartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
 //		 GUIStartFrameTest.checkIfRestaurantLogInWorks();
-		 GUIStartFrameTest.checkIfManagerLogInWorks();
+//		 GUIStartFrameTest.checkIfManagerLogInWorks();
 //		 GUIStartFrameTest.checkIfCustomerLogInWorks();
 	}
 

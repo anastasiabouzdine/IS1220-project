@@ -110,13 +110,10 @@ public class GUIManagerFrame extends GUIUserFrame {
 
 		if (user instanceof Manager) {
 			this.manager = (Manager) user;
-
 			initManager(manager);
 			GUIStartFrame.getFrame().setVisible(false);
-
-			initGUI(manager, Color.orange, Color.yellow, "Manager Area", "Just Dwaggit...");
+			initGUI(manager, Color.LIGHT_GRAY, Color.white, "Manager Area", User.messageBoxGUI);
 			instance.open(0, 0, 600, 400);
-			popUpOkWindow(User.messageBoxGUI);
 			return instance;
 		}
 

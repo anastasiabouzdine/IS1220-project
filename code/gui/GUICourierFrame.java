@@ -56,11 +56,10 @@ public class GUICourierFrame extends GUIUserFrame {
 
 			GUIStartFrame.getFrame().setVisible(false);
 			this.courier = (Courier) user;
-			initGUI(courier, Color.orange, Color.yellow, "Courier Area", "Just Dwaggit...");
+			initGUI(courier, Color.orange, Color.white, "Courier Area", User.messageBoxGUI);
 			initSetPanelNotif();
 			fillAndSetMenuBarCourier(courier);
 			instance.open(0, 0, 600, 400);
-			popUpOkWindow(User.messageBoxGUI);
 			return instance;
 		}
 

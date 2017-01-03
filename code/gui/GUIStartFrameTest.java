@@ -412,7 +412,7 @@ public class GUIStartFrameTest {
 	public static void checkIfCourierLogInWorks() throws AWTException, AlreadyUsedUsernameException {
 
 		Address address = new Address(3, 4);
-		Courier courier = new Courier("aoeu", "tnhd", address, "56789", "c8", "code");
+		Courier courier = new Courier("Courier_1", "Mary", address, "56789", "c8", "code");
 		GUIStartFrame.getCore().register(courier);
 
 		try {
@@ -470,7 +470,7 @@ public class GUIStartFrameTest {
 	public static void checkIfCourierLogInFailsWithWrongLogIn() throws AWTException, AlreadyUsedUsernameException {
 
 		Address address = new Address(3, 4);
-		Courier courier = new Courier("aoeu", "tnhd", address, "56789", "c8", "code");
+		Courier courier = new Courier("Courier_1", "Peter", address, "56789", "c8", "code");
 		GUIStartFrame.getCore().register(courier);
 
 		try {
@@ -528,7 +528,7 @@ public class GUIStartFrameTest {
 	public static void checkIfCustomerLogInWorks() throws AWTException, AlreadyUsedUsernameException {
 
 		Address address = new Address(3, 4);
-		Customer customer = new Customer("aoeu", "tnhd", address, "56789", "nth@nhsn", "cus8", "code");
+		Customer customer = new Customer("Cust_1", "Otto", address, "56789", "nth@nhsn", "cus8", "code");
 		GUIStartFrame.getCore().register(customer);
 
 		try {
@@ -585,7 +585,7 @@ public class GUIStartFrameTest {
 
 	public static void checkIfManagerLogInWorks() throws AWTException, AlreadyUsedUsernameException {
 
-		Manager manager = new Manager("aoeu", "tnhd", "m8", "code");
+		Manager manager = new Manager("Manag_1", "John", "m8", "code");
 		GUIStartFrame.getCore().register(manager);
 
 		try {

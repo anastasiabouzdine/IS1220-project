@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -97,10 +99,9 @@ public class GUICustomerFrame extends GUIUserFrame {
 			GUIStartFrame.getFrame().setVisible(false);
 			this.customer = (Customer) user;
 			fillAndSetMenuBarCustomer(customer);
-			initGUI(customer, Color.orange, Color.yellow, "Customer Area", "Just Dwaggit...");
+			initGUI(customer, Color.yellow, Color.white, "Customer Area", User.messageBoxGUI);
 			fillCustomerInit();
 			instance.open(0, 0, 600, 400);
-			popUpOkWindow(User.messageBoxGUI);
 			return instance;
 		}
 
@@ -369,6 +370,18 @@ public class GUICustomerFrame extends GUIUserFrame {
 					currentRestaurant = core.getRestaurantList().get(index);
 					displayMeals(currentRestaurant);
 				}
+			}
+		});
+		quantityTextField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				quantityTextField.setText("");
+				
 			}
 		});
 	}

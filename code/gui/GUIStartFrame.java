@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -15,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -73,8 +76,8 @@ public class GUIStartFrame {
 	JTextField phoneNum_JTF = new JTextField(15);
 	JTextField emailAddress_JTF = new JTextField(15);
 	JTextField username_JTF = new JTextField(15);
-	JTextField password_JTF = new JTextField(15);
-	JTextField passwordConf_JTF = new JTextField(15);
+	JPasswordField password_JTF = new JPasswordField(15);
+	JPasswordField passwordConf_JTF = new JPasswordField(15);
 	JTextField name_JTF = new JTextField(15);
 
 	// String to register
@@ -83,8 +86,8 @@ public class GUIStartFrame {
 	String phoneNum;
 	String emailAddress;
 	String username;
-	String password;
-	String passwortConf;
+	char[] password;
+	char[] passwordConf;
 	String name;
 
 	// panels when user register and add info
@@ -147,6 +150,8 @@ public class GUIStartFrame {
 		}
 		return instance;
 	}
+	
+	
 
 	/*********************************************************/
 	/* Fill panels */
@@ -249,7 +254,7 @@ public class GUIStartFrame {
 		JTextArea welcome_text = new JTextArea();
 		JScrollPane welcome_scrollPane = new JScrollPane();
 		welcome_scrollPane.setViewportView(welcome_text);
-		welcome_text.setText("If you already have a username, please LOGIN !\n" + "If not, then REGISTER !");
+		welcome_text.setText("If you already have a username, please GO TO LOGIN !\n" + "If not, then GO TO REGISTER !");
 		welcome_text.setBackground(Color.yellow);
 
 		welcome_panel.add(welcome_message_panel, BorderLayout.NORTH);
@@ -261,11 +266,125 @@ public class GUIStartFrame {
 		welcome_button_panel.add(goToRegister_button, BorderLayout.CENTER);
 		frame.add(welcome_panel);
 	}
+	
+	private void clearTextWhenClickedonTextfieldInit(){
+	
+		surname_JTF.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				surname_JTF.setText("");
+				
+			}
+		});
+		xCoordinate_JTF.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				xCoordinate_JTF.setText("");
+				
+			}
+		});
+		yCoordinate_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				yCoordinate_JTF.setText("");
+
+			}
+		});
+		emailAddress_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				emailAddress_JTF.setText("");
+
+			}
+		});
+		phoneNum_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				phoneNum_JTF.setText("");
+
+			}
+		});
+		passwordConf_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				passwordConf_JTF.setText("");
+
+			}
+		});
+		password_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				password_JTF.setText("");
+
+			}
+		});
+		username_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				username_JTF.setText("");
+
+			}
+		});
+		name_JTF.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				name_JTF.setText("");
+
+			}
+		});
+	}
 
 	/*********************************************************/
 
 	/*********************************************************/
 	/* Functions */
+	
+
 
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
@@ -281,6 +400,7 @@ public class GUIStartFrame {
 	public void initSettings() {
 		home_button.addActionListener(new HomeButton());
 
+		clearTextWhenClickedonTextfieldInit();
 		fillWelcomePanel();
 		fillRegisterPanel();
 		fillLoginPanel();
@@ -316,7 +436,7 @@ public class GUIStartFrame {
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, password));
+					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, new String(password)));
 				} else if (courier_specific_info.isShowing()) {
 					surname = surname_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
@@ -324,17 +444,17 @@ public class GUIStartFrame {
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Courier(name, surname, address, phoneNum, username, password));
+					core.addUser(new Courier(name, surname, address, phoneNum, username, new String(password)));
 				} else if (restaurant_specific_info.isShowing()) {
 
 					address = new Address(Integer.parseInt(xCoordinate_JTF.getText()),
 							Integer.parseInt(yCoordinate_JTF.getText()));
 
-					core.addUser(new Restaurant(name, address, username, password));
+					core.addUser(new Restaurant(name, address, username, new String(password)));
 				} else if (manager_specific_info.isShowing()) {
 
 					surname = surname_JTF.getText();
-					core.addUser(new Manager(name, surname, username, password));
+					core.addUser(new Manager(name, surname, username, new String(password)));
 				}
 				manager.getFrame().setVisible(true);
 				manager.setCurrentPanel(manager.welcome_panel);
@@ -358,8 +478,8 @@ public class GUIStartFrame {
 		});
 	}
 
-	private boolean checkIfPassWordIsEqual(String passwort, String passwortConf) {
-		if (passwort.equals(passwortConf)) {
+	private boolean checkIfPassWordIsEqual(String password, String passwordConf) {
+		if (password.equals(passwordConf)) {
 			return true;
 		} else {
 			return false;
@@ -382,7 +502,7 @@ public class GUIStartFrame {
 
 		password_JTF.setPreferredSize(new Dimension(150, 30));
 		password_JTF.setForeground(Color.BLUE);
-		password_JTF.setText("Insert your password");
+		password_JTF.setText("exemple");
 
 		login_panel.add(username_JTF, BorderLayout.NORTH);
 		login_panel.add(password_JTF, BorderLayout.CENTER);
@@ -402,10 +522,10 @@ public class GUIStartFrame {
 		username_JTF.setText("Insert a username");
 
 		password_JTF.setForeground(Color.BLUE);
-		password_JTF.setText("Insert a password");
+		password_JTF.setText("exemple");
 
 		passwordConf_JTF.setForeground(Color.BLUE);
-		passwordConf_JTF.setText("Confirm the password");
+		passwordConf_JTF.setText("exemple");
 
 		setCurrentPanel(register_panel_info);
 	}
@@ -417,10 +537,10 @@ public class GUIStartFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			username = username_JTF.getText();
-			password = password_JTF.getText();
-			passwortConf = passwordConf_JTF.getText();
+			password = password_JTF.getPassword();
+			passwordConf = passwordConf_JTF.getPassword();
 
-			if (checkIfPassWordIsEqual(password, passwortConf)) {
+			if (checkIfPassWordIsEqual(new String(password), new String(passwordConf))) {
 
 				user_specific_info.removeAll();
 
@@ -520,15 +640,15 @@ public class GUIStartFrame {
 					emailAddress = emailAddress_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
 
-					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username, password));
+					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username, new String(password)));
 				} else if (courier_specific_info.isShowing()) {
 					surname = surname_JTF.getText();
 					phoneNum = phoneNum_JTF.getText();
 
-					core.register(new Courier(name, surname, address, phoneNum, username, password));
+					core.register(new Courier(name, surname, address, phoneNum, username, new String(password)));
 				} else if (restaurant_specific_info.isShowing()) {
 
-					core.register(new Restaurant(name, address, username, password));
+					core.register(new Restaurant(name, address, username, new String(password)));
 				}
 			} catch (AlreadyUsedUsernameException e2) {
 				popUpOkWindow("Username is already taken. Try a different one.");
@@ -544,12 +664,11 @@ public class GUIStartFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			username = username_JTF.getText();
-			String code = password_JTF.getText();
+			char[] code = password_JTF.getPassword();
 
-			core.logIn(username, code);
+			core.logIn(username, new String(code));
 
 			User current_user = core.getCurrent_user();
-			System.out.println(current_user);
 			if (current_user == null) {
 				popUpOkWindow("Wrong password or username! If you have forgotten your password or username, "
 						+ "\n please write a mail to john.de-wasseige@student.ecp.fr.");

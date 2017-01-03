@@ -578,19 +578,30 @@ public class Core {
 				Restaurant order_restaurant = order.getRestaurant();
 				List<Meal> order_meals = order.getMeals();
 				List<Dish> order_dishes = order.getDishes();
-
+				String orderedFood = "";
 				if (!order_meals.isEmpty()) {
 					for (int i = 0; i < order_meals.size(); i++) { // count of meal is updated
 						addMealCount(order_meals.get(i), order.getQuantity().get(i), order_restaurant);
+						
+						String newLine = " - " + order.getQuantity().get(i) + " * "
+								+ order_meals.get(i).toString() + " \n";
+						orderedFood += newLine;
+						
 					}
-					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the meal(s): "
-							+ order_meals + " to be picked up shortly by: " + courier.getName() + ".");
+					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the meal(s):\n"
+							+ orderedFood + " to be picked up shortly by: " + courier.getName() + ".");
 
 				} else {
-					for (int i = 0; i < order_dishes.size(); i++) // count of dishes is updated
+					for (int i = 0; i < order_dishes.size(); i++) {// count of dishes is updated
 						addDishCount(order_dishes.get(i), order.getQuantity().get(i), order_restaurant);
-					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the dish(es): "
-							+ order_dishes + "to be picked up shortly by: " + courier.getName() + ".");
+						
+						String newLine = " - " + order.getQuantity().get(i) + " * "
+								+ order_dishes.get(i).toString() + " \n";
+						orderedFood += newLine;
+						
+					}
+					update(order_restaurant, "[Order ID : " + order.getID() + "] Please prepare the dish(es):\n"
+							+ orderedFood + " to be picked up shortly by: " + courier.getName() + ".");
 				}
 				order_restaurant.setNbOfDeliveredOrders(1 + order_restaurant.getNbOfDeliveredOrders());
 				Customer order_customer = order.getCustomer();

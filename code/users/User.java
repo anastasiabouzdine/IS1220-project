@@ -64,7 +64,6 @@ public abstract class User {
 		messageBoxGUI = "";
 		if (!messageBox.isEmpty()){
 			System.out.println("+++ Your messagebox +++");
-			messageBoxGUI+= "\n +++ Your messagebox +++";
 		}
 		else{
 			System.out.println("No new messages");
@@ -73,7 +72,7 @@ public abstract class User {
 		while(!messageBox.isEmpty()){
 			String message = messageBox.pop();
 			System.out.println("message " + (messageBox.size()+1) + " : " + message);
-			messageBoxGUI+="\n message " + (messageBox.size()+1) + " : " + message;
+			messageBoxGUI+="\n\n message " + (messageBox.size()+1) + " : " + message;
 		}
 	}
 
