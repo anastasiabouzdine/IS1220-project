@@ -434,8 +434,10 @@ public class GUIManagerFrame extends GUIUserFrame {
 		initProfitPanel();
 
 		goBackfromAddUserButton.addActionListener((ActionEvent e) -> {
+			getFrame().setVisible(true);
 			setCurrentPanel(welcome_panel);
 			GUIStartFrame.register_panel_info.remove(goBackfromAddUserButton);
+			GUIStartFrame.getFrame().setVisible(false);
 		});
 
 		simulateButton.addActionListener((ActionEvent e) -> {
@@ -781,9 +783,9 @@ public class GUIManagerFrame extends GUIUserFrame {
 				GUIStartFrame.manager = instance;
 				GUIStartFrame.radio_manager.setVisible(true);
 				GUIStartFrame.home_button.setVisible(false);
-				GUIStartFrame.user_global_info.add(GUIStartFrame.addUserButton);
 				GUIStartFrame.register_panel_info.add(goBackfromAddUserButton);
 				GUIStartFrame.getInstance().goToRegisterPanel();
+				getFrame().setVisible(false);
 				break;
 
 			case "remove":

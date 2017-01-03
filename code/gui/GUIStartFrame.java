@@ -269,8 +269,8 @@ public class GUIStartFrame {
 
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
-		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE,
-				null, options, options[0]);
+		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
 	public void setCurrentPanel(JPanel panel) {
@@ -336,7 +336,9 @@ public class GUIStartFrame {
 					surname = surname_JTF.getText();
 					core.addUser(new Manager(name, surname, username, password));
 				}
+				manager.getFrame().setVisible(true);
 				manager.setCurrentPanel(manager.welcome_panel);
+				frame.setVisible(false);
 				user_global_info.remove(addUserButton);
 				register_panel_info.remove(((GUIManagerFrame) manager).getGoBackfromAddUserButton());
 			} catch (Exception ex) {
@@ -418,11 +420,6 @@ public class GUIStartFrame {
 			password = password_JTF.getText();
 			passwortConf = passwordConf_JTF.getText();
 
-			if (radio_manager.isVisible())
-				register_button.setVisible(false);
-			else
-				register_button.setVisible(true);
-
 			if (checkIfPassWordIsEqual(password, passwortConf)) {
 
 				user_specific_info.removeAll();
@@ -463,15 +460,19 @@ public class GUIStartFrame {
 					manager_specific_info.add(surname_JTF, BorderLayout.SOUTH);
 					user_specific_info.add(manager_specific_info);
 
-
 				}
 				fillUserGlobalInfoPanel();
 
 				user_global_info.add(home_button, BorderLayout.SOUTH);
 				user_global_info.add(backToRegister_button, BorderLayout.SOUTH);
-				if (!radio_manager.isVisible())
+				if (!radio_manager.isVisible()) {
+					user_global_info.remove(addUserButton);
 					user_global_info.add(register_button, BorderLayout.SOUTH);
-				
+				} else {
+					user_global_info.remove(register_button);
+					user_global_info.add(addUserButton, BorderLayout.SOUTH);
+				}
+
 				setCurrentPanel(user_global_info);
 			} else {
 				popUpOkWindow("Different passwords! Please try again.");
@@ -540,15 +541,15 @@ public class GUIStartFrame {
 	}
 
 	private class LoginButton implements ActionListener {
-		// @SuppressWarnings("unused")
 		public void actionPerformed(ActionEvent e) {
 
 			username = username_JTF.getText();
 			String code = password_JTF.getText();
 
-				core.logIn(username, code);
-			
+			core.logIn(username, code);
+
 			User current_user = core.getCurrent_user();
+			System.out.println(current_user);
 			if (current_user == null) {
 				popUpOkWindow("Wrong password or username! If you have forgotten your password or username, "
 						+ "\n please write a mail to john.de-wasseige@student.ecp.fr.");
@@ -567,7 +568,7 @@ public class GUIStartFrame {
 			}
 		}
 	}
-	
+
 	/*******************************************************/
 	/* Getters and Setters */
 

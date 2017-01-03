@@ -214,6 +214,7 @@ public abstract class GUIUserFrame {
 		setCurrentPanel(welcome_panel);
 		logOut_button.addActionListener((ActionEvent e) -> {
 			frame.setVisible(false);
+			GUIStartFrame.getCore().logOut();
 			GUIStartFrame.setCurrentLogInUser(null);
 			GUIStartFrame.getInstance().goToHomePage();
 			GUIStartFrame.getFrame().setVisible(true);
