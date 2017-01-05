@@ -143,7 +143,10 @@ public class Core {
 	 * New messages are printed out if user logs in.
 	 * 
 	 * @param username
-	 *            registered username that is saved in the system.
+	 *            registered username that is saved in the system
+	 * @param password
+	 *            password of the username that is saved in the system
+	 *            
 	 * @return a String containing a welcome message if the login was successful
 	 *         or null if not
 	 */
@@ -629,10 +632,7 @@ public class Core {
 	}
 
 	/**
-	 * Creates a new order.
-	 * 
-	 * @param cust
-	 *            as type of Customer
+	 * Creates a new order for the currently logged in customer.
 	 * @param rest
 	 *            as type of Restaurant
 	 * @return new Order
@@ -818,7 +818,6 @@ public class Core {
 					nb_customers_who_ordered++;
 				}
 			}
-			System.out.println(calcTotalIncome());
 			return Order.round2(calcTotalIncome() / (double) nb_customers_who_ordered);
 		} else {
 			unauthorizedCommand();
@@ -1516,8 +1515,8 @@ public class Core {
 	}
 
 	/* static methods */
-	private static void unauthorizedCommand() {
-		 System.out.println("This command is not valid! Please try again");
+	public static void unauthorizedCommand() {
+		System.out.println("! Command not available for this type of user !");
 	}
 
 }

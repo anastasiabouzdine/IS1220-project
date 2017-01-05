@@ -11,10 +11,6 @@ import java.util.List;
 import core.Core;
 import core.Order;
 import exceptions.AlreadyUsedUsernameException;
-import parsers.ParseCouriers;
-import parsers.ParseCustomers;
-import parsers.ParseManagers;
-import parsers.ParseRestaurants;
 import restaurantSetUp.AbstractFactory;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
@@ -141,6 +137,15 @@ public class CommandProcessor {
 		case "SHOWTOTALPROFIT":
 			showTotalProfit();
 			break;
+		case "SETSERVICEFEE":
+			setServiceFee();
+			break;
+		case "SETMARKUPPERCENTAGE":
+			setMarkupPercentage();
+			break;
+		case "SETDELIVERYCOST":
+			setDeliveryCost();
+			break;
 		case "LOGOUT":
 			logout();
 			break;
@@ -261,7 +266,7 @@ public class CommandProcessor {
 		if (core.getCurrent_restaurant() != null) {
 			potential_meals.add(meal_factory.getMeal(mealType, mealName));
 		} else {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -295,7 +300,7 @@ public class CommandProcessor {
 				.println("! This meal has first to be created, please do it using createMeal <mealName> <mealType> !");
 			}
 		} else {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -370,7 +375,7 @@ public class CommandProcessor {
 				System.out.println("! This meal does not exist !");
 			}
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -389,7 +394,7 @@ public class CommandProcessor {
 				System.out.println("! This meal does not exist !");
 			}
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -399,7 +404,7 @@ public class CommandProcessor {
 		try {
 			current_order = core.createNewOrder(core.findRestaurantByName(restaurantName));
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -422,7 +427,7 @@ public class CommandProcessor {
 				}
 			}
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -448,7 +453,7 @@ public class CommandProcessor {
 					}
 				}
 			} catch (NullPointerException e) {
-				System.out.println("! Command not available for this type of user !");
+				Core.unauthorizedCommand();
 			}
 		} catch (NumberFormatException e) {
 			System.out.println("! Please insert a valid number for the quantity !");
@@ -474,7 +479,7 @@ public class CommandProcessor {
 				}
 				current_order = null;
 			} catch (NullPointerException e) {
-				System.out.println("! Command not available for this type of user !");
+				Core.unauthorizedCommand();
 			}
 		} catch (ParseException e) {
 			System.out.println("! Please enter the date with dd/mm/yyyy format !");
@@ -488,7 +493,7 @@ public class CommandProcessor {
 		try {
 			core.getCurrent_courier().setAvailable(true);
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		} finally {
 			core.logOut();
 		}
@@ -501,7 +506,7 @@ public class CommandProcessor {
 		try {
 			core.getCurrent_courier().setAvailable(false);
 		} catch (NullPointerException e) {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		} finally {
 			core.logOut();
 		}
@@ -571,7 +576,7 @@ public class CommandProcessor {
 				System.out.println("Please choose between basic|points|lottery.");
 			}
 		} else {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -614,7 +619,7 @@ public class CommandProcessor {
 			for (Customer c : core.getCustomerList())
 				System.out.println(c.toString());
 		} else {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -627,7 +632,7 @@ public class CommandProcessor {
 			for (Restaurant r : core.getRestaurantList())
 				System.out.println(r.toString());
 		} else {
-			System.out.println("! Command not available for this type of user !");
+			Core.unauthorizedCommand();
 		}
 	}
 
@@ -696,6 +701,60 @@ public class CommandProcessor {
 		double profit = core.calcTotalProfit();
 		System.out.println("Total profit = " + profit + ".");
 	}
+	
+	/**
+	 * For the currently logged in manager to set the service fee.
+	 */
+	public void setServiceFee() {
+		try {
+			Double serviceFee = Double.parseDouble(current_args[0]);
+			core.setServiceFee(serviceFee);
+		} catch (NumberFormatException e) {
+			System.out.println("! Please enter a valid double for the service fee !");
+		}
+	}
+	
+	/**
+	 * For the currently logged in manager to set the markup percentage.
+	 */
+	public void setMarkupPercentage() {
+		try {
+			Double markupPercentage = Double.parseDouble(current_args[0]);
+			core.setServiceFee(markupPercentage);
+		} catch (NumberFormatException e) {
+			System.out.println("! Please enter a valid double for the service fee !");
+		}
+	}
+	
+	/**
+	 * For the currently logged in manager to set the delivery cost.
+	 */
+	public void setDeliveryCost() {
+		try {
+			Double deliveryCost = Double.parseDouble(current_args[0]);
+			core.setServiceFee(deliveryCost);
+		} catch (NumberFormatException e) {
+			System.out.println("! Please enter a valid double for the service fee !");
+		}
+	}
+	
+	/**
+	 * For the currently logged in manager to simulate the needed specification following
+	 * the given profits and two other specifications.
+	 */
+	public void simulateProfit() {
+		try {
+			Double targetProfit = Double.parseDouble(current_args[0]);
+			Double input1 = Double.parseDouble(current_args[1]);
+			Double input2 = Double.parseDouble(current_args[2]);
+			
+			Double out = core.simulateProfit(targetProfit, input1, input2);
+			System.out.println("delivery cost || service fee || markup percentage needed to achieve given"
+					+ " profit = " + out);
+		} catch (NumberFormatException e) {
+			System.out.println("! Please enter a valid double for the service fee !");
+		}
+	}
 
 	/**
 	 * Performs logout.
@@ -711,7 +770,7 @@ public class CommandProcessor {
 	 *            a string containing the date to be parsed in the form
 	 *            dd/mm/yyyy
 	 * @return a Calendar object representing the parsed date
-	 * @throws ParseException
+	 * @throws ParseException if the input string is not in the required format
 	 */
 	public static Calendar parseDateFromString(String string_date) throws ParseException {
 		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
