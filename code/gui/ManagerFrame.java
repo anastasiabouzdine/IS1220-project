@@ -32,9 +32,9 @@ import users.Customer;
 import users.Restaurant;
 import users.User;
 
-public class GUIManagerFrame extends GUIUserFrame {
+public class ManagerFrame extends UserFrame {
 
-	private GUIManagerFrame instance;
+	private ManagerFrame instance;
 	private Manager manager;
 
 	private JPanel userManagePanel = new JPanel();
@@ -44,7 +44,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 	// JMenu
 	private JMenu userManageMenu = new JMenu("Manage Users");
 	private JMenu profitMenu = new JMenu("Check Profits");
-	private Core core = GUIStartFrame.getCore();
+	private Core core = StartFrame.getCore();
 
 	// Button
 	private Button goBackfromAddUserButton = new Button("GO BACK");
@@ -85,33 +85,34 @@ public class GUIManagerFrame extends GUIUserFrame {
 	private JPanel inputPanel = new JPanel();
 
 	// Radio Buttons
-	ButtonGroup sort_policy_group = new ButtonGroup();
-	JRadioButton radio_sortMeal = new JRadioButton("Sort by meal");
-	JRadioButton radio_sortDish = new JRadioButton("Sort by dish");
+	private ButtonGroup sort_policy_group = new ButtonGroup();
+	private JRadioButton radio_sortMeal = new JRadioButton("Sort by meal");
+	private JRadioButton radio_sortDish = new JRadioButton("Sort by dish");
 
-	ButtonGroup delivery_policy_group = new ButtonGroup();
-	JRadioButton radio_fastDeliv = new JRadioButton("Set fast delivery policy");
-	JRadioButton radio_fairDeliv = new JRadioButton("Set fair delivery policy");
+	private ButtonGroup delivery_policy_group = new ButtonGroup();
+	private JRadioButton radio_fastDeliv = new JRadioButton("Set fast delivery policy");
+	private JRadioButton radio_fairDeliv = new JRadioButton("Set fair delivery policy");
 
-	ButtonGroup simulate_policy_group = new ButtonGroup();
-	JRadioButton radio_delCostProfit = new JRadioButton("Simulate delivery cost");
-	JRadioButton radio_serFeeProfit = new JRadioButton("Simulate service fee");
-	JRadioButton radio_markupProfit = new JRadioButton("Simulate markup percentage");
+	private ButtonGroup simulate_policy_group = new ButtonGroup();
+	private JRadioButton radio_delCostProfit = new JRadioButton("Simulate delivery cost");
+	private JRadioButton radio_serFeeProfit = new JRadioButton("Simulate service fee");
+	private JRadioButton radio_markupProfit = new JRadioButton("Simulate markup percentage");
 
 	/*************************************************/
 	// Constructors
-	public GUIManagerFrame() {
+	public ManagerFrame() {
 		super();
-		instance = this;
+		if(instance == null)
+			instance = this;
 	}
 
 	@Override
-	public GUIUserFrame getInstance(User user) {
+	public UserFrame getInstance(User user) {
 
 		if (user instanceof Manager) {
 			this.manager = (Manager) user;
 			initManager(manager);
-			GUIStartFrame.getFrame().setVisible(false);
+			StartFrame.getFrame().setVisible(false);
 			initGUI(manager, Color.LIGHT_GRAY, Color.white, "Manager Area", User.messageBoxGUI);
 			instance.open(0, 0, 600, 400);
 			return instance;
@@ -141,7 +142,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				for (Restaurant user : jListRestaurantShow.getSelectedValuesList()) {
 					core.removeUser(user);
 				}
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			});
 
 		} else if (string.equals("deactivate")) {
@@ -161,7 +162,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				for (User user : jListRestaurantShow.getSelectedValuesList()) {
 					core.deactivateUser(user);
 				}
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			});
 
 		} else if (string.equals("activate")) {
@@ -181,7 +182,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				for (User user : jListRestaurantShow.getSelectedValuesList()) {
 					core.activateUser(user);
 				}
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			});
 
 		}
@@ -216,7 +217,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 		userManagePanel.add(userPanel, BorderLayout.CENTER);
 		userManagePanel.add(removeDeActivateButton, BorderLayout.NORTH);
 
-		userManagePanel.add(home_button, BorderLayout.SOUTH);
+		userManagePanel.add(getHome_button(), BorderLayout.SOUTH);
 		setCurrentPanel(userManagePanel);
 	}
 
@@ -402,8 +403,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 		getSettingPanel().removeAll();
 		getSettingPanel().add(policy_type, BorderLayout.NORTH);
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(save_button, BorderLayout.SOUTH);
-		getSetButtonPanel().add(home_button, BorderLayout.SOUTH);
+		getSetButtonPanel().add(getSave_button(), BorderLayout.SOUTH);
+		getSetButtonPanel().add(getHome_button(), BorderLayout.SOUTH);
 		getSettingPanel().add(getSetButtonPanel());
 		setCurrentPanel(getSettingPanel());
 	}
@@ -416,7 +417,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 		profitRelatedPanel.add(descrT, BorderLayout.WEST);
 		profitRelatedPanel.add(valueT, BorderLayout.CENTER);
 		profitPanel.add(profitRelatedPanel, BorderLayout.NORTH);
-		profitPanel.add(home_button, BorderLayout.SOUTH);
+		profitPanel.add(getHome_button(), BorderLayout.SOUTH);
 		setCurrentPanel(profitPanel);
 	}
 
@@ -432,9 +433,9 @@ public class GUIManagerFrame extends GUIUserFrame {
 
 		goBackfromAddUserButton.addActionListener((ActionEvent e) -> {
 			getFrame().setVisible(true);
-			setCurrentPanel(welcome_panel);
-			GUIStartFrame.register_panel_info.remove(goBackfromAddUserButton);
-			GUIStartFrame.getFrame().setVisible(false);
+			setCurrentPanel(getWelcome_panel());
+			StartFrame.getRegister_panel_info().remove(goBackfromAddUserButton);
+			StartFrame.getFrame().setVisible(false);
 		});
 
 		simulateButton.addActionListener((ActionEvent e) -> {
@@ -601,7 +602,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 				fillScrollBarMostLeast("food", false);
 			}
 
-			getInfoPanel().add(home_button, BorderLayout.SOUTH);
+			getInfoPanel().add(getHome_button(), BorderLayout.SOUTH);
 			setCurrentPanel(getInfoPanel());
 		}
 	}
@@ -634,8 +635,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				descr = "Set your new surname: ";
 				value = manager.getSurname();
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					String surname = getSetTextFieldValue().getText();
 					manager.setSurname(surname);
@@ -650,8 +651,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				descr = "Set the makeup percentage: ";
 				value = Double.toString(core.getMarkupPercentage());
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					try {
 						Double makeupPercentage = Double.parseDouble(getSetTextFieldValue().getText());
@@ -672,8 +673,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				descr = "Set the service fee: ";
 				value = Double.toString(core.getServiceFee());
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					try {
 						Double serviceFee = Double.parseDouble(getSetTextFieldValue().getText());
@@ -694,8 +695,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				descr = "Set the delivery cost: ";
 				value = Double.toString(core.getDeliveryCost());
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					try {
 						Double deliveryCost = Double.parseDouble(getSetTextFieldValue().getText());
@@ -713,8 +714,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 
 			case "simulation policy":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					if (radio_markupProfit.isSelected())
 						core.setTargetProfitPolicyToMarkup();
@@ -728,8 +729,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				break;
 			case "sort policy":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					if (radio_sortMeal.isSelected())
 						core.setSortPolicyToMealSort();
@@ -741,8 +742,8 @@ public class GUIManagerFrame extends GUIUserFrame {
 				break;
 			case "delivery policy":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e3) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e3) -> {
 
 					if (radio_fastDeliv.isSelected())
 						core.setDeliveryPolicyToFastDeliv();
@@ -777,11 +778,11 @@ public class GUIManagerFrame extends GUIUserFrame {
 			switch (choice) {
 
 			case "add":
-				GUIStartFrame.manager = instance;
-				GUIStartFrame.radio_manager.setVisible(true);
-				GUIStartFrame.home_button.setVisible(false);
-				GUIStartFrame.register_panel_info.add(goBackfromAddUserButton);
-				GUIStartFrame.getInstance().goToRegisterPanel();
+				StartFrame.manager = instance;
+				StartFrame.getRadio_manager().setVisible(true);
+				StartFrame.getHome_button().setVisible(false);
+				StartFrame.getRegister_panel_info().add(goBackfromAddUserButton);
+				StartFrame.getInstance().goToRegisterPanel();
 				getFrame().setVisible(false);
 				break;
 
@@ -891,7 +892,7 @@ public class GUIManagerFrame extends GUIUserFrame {
 	/**
 	 * @return the instance
 	 */
-	public GUIManagerFrame getInstance() {
+	public ManagerFrame getInstance() {
 		return this.instance;
 	}
 

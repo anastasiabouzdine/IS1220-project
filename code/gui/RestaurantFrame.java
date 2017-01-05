@@ -39,9 +39,9 @@ import restaurantSetUp.Starter;
 import users.Restaurant;
 import users.User;
 
-public class GUIRestaurantFrame extends GUIUserFrame {
+public class RestaurantFrame extends UserFrame {
 
-	private GUIRestaurantFrame instance;
+	private RestaurantFrame instance;
 	private Restaurant restaurant;
 
 	// JPanel
@@ -83,7 +83,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	private JFormattedTextField typeDishT = new JFormattedTextField("insert type");
 
 	// Helper to easily display meals
-	private GUIDisplayMealDish mealDishDisplay = new GUIDisplayMealDish();
+	private DisplayMealDish mealDishDisplay = new DisplayMealDish();
 
 	// Combo box
 	private String[] food_types = { "standard", "vegetarian", "glutenfree" };
@@ -100,22 +100,23 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 	/*************************************************/
 	// Constructor
 
-	public GUIRestaurantFrame() {
+	public RestaurantFrame() {
 		super();
-		instance = this;
+		if(instance == null)
+			instance = this;
 	}
 
 	/*************************************************/
 	// Initialize functions
 
 	@Override
-	public GUIUserFrame getInstance(User user) {
+	public UserFrame getInstance(User user) {
 
 		if (user instanceof Restaurant) {
 
 			Restaurant rest = (Restaurant) user;
 
-			GUIStartFrame.getFrame().setVisible(false);
+			StartFrame.getFrame().setVisible(false);
 			this.restaurant = rest;
 			fillAndSetMenuBarRestInit(rest);
 			initGUI(restaurant, Color.red, Color.white, "Restaurant Area", User.messageBoxGUI);
@@ -161,7 +162,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					int index = list.locationToIndex(evt.getPoint());
 					Meal meal = rest.getListOfMeal().get(index);
 					rest.setSpecialMeal(meal);
-					setCurrentPanel(welcome_panel);
+					setCurrentPanel(getWelcome_panel());
 				}
 			}
 		});
@@ -260,7 +261,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				fullMeal.setFullMeal(starters.get(starterIndex), mainDishs.get(mainDishIndex),
 						desserts.get(dessertIndex));
 				rest.addMeal(fullMeal);
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			} else if (isStart && isMain) {
 				int mainDishIndex = mainDishList.getSelectedIndices()[0];
 				int starterIndex = starterList.getSelectedIndices()[0];
@@ -269,7 +270,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				HalfMeal halfMeal = (HalfMeal) mealFactory.getMeal("HalfMeal", name);
 				halfMeal.setHalfMeal(mainDishs.get(mainDishIndex), starters.get(starterIndex));
 				rest.addMeal(halfMeal);
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			} else if (isDessert && isMain) {
 				int mainDishIndex = mainDishList.getSelectedIndices()[0];
 				int dessertIndex = dessertList.getSelectedIndices()[0];
@@ -278,7 +279,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				HalfMeal halfMeal = (HalfMeal) mealFactory.getMeal("HalfMeal", name);
 				halfMeal.setHalfMeal(mainDishs.get(mainDishIndex), desserts.get(dessertIndex));
 				rest.addMeal(halfMeal);
-				setCurrentPanel(welcome_panel);
+				setCurrentPanel(getWelcome_panel());
 			} else {
 				String message = "Please select one of the following options: 1) starter, main dish and dessert (full meal), "
 						+ "2) starter and main dish (half meal) or 3) main dish and dessert (half meal).";
@@ -457,25 +458,25 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				mealDishDisplay.fillPanelMealShow(rest);
 				mealDishDisplay.getjListMealShow().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				fillInfoPanelScroll(mealDishDisplay.getjListMealShow());
-				getInfoPanel().add(home_button, BorderLayout.SOUTH);
+				getInfoPanel().add(getHome_button(), BorderLayout.SOUTH);
 				break;
 			case "starter":
 
 				mealDishDisplay.filljListStarter(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListStarter());
-				getInfoPanel().add(home_button, BorderLayout.SOUTH);
+				getInfoPanel().add(getHome_button(), BorderLayout.SOUTH);
 				break;
 			case "main dish":
 
 				mealDishDisplay.filljListMainDish(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListMainDish());
-				getInfoPanel().add(home_button, BorderLayout.SOUTH);
+				getInfoPanel().add(getHome_button(), BorderLayout.SOUTH);
 				break;
 			case "dessert":
 
 				mealDishDisplay.filljListDessert(rest);
 				fillInfoPanelScroll(mealDishDisplay.getjListDessert());
-				getInfoPanel().add(home_button, BorderLayout.SOUTH);
+				getInfoPanel().add(getHome_button(), BorderLayout.SOUTH);
 				break;
 			}
 			setCurrentPanel(getInfoPanel());
@@ -507,8 +508,8 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 			case "address":
 				descr = "Set your new address: ";
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e4) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e4) -> {
 
 					try {
 						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
@@ -533,7 +534,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 				scrollPanel.add(jScrollPaneSpecMeal);
 				getSettingPanel().removeAll();
 				getSettingPanel().add(scrollPanel, BorderLayout.CENTER);
-				getSettingPanel().add(home_button, BorderLayout.SOUTH);
+				getSettingPanel().add(getHome_button(), BorderLayout.SOUTH);
 
 				break;
 			}
@@ -588,7 +589,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					for (int i = 0; i < toDelete.length; i++) {
 						rest.getListOfMeal().remove(toDelete[i] - i);
 					}
-					setCurrentPanel(welcome_panel);
+					setCurrentPanel(getWelcome_panel());
 				});
 				break;
 
@@ -607,7 +608,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addStarter(starter);
-						setCurrentPanel(welcome_panel);
+						setCurrentPanel(getWelcome_panel());
 					} catch (NumberFormatException e2) {
 						String message2 = "Please insert a number with two digits for the price.";
 						popUpOkWindow(message2);
@@ -632,7 +633,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addMainDish(mainDish);
-						setCurrentPanel(welcome_panel);
+						setCurrentPanel(getWelcome_panel());
 					} catch (NumberFormatException e2) {
 						String message3 = "Please insert a number with two digits for the price.";
 						popUpOkWindow(message3);
@@ -657,7 +658,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addDessert(dessert);
-						setCurrentPanel(welcome_panel);
+						setCurrentPanel(getWelcome_panel());
 					} catch (NumberFormatException e2) {
 						String message4 = "Please insert a number with two digits for the price.";
 						popUpOkWindow(message4);
@@ -678,7 +679,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					for (int i = 0; i < toDelete.length; i++) {
 						rest.getMenu().getListOfStarter().remove(toDelete[i] - i);
 					}
-					setCurrentPanel(welcome_panel);
+					setCurrentPanel(getWelcome_panel());
 				});
 				break;
 			case "remove main dish":
@@ -692,7 +693,7 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					for (int i = 0; i < toDelete.length; i++) {
 						rest.getMenu().getListOfMainDish().remove(toDelete[i] - i);
 					}
-					setCurrentPanel(welcome_panel);
+					setCurrentPanel(getWelcome_panel());
 				});
 				break;
 			case "remove dessert":
@@ -706,11 +707,11 @@ public class GUIRestaurantFrame extends GUIUserFrame {
 					for (int i = 0; i < toDelete.length; i++) {
 						rest.getMenu().getListOfDessert().remove(toDelete[i] - i);
 					}
-					setCurrentPanel(welcome_panel);
+					setCurrentPanel(getWelcome_panel());
 				});
 				break;
 			}
-			addRemovePanel.add(home_button, BorderLayout.SOUTH);
+			addRemovePanel.add(getHome_button(), BorderLayout.SOUTH);
 			setCurrentPanel(addRemovePanel);
 		}
 	}

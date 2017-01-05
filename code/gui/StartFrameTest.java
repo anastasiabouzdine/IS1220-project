@@ -12,7 +12,7 @@ import users.Customer;
 import users.Manager;
 import users.User;
 
-public class GUIStartFrameTest {
+public class StartFrameTest {
 
 	// checks whether the go to Buttons work
 	public static void checkIfClickGoToButtonsWork() throws AWTException {
@@ -45,7 +45,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		if (GUIStartFrame.getInstance().getRegister_panel_info().isShowing())
+		StartFrame.getInstance();
+		if (StartFrame.getRegister_panel_info().isShowing())
 			goToRegisterButton = true;
 
 		System.out.println("Test goRegisterButton was " + goToRegisterButton);
@@ -72,7 +73,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		if (GUIStartFrame.getInstance().getWelcome_panel().isShowing())
+		if (StartFrame.getInstance().getWelcome_panel().isShowing())
 			homeButton1 = true;
 
 		System.out.println("Test goHomeButton1 was " + homeButton1);
@@ -99,7 +100,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		if (GUIStartFrame.getInstance().getLogin_panel().isShowing())
+		if (StartFrame.getInstance().getLogin_panel().isShowing())
 			goToLoginButton = true;
 
 		System.out.println("Test goToLogInButton was " + goToLoginButton);
@@ -126,7 +127,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		if (GUIStartFrame.getInstance().getWelcome_panel().isShowing())
+		if (StartFrame.getInstance().getWelcome_panel().isShowing())
 			homeButton2 = true;
 
 		System.out.println("Test goHomeButton2 was " + homeButton2);
@@ -156,10 +157,10 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("r8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
-		GUIStartFrame.getInstance().passwordConf_JTF.setText("code");
-		GUIStartFrame.getInstance().radio_restaurant.doClick();
+		StartFrame.getInstance().getUsername_JTF().setText("r8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
+		StartFrame.getInstance().getPasswordConf_JTF().setText("code");
+		StartFrame.getInstance().getRadio_restaurant().doClick();
 
 		bot.mouseMove(300, 130);
 		try {
@@ -177,9 +178,9 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().name_JTF.setText("new Restaurant");
-		GUIStartFrame.getInstance().xCoordinate_JTF.setText("5");
-		GUIStartFrame.getInstance().yCoordinate_JTF.setText("8");
+		StartFrame.getInstance().getName_JTF().setText("new Restaurant");
+		StartFrame.getInstance().getxCoordinate_JTF().setText("5");
+		StartFrame.getInstance().getyCoordinate_JTF().setText("8");
 
 		bot.mouseMove(300, 300);
 		try {
@@ -197,11 +198,11 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getCore().logIn("root");
-		User user = GUIStartFrame.getCore().getUsers().get("r8");
+		StartFrame.getCore().logIn("root");
+		User user = StartFrame.getCore().getUsers().get("r8");
 		System.out
-				.println("Test register Restaurant was " + GUIStartFrame.getCore().getRestaurantList().contains(user));
-		GUIStartFrame.getCore().logOut();
+				.println("Test register Restaurant was " + StartFrame.getCore().getRestaurantList().contains(user));
+		StartFrame.getCore().logOut();
 
 		try {
 			Thread.sleep(500);
@@ -247,10 +248,10 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("c8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
-		GUIStartFrame.getInstance().passwordConf_JTF.setText("code");
-		GUIStartFrame.getInstance().radio_courier.doClick();
+		StartFrame.getInstance().getUsername_JTF().setText("c8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
+		StartFrame.getInstance().getPasswordConf_JTF().setText("code");
+		StartFrame.getInstance().getRadio_courier().doClick();
 
 		bot.mouseMove(300, 130);
 		try {
@@ -268,11 +269,11 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().name_JTF.setText("new Courier");
-		GUIStartFrame.getInstance().surname_JTF.setText("peter");
-		GUIStartFrame.getInstance().phoneNum_JTF.setText("435678");
-		GUIStartFrame.getInstance().xCoordinate_JTF.setText("5");
-		GUIStartFrame.getInstance().yCoordinate_JTF.setText("8");
+		StartFrame.getInstance().getName_JTF().setText("new Courier");
+		StartFrame.getInstance().getSurname_JTF().setText("peter");
+		StartFrame.getInstance().getPhoneNum_JTF().setText("435678");
+		StartFrame.getInstance().getxCoordinate_JTF().setText("5");
+		StartFrame.getInstance().getyCoordinate_JTF().setText("8");
 
 		bot.mouseMove(300, 370);
 		try {
@@ -290,10 +291,10 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getCore().logIn("root");
-		User user = GUIStartFrame.getCore().getUsers().get("c8");
-		System.out.println("Test register Courier was " + GUIStartFrame.getCore().getCourierList().contains(user));
-		GUIStartFrame.getCore().logOut();
+		StartFrame.getCore().logIn("root");
+		User user = StartFrame.getCore().getUsers().get("c8");
+		System.out.println("Test register Courier was " + StartFrame.getCore().getCourierList().contains(user));
+		StartFrame.getCore().logOut();
 
 		try {
 			Thread.sleep(500);
@@ -339,10 +340,10 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("cus8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
-		GUIStartFrame.getInstance().passwordConf_JTF.setText("code");
-		GUIStartFrame.getInstance().radio_customer.doClick();
+		StartFrame.getInstance().getUsername_JTF().setText("cus8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
+		StartFrame.getInstance().getPasswordConf_JTF().setText("code");
+		StartFrame.getInstance().getRadio_customer().doClick();
 
 		bot.mouseMove(300, 130);
 		try {
@@ -360,12 +361,12 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().name_JTF.setText("new Customer");
-		GUIStartFrame.getInstance().surname_JTF.setText("peter");
-		GUIStartFrame.getInstance().phoneNum_JTF.setText("435678");
-		GUIStartFrame.getInstance().xCoordinate_JTF.setText("5");
-		GUIStartFrame.getInstance().yCoordinate_JTF.setText("8");
-		GUIStartFrame.getInstance().emailAddress_JTF.setText("hallo@aol.com");
+		StartFrame.getInstance().getName_JTF().setText("new Customer");
+		StartFrame.getInstance().getSurname_JTF().setText("peter");
+		StartFrame.getInstance().getPhoneNum_JTF().setText("435678");
+		StartFrame.getInstance().getxCoordinate_JTF().setText("5");
+		StartFrame.getInstance().getyCoordinate_JTF().setText("8");
+		StartFrame.getInstance().getEmailAddress_JTF().setText("hallo@aol.com");
 
 		bot.mouseMove(300, 400);
 		try {
@@ -383,10 +384,10 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getCore().logIn("root");
-		User user = GUIStartFrame.getCore().getUsers().get("cus8");
-		System.out.println("Test register Customer was " + GUIStartFrame.getCore().getCustomerList().contains(user));
-		GUIStartFrame.getCore().logOut();
+		StartFrame.getCore().logIn("root");
+		User user = StartFrame.getCore().getUsers().get("cus8");
+		System.out.println("Test register Customer was " + StartFrame.getCore().getCustomerList().contains(user));
+		StartFrame.getCore().logOut();
 
 		try {
 			Thread.sleep(500);
@@ -413,7 +414,7 @@ public class GUIStartFrameTest {
 
 		Address address = new Address(3, 4);
 		Courier courier = new Courier("Courier_1", "Mary", address, "56789", "c8", "code");
-		GUIStartFrame.getCore().register(courier);
+		StartFrame.getCore().register(courier);
 
 		try {
 			Thread.sleep(1000);
@@ -440,8 +441,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("c8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
+		StartFrame.getInstance().getUsername_JTF().setText("c8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
 
 		try {
 			Thread.sleep(500);
@@ -463,7 +464,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		boolean test = (GUIStartFrame.getCurrentLogInUser() instanceof GUICourierFrame);
+		boolean test = (StartFrame.getCurrentLogInUser() instanceof CourierFrame);
 		System.out.println("Test checkIfCourierLogInWorks was " + test);
 	}
 
@@ -471,7 +472,7 @@ public class GUIStartFrameTest {
 
 		Address address = new Address(3, 4);
 		Courier courier = new Courier("Courier_1", "Peter", address, "56789", "c8", "code");
-		GUIStartFrame.getCore().register(courier);
+		StartFrame.getCore().register(courier);
 
 		try {
 			Thread.sleep(1000);
@@ -498,8 +499,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("c8");
-		GUIStartFrame.getInstance().password_JTF.setText("codoe");
+		StartFrame.getInstance().getUsername_JTF().setText("c8");
+		StartFrame.getInstance().getPassword_JTF().setText("codoe");
 
 		try {
 			Thread.sleep(500);
@@ -521,7 +522,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		boolean test = (GUIStartFrame.getInstance().getLogin_panel().isShowing());
+		boolean test = (StartFrame.getInstance().getLogin_panel().isShowing());
 		System.out.println("Test checkIfCourierLogInFailsWithWrongLogIn was " + test);
 	}
 
@@ -529,7 +530,7 @@ public class GUIStartFrameTest {
 
 		Address address = new Address(3, 4);
 		Customer customer = new Customer("Cust_1", "Otto", address, "56789", "nth@nhsn", "cus8", "code");
-		GUIStartFrame.getCore().register(customer);
+		StartFrame.getCore().register(customer);
 
 		try {
 			Thread.sleep(1000);
@@ -556,8 +557,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("cus8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
+		StartFrame.getInstance().getUsername_JTF().setText("cus8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
 
 		try {
 			Thread.sleep(500);
@@ -579,14 +580,14 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		boolean test = (GUIStartFrame.getCurrentLogInUser() instanceof GUICustomerFrame);
+		boolean test = (StartFrame.getCurrentLogInUser() instanceof CustomerFrame);
 		System.out.println("Test checkIfCustomerLogInWorks was " + test);
 	}
 
 	public static void checkIfManagerLogInWorks() throws AWTException, AlreadyUsedUsernameException {
 
 		Manager manager = new Manager("Manag_1", "John", "m8", "code");
-		GUIStartFrame.getCore().register(manager);
+		StartFrame.getCore().register(manager);
 
 		try {
 			Thread.sleep(1000);
@@ -613,8 +614,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("m8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
+		StartFrame.getInstance().getUsername_JTF().setText("m8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
 
 		try {
 			Thread.sleep(500);
@@ -636,7 +637,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		boolean test = (GUIStartFrame.getCurrentLogInUser() instanceof GUIManagerFrame);
+		boolean test = (StartFrame.getCurrentLogInUser() instanceof ManagerFrame);
 		System.out.println("Test checkIfManagerLogInWorks was " + test);
 	}
 
@@ -667,8 +668,8 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		GUIStartFrame.getInstance().username_JTF.setText("res8");
-		GUIStartFrame.getInstance().password_JTF.setText("code");
+		StartFrame.getInstance().getUsername_JTF().setText("res8");
+		StartFrame.getInstance().getPassword_JTF().setText("code");
 
 		try {
 			Thread.sleep(500);
@@ -690,7 +691,7 @@ public class GUIStartFrameTest {
 		} catch (InterruptedException e) {
 		}
 
-		boolean test = (GUIStartFrame.getCurrentLogInUser() instanceof GUIRestaurantFrame);
+		boolean test = (StartFrame.getCurrentLogInUser() instanceof RestaurantFrame);
 		System.out.println("Test checkIfRestaurantLogInWorks was " + test);
 	}
 

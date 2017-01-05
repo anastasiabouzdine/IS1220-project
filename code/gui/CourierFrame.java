@@ -14,9 +14,9 @@ import javax.swing.JRadioButton;
 import users.Courier;
 import users.User;
 
-public class GUICourierFrame extends GUIUserFrame {
+public class CourierFrame extends UserFrame {
 
-	private GUICourierFrame instance;
+	private CourierFrame instance;
 	private Courier courier;
 
 	private JRadioButton dutyOff = new JRadioButton("Off");
@@ -25,9 +25,10 @@ public class GUICourierFrame extends GUIUserFrame {
 
 	private JPanel dutyPanel = new JPanel();
 
-	public GUICourierFrame() {
+	public CourierFrame() {
 		super();
-		instance = this;
+		if(instance == null)
+			instance = this;
 	}
 
 	/*************************************************/
@@ -41,7 +42,7 @@ public class GUICourierFrame extends GUIUserFrame {
 		}
 		getSettingPanel().add(dutyPanel);
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(getHome_button());
 		getSetButtonPanel().add(save_button);
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
@@ -50,11 +51,11 @@ public class GUICourierFrame extends GUIUserFrame {
 	// Init functions
 
 	@Override
-	public GUIUserFrame getInstance(User user) {
+	public UserFrame getInstance(User user) {
 
 		if (user instanceof Courier) {
 
-			GUIStartFrame.getFrame().setVisible(false);
+			StartFrame.getFrame().setVisible(false);
 			this.courier = (Courier) user;
 			initGUI(courier, Color.orange, Color.white, "Courier Area", User.messageBoxGUI);
 			initSetPanelNotif();

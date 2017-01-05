@@ -37,16 +37,16 @@ import users.Customer;
 import users.Restaurant;
 import users.User;
 
-public class GUICustomerFrame extends GUIUserFrame {
+public class CustomerFrame extends UserFrame {
 
-	private GUICustomerFrame instance;
+	private CustomerFrame instance;
 	private Customer customer;
-	private GUIDisplayMealDish mealDishDisplay = new GUIDisplayMealDish();
+	private DisplayMealDish mealDishDisplay = new DisplayMealDish();
 
 	private Meal currentMeal;
 	private Order currentOrder;
 	private Restaurant currentRestaurant;
-	private Core core = GUIStartFrame.getCore();
+	private Core core = StartFrame.getCore();
 
 	private JList<Restaurant> restaurants = new JList<Restaurant>();
 	private JList<Dish> dishes;
@@ -83,20 +83,24 @@ public class GUICustomerFrame extends GUIUserFrame {
 
 	private JTextField quantityTextField = new JTextField("quantity as int");
 
-	public GUICustomerFrame() {
+	public CustomerFrame() {
 		super();
-		instance = this;
+		if(instance == null)
+			instance = this;
 	}
+
+	
+	
 
 	/*************************************************/
 	// Constructor
 
 	@Override
-	public GUIUserFrame getInstance(User user) {
+	public UserFrame getInstance(User user) {
 
 		if (user instanceof Customer) {
 
-			GUIStartFrame.getFrame().setVisible(false);
+			StartFrame.getFrame().setVisible(false);
 			this.customer = (Customer) user;
 			fillAndSetMenuBarCustomer(customer);
 			initGUI(customer, Color.yellow, Color.white, "Customer Area", User.messageBoxGUI);
@@ -185,11 +189,11 @@ public class GUICustomerFrame extends GUIUserFrame {
 			menuToggleButton.setVisible(false);
 			finishOrderPanel.removeAll();
 			finishOrderPanel.removeAll();
-			finishOrderPanel.add(home_button);
+			finishOrderPanel.add(getHome_button());
 			finishOrderPanel.add(finishOrderButton);
 			orderPanel.add(finishOrderPanel, BorderLayout.SOUTH);
 		} else {
-			orderPanel.add(home_button, BorderLayout.SOUTH);
+			orderPanel.add(getHome_button(), BorderLayout.SOUTH);
 		}
 
 		setCurrentPanel(orderPanel);
@@ -199,7 +203,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 		fillRestaurants();
 		restaurants.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		fillOrderPanelScroll(restaurants);
-		orderPanel.add(home_button, BorderLayout.SOUTH);
+		orderPanel.add(getHome_button(), BorderLayout.SOUTH);
 	}
 
 	private void fillRestaurants() {
@@ -247,7 +251,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 		dishes = mealDishDisplay.filljListAllDishes(rest);
 		fillOrderPanelScroll(dishes);
 		addToOrderPanel.removeAll();
-		addToOrderPanel.add(home_button);
+		addToOrderPanel.add(getHome_button());
 		addToOrderButton = new Button("ADD TO ORDER");
 
 		addToOrderButton.addActionListener((ActionEvent e) -> {
@@ -301,7 +305,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 		}
 		getSettingPanel().add(fidPlanPanel);
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(getHome_button());
 		getSetButtonPanel().add(save_button);
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
@@ -315,7 +319,7 @@ public class GUICustomerFrame extends GUIUserFrame {
 		}
 		getSettingPanel().add(notificationPanel);
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(getHome_button());
 		getSetButtonPanel().add(save_button);
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}

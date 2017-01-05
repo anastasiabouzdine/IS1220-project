@@ -22,7 +22,7 @@ import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
 import users.Restaurant;
 
-public class GUIDisplayMealDish {
+public class DisplayMealDish {
 
 	private JList<Meal> jListMealShow = new JList<>();
 	private JList<Meal> jListMealRemove = new JList<>();
@@ -52,7 +52,7 @@ public class GUIDisplayMealDish {
 	private JMenu dishMenu = new JMenu("menu");
 
 
-	public GUIDisplayMealDish() {
+	public DisplayMealDish() {
 		super();
 	}
 

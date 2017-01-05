@@ -23,7 +23,7 @@ import javax.swing.SwingUtilities;
 
 import users.User;
 
-public abstract class GUIUserFrame {
+public abstract class UserFrame {
 
 	// Frames
 	private JFrame frame;
@@ -45,20 +45,20 @@ public abstract class GUIUserFrame {
 	private JTextField setTextFieldYInt = new JTextField();
 
 	// Panels
-	JPanel welcome_panel = new JPanel();
-	JPanel welcome_button_panel = new JPanel();
-	JPanel welcome_message_panel = new JPanel();
+	private JPanel welcome_panel = new JPanel();
+	private JPanel welcome_button_panel = new JPanel();
+	private JPanel welcome_message_panel = new JPanel();
 
 	// Buttons
-	JButton logOut_button = new JButton("LOG OUT");
-	JButton home_button = new JButton("GO HOME");
-	JButton save_button;
+	private JButton logOut_button = new JButton("LOG OUT");
+	private JButton home_button = new JButton("GO HOME");
+	private JButton save_button;
 	private int currentSettingShow = 0;
 
-	public abstract GUIUserFrame getInstance(User user);
+	public abstract UserFrame getInstance(User user);
 
 	public void setGUIStartFrameVisible() {
-		GUIStartFrame.getFrame().setVisible(true);
+		StartFrame.getFrame().setVisible(true);
 	}
 
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
@@ -90,7 +90,7 @@ public abstract class GUIUserFrame {
 		getInfoSubPanel().add(infoTextFieldDesc, BorderLayout.CENTER);
 		getInfoSubPanel().add(infoTextFieldValue, BorderLayout.CENTER);
 		infoPanel.add(getInfoSubPanel());
-		infoPanel.add(home_button, BorderLayout.SOUTH);
+		infoPanel.add(getHome_button(), BorderLayout.SOUTH);
 
 	}
 
@@ -121,7 +121,7 @@ public abstract class GUIUserFrame {
 		getSetSubPanel().add(setTextFieldValue, BorderLayout.CENTER);
 		settingPanel.add(getSetSubPanel());
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(getHome_button());
 		getSetButtonPanel().add(save_button);
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
@@ -169,7 +169,7 @@ public abstract class GUIUserFrame {
 
 		// Buttons
 		welcome_button_panel.add(logOut_button, BorderLayout.CENTER);
-		home_button.addActionListener((ActionEvent e) -> {
+		getHome_button().addActionListener((ActionEvent e) -> {
 			setCurrentPanel(welcome_panel);
 		});
 
@@ -187,7 +187,7 @@ public abstract class GUIUserFrame {
 		getSetSubPanel().add(setTextFieldYInt, BorderLayout.SOUTH);
 		getSettingPanel().add(getSetSubPanel());
 		getSetButtonPanel().removeAll();
-		getSetButtonPanel().add(home_button);
+		getSetButtonPanel().add(getHome_button());
 		getSetButtonPanel().add(save_button);
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
@@ -217,10 +217,10 @@ public abstract class GUIUserFrame {
 		setCurrentPanel(welcome_panel);
 		logOut_button.addActionListener((ActionEvent e) -> {
 			frame.setVisible(false);
-			GUIStartFrame.getCore().logOut();
-			GUIStartFrame.setCurrentLogInUser(null);
-			GUIStartFrame.getInstance().goToHomePage();
-			GUIStartFrame.getFrame().setVisible(true);
+			StartFrame.getCore().logOut();
+			StartFrame.setCurrentLogInUser(null);
+			StartFrame.getInstance().goToHomePage();
+			StartFrame.getFrame().setVisible(true);
 		});
 	}
 
@@ -337,7 +337,7 @@ public abstract class GUIUserFrame {
 				save_button = new JButton("SAVE");
 				save_button.addActionListener((ActionEvent e2) -> {
 					String value2 = setTextFieldValue.getText();
-					GUIStartFrame.getCore().setUsername(user, value2);
+					StartFrame.getCore().setUsername(user, value2);
 				});
 				break;
 			case "password":
@@ -355,37 +355,6 @@ public abstract class GUIUserFrame {
 		}
 	}
 
-	@SuppressWarnings("serial")
-	abstract class UserActionSetting extends AbstractAction {
-
-		String name;
-
-		public UserActionSetting(String name, String desc) {
-			super(name);
-			this.name = name;
-			putValue(Action.SHORT_DESCRIPTION, desc);
-		}
-
-		@Override
-		public abstract void actionPerformed(ActionEvent e);
-
-	}
-
-	@SuppressWarnings("serial")
-	abstract class UserActionInfo extends AbstractAction {
-
-		String name;
-
-		public UserActionInfo(String name, String desc) {
-			super(name);
-			this.name = name;
-			putValue(Action.SHORT_DESCRIPTION, desc);
-		}
-
-		@Override
-		public abstract void actionPerformed(ActionEvent e);
-
-	}
 
 	/*****************************************************/
 	// getter & setter
@@ -552,6 +521,20 @@ public abstract class GUIUserFrame {
 	 */
 	public JTextField getSetTextFieldValue() {
 		return setTextFieldValue;
+	}
+
+	/**
+	 * @return the home_button
+	 */
+	public JButton getHome_button() {
+		return home_button;
+	}
+
+	/**
+	 * @param home_button the home_button to set
+	 */
+	public void setHome_button(JButton home_button) {
+		this.home_button = home_button;
 	}
 
 }
