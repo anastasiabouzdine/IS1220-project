@@ -1,5 +1,7 @@
 package policies;
 
+import java.io.Serializable;
+
 import users.Courier;
 
 /**
@@ -11,8 +13,9 @@ import users.Courier;
  * 
  */
 
-public class CourierDistance {
-	
+public class CourierDistance implements Serializable {
+
+	private static final long serialVersionUID = 8200133095043109166L;
 	private Courier courier;
 	private double Distance;
 	

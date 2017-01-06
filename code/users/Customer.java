@@ -1,5 +1,7 @@
 package users;
 
+import java.io.Serializable;
+
 import core.Order;
 import policies.FidCardPlan;
 import policies.FidCardPlanBasic;
@@ -19,8 +21,9 @@ import restaurantSetUp.Meal;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Customer extends User implements Observer{
+public class Customer extends User implements Observer, Serializable {
 
+	private static final long serialVersionUID = -3550418727759734260L;
 	private String surname;
 	private Address address;
 	private String email;

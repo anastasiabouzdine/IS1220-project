@@ -1,12 +1,17 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * The class <code>DishFactory</code> produces a concrete dish factory.
  *  
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class DishFactory extends AbstractFactory {
+public class DishFactory extends AbstractFactory implements Serializable {
+
+	private static final long serialVersionUID = -2127154441402345657L;
+
 
 	/**
 	 * Returns a dish of specified type (starter, maindish, dessert),

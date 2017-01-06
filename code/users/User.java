@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 
@@ -13,8 +14,9 @@ import java.util.Stack;
  * @author Patrick von Platen
  */
 
-public abstract class User {
+public abstract class User implements Serializable {
 
+	private static final long serialVersionUID = -3138603321875483384L;
 	private String name;
 	private String username;
 	private String password;

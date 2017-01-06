@@ -1,12 +1,16 @@
 package policies;
 
+import java.io.Serializable;
+
 /**
  * The class <code>FidCardPlanBasic</code> implements the interface <code>FidCardPlan</code> and presents the Basic Fidelity Card Plan.
  *  
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FidCardPlanBasic implements FidCardPlan {
+public class FidCardPlanBasic implements FidCardPlan, Serializable {
+
+	private static final long serialVersionUID = 215958053256443809L;
 
 	/**
 	 * Constructor of Basic Fidelity Plan

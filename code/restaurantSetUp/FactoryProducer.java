@@ -1,5 +1,6 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
 
 /**
  * The class <code>FactoryProducer</code> produces concrete factories based on given input.
@@ -7,8 +8,10 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FactoryProducer {
+public class FactoryProducer implements Serializable {
 	
+	private static final long serialVersionUID = -6084842873502016401L;
+
 	/**
 	 * Returns an AbstractFactory of specified type.
 	 * 

@@ -1,5 +1,7 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * FullMeal extends the <code>Meal</code> class and is represented
  * by a name, a <code>Starter</code>, <code>MainDish</code> and <code>Dessert</code>.
@@ -7,9 +9,10 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FullMeal extends Meal{
+public class FullMeal extends Meal implements Serializable {
 	
-	
+	private static final long serialVersionUID = -6204371524741693725L;
+
 	/**
 	 * Class constructor.
 	 * @param name a String containing the name of the  fullmeal

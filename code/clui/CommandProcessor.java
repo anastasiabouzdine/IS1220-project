@@ -1,5 +1,10 @@
 package clui;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,15 +42,24 @@ public class CommandProcessor {
 
 	/**************************************************/
 	/* Singleton pattern */
+	
+	/**
+	 * The core object is taken from deserialization of the appropriated
+	 * ser file containing all the background of the core.
+	 */
 	private CommandProcessor() {
-		core = new Core();
-
-//		core.logIn("root", "root_password"); // login with manager to add lists
-		// core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
-		// core.setCourierList(ParseCouriers.parseCouriers("src/txtFILES/courierList.txt"));
-		// core.setManagerList(ParseManagers.parseManagers("src/txtFILES/managersList.txt"));
-		// core.setRestaurantList(ParseRestaurants.parseRestaurants("src/txtFILES/restaurantList.txt"));
-//		core.logOut();
+		try {
+			FileInputStream fileIn = new FileInputStream("./ser_files/clui_core.ser");
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			core = (Core) in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			System.out.println("! Error while loading the file !");
+			core = new Core();
+		} catch (ClassNotFoundException e) {
+			System.out.println("! Class not found !");		
+		}
 	}
 
 	private static final CommandProcessor INSTANCE = new CommandProcessor();
@@ -148,6 +162,12 @@ public class CommandProcessor {
 			break;
 		case "LOGOUT":
 			logout();
+			break;
+		case "STOP":
+			stopAndSerialize();
+			break;
+		case "RESET":
+			resetCore();
 			break;
 		}
 	}
@@ -613,14 +633,12 @@ public class CommandProcessor {
 	/**
 	 * For the currently logged on myFoodora manager to display the list of
 	 * customers.
+	 * Note that the <code>getCustomerList</code> method of the core
+	 * can only be used when the current logged in user is a manager.
 	 */
 	public void showCustomers() {
-		if (core.getCurrent_manager() != null) {
-			for (Customer c : core.getCustomerList())
-				System.out.println(c.toString());
-		} else {
-			Core.unauthorizedCommand();
-		}
+		for (Customer c : core.getCustomerList())
+			System.out.println(c.toString());
 	}
 
 	/**
@@ -693,13 +711,17 @@ public class CommandProcessor {
 				System.out.println("! Please insert date in the format dd/mm/yyyy !");
 			}
 		} else {
-			ed = core.getSavedOrders().get(0).getDate();
+			ed = core.getSavedOrders().get(core.getSavedOrders().size() - 1).getDate();
 		}
 		core.setDateBeforeWithCalObject(bd);
 		core.setDateAfterWithCalObject(ed);
 		
 		double profit = core.calcTotalProfit();
-		System.out.println("Total profit = " + profit + ".");
+		if (beginDate != null && endDate != null) {
+			System.out.println("Total profit between " + beginDate + " and " + endDate + " = " + profit + ".");
+		} else {
+			System.out.println("Total profit since creation = " + profit + ".");
+		}
 	}
 	
 	/**
@@ -737,24 +759,6 @@ public class CommandProcessor {
 			System.out.println("! Please enter a valid double for the service fee !");
 		}
 	}
-	
-	/**
-	 * For the currently logged in manager to simulate the needed specification following
-	 * the given profits and two other specifications.
-	 */
-	public void simulateProfit() {
-		try {
-			Double targetProfit = Double.parseDouble(current_args[0]);
-			Double input1 = Double.parseDouble(current_args[1]);
-			Double input2 = Double.parseDouble(current_args[2]);
-			
-			Double out = core.simulateProfit(targetProfit, input1, input2);
-			System.out.println("delivery cost || service fee || markup percentage needed to achieve given"
-					+ " profit = " + out);
-		} catch (NumberFormatException e) {
-			System.out.println("! Please enter a valid double for the service fee !");
-		}
-	}
 
 	/**
 	 * Performs logout.
@@ -762,6 +766,42 @@ public class CommandProcessor {
 	public void logout() {
 		core.logOut();
 	}
+
+	/**
+	 * Method is called whenever the command line is stopped and will
+	 * serialize the core and all its relevant attributes into the 
+	 * clui_core[dot]ser file.
+	 */
+	public void stopAndSerialize() {
+		logout();
+		try {
+			FileOutputStream fileOut = new FileOutputStream("./ser_files/clui_core.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(core);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in ./ser_files/clui_core.ser");
+		}catch(IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	/**
+	 * For the currently logged in manager to reset the whole core object
+	 * (cleaning the database of all users and orders).
+	 */
+	public void resetCore() {
+		if (core.getCurrent_manager() != null) {
+			core = new Core();
+			System.out.println("Database was successfully reset, note that you have been logged out");
+		} else {
+			Core.unauthorizedCommand();
+		}
+	}
+
+	
+	/******************************************************************/
+	/* Static helpers */
 
 	/**
 	 * Returns a Calendar object parsed from input date in format dd/mm/yyyy.

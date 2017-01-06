@@ -1,5 +1,7 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * Dessert extends the <code>Dish</code> class and
  * represent a dessert with name, price and price.
@@ -8,8 +10,10 @@ package restaurantSetUp;
  * @author Patrick von Platen
  */
 
-public class Dessert extends Dish {
+public class Dessert extends Dish implements Serializable {
 	
+	private static final long serialVersionUID = 5187589032949599698L;
+
 	/**
 	 * Constructor for a dessert with given type.
 	 * 

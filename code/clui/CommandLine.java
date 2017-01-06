@@ -46,9 +46,7 @@ public class CommandLine {
 	 * @return	a string containing information about the success of the parsing
 	 */
 	public String getInputInfoAndProcessCmd(String s) {
-		if (s.equals("stop")){
-			return s + " command executed.";
-		} else if (s.equals("help")) { 
+		if (s.equals("help")) { 
 			printListOfCommands();
 			return s + " command executed.";
 		}

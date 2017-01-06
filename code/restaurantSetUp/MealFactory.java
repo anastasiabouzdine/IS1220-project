@@ -1,12 +1,17 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * The class <code>MealFactory</code> produces a concrete meal factory.
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class MealFactory extends AbstractFactory{
+public class MealFactory extends AbstractFactory implements Serializable {
+
+	private static final long serialVersionUID = -775359798482177866L;
+
 
 	/**
 	 * Returns a meal of specified type (starter, maindish, dessert).

@@ -1,5 +1,7 @@
 package policies;
 
+import java.io.Serializable;
+
 import users.Restaurant;
 
 /**
@@ -15,8 +17,9 @@ import users.Restaurant;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public abstract class SortPolicy implements Comparable<SortPolicy> {
-	
+public abstract class SortPolicy implements Comparable<SortPolicy>, Serializable {
+
+	private static final long serialVersionUID = 1682061892888342802L;
 	private int count;
 	private Restaurant rest;
 	

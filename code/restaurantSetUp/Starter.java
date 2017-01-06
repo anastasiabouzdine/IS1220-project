@@ -1,5 +1,7 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * Starter extends the <code>Dish</code> class and
  * represent a starter with name, price and price.
@@ -7,7 +9,9 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Starter extends Dish {
+public class Starter extends Dish implements Serializable {
+
+	private static final long serialVersionUID = 6130422909286623816L;
 
 	/**
 	 * Constructor for a Starter with given type.

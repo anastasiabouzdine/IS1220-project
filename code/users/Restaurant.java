@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,8 +30,9 @@ import restaurantSetUp.Starter;
  * @author Patrick von Platen
  */
 
-public class Restaurant extends User {
+public class Restaurant extends User implements Serializable {
 
+	private static final long serialVersionUID = -8940299787192000061L;
 	private Address address;
 	private String surname;
 	private String emailAddress;

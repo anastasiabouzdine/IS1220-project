@@ -1,5 +1,7 @@
 package policies;
 
+import java.io.Serializable;
+
 import restaurantSetUp.Dish;
 import users.Restaurant;
 
@@ -12,8 +14,9 @@ import users.Restaurant;
  * @author Patrick von Platen
  */
 
-public class DishSort extends SortPolicy{
-	
+public class DishSort extends SortPolicy implements Serializable {
+
+	private static final long serialVersionUID = -5880129005073197401L;
 	private Dish dish;
 	
 	/**

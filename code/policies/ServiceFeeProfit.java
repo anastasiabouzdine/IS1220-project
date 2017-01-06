@@ -1,5 +1,6 @@
 package policies;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -17,7 +18,9 @@ import core.Order;
  * @see #howToTargetProfit(double, double, double, ArrayList, Calendar, Calendar)
  */
 
-public class ServiceFeeProfit implements TargetProfitPolicy {
+public class ServiceFeeProfit implements TargetProfitPolicy, Serializable {
+
+	private static final long serialVersionUID = 4606051582088060152L;
 
 		/**
 		 * Constructor

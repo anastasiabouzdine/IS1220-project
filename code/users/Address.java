@@ -1,13 +1,16 @@
 package users;
 
+import java.io.Serializable;
+
 /**
  * Class that represents a 2-dim address.
  * 
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Address {
+public class Address implements Serializable {
 
+	private static final long serialVersionUID = 1007873350502849794L;
 	private int xCoordinate;
 	private int yCoordinate;
 

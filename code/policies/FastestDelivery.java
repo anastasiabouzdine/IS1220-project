@@ -1,5 +1,6 @@
 package policies;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -16,8 +17,9 @@ import users.Courier;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FastestDelivery implements DeliveryPolicy {
+public class FastestDelivery implements DeliveryPolicy, Serializable {
 
+	private static final long serialVersionUID = 8482409880146169218L;
 	private ArrayList<Courier> courierListSorted;
 	private ArrayList<Double> courierDistanceList;
 	

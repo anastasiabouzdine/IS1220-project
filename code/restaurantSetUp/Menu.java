@@ -1,5 +1,6 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import restaurantSetUp.Starter;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class Menu {
+public class Menu implements Serializable {
 
+	private static final long serialVersionUID = 2637206997365542048L;
 	private List<Starter> listOfStarter;
 	private List<MainDish> listOfMainDish;
 	private List<Dessert> listOfDessert;

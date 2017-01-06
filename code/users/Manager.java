@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 
 /**
  * The class <code>Manager</code> allows to create a Manager which is in
@@ -18,8 +19,9 @@ package users;
  * @author Patrick von Platen
  */
 
-public class Manager extends User {
+public class Manager extends User implements Serializable {
 
+	private static final long serialVersionUID = -5624499074797331876L;
 	private String surname;
 
 	/**

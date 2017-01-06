@@ -1,5 +1,6 @@
 package users;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import core.Order;
@@ -19,8 +20,9 @@ import core.Order;
  * @see #replyRandom()
  */
 
-public class Courier extends User {
+public class Courier extends User implements Serializable {
 
+	private static final long serialVersionUID = 2500446232155476659L;
 	private String surname;
 	private Address position;
 	private String phoneNumber;

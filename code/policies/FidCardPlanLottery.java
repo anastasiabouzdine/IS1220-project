@@ -1,12 +1,16 @@
 package policies;
 
+import java.io.Serializable;
+
 /**
  * The class <code>FidCardPlanLottery</code> implements the interface <code>FidCardPlan</code> and presents the Lottery Fidelity Card Plan.
  *  
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FidCardPlanLottery implements FidCardPlan {
+public class FidCardPlanLottery implements FidCardPlan, Serializable {
+
+	private static final long serialVersionUID = -254937362758848275L;
 
 	/**
 	 * Constructor of Basic Fidelity Plan

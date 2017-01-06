@@ -1,5 +1,7 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /************************************************************/
 /**
  * Class that represent a dish/ class is inherited by other 
@@ -8,8 +10,9 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public abstract class Dish {
+public abstract class Dish implements Serializable {
 	
+	private static final long serialVersionUID = 6491771596973023390L;
 	private String name;
 	private double price;
 	private String type;

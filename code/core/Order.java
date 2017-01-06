@@ -1,5 +1,6 @@
 package core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -20,7 +21,9 @@ import users.Restaurant;
  * @author Patrick von Platen
  */
 
-public class Order {
+public class Order implements Serializable {
+
+	private static final long serialVersionUID = 4130029589405922273L;
 	private int ID;
 	private static int counter=0;
 	private Customer customer;

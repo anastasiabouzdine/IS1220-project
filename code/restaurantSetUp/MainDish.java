@@ -4,6 +4,8 @@
 
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /************************************************************/
 
 /**
@@ -12,8 +14,10 @@ package restaurantSetUp;
  * @author Patrick von Platen
  */
 
-public class MainDish extends Dish {
+public class MainDish extends Dish implements Serializable {
 	
+	private static final long serialVersionUID = 8289112599059036474L;
+
 	/**
 	 * Constructor for a MainDish with given type.
 	 * 

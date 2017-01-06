@@ -1,5 +1,7 @@
 package restaurantSetUp;
 
+import java.io.Serializable;
+
 /**
  * HalfMeal extends the <code>Meal</code> class and is represented
  * by a name, a <code>MainDish</code> and a <code>Starter</code> or a<code>Dessert</code>.
@@ -7,8 +9,10 @@ package restaurantSetUp;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class HalfMeal extends Meal {
+public class HalfMeal extends Meal implements Serializable {
 	
+	private static final long serialVersionUID = -2991192007125404562L;
+
 	public HalfMeal(String name){
 		super(name);
 	}

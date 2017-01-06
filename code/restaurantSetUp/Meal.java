@@ -4,6 +4,7 @@
 
 package restaurantSetUp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,9 @@ import restaurantSetUp.Dish;
  * @author Patrick von Platen
  * @author John Wasseige
  */
-public abstract class Meal {
-	
+public abstract class Meal implements Serializable {
+
+	private static final long serialVersionUID = -4876430174939851276L;
 	private String name;
 	private List<Dish> listOfDish;
 	private String type;

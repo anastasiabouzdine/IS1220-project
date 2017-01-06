@@ -1,5 +1,6 @@
 package policies;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -14,8 +15,9 @@ import users.Courier;
  * @author John de Wasseige
  * @author Patrick von Platen
  */
-public class FairOccupationDelivery implements DeliveryPolicy {
+public class FairOccupationDelivery implements DeliveryPolicy, Serializable {
 	
+	private static final long serialVersionUID = -3578517789744313257L;
 	private ArrayList<Courier> listCourier;
 	
 	

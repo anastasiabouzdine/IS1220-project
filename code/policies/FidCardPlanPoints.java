@@ -1,5 +1,7 @@
 package policies;
 
+import java.io.Serializable;
+
 /**
  * The class <code>FidCardPlanPoints</code> allows to create a FidCardPlanPoints which 
  * <ul>
@@ -11,8 +13,9 @@ package policies;
  * @author Patrick von Platen
  */
 
-public class FidCardPlanPoints implements FidCardPlan{
+public class FidCardPlanPoints implements FidCardPlan, Serializable {
 	
+	private static final long serialVersionUID = -2786490162701134301L;
 	private int points;
 	private double reduc;
 	

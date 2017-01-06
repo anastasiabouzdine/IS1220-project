@@ -1,5 +1,6 @@
 package core;
 
+import java.io.Serializable;
 import java.util.*;
 
 import exceptions.AlreadyUsedUsernameException;
@@ -25,7 +26,9 @@ import users.*;
  * @author Patrick von Platen
  */
 
-public class Core {
+public class Core implements Serializable {
+	
+	private static final long serialVersionUID = 12345678987654321L;
 
 	/* Basic attributes */
 	private String name;
@@ -102,8 +105,10 @@ public class Core {
 		this.receivedOrders = new LinkedList<Order>();
 		this.savedOrders = new ArrayList<Order>();
 
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		this.dateBefore = cal;
 		this.dateAfter = Calendar.getInstance();
-		this.dateBefore = Calendar.getInstance();
 	}
 
 	/*********************************************************************/
@@ -768,8 +773,7 @@ public class Core {
 	public double calcTotalProfit() {
 		if (current_manager != null) {
 			double sum = 0.0D;
-			this.autoSetDateAfter();
-			this.autoSetDateBeforeOneMonthAgo();
+			
 			for (Order order : this.savedOrders) {
 				if (order.getDate().compareTo(dateBefore) >= 0 && order.getDate().compareTo(dateAfter) <= 0) {
 					sum = Order.round2(sum + order.getProfitFinal());
