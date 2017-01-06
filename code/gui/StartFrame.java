@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -23,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import core.Core;
 import core.Order;
@@ -50,57 +53,57 @@ public class StartFrame {
 	private static Core core;
 
 	private JPanel address_panel = new JPanel();
-	private	JPanel login_panel = new JPanel();
+	private JPanel login_panel = new JPanel();
 
-		// radio buttons for user to register
-	private	JRadioButton radio_customer = new JRadioButton("Customer", true);
-	private	JRadioButton radio_courier = new JRadioButton("Courier");
-	private	JRadioButton radio_restaurant = new JRadioButton("Restaurant");
-	private	static JRadioButton radio_manager = new JRadioButton("Manager");
-	private	ButtonGroup user_type_group = new ButtonGroup();
+	// radio buttons for user to register
+	private JRadioButton radio_customer = new JRadioButton("Customer", true);
+	private JRadioButton radio_courier = new JRadioButton("Courier");
+	private JRadioButton radio_restaurant = new JRadioButton("Restaurant");
+	private static JRadioButton radio_manager = new JRadioButton("Manager");
+	private ButtonGroup user_type_group = new ButtonGroup();
 
-		// buttons
-	private	JButton logIn_button = new JButton("LOG IN");
-	private	static JButton home_button = new JButton("GO TO HOME");
-	private	JButton goToRegister_button = new JButton("GO TO REGISTER");
-	private	JButton backToRegister_button = new JButton("GO BACK");
-	private	JButton createAccount_button = new JButton("CREATE ACCOUNT");
-	private	JButton goToLogIn_button = new JButton("GO TO LOG IN");
-	private	JButton register_button = new JButton("REGISTER");
-	private	static Button addUserButton = new Button("ADD USER");
+	// buttons
+	private JButton logIn_button = new JButton("LOG IN");
+	private static JButton home_button = new JButton("GO TO HOME");
+	private JButton goToRegister_button = new JButton("GO TO REGISTER");
+	private JButton backToRegister_button = new JButton("GO BACK");
+	private JButton createAccount_button = new JButton("CREATE ACCOUNT");
+	private JButton goToLogIn_button = new JButton("GO TO LOG IN");
+	private JButton register_button = new JButton("REGISTER");
+	private static Button addUserButton = new Button("ADD USER");
 
-		// Textfields to register
-	private	JTextField surname_JTF = new JTextField(15);
-	private	JTextField xCoordinate_JTF = new JTextField(15);
-	private	JTextField yCoordinate_JTF = new JTextField(15);
-	private	JTextField phoneNum_JTF = new JTextField(15);
-	private	JTextField emailAddress_JTF = new JTextField(15);
-	private	JTextField username_JTF = new JTextField(15);
-	private	JPasswordField password_JTF = new JPasswordField(15);
-	private	JPasswordField passwordConf_JTF = new JPasswordField(15);
-	private	JTextField name_JTF = new JTextField(15);
+	// Textfields to register
+	private JTextField surname_JTF = new JTextField(15);
+	private JTextField xCoordinate_JTF = new JTextField(15);
+	private JTextField yCoordinate_JTF = new JTextField(15);
+	private JTextField phoneNum_JTF = new JTextField(15);
+	private JTextField emailAddress_JTF = new JTextField(15);
+	private JTextField username_JTF = new JTextField(15);
+	private JPasswordField password_JTF = new JPasswordField(15);
+	private JPasswordField passwordConf_JTF = new JPasswordField(15);
+	private JTextField name_JTF = new JTextField(15);
 
-		// String to register
-	private	String surname;
-	private	Address address;
-	private	String phoneNum;
-	private	String emailAddress;
-	private	String username;
-	private	char[] password;
-	private	char[] passwordConf;
-	private	String name;
+	// String to register
+	private String surname;
+	private Address address;
+	private String phoneNum;
+	private String emailAddress;
+	private String username;
+	private char[] password;
+	private char[] passwordConf;
+	private String name;
 
-		// panels when user register and add info
-	private	JPanel welcome_panel = new JPanel();
-	private	JPanel welcome_button_panel = new JPanel();
-	private	JPanel welcome_message_panel = new JPanel();
-	private	static JPanel register_panel_info = new JPanel();
-	private	static JPanel user_global_info = new JPanel();
-	private	JPanel user_specific_info = new JPanel();
-	private	JPanel customer_specific_info = new JPanel();
-	private	JPanel courier_specific_info = new JPanel();
-	private	JPanel restaurant_specific_info = new JPanel();
-	private	JPanel manager_specific_info = new JPanel();
+	// panels when user register and add info
+	private JPanel welcome_panel = new JPanel();
+	private JPanel welcome_button_panel = new JPanel();
+	private JPanel welcome_message_panel = new JPanel();
+	private static JPanel register_panel_info = new JPanel();
+	private static JPanel user_global_info = new JPanel();
+	private JPanel user_specific_info = new JPanel();
+	private JPanel customer_specific_info = new JPanel();
+	private JPanel courier_specific_info = new JPanel();
+	private JPanel restaurant_specific_info = new JPanel();
+	private JPanel manager_specific_info = new JPanel();
 
 	// Manager for add User button
 	static UserFrame manager;
@@ -150,8 +153,6 @@ public class StartFrame {
 		}
 		return instance;
 	}
-	
-	
 
 	/*********************************************************/
 	/* Fill panels */
@@ -254,7 +255,8 @@ public class StartFrame {
 		JTextArea welcome_text = new JTextArea();
 		JScrollPane welcome_scrollPane = new JScrollPane();
 		welcome_scrollPane.setViewportView(welcome_text);
-		welcome_text.setText("If you already have a username, please GO TO LOGIN !\n" + "If not, then GO TO REGISTER !");
+		welcome_text
+				.setText("If you already have a username, please GO TO LOGIN !\n" + "If not, then GO TO REGISTER !");
 		welcome_text.setBackground(Color.yellow);
 
 		welcome_panel.add(welcome_message_panel, BorderLayout.NORTH);
@@ -266,31 +268,31 @@ public class StartFrame {
 		welcome_button_panel.add(goToRegister_button, BorderLayout.CENTER);
 		frame.add(welcome_panel);
 	}
-	
-	private void clearTextWhenClickedonTextfieldInit(){
-	
+
+	private void clearTextWhenClickedonTextfieldInit() {
+
 		getSurname_JTF().addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				getSurname_JTF().setText("");
-				
+
 			}
 		});
 		getxCoordinate_JTF().addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				getxCoordinate_JTF().setText("");
-				
+
 			}
 		});
 		getyCoordinate_JTF().addFocusListener(new FocusListener() {
@@ -383,8 +385,6 @@ public class StartFrame {
 
 	/*********************************************************/
 	/* Functions */
-	
-
 
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
@@ -398,6 +398,10 @@ public class StartFrame {
 	}
 
 	public void initSettings() {
+
+		frame.addWindowListener(new WindowEventHandler());
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
 		getHome_button().addActionListener(new HomeButton());
 
 		clearTextWhenClickedonTextfieldInit();
@@ -436,7 +440,8 @@ public class StartFrame {
 					address = new Address(Integer.parseInt(getxCoordinate_JTF().getText()),
 							Integer.parseInt(getyCoordinate_JTF().getText()));
 
-					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username, new String(password)));
+					core.addUser(new Customer(name, surname, address, phoneNum, emailAddress, username,
+							new String(password)));
 				} else if (courier_specific_info.isShowing()) {
 					surname = getSurname_JTF().getText();
 					phoneNum = getPhoneNum_JTF().getText();
@@ -640,7 +645,8 @@ public class StartFrame {
 					emailAddress = getEmailAddress_JTF().getText();
 					phoneNum = getPhoneNum_JTF().getText();
 
-					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username, new String(password)));
+					core.register(new Customer(name, surname, address, phoneNum, emailAddress, username,
+							new String(password)));
 				} else if (courier_specific_info.isShowing()) {
 					surname = getSurname_JTF().getText();
 					phoneNum = getPhoneNum_JTF().getText();
@@ -688,6 +694,13 @@ public class StartFrame {
 		}
 	}
 
+	class WindowEventHandler extends WindowAdapter {
+		public void windowClosing(WindowEvent evt) {
+			System.out.println("Hallo"); // TODO John
+			System.exit(0);
+		}
+	}
+
 	/*******************************************************/
 	/* Getters and Setters */
 
@@ -723,8 +736,6 @@ public class StartFrame {
 		return core;
 	}
 
-
-
 	/**
 	 * @return the radio_manager
 	 */
@@ -732,16 +743,13 @@ public class StartFrame {
 		return radio_manager;
 	}
 
-
-
 	/**
-	 * @param radio_manager the radio_manager to set
+	 * @param radio_manager
+	 *            the radio_manager to set
 	 */
 	public static void setRadio_manager(JRadioButton radio_manager) {
 		StartFrame.radio_manager = radio_manager;
 	}
-
-
 
 	/**
 	 * @return the home_button
@@ -750,16 +758,13 @@ public class StartFrame {
 		return home_button;
 	}
 
-
-
 	/**
-	 * @param home_button the home_button to set
+	 * @param home_button
+	 *            the home_button to set
 	 */
 	public static void setHome_button(JButton home_button) {
 		StartFrame.home_button = home_button;
 	}
-
-
 
 	/**
 	 * @return the username_JTF
@@ -768,16 +773,13 @@ public class StartFrame {
 		return username_JTF;
 	}
 
-
-
 	/**
-	 * @param username_JTF the username_JTF to set
+	 * @param username_JTF
+	 *            the username_JTF to set
 	 */
 	public void setUsername_JTF(JTextField username_JTF) {
 		this.username_JTF = username_JTF;
 	}
-
-
 
 	/**
 	 * @return the password_JTF
@@ -786,16 +788,13 @@ public class StartFrame {
 		return password_JTF;
 	}
 
-
-
 	/**
-	 * @param password_JTF the password_JTF to set
+	 * @param password_JTF
+	 *            the password_JTF to set
 	 */
 	public void setPassword_JTF(JPasswordField password_JTF) {
 		this.password_JTF = password_JTF;
 	}
-
-
 
 	/**
 	 * @return the passwordConf_JTF
@@ -804,16 +803,13 @@ public class StartFrame {
 		return passwordConf_JTF;
 	}
 
-
-
 	/**
-	 * @param passwordConf_JTF the passwordConf_JTF to set
+	 * @param passwordConf_JTF
+	 *            the passwordConf_JTF to set
 	 */
 	public void setPasswordConf_JTF(JPasswordField passwordConf_JTF) {
 		this.passwordConf_JTF = passwordConf_JTF;
 	}
-
-
 
 	/**
 	 * @return the radio_restaurant
@@ -822,16 +818,13 @@ public class StartFrame {
 		return radio_restaurant;
 	}
 
-
-
 	/**
-	 * @param radio_restaurant the radio_restaurant to set
+	 * @param radio_restaurant
+	 *            the radio_restaurant to set
 	 */
 	public void setRadio_restaurant(JRadioButton radio_restaurant) {
 		this.radio_restaurant = radio_restaurant;
 	}
-
-
 
 	/**
 	 * @return the name_JTF
@@ -840,16 +833,13 @@ public class StartFrame {
 		return name_JTF;
 	}
 
-
-
 	/**
-	 * @param name_JTF the name_JTF to set
+	 * @param name_JTF
+	 *            the name_JTF to set
 	 */
 	public void setName_JTF(JTextField name_JTF) {
 		this.name_JTF = name_JTF;
 	}
-
-
 
 	/**
 	 * @return the xCoordinate_JTF
@@ -858,16 +848,13 @@ public class StartFrame {
 		return xCoordinate_JTF;
 	}
 
-
-
 	/**
-	 * @param xCoordinate_JTF the xCoordinate_JTF to set
+	 * @param xCoordinate_JTF
+	 *            the xCoordinate_JTF to set
 	 */
 	public void setxCoordinate_JTF(JTextField xCoordinate_JTF) {
 		this.xCoordinate_JTF = xCoordinate_JTF;
 	}
-
-
 
 	/**
 	 * @return the yCoordinate_JTF
@@ -876,16 +863,13 @@ public class StartFrame {
 		return yCoordinate_JTF;
 	}
 
-
-
 	/**
-	 * @param yCoordinate_JTF the yCoordinate_JTF to set
+	 * @param yCoordinate_JTF
+	 *            the yCoordinate_JTF to set
 	 */
 	public void setyCoordinate_JTF(JTextField yCoordinate_JTF) {
 		this.yCoordinate_JTF = yCoordinate_JTF;
 	}
-
-
 
 	/**
 	 * @return the radio_courier
@@ -894,16 +878,13 @@ public class StartFrame {
 		return radio_courier;
 	}
 
-
-
 	/**
-	 * @param radio_courier the radio_courier to set
+	 * @param radio_courier
+	 *            the radio_courier to set
 	 */
 	public void setRadio_courier(JRadioButton radio_courier) {
 		this.radio_courier = radio_courier;
 	}
-
-
 
 	/**
 	 * @return the surname_JTF
@@ -912,16 +893,13 @@ public class StartFrame {
 		return surname_JTF;
 	}
 
-
-
 	/**
-	 * @param surname_JTF the surname_JTF to set
+	 * @param surname_JTF
+	 *            the surname_JTF to set
 	 */
 	public void setSurname_JTF(JTextField surname_JTF) {
 		this.surname_JTF = surname_JTF;
 	}
-
-
 
 	/**
 	 * @return the phoneNum_JTF
@@ -930,16 +908,13 @@ public class StartFrame {
 		return phoneNum_JTF;
 	}
 
-
-
 	/**
-	 * @param phoneNum_JTF the phoneNum_JTF to set
+	 * @param phoneNum_JTF
+	 *            the phoneNum_JTF to set
 	 */
 	public void setPhoneNum_JTF(JTextField phoneNum_JTF) {
 		this.phoneNum_JTF = phoneNum_JTF;
 	}
-
-
 
 	/**
 	 * @return the radio_customer
@@ -948,16 +923,13 @@ public class StartFrame {
 		return radio_customer;
 	}
 
-
-
 	/**
-	 * @param radio_customer the radio_customer to set
+	 * @param radio_customer
+	 *            the radio_customer to set
 	 */
 	public void setRadio_customer(JRadioButton radio_customer) {
 		this.radio_customer = radio_customer;
 	}
-
-
 
 	/**
 	 * @return the emailAddress_JTF
@@ -966,10 +938,9 @@ public class StartFrame {
 		return emailAddress_JTF;
 	}
 
-
-
 	/**
-	 * @param emailAddress_JTF the emailAddress_JTF to set
+	 * @param emailAddress_JTF
+	 *            the emailAddress_JTF to set
 	 */
 	public void setEmailAddress_JTF(JTextField emailAddress_JTF) {
 		this.emailAddress_JTF = emailAddress_JTF;

@@ -26,7 +26,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-
 import restaurantSetUp.AbstractFactory;
 import restaurantSetUp.Dessert;
 import restaurantSetUp.FactoryProducer;
@@ -102,7 +101,7 @@ public class RestaurantFrame extends UserFrame {
 
 	public RestaurantFrame() {
 		super();
-		if(instance == null)
+		if (instance == null)
 			instance = this;
 	}
 
@@ -130,6 +129,7 @@ public class RestaurantFrame extends UserFrame {
 
 	private void initRest(Restaurant rest) {
 
+		getReset_button().setVisible(false);
 		fillTextFieldsWithFocusInit();
 		fillAddMealPanelInit(rest);
 		fillAddRemovePanelInit();

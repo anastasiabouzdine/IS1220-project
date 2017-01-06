@@ -27,7 +27,7 @@ public class CourierFrame extends UserFrame {
 
 	public CourierFrame() {
 		super();
-		if(instance == null)
+		if (instance == null)
 			instance = this;
 	}
 
@@ -43,7 +43,7 @@ public class CourierFrame extends UserFrame {
 		getSettingPanel().add(dutyPanel);
 		getSetButtonPanel().removeAll();
 		getSetButtonPanel().add(getHome_button());
-		getSetButtonPanel().add(save_button);
+		getSetButtonPanel().add(getSave_button());
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
 
@@ -60,6 +60,7 @@ public class CourierFrame extends UserFrame {
 			initGUI(courier, Color.orange, Color.white, "Courier Area", User.messageBoxGUI);
 			initSetPanelNotif();
 			fillAndSetMenuBarCourier(courier);
+			getReset_button().setVisible(false);
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}
@@ -160,8 +161,8 @@ public class CourierFrame extends UserFrame {
 			case "surname":
 				descr = "Set your new surname: ";
 				value = courier.getSurname();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
 					courier.setSurname(value2);
@@ -171,8 +172,8 @@ public class CourierFrame extends UserFrame {
 			case "address":
 				descr = "Set your new address: ";
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e4) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e4) -> {
 
 					try {
 						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
@@ -191,8 +192,8 @@ public class CourierFrame extends UserFrame {
 			case "phoneNumb":
 				descr = "Set your new phone number: ";
 				value = courier.getPhoneNumber();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
 					courier.setPhoneNumber(value2);
@@ -201,8 +202,8 @@ public class CourierFrame extends UserFrame {
 				break;
 			case "duty":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 					if (dutyOn.isSelected()) {
 						courier.setAvailable(true);
 					} else if (dutyOff.isSelected()) {

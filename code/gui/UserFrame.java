@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -20,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import users.User;
 
@@ -53,6 +56,7 @@ public abstract class UserFrame {
 	private JButton logOut_button = new JButton("LOG OUT");
 	private JButton home_button = new JButton("GO HOME");
 	private JButton save_button;
+	private JButton reset_button = new JButton("RESET ALL");
 	private int currentSettingShow = 0;
 
 	public abstract UserFrame getInstance(User user);
@@ -66,6 +70,8 @@ public abstract class UserFrame {
 			public void run() {
 				frame.setBounds(xLocation, yLocation, width, height);
 				frame.setVisible(true);
+				frame.addWindowListener(new WindowEventHandler());
+				frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			}
 		});
 	}
@@ -169,8 +175,18 @@ public abstract class UserFrame {
 
 		// Buttons
 		welcome_button_panel.add(logOut_button, BorderLayout.CENTER);
+		welcome_button_panel.add(reset_button, BorderLayout.EAST);
 		getHome_button().addActionListener((ActionEvent e) -> {
 			setCurrentPanel(welcome_panel);
+		});
+		reset_button.addActionListener((e) -> {
+
+			popUpOkWindow("All data has been reseted and a new system was put in place. "
+					+ "\nsystem will shut down. Plese restart the system.");
+
+			// TODO insert function
+
+			System.exit(0);
 		});
 
 		frame.add(welcome_panel);
@@ -201,8 +217,8 @@ public abstract class UserFrame {
 
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
-		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE,
-				null, options, options[0]);
+		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
 	/**************************************************/
@@ -355,6 +371,12 @@ public abstract class UserFrame {
 		}
 	}
 
+	class WindowEventHandler extends WindowAdapter {
+		public void windowClosing(WindowEvent evt) {
+			System.out.println("Hallo"); // TODO John
+			System.exit(0);
+		}
+	}
 
 	/*****************************************************/
 	// getter & setter
@@ -531,10 +553,26 @@ public abstract class UserFrame {
 	}
 
 	/**
-	 * @param home_button the home_button to set
+	 * @param home_button
+	 *            the home_button to set
 	 */
 	public void setHome_button(JButton home_button) {
 		this.home_button = home_button;
+	}
+
+	/**
+	 * @return the reset_button
+	 */
+	public JButton getReset_button() {
+		return reset_button;
+	}
+
+	/**
+	 * @param reset_button
+	 *            the reset_button to set
+	 */
+	public void setReset_button(JButton reset_button) {
+		this.reset_button = reset_button;
 	}
 
 }

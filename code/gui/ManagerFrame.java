@@ -102,7 +102,7 @@ public class ManagerFrame extends UserFrame {
 	// Constructors
 	public ManagerFrame() {
 		super();
-		if(instance == null)
+		if (instance == null)
 			instance = this;
 	}
 
@@ -111,9 +111,9 @@ public class ManagerFrame extends UserFrame {
 
 		if (user instanceof Manager) {
 			this.manager = (Manager) user;
-			initManager(manager);
 			StartFrame.getFrame().setVisible(false);
 			initGUI(manager, Color.LIGHT_GRAY, Color.white, "Manager Area", User.messageBoxGUI);
+			initManager(manager);
 			instance.open(0, 0, 600, 400);
 			return instance;
 		}
@@ -430,6 +430,7 @@ public class ManagerFrame extends UserFrame {
 		fillProfitRelatedPanelInit();
 		initRadioButtons();
 		initProfitPanel();
+		getReset_button().setVisible(true);
 
 		goBackfromAddUserButton.addActionListener((ActionEvent e) -> {
 			getFrame().setVisible(true);

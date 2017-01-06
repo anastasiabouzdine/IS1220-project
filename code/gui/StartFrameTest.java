@@ -200,8 +200,7 @@ public class StartFrameTest {
 
 		StartFrame.getCore().logIn("root");
 		User user = StartFrame.getCore().getUsers().get("r8");
-		System.out
-				.println("Test register Restaurant was " + StartFrame.getCore().getRestaurantList().contains(user));
+		System.out.println("Test register Restaurant was " + StartFrame.getCore().getRestaurantList().contains(user));
 		StartFrame.getCore().logOut();
 
 		try {

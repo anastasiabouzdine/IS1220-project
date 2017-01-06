@@ -85,12 +85,9 @@ public class CustomerFrame extends UserFrame {
 
 	public CustomerFrame() {
 		super();
-		if(instance == null)
+		if (instance == null)
 			instance = this;
 	}
-
-	
-	
 
 	/*************************************************/
 	// Constructor
@@ -306,7 +303,7 @@ public class CustomerFrame extends UserFrame {
 		getSettingPanel().add(fidPlanPanel);
 		getSetButtonPanel().removeAll();
 		getSetButtonPanel().add(getHome_button());
-		getSetButtonPanel().add(save_button);
+		getSetButtonPanel().add(getSave_button());
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
 
@@ -320,7 +317,7 @@ public class CustomerFrame extends UserFrame {
 		getSettingPanel().add(notificationPanel);
 		getSetButtonPanel().removeAll();
 		getSetButtonPanel().add(getHome_button());
-		getSetButtonPanel().add(save_button);
+		getSetButtonPanel().add(getSave_button());
 		getSettingPanel().add(getSetButtonPanel(), BorderLayout.SOUTH);
 	}
 
@@ -329,6 +326,7 @@ public class CustomerFrame extends UserFrame {
 
 	private void fillCustomerInit() {
 
+		getReset_button().setVisible(false);
 		fillorderPanelInit();
 		initSetPanelFidPlan();
 		initSetPanelNotif();
@@ -362,7 +360,7 @@ public class CustomerFrame extends UserFrame {
 				String message = "Order was deleted";
 				popUpOkWindow(message);
 			}
-			setCurrentPanel(welcome_panel);
+			setCurrentPanel(getWelcome_panel());
 
 		});
 		restaurants.addMouseListener(new MouseAdapter() {
@@ -377,15 +375,15 @@ public class CustomerFrame extends UserFrame {
 			}
 		});
 		quantityTextField.addFocusListener(new FocusListener() {
-			
+
 			@Override
 			public void focusLost(FocusEvent e) {
 			}
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				quantityTextField.setText("");
-				
+
 			}
 		});
 	}
@@ -525,8 +523,8 @@ public class CustomerFrame extends UserFrame {
 			case "surname":
 				descr = "Set your new surname: ";
 				value = customer.getSurname();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
 					customer.setSurname(value2);
@@ -536,8 +534,8 @@ public class CustomerFrame extends UserFrame {
 			case "address":
 				descr = "Set your new address: ";
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e4) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e4) -> {
 
 					try {
 						int xCoord = Integer.parseInt(getSetTextFieldXInt().getText());
@@ -556,8 +554,8 @@ public class CustomerFrame extends UserFrame {
 			case "phoneNumb":
 				descr = "Set your new phone number: ";
 				value = customer.getPhoneNumber();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
 					customer.setPhoneNumber(value2);
@@ -567,8 +565,8 @@ public class CustomerFrame extends UserFrame {
 			case "emailAddress":
 				descr = "Set your new email address: ";
 				value = customer.getEmail();
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 
 					String value2 = getSetTextFieldValue().getText();
 					customer.setEmail(value2);
@@ -577,8 +575,8 @@ public class CustomerFrame extends UserFrame {
 				break;
 			case "fidelity plan":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 					if (fidPlanBasic.isSelected()) {
 						customer.setFidCardToBasic();
 					} else if (fidPlanPoints.isSelected()) {
@@ -591,8 +589,8 @@ public class CustomerFrame extends UserFrame {
 				break;
 			case "notification":
 
-				save_button = new JButton("SAVE");
-				save_button.addActionListener((ActionEvent e2) -> {
+				setSave_button(new JButton("SAVE"));
+				getSave_button().addActionListener((ActionEvent e2) -> {
 					if (notificationOn.isSelected()) {
 						customer.setBeNotified(true);
 					} else if (notificationOff.isSelected()) {

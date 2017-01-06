@@ -12,7 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
-
 import restaurantSetUp.Dessert;
 import restaurantSetUp.Dish;
 import restaurantSetUp.FullMeal;
@@ -48,16 +47,15 @@ public class DisplayMealDish {
 	private JFormattedTextField dessertT = new JFormattedTextField();
 	private JFormattedTextField priceT = new JFormattedTextField();
 	private JFormattedTextField addDishT = new JFormattedTextField();
-	
-	private JMenu dishMenu = new JMenu("menu");
 
+	private JMenu dishMenu = new JMenu("menu");
 
 	public DisplayMealDish() {
 		super();
 	}
 
 	public JPanel display(Meal meal, Restaurant rest) {
-		
+
 		if (meal instanceof FullMeal) {
 			FullMeal fullMeal = (FullMeal) meal;
 			String starter = fullMeal.getListOfDish().get(0).getName() + " of type "
@@ -73,7 +71,7 @@ public class DisplayMealDish {
 			mainDishT.setColumns(30);
 			dessertT.setColumns(30);
 			priceT.setColumns(30);
-			
+
 			starterT.setText(starter);
 			mainDishT.setText(mainDish);
 			dessertT.setText(dessert);
@@ -90,7 +88,7 @@ public class DisplayMealDish {
 			mealValuePanel.add(mainDishT);
 			mealValuePanel.add(dessertT);
 			mealValuePanel.add(priceT);
-			
+
 			jListDessert.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		} else {
@@ -122,7 +120,7 @@ public class DisplayMealDish {
 		dishPanel.removeAll();
 		dishPanel.add(mealLabelPanel, BorderLayout.CENTER);
 		dishPanel.add(mealValuePanel, BorderLayout.LINE_END);
-		dishPanel.add(goBack_button,BorderLayout.SOUTH);
+		dishPanel.add(goBack_button, BorderLayout.SOUTH);
 
 		return dishPanel;
 	}
@@ -144,21 +142,23 @@ public class DisplayMealDish {
 		priceT.setEditable(false);
 	}
 
-	public void fillPanelMealRemove(Restaurant rest){
+	public void fillPanelMealRemove(Restaurant rest) {
 		DefaultListModel<Meal> model = new DefaultListModel<Meal>();
 		for (Meal meal : rest.getListOfMeal()) {
 			model.addElement(meal);
 		}
 		jListMealRemove.setModel(model);
 	}
-	public void fillPanelMealShow(Restaurant rest){
+
+	public void fillPanelMealShow(Restaurant rest) {
 		DefaultListModel<Meal> model = new DefaultListModel<Meal>();
 		for (Meal meal : rest.getListOfMeal()) {
 			model.addElement(meal);
 		}
 		jListMealShow.setModel(model);
 	}
-	public void filljListStarter(Restaurant rest){
+
+	public void filljListStarter(Restaurant rest) {
 		jListStarter.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<Starter> model = new DefaultListModel<Starter>();
 		for (Starter start : rest.getMenu().getListOfStarter()) {
@@ -167,7 +167,8 @@ public class DisplayMealDish {
 		jListStarter.setModel(model);
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
-	public void filljListMainDish(Restaurant rest){
+
+	public void filljListMainDish(Restaurant rest) {
 		jListMainDish.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<MainDish> model = new DefaultListModel<MainDish>();
 		for (MainDish mainDish : rest.getMenu().getListOfMainDish()) {
@@ -176,25 +177,27 @@ public class DisplayMealDish {
 		jListMainDish.setModel(model);
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
-	public void filljListDessert(Restaurant rest){
+
+	public void filljListDessert(Restaurant rest) {
 		jListDessert.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<Dessert> model = new DefaultListModel<Dessert>();
-		for (Dessert dessert: rest.getMenu().getListOfDessert()) {
+		for (Dessert dessert : rest.getMenu().getListOfDessert()) {
 			model.addElement(dessert);
 		}
 		jListDessert.setModel(model);
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
-	public JList<Dish> filljListAllDishes(Restaurant rest){
+
+	public JList<Dish> filljListAllDishes(Restaurant rest) {
 		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
-		
+
 		for (Starter start : rest.getMenu().getListOfStarter()) {
 			model.addElement(start);
 		}
 		for (MainDish mainDish : rest.getMenu().getListOfMainDish()) {
 			model.addElement(mainDish);
 		}
-		for (Dessert dessert: rest.getMenu().getListOfDessert()) {
+		for (Dessert dessert : rest.getMenu().getListOfDessert()) {
 			model.addElement(dessert);
 		}
 		jListAllDish.setModel(model);
@@ -252,7 +255,8 @@ public class DisplayMealDish {
 	}
 
 	/**
-	 * @param goBack_button the goBack_button to set
+	 * @param goBack_button
+	 *            the goBack_button to set
 	 */
 	public void setGoBack_button(Button goBack_button) {
 		this.goBack_button = goBack_button;
