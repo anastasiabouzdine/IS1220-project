@@ -443,7 +443,7 @@ public class ManagerFrame extends UserFrame {
 			try {
 				double profit = core.simulateProfit(Double.parseDouble(valueT.getText()),
 						Double.parseDouble(valueInput2T.getText()), Double.parseDouble(valueInput3T.getText()));
-				System.out.println(profit);
+				popUpOkWindow("The simulated result : " + profit);
 			} catch (NumberFormatException e2) {
 				message = "Please fill out all input fields with doubles.";
 				popUpOkWindow(message);
