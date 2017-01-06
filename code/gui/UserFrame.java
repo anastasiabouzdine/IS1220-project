@@ -8,6 +8,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -24,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import core.Core;
 import users.User;
 
 public abstract class UserFrame {
@@ -184,7 +188,18 @@ public abstract class UserFrame {
 			popUpOkWindow("All data has been reseted and a new system was put in place. "
 					+ "\nsystem will shut down. Plese restart the system.");
 
-			// TODO insert function
+			StartFrame.setCore(new Core());
+			try {
+				FileOutputStream fileOut = new FileOutputStream("./ser_files/gui_core.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(StartFrame.getCore());
+				out.close();
+				fileOut.close();
+				System.out.println("Serialized data is saved in ./ser_files/gui_core.ser");
+			}catch(IOException i) {
+				i.printStackTrace();
+			}
+			System.out.println("Database was successfully reset and you have been logged out.");
 
 			System.exit(0);
 		});
@@ -373,7 +388,17 @@ public abstract class UserFrame {
 
 	class WindowEventHandler extends WindowAdapter {
 		public void windowClosing(WindowEvent evt) {
-			System.out.println("Hallo"); // TODO John
+			StartFrame.getCore().logOut();
+			try {
+				FileOutputStream fileOut = new FileOutputStream("./ser_files/gui_core.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(StartFrame.getCore());
+				out.close();
+				fileOut.close();
+				System.out.println("Serialized data is saved in ./ser_files/gui_core.ser");
+			}catch(IOException i) {
+				i.printStackTrace();
+			}
 			System.exit(0);
 		}
 	}

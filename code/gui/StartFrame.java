@@ -11,6 +11,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -116,7 +121,18 @@ public class StartFrame {
 			instance = new StartFrame();
 			// For testing
 
-			core = new Core();
+			try {
+				FileInputStream fileIn = new FileInputStream("./ser_files/gui_core.ser");
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				core = (Core) in.readObject();
+				in.close();
+				fileIn.close();
+			} catch (IOException i) {
+				System.out.println("! Error while loading the file !");
+				core = new Core();
+			} catch (ClassNotFoundException e) {
+				System.out.println("! Class not found !");		
+			}
 
 			core.logIn("root"); // login with manager to add lists
 			core.setCustomerList(ParseCustomers.parseCustomers("src/txtFILES/customersList.txt"));
@@ -635,11 +651,11 @@ public class StartFrame {
 
 	private class RegisterButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			try{
+				address = new Address(Integer.parseInt(getxCoordinate_JTF().getText()),
+						Integer.parseInt(getyCoordinate_JTF().getText()));
 
-			address = new Address(Integer.parseInt(getxCoordinate_JTF().getText()),
-					Integer.parseInt(getyCoordinate_JTF().getText()));
-			name = getName_JTF().getText();
-			try {
+				name = getName_JTF().getText();
 				if (customer_specific_info.isShowing()) {
 					surname = getSurname_JTF().getText();
 					emailAddress = getEmailAddress_JTF().getText();
@@ -656,12 +672,12 @@ public class StartFrame {
 
 					core.register(new Restaurant(name, address, username, new String(password)));
 				}
+				goToLogInPanel();
 			} catch (AlreadyUsedUsernameException e2) {
 				popUpOkWindow("Username is already taken. Try a different one.");
 			} catch (NumberFormatException ex) {
 				popUpOkWindow("Please use only integers for the address coordinates.");
 			}
-			goToLogInPanel();
 		}
 
 	}
@@ -696,7 +712,17 @@ public class StartFrame {
 
 	class WindowEventHandler extends WindowAdapter {
 		public void windowClosing(WindowEvent evt) {
-			System.out.println("Hallo"); // TODO John
+			core.logOut();;
+			try {
+				FileOutputStream fileOut = new FileOutputStream("./ser_files/gui_core.ser");
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				out.writeObject(core);
+				out.close();
+				fileOut.close();
+				System.out.println("Serialized data is saved in ./ser_files/gui_core.ser");
+			}catch(IOException i) {
+				i.printStackTrace();
+			}
 			System.exit(0);
 		}
 	}
@@ -734,6 +760,14 @@ public class StartFrame {
 
 	public static Core getCore() {
 		return core;
+	}
+
+	
+	/**
+	 * @param core the core to set
+	 */
+	public static void setCore(Core core) {
+		StartFrame.core = core;
 	}
 
 	/**

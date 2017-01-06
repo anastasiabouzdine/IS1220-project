@@ -19,7 +19,7 @@ public class LaunchGUI {
 	 *******************************************************/
 
 	public static void popUpOkWindow(String message) {
-		Object[] options = { "OK" };
+			Object[] options = { "OK" };
 		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}

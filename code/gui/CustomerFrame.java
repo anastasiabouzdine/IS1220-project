@@ -354,7 +354,7 @@ public class CustomerFrame extends UserFrame {
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				core.placeNewOrder(currentOrder);
 				popUpOkWindow(
-						core.getCurrentMessage() + " If you don't pay in 2 days, we will come after your family.");
+						core.getCurrentMessage() + " Please pay in the next 48 hours.");
 			} else {
 				String message = "Order was deleted";
 				popUpOkWindow(message);
