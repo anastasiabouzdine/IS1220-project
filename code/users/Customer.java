@@ -120,7 +120,7 @@ public class Customer extends User implements Observer, Serializable {
 			Meal specialMealOfTheWeek = restaurant.getSpecialMeal();
 			double mealPrice = Order.round2(specialMealOfTheWeek.getPrice()*(1-restaurant.getSpecDiscFact()));
 			String info = restaurant.getName() + " has put the meal "
-					+ specialMealOfTheWeek.getName() + " at a price of " 
+					+ specialMealOfTheWeek.getName() + "as a special meal at a price of " 
 					+ mealPrice;
 			this.update(info);
 			System.out.println("[Customer UPDATE] " + getUsername() + " has been notified that " + info);

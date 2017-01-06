@@ -160,7 +160,7 @@ public class RestaurantFrame extends UserFrame {
 				if (evt.getClickCount() == 2) {
 					int index = list.locationToIndex(evt.getPoint());
 					Meal meal = rest.getListOfMeal().get(index);
-					rest.setSpecialMeal(meal);
+					StartFrame.getCore().setSpecialMeal(meal);
 					setCurrentPanel(getWelcome_panel());
 				}
 			}
