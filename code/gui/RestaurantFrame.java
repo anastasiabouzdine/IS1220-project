@@ -101,8 +101,7 @@ public class RestaurantFrame extends UserFrame {
 
 	public RestaurantFrame() {
 		super();
-		if (instance == null)
-			instance = this;
+		instance = this;
 	}
 
 	/*************************************************/

@@ -27,8 +27,7 @@ public class CourierFrame extends UserFrame {
 
 	public CourierFrame() {
 		super();
-		if (instance == null)
-			instance = this;
+		instance = this;
 	}
 
 	/*************************************************/

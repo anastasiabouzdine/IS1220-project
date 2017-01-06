@@ -85,8 +85,7 @@ public class CustomerFrame extends UserFrame {
 
 	public CustomerFrame() {
 		super();
-		if (instance == null)
-			instance = this;
+		instance = this;
 	}
 
 	/*************************************************/

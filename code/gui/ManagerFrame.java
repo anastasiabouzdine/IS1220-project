@@ -102,8 +102,7 @@ public class ManagerFrame extends UserFrame {
 	// Constructors
 	public ManagerFrame() {
 		super();
-		if (instance == null)
-			instance = this;
+		instance = this;
 	}
 
 	@Override
