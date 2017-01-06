@@ -603,7 +603,7 @@ public class RestaurantFrame extends UserFrame {
 						double price = 0;
 						price = Double.parseDouble(priceDishT.getText());
 
-						Starter starter = (Starter) dishMealFactory.getDish("Starter", nameDishT.getText(), price,
+						Starter starter = (Starter) dishMealFactory.getDish("STARTER", nameDishT.getText(), price,
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addStarter(starter);
@@ -628,7 +628,7 @@ public class RestaurantFrame extends UserFrame {
 						double price = 0;
 						price = Double.parseDouble(priceDishT.getText());
 
-						MainDish mainDish = (MainDish) dishMealFactory.getDish("Starter", nameDishT.getText(), price,
+						MainDish mainDish = (MainDish) dishMealFactory.getDish("MAINDISH", nameDishT.getText(), price,
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addMainDish(mainDish);
@@ -653,7 +653,7 @@ public class RestaurantFrame extends UserFrame {
 					try {
 						double price = 0;
 						price = Double.parseDouble(priceDishT.getText());
-						Dessert dessert = (Dessert) dishMealFactory.getDish("Starter", nameDishT.getText(), price,
+						Dessert dessert = (Dessert) dishMealFactory.getDish("DESSERT", nameDishT.getText(), price,
 								(String) comboBox_foodType.getSelectedItem());
 
 						rest.addDessert(dessert);
