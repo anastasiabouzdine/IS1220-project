@@ -11,17 +11,17 @@ he wants to create, it can either be a fullmeal or a halfmeal.
 This prevents the system from failing in case the \lstinline|addDish2Meal|
 is never called after this one.
 The restaurant will immediately know which type of dishes he has to add
-to the meal in order to stay relevant with the mealtype he gave. 
+to the meal in order to stay consistent with the mealtype he gave. 
 % paragraph meal_creation_in_commandline (end)
 
 \paragraph{Order creation in commandline} % (fold)
 \label{par:order_creation_in_commandline}
-Then, we changed the \lstinline|createOrder| command. It's new form is
+Then, we changed the \lstinline|createOrder| command. Its new form is
 \lstinline|createOrder <restaurantName>|.
 This is justified by the fact that naming an order by the customer
-has is of no use in our project nor in reality as the system
-handles the assignement of a unique ID of the order.
-One can then respond that having an ordername allows to handle
+is of no use in our project nor in reality as the system
+handles the assignement of an unique ID of the order.
+One could argue that having an ordername allows to handle
 multiple orders at the same time by the same customer,
 which is indeed true but of no use either.
 An order isn't restricted to a certain amount of dishes
@@ -45,8 +45,8 @@ but only to how we implemented the \Core.
 In the latter, we designed the order handling in a way that once an order
 is placed, it is automatically treated, meaning the system finds a courier
 following the delivery policy.
-Finding the deliverer can thus only be made once an order \emph{really}
-added the list of orders of the \Core.
+Finding the deliverer can thus only be made once an order is \emph{really}
+added to the list of orders of the \Core.
 Therefore, the \lstinline|endOrder| will take care of finding the courier
 and showing it on screen, replacing the use of \lstinline|findDeliverer|.
 % paragraph merge_of (end)
@@ -63,9 +63,9 @@ and the latter doesn't need to specify his own username when changing his status
 \label{par:use_of_lstinline_showmenuitem_by_any_type_of_user}
 Instead of just being accessible to the mangare, showing all the menu
 items can be done by any type of user.
-This choice is motivated on one side as it is useful for both the customer
+This choice is motivated on one side because it is useful for both the customer
 to have a list of what he can order and for the restaurant to remember what
-is in its own menu, and on the other side as it describes reality in a better
+is in its own menu, and on the other side because it is more realitic
 as a menu card is something public that anyone can view.
 % paragraph use_of_lstinline_showmenuitem_by_any_type_of_user (end)
 

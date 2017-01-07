@@ -30,6 +30,16 @@ import javax.swing.WindowConstants;
 import core.Core;
 import users.User;
 
+
+/**
+ * The class <code>UserFrame</code> is an abstract class that will be inherited by the users. It determines the
+ * basic layout of the user frame and provides with some useful functions.
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public abstract class UserFrame {
 
 	// Frames
@@ -63,12 +73,26 @@ public abstract class UserFrame {
 	private JButton reset_button = new JButton("RESET ALL");
 	private int currentSettingShow = 0;
 
+	/**
+	 * @param user 
+	 * @return a UserFrame meaning an object of the class itself
+	 */
 	public abstract UserFrame getInstance(User user);
 
+	/**
+	 * sets the startFrame of the GUI visible 
+	 * @see <code>StartFrame</code>
+	 */
 	public void setGUIStartFrameVisible() {
 		StartFrame.getFrame().setVisible(true);
 	}
 
+	/**
+	 * @param xLocation the horizontal location where the GUI is going to be displayed
+	 * @param yLocation the vertical location where the GUI is going to be displayed
+	 * @param width the width of the window that will be displayed
+	 * @param height the height of the window that will be displayed
+	 */
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -82,6 +106,10 @@ public abstract class UserFrame {
 
 	/**************************************************/
 	// fill panels
+	/**
+	 * use to fill the panel that will be displayed when an action of the 
+	 * information bar is clicked on.
+	 */
 	public void fillInfoPanel() {
 		getInfoPanel().setBorder(BorderFactory.createTitledBorder("Information"));
 		infoPanel.setLayout(new BorderLayout());
@@ -93,6 +121,13 @@ public abstract class UserFrame {
 		frame.add(infoPanel);
 	}
 
+	/**
+	 * fill info panel with a certain description and a value that 
+	 * is displayed.
+	 * 
+	 * @param descr description of the value to be displayed 
+	 * @param value value that was asked for
+	 */
 	public void fillInfoPanel(String descr, String value) {
 		infoPanel.removeAll();
 		infoTextFieldDesc.setText(descr);
@@ -111,6 +146,10 @@ public abstract class UserFrame {
 		infoMenu.add(new UserActionInfoBasic("password", "show current password", user));
 	}
 
+	/**
+	 * use to fill the panel that will be displayed when an action of the 
+	 * setting bar is clicked on.
+	 */
 	public void fillSetPanel() {
 		settingPanel.setBorder(BorderFactory.createTitledBorder("Settings"));
 		settingPanel.setLayout(new BorderLayout());
@@ -121,6 +160,13 @@ public abstract class UserFrame {
 		frame.add(settingPanel);
 	}
 
+	/**
+	 * fill setting panel with a certain description and a value that 
+	 * is displayed.
+	 * 
+	 * @param descr description of the value to be displayed 
+	 * @param value value that is going to be changed
+	 */
 	public void fillSetPanel(String descr, String value) {
 
 		settingPanel.removeAll();
@@ -142,6 +188,11 @@ public abstract class UserFrame {
 		getSettingMenu().add(new UserActionSettingBasic("password", "change current password", user));
 	}
 
+	/**
+	 * initialize the menu bar
+	 * 
+	 * @param user user that is logged in
+	 */
 	public void fillAndSetMenuBar(User user) {
 		fillInfoMenuWithFunction(user);
 		fillSetMenuWithFunction(user);
@@ -151,6 +202,14 @@ public abstract class UserFrame {
 		frame.setJMenuBar(menuBar);
 	}
 
+	/**
+	 * initialize the welcome panel
+	 * 
+	 * @param color1 the color of the inner panel 
+	 * @param color2 the color of the outer panel which is different for every user
+	 * @param welcomeText text to welcome the user 
+	 * @param messages of the message box
+	 */
 	public void fillWelcomePanel(User user, Color color1, Color color2, String welcomeText, String new_messages) {
 		welcome_panel.setBackground(color1);
 		welcome_panel.setBorder(BorderFactory.createTitledBorder(welcomeText));
@@ -207,6 +266,13 @@ public abstract class UserFrame {
 		frame.add(welcome_panel);
 	}
 
+	/**
+	 * fill the address panel
+	 * 
+	 * @param descr the description of the address panel 
+	 * @param valueX the value of the xCoordinate
+	 * @param valueY the value of the yCoordinate
+	 */
 	public void fillSetPanelAddress(String descr, String valueX, String valueY) {
 		getSettingPanel().removeAll();
 		getSetTextFieldDesc().setText(descr);
@@ -225,11 +291,21 @@ public abstract class UserFrame {
 
 	/**************************************************/
 	// help functions
+	/**
+	 * change the panel that is shown
+	 * 
+	 * @param panel panel that will be the panel that is shown
+	 */
 	public void setCurrentPanel(JPanel panel) {
 		getFrame().setContentPane(panel);
 		getFrame().setVisible(true);
 	}
 
+	/**
+	 * create pop up window
+	 * 
+	 * @param message a message that will be shown in a pop up window
+	 */
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
 		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
@@ -238,6 +314,14 @@ public abstract class UserFrame {
 
 	/**************************************************/
 	// Initialize functions
+	/**
+	 * initialize the frame that will be shown
+	 * 
+	 * @param color1 the color of the inner panel 
+	 * @param color2 the color of the outer panel which is different for every user
+	 * @param welcomeText text to welcome the user 
+	 * @param messages of the message box
+	 */
 	public void initGUI(User user, Color color1, Color color2, String welcomeText, String messageBox) {
 		setFrame(new JFrame("Welcome " + user.getName()));
 		fillWelcomePanel(user, color1, color2, welcomeText, messageBox);
@@ -402,165 +486,176 @@ public abstract class UserFrame {
 			System.exit(0);
 		}
 	}
-
+	
 	/*****************************************************/
 	// getter & setter
 
+	/**
+	 * @return the frame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame the frame to set
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 	}
 
+	/**
+	 * @return the menuBar
+	 */
 	public JMenuBar getMenuBar() {
 		return menuBar;
 	}
 
+	/**
+	 * @param menuBar the menuBar to set
+	 */
 	public void setMenuBar(JMenuBar menuBar) {
 		this.menuBar = menuBar;
 	}
 
-	public JMenu getSettingsMenu() {
-		return getSettingMenu();
-	}
-
-	public void setSettingsMenu(JMenu settingsMenu) {
-		this.setSettingMenu(settingsMenu);
-	}
-
-	public JMenu getInfoMenu() {
-		return infoMenu;
-	}
-
-	public void setInfoMenu(JMenu infoMenu) {
-		this.infoMenu = infoMenu;
-	}
-
-	public JPanel getInfoPanel() {
-		return infoPanel;
-	}
-
-	public void setInfoPanel(JPanel infoPanel) {
-		this.infoPanel = infoPanel;
-	}
-
-	public JPanel getSettingPanel() {
-		return settingPanel;
-	}
-
-	public void setSettingPanel(JPanel settingPanel) {
-		this.settingPanel = settingPanel;
-	}
-
-	public JPanel getWelcome_panel() {
-		return welcome_panel;
-	}
-
-	public void setWelcome_panel(JPanel welcome_panel) {
-		this.welcome_panel = welcome_panel;
-	}
-
-	public JPanel getWelcome_button_panel() {
-		return welcome_button_panel;
-	}
-
-	public void setWelcome_button_panel(JPanel welcome_button_panel) {
-		this.welcome_button_panel = welcome_button_panel;
-	}
-
-	public JPanel getWelcome_message_panel() {
-		return welcome_message_panel;
-	}
-
-	public void setWelcome_message_panel(JPanel welcome_message_panel) {
-		this.welcome_message_panel = welcome_message_panel;
-	}
-
-	public JButton getLogOut_button() {
-		return logOut_button;
-	}
-
-	public void setLogOut_button(JButton logOut_button) {
-		this.logOut_button = logOut_button;
-	}
-
-	public int getCurrentSettingShow() {
-		return currentSettingShow;
-	}
-
-	public void setCurrentSettingShow(int currentSettingShow) {
-		this.currentSettingShow = currentSettingShow;
-	}
-
+	/**
+	 * @return the settingMenu
+	 */
 	public JMenu getSettingMenu() {
 		return settingMenu;
 	}
 
+	/**
+	 * @param settingMenu the settingMenu to set
+	 */
 	public void setSettingMenu(JMenu settingMenu) {
 		this.settingMenu = settingMenu;
 	}
 
+	/**
+	 * @return the infoMenu
+	 */
+	public JMenu getInfoMenu() {
+		return infoMenu;
+	}
+
+	/**
+	 * @param infoMenu the infoMenu to set
+	 */
+	public void setInfoMenu(JMenu infoMenu) {
+		this.infoMenu = infoMenu;
+	}
+
+	/**
+	 * @return the infoPanel
+	 */
+	public JPanel getInfoPanel() {
+		return infoPanel;
+	}
+
+	/**
+	 * @param infoPanel the infoPanel to set
+	 */
+	public void setInfoPanel(JPanel infoPanel) {
+		this.infoPanel = infoPanel;
+	}
+
+	/**
+	 * @return the infoSubPanel
+	 */
 	public JPanel getInfoSubPanel() {
 		return infoSubPanel;
 	}
 
+	/**
+	 * @param infoSubPanel the infoSubPanel to set
+	 */
 	public void setInfoSubPanel(JPanel infoSubPanel) {
 		this.infoSubPanel = infoSubPanel;
 	}
 
 	/**
-	 * @return the save_button
+	 * @return the infoTextFieldDesc
 	 */
-	public JButton getSave_button() {
-		return save_button;
+	public JTextField getInfoTextFieldDesc() {
+		return infoTextFieldDesc;
 	}
 
 	/**
-	 * @param save_button
-	 *            the save_button to set
+	 * @param infoTextFieldDesc the infoTextFieldDesc to set
 	 */
-	public void setSave_button(JButton save_button) {
-		this.save_button = save_button;
+	public void setInfoTextFieldDesc(JTextField infoTextFieldDesc) {
+		this.infoTextFieldDesc = infoTextFieldDesc;
 	}
 
-	public JTextField getSetTextFieldDesc() {
-		return setTextFieldDesc;
+	/**
+	 * @return the infoTextFieldValue
+	 */
+	public JTextField getInfoTextFieldValue() {
+		return infoTextFieldValue;
 	}
 
-	public void setSetTextFieldDesc(JTextField setTextFieldDesc) {
-		this.setTextFieldDesc = setTextFieldDesc;
+	/**
+	 * @param infoTextFieldValue the infoTextFieldValue to set
+	 */
+	public void setInfoTextFieldValue(JTextField infoTextFieldValue) {
+		this.infoTextFieldValue = infoTextFieldValue;
 	}
 
+	/**
+	 * @return the settingPanel
+	 */
+	public JPanel getSettingPanel() {
+		return settingPanel;
+	}
+
+	/**
+	 * @param settingPanel the settingPanel to set
+	 */
+	public void setSettingPanel(JPanel settingPanel) {
+		this.settingPanel = settingPanel;
+	}
+
+	/**
+	 * @return the setSubPanel
+	 */
 	public JPanel getSetSubPanel() {
 		return setSubPanel;
 	}
 
+	/**
+	 * @param setSubPanel the setSubPanel to set
+	 */
 	public void setSetSubPanel(JPanel setSubPanel) {
 		this.setSubPanel = setSubPanel;
 	}
 
+	/**
+	 * @return the setButtonPanel
+	 */
 	public JPanel getSetButtonPanel() {
 		return setButtonPanel;
 	}
 
+	/**
+	 * @param setButtonPanel the setButtonPanel to set
+	 */
 	public void setSetButtonPanel(JPanel setButtonPanel) {
 		this.setButtonPanel = setButtonPanel;
 	}
 
 	/**
-	 * @return the setTextFieldXInt
+	 * @return the setTextFieldDesc
 	 */
-	public JTextField getSetTextFieldXInt() {
-		return setTextFieldXInt;
+	public JTextField getSetTextFieldDesc() {
+		return setTextFieldDesc;
 	}
 
 	/**
-	 * @return the setTextFieldYInt
+	 * @param setTextFieldDesc the setTextFieldDesc to set
 	 */
-	public JTextField getSetTextFieldYInt() {
-		return setTextFieldYInt;
+	public void setSetTextFieldDesc(JTextField setTextFieldDesc) {
+		this.setTextFieldDesc = setTextFieldDesc;
 	}
 
 	/**
@@ -571,6 +666,97 @@ public abstract class UserFrame {
 	}
 
 	/**
+	 * @param setTextFieldValue the setTextFieldValue to set
+	 */
+	public void setSetTextFieldValue(JTextField setTextFieldValue) {
+		this.setTextFieldValue = setTextFieldValue;
+	}
+
+	/**
+	 * @return the setTextFieldXInt
+	 */
+	public JTextField getSetTextFieldXInt() {
+		return setTextFieldXInt;
+	}
+
+	/**
+	 * @param setTextFieldXInt the setTextFieldXInt to set
+	 */
+	public void setSetTextFieldXInt(JTextField setTextFieldXInt) {
+		this.setTextFieldXInt = setTextFieldXInt;
+	}
+
+	/**
+	 * @return the setTextFieldYInt
+	 */
+	public JTextField getSetTextFieldYInt() {
+		return setTextFieldYInt;
+	}
+
+	/**
+	 * @param setTextFieldYInt the setTextFieldYInt to set
+	 */
+	public void setSetTextFieldYInt(JTextField setTextFieldYInt) {
+		this.setTextFieldYInt = setTextFieldYInt;
+	}
+
+	/**
+	 * @return the welcome_panel
+	 */
+	public JPanel getWelcome_panel() {
+		return welcome_panel;
+	}
+
+	/**
+	 * @param welcome_panel the welcome_panel to set
+	 */
+	public void setWelcome_panel(JPanel welcome_panel) {
+		this.welcome_panel = welcome_panel;
+	}
+
+	/**
+	 * @return the welcome_button_panel
+	 */
+	public JPanel getWelcome_button_panel() {
+		return welcome_button_panel;
+	}
+
+	/**
+	 * @param welcome_button_panel the welcome_button_panel to set
+	 */
+	public void setWelcome_button_panel(JPanel welcome_button_panel) {
+		this.welcome_button_panel = welcome_button_panel;
+	}
+
+	/**
+	 * @return the welcome_message_panel
+	 */
+	public JPanel getWelcome_message_panel() {
+		return welcome_message_panel;
+	}
+
+	/**
+	 * @param welcome_message_panel the welcome_message_panel to set
+	 */
+	public void setWelcome_message_panel(JPanel welcome_message_panel) {
+		this.welcome_message_panel = welcome_message_panel;
+	}
+
+	/**
+	 * @return the logOut_button
+	 */
+	public JButton getLogOut_button() {
+		return logOut_button;
+	}
+
+	/**
+	 * @param logOut_button the logOut_button to set
+	 */
+	public void setLogOut_button(JButton logOut_button) {
+		this.logOut_button = logOut_button;
+	}
+
+	/**
 	 * @return the home_button
 	 */
 	public JButton getHome_button() {
@@ -578,11 +764,24 @@ public abstract class UserFrame {
 	}
 
 	/**
-	 * @param home_button
-	 *            the home_button to set
+	 * @param home_button the home_button to set
 	 */
 	public void setHome_button(JButton home_button) {
 		this.home_button = home_button;
+	}
+
+	/**
+	 * @return the save_button
+	 */
+	public JButton getSave_button() {
+		return save_button;
+	}
+
+	/**
+	 * @param save_button the save_button to set
+	 */
+	public void setSave_button(JButton save_button) {
+		this.save_button = save_button;
 	}
 
 	/**
@@ -593,11 +792,28 @@ public abstract class UserFrame {
 	}
 
 	/**
-	 * @param reset_button
-	 *            the reset_button to set
+	 * @param reset_button the reset_button to set
 	 */
 	public void setReset_button(JButton reset_button) {
 		this.reset_button = reset_button;
 	}
+
+	/**
+	 * @return the currentSettingShow
+	 */
+	public int getCurrentSettingShow() {
+		return currentSettingShow;
+	}
+
+	/**
+	 * @param currentSettingShow the currentSettingShow to set
+	 */
+	public void setCurrentSettingShow(int currentSettingShow) {
+		this.currentSettingShow = currentSettingShow;
+	}
+
+	
+
+	
 
 }

@@ -14,6 +14,19 @@ import javax.swing.JRadioButton;
 import users.Courier;
 import users.User;
 
+/**
+ * The class <code>CourierFrame</code> inherits the class <code>UserFrame</code>the class that will manage the frame 
+ * when a <code>Courier</code> is logged in. 
+ * 
+ * It provides all the functionality of the class <code>Courier</code> and some functions 
+ * of the core that are made for <code>Courier</code>.
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
+
 public class CourierFrame extends UserFrame {
 
 	private CourierFrame instance;
@@ -25,6 +38,9 @@ public class CourierFrame extends UserFrame {
 
 	private JPanel dutyPanel = new JPanel();
 
+	/**
+	 * Constructor
+	 */
 	public CourierFrame() {
 		super();
 		instance = this;
@@ -49,6 +65,11 @@ public class CourierFrame extends UserFrame {
 	/*************************************************/
 	// Init functions
 
+	/**
+	 * @param user that will log in which is a courier in this case.
+	 * @return the instance of this class which is going to be saved as 
+	 * the current user frame.
+	 */
 	@Override
 	public UserFrame getInstance(User user) {
 
@@ -80,7 +101,7 @@ public class CourierFrame extends UserFrame {
 		getSettingMenu().add(new courierActionSettingBasicCour("duty", "change current duty settings", courier));
 	}
 
-	public void fillAndSetMenuBarCourier(Courier courier) {
+	private void fillAndSetMenuBarCourier(Courier courier) {
 		fillInfoMenuWithFunctionCourier(courier);
 		fillSetMenuWithFunctionCourier(courier);
 	}

@@ -32,6 +32,18 @@ import users.Customer;
 import users.Restaurant;
 import users.User;
 
+/**
+ * The class <code>ManagerFrame</code> inherits the class <code>ManagerFrame</code>the class that will manage the frame 
+ * when a <code>Manager</code> is logged in. 
+ * 
+ * It provides all the functionality of the class <code>Manager</code> and nearly all the functions 
+ * of the core, since most of them are made for <code>Manager</code>.
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class ManagerFrame extends UserFrame {
 
 	private ManagerFrame instance;
@@ -100,11 +112,20 @@ public class ManagerFrame extends UserFrame {
 
 	/*************************************************/
 	// Constructors
+	
+	/**
+	 * Constructor
+	 */
 	public ManagerFrame() {
 		super();
 		instance = this;
 	}
 
+	/**
+	 * @param user that will log in which is a manager in this case.
+	 * @return the instance of this class which is going to be saved as 
+	 * the current user frame.
+	 */
 	@Override
 	public UserFrame getInstance(User user) {
 
@@ -470,7 +491,7 @@ public class ManagerFrame extends UserFrame {
 		inputPanel.setBackground(Color.ORANGE);
 
 		descrInput2T.setEditable(false);
-		descrInput2T.setEditable(false);
+		descrInput3T.setEditable(false);
 
 	}
 

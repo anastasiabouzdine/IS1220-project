@@ -14,7 +14,14 @@ import users.User;
 
 public class StartFrameTest {
 
-	// checks whether the go to Buttons work
+
+	/**
+	 * Test class that has robots to click through the GUI.
+	 * 
+	 * @author John de Wasseige
+	 * @author Patrick von Platen
+	 *
+	 */
 	public static void checkIfClickGoToButtonsWork() throws AWTException {
 
 		boolean goToLoginButton = false;

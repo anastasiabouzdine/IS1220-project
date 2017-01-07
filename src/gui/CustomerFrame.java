@@ -37,6 +37,19 @@ import users.Customer;
 import users.Restaurant;
 import users.User;
 
+/**
+ * The class <code>CustomerFrame</code> inherits the class <code>UserFrame</code>the class that will manage the frame 
+ * when a <code>Customer</code> is logged in. 
+ * 
+ * It provides all the functionality of the class <code>Customer</code> and some functions 
+ * of the core that are made for <code>Customer</code>.
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
+
 public class CustomerFrame extends UserFrame {
 
 	private CustomerFrame instance;
@@ -83,6 +96,9 @@ public class CustomerFrame extends UserFrame {
 
 	private JTextField quantityTextField = new JTextField("quantity as int");
 
+	/**
+	 * Constructor
+	 */
 	public CustomerFrame() {
 		super();
 		instance = this;
@@ -91,6 +107,11 @@ public class CustomerFrame extends UserFrame {
 	/*************************************************/
 	// Constructor
 
+	/**
+	 * @param user that will log in which is a customer in this case.
+	 * @return the instance of this class which is going to be saved as 
+	 * the current user frame.
+	 */
 	@Override
 	public UserFrame getInstance(User user) {
 
@@ -412,7 +433,7 @@ public class CustomerFrame extends UserFrame {
 		orderMenu.add(new CustomerActionOrder("new order", "place a new order"));
 	}
 
-	public void fillAndSetMenuBarCustomer(Customer customer) {
+	private void fillAndSetMenuBarCustomer(Customer customer) {
 		fillInfoMenuWithFunctionCustomer(customer);
 		fillSetMenuWithFunctionCustomer(customer);
 		fillcustomerActionOrder(customer);

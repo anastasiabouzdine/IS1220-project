@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.13" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="gui.StartFrame" project="IS1220_project" 
-    file="/IS1220_project/src/gui/StartFrame.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="174" y="314"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+<class-diagram version="1.1.13" icons="true" automaticImage="PNG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
+  <class id="1" language="java" name="gui.StartFrame" project="MyFoodora" file="/MyFoodora/src/gui/StartFrame.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="350" width="270" x="119" y="-772"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="gui.UserFrame" project="IS1220_project" 
-    file="/IS1220_project/src/gui/UserFrame.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="705" y="328"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+  <class id="2" language="java" name="gui.UserFrame" project="MyFoodora" file="/MyFoodora/src/gui/UserFrame.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="331" width="317" x="590" y="-762"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
@@ -22,17 +23,23 @@
   <association id="3">    
     <end type="SOURCE" refId="1" navigable="false">      
       <attribute id="4" name="currentLogInUser">        
-        <position height="18" width="103" x="368" y="288"/>      
+        <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="5" minimum="0" maximum="1"/>    
+      <multiplicity id="5" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="6">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="7" name="instance"/>      
-      <multiplicity id="8" minimum="0" maximum="1"/>    
+      <attribute id="7" name="instance">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

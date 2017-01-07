@@ -21,6 +21,15 @@ import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
 import users.Restaurant;
 
+/**
+ * The class <code>DisplayMealDish</code> provides functionality to show meals and lists 
+ * on a scroll panel. 
+ * 
+ * It is used by both <code>CustomerFrame</code> and <code>RestaurantFrame</code>.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class DisplayMealDish {
 
 	private JList<Meal> jListMealShow = new JList<>();
@@ -50,10 +59,21 @@ public class DisplayMealDish {
 
 	private JMenu dishMenu = new JMenu("menu");
 
+	/**
+	 * Constructor
+	 */
 	public DisplayMealDish() {
 		super();
 	}
 
+	/**
+	 * display panel that returns a JPanel including a 
+	 * detailed description of a meal of a restaurant.
+	 * 
+	 * @param meal the meal that is going to by
+	 * @param rest the restaurant that offers that meal
+	 * @return JPanel panel including description of meal
+	 */
 	public JPanel display(Meal meal, Restaurant rest) {
 
 		if (meal instanceof FullMeal) {
@@ -125,6 +145,11 @@ public class DisplayMealDish {
 		return dishPanel;
 	}
 
+	/**
+	 * used to display the dishes of the restaurant
+	 * 
+	 * @param rest restaurant whose dishes are going to be displayed
+	 */
 	public void setTextFields(Restaurant rest) {
 
 		dishPanel.setBorder(BorderFactory.createEmptyBorder());
@@ -142,6 +167,11 @@ public class DisplayMealDish {
 		priceT.setEditable(false);
 	}
 
+	/**
+	 * used to initialize a jList of the restaurant's meals.
+	 * 
+	 * @param rest restaurant that is chosen
+	 */
 	public void fillPanelMealRemove(Restaurant rest) {
 		DefaultListModel<Meal> model = new DefaultListModel<Meal>();
 		for (Meal meal : rest.getListOfMeal()) {
@@ -150,6 +180,11 @@ public class DisplayMealDish {
 		jListMealRemove.setModel(model);
 	}
 
+	/**
+	 * used to show all the meals of a restaurant in a jlist.
+	 * 
+	 * @param rest restaurant that is chosen
+	 */
 	public void fillPanelMealShow(Restaurant rest) {
 		DefaultListModel<Meal> model = new DefaultListModel<Meal>();
 		for (Meal meal : rest.getListOfMeal()) {
@@ -158,6 +193,11 @@ public class DisplayMealDish {
 		jListMealShow.setModel(model);
 	}
 
+	/**
+	 * used to make a jlist with all starters of a restaurant.
+	 * 
+	 * @param rest restaurant that is chosen
+	 */
 	public void filljListStarter(Restaurant rest) {
 		jListStarter.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<Starter> model = new DefaultListModel<Starter>();
@@ -168,6 +208,11 @@ public class DisplayMealDish {
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 
+	/**
+	 * used to make a jlist with all main dishes of a restaurant.
+	 * 
+	 * @param rest restaurant that is chosen
+	 */
 	public void filljListMainDish(Restaurant rest) {
 		jListMainDish.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<MainDish> model = new DefaultListModel<MainDish>();
@@ -178,6 +223,11 @@ public class DisplayMealDish {
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 
+	/**
+	 * used to make a jlist with all desserts of a restaurant.
+	 * 
+	 * @param rest restaurant that is chosen
+	 */
 	public void filljListDessert(Restaurant rest) {
 		jListDessert.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		DefaultListModel<Dessert> model = new DefaultListModel<Dessert>();
@@ -188,6 +238,12 @@ public class DisplayMealDish {
 		jListMealShow.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 
+	/**
+	 * used to make a jlist with all dishes of a restaurant.
+	 * 
+	 * @param rest restaurant that is chosen
+	 * @return JlistAllDish list of all dishes of a restaurant
+	 */
 	public JList<Dish> filljListAllDishes(Restaurant rest) {
 		DefaultListModel<Dish> model = new DefaultListModel<Dish>();
 

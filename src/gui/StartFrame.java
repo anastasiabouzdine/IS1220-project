@@ -49,6 +49,16 @@ import users.Manager;
 import users.Restaurant;
 import users.User;
 
+/**
+ * The class <code>StartFrame</code> is the class that will create a new core 
+ * and be in charge of handling the user experience. It provides the user with 
+ * a frame that allows registering and the log in. 
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class StartFrame {
 
 	private static StartFrame instance;
@@ -111,11 +121,17 @@ public class StartFrame {
 	private JPanel manager_specific_info = new JPanel();
 
 	// Manager for add User button
-	static UserFrame manager;
+	private static UserFrame manager;
 
 	/*********************************************************/
 	// HelpFunctions
 
+	/**
+	 * intializing the StartFrame when it was not yet initialized.
+	 * If it was, the function will just return the instance of this class.
+	 * 
+	 * @return instance instance of this class
+	 */
 	public static StartFrame getInstance() {
 		if (instance == null) {
 			instance = new StartFrame();
@@ -172,6 +188,10 @@ public class StartFrame {
 
 	/*********************************************************/
 	/* Fill panels */
+	
+	/**
+	 * initializing the info panels used for registering the user. 
+	 */
 	public void fillUserGlobalInfoPanel() {
 		user_global_info.removeAll();
 		user_global_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
@@ -202,36 +222,39 @@ public class StartFrame {
 		address_panel.add(getyCoordinate_JTF());
 	}
 
-	public void fillCourierSpecificInfosPanel() {
+	private void fillCourierSpecificInfosPanel() {
 		courier_specific_info.setLayout(new BorderLayout());
 		courier_specific_info.setBorder(BorderFactory.createEmptyBorder(50, 80, 50, 80));
 		courier_specific_info.setBackground(Color.gray);
 	}
 
-	public void fillCustomerSpecificInfosPanel() {
+	private void fillCustomerSpecificInfosPanel() {
 		customer_specific_info.setLayout(new BorderLayout());
 		customer_specific_info.setBorder(BorderFactory.createEmptyBorder(50, 80, 50, 80));
 		customer_specific_info.setBackground(Color.gray);
 	}
 
-	public void fillRestaurantSpecificInfosPanel() {
+	private void fillRestaurantSpecificInfosPanel() {
 		restaurant_specific_info.setLayout(new BorderLayout());
 		restaurant_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 		restaurant_specific_info.setBackground(Color.gray);
 	}
 
-	public void fillManagerSpecificInfosPanel() {
+	private void fillManagerSpecificInfosPanel() {
 		manager_specific_info.setLayout(new BorderLayout());
 		manager_specific_info.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
 		manager_specific_info.setBackground(Color.green);
 	}
 
-	public void fillLoginPanel() {
+	private void fillLoginPanel() {
 		login_panel.setBackground(Color.green);
 		login_panel.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
 		frame.add(login_panel);
 	}
 
+	/**
+	 * use this function to display the register panel
+	 */
 	public void fillRegisterPanel() {
 		register_panel_info.setBackground(Color.gray);
 		register_panel_info.setBorder(BorderFactory.createEmptyBorder(30, 150, 10, 150));
@@ -251,7 +274,7 @@ public class StartFrame {
 		frame.add(register_panel_info);
 	}
 
-	public void fillWelcomePanel() {
+	private void fillWelcomePanel() {
 
 		welcome_panel.setBackground(Color.orange);
 		welcome_panel.setBorder(BorderFactory.createTitledBorder("Welcome"));
@@ -402,18 +425,28 @@ public class StartFrame {
 	/*********************************************************/
 	/* Functions */
 
+	/**
+	 * to display a message in a pop up window
+	 * 
+	 * @param message message to be displayed
+	 */
 	public void popUpOkWindow(String message) {
 		Object[] options = { "OK" };
 		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
+	/**
+	 * to change the current panel that is displayed
+	 * 
+	 * @param panel panel that will be displayed
+	 */
 	public void setCurrentPanel(JPanel panel) {
 		frame.setContentPane(panel);
 		frame.setVisible(true);
 	}
 
-	public void initSettings() {
+	private void initSettings() {
 
 		frame.addWindowListener(new WindowEventHandler());
 		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -489,6 +522,12 @@ public class StartFrame {
 		});
 	}
 
+	/**
+	 * @param xLocation the horizontal location where the GUI is going to be displayed
+	 * @param yLocation the vertical location where the GUI is going to be displayed
+	 * @param width the width of the window that will be displayed
+	 * @param height the height of the window that will be displayed
+	 */
 	public void open(final int xLocation, final int yLocation, final int width, final int height) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -507,6 +546,9 @@ public class StartFrame {
 		}
 	}
 
+	/**
+	 * to display the welcome panel of the start frame
+	 */
 	public void goToHomePage() {
 		setCurrentPanel(welcome_panel);
 	}
@@ -531,6 +573,9 @@ public class StartFrame {
 		setCurrentPanel(login_panel);
 	}
 
+	/**
+	 * to display the register panel of the start frame
+	 */
 	public void goToRegisterPanel() {
 		register_panel_info.add(createAccount_button, BorderLayout.SOUTH);
 		register_panel_info.add(getHome_button(), BorderLayout.SOUTH);
@@ -691,6 +736,7 @@ public class StartFrame {
 			core.logIn(username, new String(code));
 
 			User current_user = core.getCurrent_user();
+			
 			if (current_user == null) {
 				popUpOkWindow("Wrong password or username! If you have forgotten your password or username, "
 						+ "\n please write a mail to john.de-wasseige@student.ecp.fr.");
@@ -726,43 +772,46 @@ public class StartFrame {
 			System.exit(0);
 		}
 	}
-
+	
 	/*******************************************************/
 	/* Getters and Setters */
 
+
+	/**
+	 * @return the frame
+	 */
 	public static JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * @param frame the frame to set
+	 */
 	public static void setFrame(JFrame frame) {
 		StartFrame.frame = frame;
 	}
 
+	/**
+	 * @return the currentLogInUser
+	 */
 	public static UserFrame getCurrentLogInUser() {
 		return currentLogInUser;
 	}
 
+	/**
+	 * @param currentLogInUser the currentLogInUser to set
+	 */
 	public static void setCurrentLogInUser(UserFrame currentLogInUser) {
 		StartFrame.currentLogInUser = currentLogInUser;
 	}
 
-	public JPanel getLogin_panel() {
-		return login_panel;
-	}
-
-	public static JPanel getRegister_panel_info() {
-		return register_panel_info;
-	}
-
-	public JPanel getWelcome_panel() {
-		return welcome_panel;
-	}
-
+	/**
+	 * @return the core
+	 */
 	public static Core getCore() {
 		return core;
 	}
 
-	
 	/**
 	 * @param core the core to set
 	 */
@@ -771,78 +820,59 @@ public class StartFrame {
 	}
 
 	/**
-	 * @return the radio_manager
+	 * @return the address_panel
 	 */
-	public static JRadioButton getRadio_manager() {
-		return radio_manager;
+	public JPanel getAddress_panel() {
+		return address_panel;
 	}
 
 	/**
-	 * @param radio_manager
-	 *            the radio_manager to set
+	 * @param address_panel the address_panel to set
 	 */
-	public static void setRadio_manager(JRadioButton radio_manager) {
-		StartFrame.radio_manager = radio_manager;
+	public void setAddress_panel(JPanel address_panel) {
+		this.address_panel = address_panel;
 	}
 
 	/**
-	 * @return the home_button
+	 * @return the login_panel
 	 */
-	public static JButton getHome_button() {
-		return home_button;
+	public JPanel getLogin_panel() {
+		return login_panel;
 	}
 
 	/**
-	 * @param home_button
-	 *            the home_button to set
+	 * @param login_panel the login_panel to set
 	 */
-	public static void setHome_button(JButton home_button) {
-		StartFrame.home_button = home_button;
+	public void setLogin_panel(JPanel login_panel) {
+		this.login_panel = login_panel;
 	}
 
 	/**
-	 * @return the username_JTF
+	 * @return the radio_customer
 	 */
-	public JTextField getUsername_JTF() {
-		return username_JTF;
+	public JRadioButton getRadio_customer() {
+		return radio_customer;
 	}
 
 	/**
-	 * @param username_JTF
-	 *            the username_JTF to set
+	 * @param radio_customer the radio_customer to set
 	 */
-	public void setUsername_JTF(JTextField username_JTF) {
-		this.username_JTF = username_JTF;
+	public void setRadio_customer(JRadioButton radio_customer) {
+		this.radio_customer = radio_customer;
 	}
 
 	/**
-	 * @return the password_JTF
+	 * @return the radio_courier
 	 */
-	public JPasswordField getPassword_JTF() {
-		return password_JTF;
+	public JRadioButton getRadio_courier() {
+		return radio_courier;
 	}
 
 	/**
-	 * @param password_JTF
-	 *            the password_JTF to set
+	 * @param radio_courier the radio_courier to set
 	 */
-	public void setPassword_JTF(JPasswordField password_JTF) {
-		this.password_JTF = password_JTF;
-	}
-
-	/**
-	 * @return the passwordConf_JTF
-	 */
-	public JPasswordField getPasswordConf_JTF() {
-		return passwordConf_JTF;
-	}
-
-	/**
-	 * @param passwordConf_JTF
-	 *            the passwordConf_JTF to set
-	 */
-	public void setPasswordConf_JTF(JPasswordField passwordConf_JTF) {
-		this.passwordConf_JTF = passwordConf_JTF;
+	public void setRadio_courier(JRadioButton radio_courier) {
+		this.radio_courier = radio_courier;
 	}
 
 	/**
@@ -853,26 +883,164 @@ public class StartFrame {
 	}
 
 	/**
-	 * @param radio_restaurant
-	 *            the radio_restaurant to set
+	 * @param radio_restaurant the radio_restaurant to set
 	 */
 	public void setRadio_restaurant(JRadioButton radio_restaurant) {
 		this.radio_restaurant = radio_restaurant;
 	}
 
 	/**
-	 * @return the name_JTF
+	 * @return the radio_manager
 	 */
-	public JTextField getName_JTF() {
-		return name_JTF;
+	public static JRadioButton getRadio_manager() {
+		return radio_manager;
 	}
 
 	/**
-	 * @param name_JTF
-	 *            the name_JTF to set
+	 * @param radio_manager the radio_manager to set
 	 */
-	public void setName_JTF(JTextField name_JTF) {
-		this.name_JTF = name_JTF;
+	public static void setRadio_manager(JRadioButton radio_manager) {
+		StartFrame.radio_manager = radio_manager;
+	}
+
+	/**
+	 * @return the user_type_group
+	 */
+	public ButtonGroup getUser_type_group() {
+		return user_type_group;
+	}
+
+	/**
+	 * @param user_type_group the user_type_group to set
+	 */
+	public void setUser_type_group(ButtonGroup user_type_group) {
+		this.user_type_group = user_type_group;
+	}
+
+	/**
+	 * @return the logIn_button
+	 */
+	public JButton getLogIn_button() {
+		return logIn_button;
+	}
+
+	/**
+	 * @param logIn_button the logIn_button to set
+	 */
+	public void setLogIn_button(JButton logIn_button) {
+		this.logIn_button = logIn_button;
+	}
+
+	/**
+	 * @return the home_button
+	 */
+	public static JButton getHome_button() {
+		return home_button;
+	}
+
+	/**
+	 * @param home_button the home_button to set
+	 */
+	public static void setHome_button(JButton home_button) {
+		StartFrame.home_button = home_button;
+	}
+
+	/**
+	 * @return the goToRegister_button
+	 */
+	public JButton getGoToRegister_button() {
+		return goToRegister_button;
+	}
+
+	/**
+	 * @param goToRegister_button the goToRegister_button to set
+	 */
+	public void setGoToRegister_button(JButton goToRegister_button) {
+		this.goToRegister_button = goToRegister_button;
+	}
+
+	/**
+	 * @return the backToRegister_button
+	 */
+	public JButton getBackToRegister_button() {
+		return backToRegister_button;
+	}
+
+	/**
+	 * @param backToRegister_button the backToRegister_button to set
+	 */
+	public void setBackToRegister_button(JButton backToRegister_button) {
+		this.backToRegister_button = backToRegister_button;
+	}
+
+	/**
+	 * @return the createAccount_button
+	 */
+	public JButton getCreateAccount_button() {
+		return createAccount_button;
+	}
+
+	/**
+	 * @param createAccount_button the createAccount_button to set
+	 */
+	public void setCreateAccount_button(JButton createAccount_button) {
+		this.createAccount_button = createAccount_button;
+	}
+
+	/**
+	 * @return the goToLogIn_button
+	 */
+	public JButton getGoToLogIn_button() {
+		return goToLogIn_button;
+	}
+
+	/**
+	 * @param goToLogIn_button the goToLogIn_button to set
+	 */
+	public void setGoToLogIn_button(JButton goToLogIn_button) {
+		this.goToLogIn_button = goToLogIn_button;
+	}
+
+	/**
+	 * @return the register_button
+	 */
+	public JButton getRegister_button() {
+		return register_button;
+	}
+
+	/**
+	 * @param register_button the register_button to set
+	 */
+	public void setRegister_button(JButton register_button) {
+		this.register_button = register_button;
+	}
+
+	/**
+	 * @return the addUserButton
+	 */
+	public static Button getAddUserButton() {
+		return addUserButton;
+	}
+
+	/**
+	 * @param addUserButton the addUserButton to set
+	 */
+	public static void setAddUserButton(Button addUserButton) {
+		StartFrame.addUserButton = addUserButton;
+	}
+
+	/**
+	 * @return the surname_JTF
+	 */
+	public JTextField getSurname_JTF() {
+		return surname_JTF;
+	}
+
+	/**
+	 * @param surname_JTF the surname_JTF to set
+	 */
+	public void setSurname_JTF(JTextField surname_JTF) {
+		this.surname_JTF = surname_JTF;
 	}
 
 	/**
@@ -883,8 +1051,7 @@ public class StartFrame {
 	}
 
 	/**
-	 * @param xCoordinate_JTF
-	 *            the xCoordinate_JTF to set
+	 * @param xCoordinate_JTF the xCoordinate_JTF to set
 	 */
 	public void setxCoordinate_JTF(JTextField xCoordinate_JTF) {
 		this.xCoordinate_JTF = xCoordinate_JTF;
@@ -898,41 +1065,10 @@ public class StartFrame {
 	}
 
 	/**
-	 * @param yCoordinate_JTF
-	 *            the yCoordinate_JTF to set
+	 * @param yCoordinate_JTF the yCoordinate_JTF to set
 	 */
 	public void setyCoordinate_JTF(JTextField yCoordinate_JTF) {
 		this.yCoordinate_JTF = yCoordinate_JTF;
-	}
-
-	/**
-	 * @return the radio_courier
-	 */
-	public JRadioButton getRadio_courier() {
-		return radio_courier;
-	}
-
-	/**
-	 * @param radio_courier
-	 *            the radio_courier to set
-	 */
-	public void setRadio_courier(JRadioButton radio_courier) {
-		this.radio_courier = radio_courier;
-	}
-
-	/**
-	 * @return the surname_JTF
-	 */
-	public JTextField getSurname_JTF() {
-		return surname_JTF;
-	}
-
-	/**
-	 * @param surname_JTF
-	 *            the surname_JTF to set
-	 */
-	public void setSurname_JTF(JTextField surname_JTF) {
-		this.surname_JTF = surname_JTF;
 	}
 
 	/**
@@ -943,26 +1079,10 @@ public class StartFrame {
 	}
 
 	/**
-	 * @param phoneNum_JTF
-	 *            the phoneNum_JTF to set
+	 * @param phoneNum_JTF the phoneNum_JTF to set
 	 */
 	public void setPhoneNum_JTF(JTextField phoneNum_JTF) {
 		this.phoneNum_JTF = phoneNum_JTF;
-	}
-
-	/**
-	 * @return the radio_customer
-	 */
-	public JRadioButton getRadio_customer() {
-		return radio_customer;
-	}
-
-	/**
-	 * @param radio_customer
-	 *            the radio_customer to set
-	 */
-	public void setRadio_customer(JRadioButton radio_customer) {
-		this.radio_customer = radio_customer;
 	}
 
 	/**
@@ -973,11 +1093,342 @@ public class StartFrame {
 	}
 
 	/**
-	 * @param emailAddress_JTF
-	 *            the emailAddress_JTF to set
+	 * @param emailAddress_JTF the emailAddress_JTF to set
 	 */
 	public void setEmailAddress_JTF(JTextField emailAddress_JTF) {
 		this.emailAddress_JTF = emailAddress_JTF;
 	}
+
+	/**
+	 * @return the username_JTF
+	 */
+	public JTextField getUsername_JTF() {
+		return username_JTF;
+	}
+
+	/**
+	 * @param username_JTF the username_JTF to set
+	 */
+	public void setUsername_JTF(JTextField username_JTF) {
+		this.username_JTF = username_JTF;
+	}
+
+	/**
+	 * @return the password_JTF
+	 */
+	public JPasswordField getPassword_JTF() {
+		return password_JTF;
+	}
+
+	/**
+	 * @param password_JTF the password_JTF to set
+	 */
+	public void setPassword_JTF(JPasswordField password_JTF) {
+		this.password_JTF = password_JTF;
+	}
+
+	/**
+	 * @return the passwordConf_JTF
+	 */
+	public JPasswordField getPasswordConf_JTF() {
+		return passwordConf_JTF;
+	}
+
+	/**
+	 * @param passwordConf_JTF the passwordConf_JTF to set
+	 */
+	public void setPasswordConf_JTF(JPasswordField passwordConf_JTF) {
+		this.passwordConf_JTF = passwordConf_JTF;
+	}
+
+	/**
+	 * @return the name_JTF
+	 */
+	public JTextField getName_JTF() {
+		return name_JTF;
+	}
+
+	/**
+	 * @param name_JTF the name_JTF to set
+	 */
+	public void setName_JTF(JTextField name_JTF) {
+		this.name_JTF = name_JTF;
+	}
+
+	/**
+	 * @return the surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * @param surname the surname to set
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the phoneNum
+	 */
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	/**
+	 * @param phoneNum the phoneNum to set
+	 */
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	/**
+	 * @return the emailAddress
+	 */
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	/**
+	 * @param emailAddress the emailAddress to set
+	 */
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the password
+	 */
+	public char[] getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(char[] password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the passwordConf
+	 */
+	public char[] getPasswordConf() {
+		return passwordConf;
+	}
+
+	/**
+	 * @param passwordConf the passwordConf to set
+	 */
+	public void setPasswordConf(char[] passwordConf) {
+		this.passwordConf = passwordConf;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the welcome_panel
+	 */
+	public JPanel getWelcome_panel() {
+		return welcome_panel;
+	}
+
+	/**
+	 * @param welcome_panel the welcome_panel to set
+	 */
+	public void setWelcome_panel(JPanel welcome_panel) {
+		this.welcome_panel = welcome_panel;
+	}
+
+	/**
+	 * @return the welcome_button_panel
+	 */
+	public JPanel getWelcome_button_panel() {
+		return welcome_button_panel;
+	}
+
+	/**
+	 * @param welcome_button_panel the welcome_button_panel to set
+	 */
+	public void setWelcome_button_panel(JPanel welcome_button_panel) {
+		this.welcome_button_panel = welcome_button_panel;
+	}
+
+	/**
+	 * @return the welcome_message_panel
+	 */
+	public JPanel getWelcome_message_panel() {
+		return welcome_message_panel;
+	}
+
+	/**
+	 * @param welcome_message_panel the welcome_message_panel to set
+	 */
+	public void setWelcome_message_panel(JPanel welcome_message_panel) {
+		this.welcome_message_panel = welcome_message_panel;
+	}
+
+	/**
+	 * @return the register_panel_info
+	 */
+	public static JPanel getRegister_panel_info() {
+		return register_panel_info;
+	}
+
+	/**
+	 * @param register_panel_info the register_panel_info to set
+	 */
+	public static void setRegister_panel_info(JPanel register_panel_info) {
+		StartFrame.register_panel_info = register_panel_info;
+	}
+
+	/**
+	 * @return the user_global_info
+	 */
+	public static JPanel getUser_global_info() {
+		return user_global_info;
+	}
+
+	/**
+	 * @param user_global_info the user_global_info to set
+	 */
+	public static void setUser_global_info(JPanel user_global_info) {
+		StartFrame.user_global_info = user_global_info;
+	}
+
+	/**
+	 * @return the user_specific_info
+	 */
+	public JPanel getUser_specific_info() {
+		return user_specific_info;
+	}
+
+	/**
+	 * @param user_specific_info the user_specific_info to set
+	 */
+	public void setUser_specific_info(JPanel user_specific_info) {
+		this.user_specific_info = user_specific_info;
+	}
+
+	/**
+	 * @return the customer_specific_info
+	 */
+	public JPanel getCustomer_specific_info() {
+		return customer_specific_info;
+	}
+
+	/**
+	 * @param customer_specific_info the customer_specific_info to set
+	 */
+	public void setCustomer_specific_info(JPanel customer_specific_info) {
+		this.customer_specific_info = customer_specific_info;
+	}
+
+	/**
+	 * @return the courier_specific_info
+	 */
+	public JPanel getCourier_specific_info() {
+		return courier_specific_info;
+	}
+
+	/**
+	 * @param courier_specific_info the courier_specific_info to set
+	 */
+	public void setCourier_specific_info(JPanel courier_specific_info) {
+		this.courier_specific_info = courier_specific_info;
+	}
+
+	/**
+	 * @return the restaurant_specific_info
+	 */
+	public JPanel getRestaurant_specific_info() {
+		return restaurant_specific_info;
+	}
+
+	/**
+	 * @param restaurant_specific_info the restaurant_specific_info to set
+	 */
+	public void setRestaurant_specific_info(JPanel restaurant_specific_info) {
+		this.restaurant_specific_info = restaurant_specific_info;
+	}
+
+	/**
+	 * @return the manager_specific_info
+	 */
+	public JPanel getManager_specific_info() {
+		return manager_specific_info;
+	}
+
+	/**
+	 * @param manager_specific_info the manager_specific_info to set
+	 */
+	public void setManager_specific_info(JPanel manager_specific_info) {
+		this.manager_specific_info = manager_specific_info;
+	}
+
+	/**
+	 * @return the manager
+	 */
+	public static UserFrame getManager() {
+		return manager;
+	}
+
+	/**
+	 * @param manager the manager to set
+	 */
+	public static void setManager(UserFrame manager) {
+		StartFrame.manager = manager;
+	}
+
+	/**
+	 * @param instance the instance to set
+	 */
+	public static void setInstance(StartFrame instance) {
+		StartFrame.instance = instance;
+	}
+
+	
+	
 
 }

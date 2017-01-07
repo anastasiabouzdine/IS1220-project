@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 import exceptions.AlreadyUsedUsernameException;
 
 /**
+ * Launches the graphical user interface.
+ * 
  * @author John de Wasseige
  * @author Patrick von Platen
  *
@@ -33,18 +35,18 @@ public class LaunchGUI {
 				+ "\nwill be saved. At start, saved data will automatically be loaded.");
 
 		// Register Tests - can be run all together
-		// StartFrameTest.checkIfClickGoToButtonsWork();
-		// StartFrameTest.checkIfRestaurantCanBeRegistered();
-		// StartFrameTest.checkIfCourierCanBeRegistered();
-		// StartFrameTest.checkIfCustomerCanBeRegistered();
+//		 StartFrameTest.checkIfClickGoToButtonsWork();
+//		 StartFrameTest.checkIfRestaurantCanBeRegistered();
+//		 StartFrameTest.checkIfCourierCanBeRegistered();
+//		 StartFrameTest.checkIfCustomerCanBeRegistered();
 
 		// Log-in Tests - please run only one test at a time - if not they will
 		// fail
-		// StartFrameTest.checkIfCourierLogInWorks();
+//		 StartFrameTest.checkIfCourierLogInWorks();
 		// StartFrameTest.checkIfCourierLogInFailsWithWrongLogIn();
 		// StartFrameTest.checkIfRestaurantLogInWorks();
-		// StartFrameTest.checkIfManagerLogInWorks();
-		// StartFrameTest.checkIfCustomerLogInWorks();
+//		 StartFrameTest.checkIfManagerLogInWorks();
+		 StartFrameTest.checkIfCustomerLogInWorks();
 	}
 
 }

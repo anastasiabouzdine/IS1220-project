@@ -38,6 +38,18 @@ import restaurantSetUp.Starter;
 import users.Restaurant;
 import users.User;
 
+/**
+ * The class <code>RestaurantFrame</code> inherits the class <code>UserFrame</code>the class that will manage the frame 
+ * when a <code>Restaurant</code> is logged in. 
+ * 
+ * It provides all the functionality of the class <code>Restaurant</code> and some functions 
+ * of the core that are made for <code>Restaurant</code>.
+ * 
+ * This class has nested classes providing the actions that are added to the menu bar.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class RestaurantFrame extends UserFrame {
 
 	private RestaurantFrame instance;
@@ -99,6 +111,9 @@ public class RestaurantFrame extends UserFrame {
 	/*************************************************/
 	// Constructor
 
+	/**
+	 * Constructor
+	 */
 	public RestaurantFrame() {
 		super();
 		instance = this;
@@ -107,6 +122,11 @@ public class RestaurantFrame extends UserFrame {
 	/*************************************************/
 	// Initialize functions
 
+	/**
+	 * @param user that will log in which is a restaurant in this case.
+	 * @return the instance of this class which is going to be saved as 
+	 * the current user frame.
+	 */
 	@Override
 	public UserFrame getInstance(User user) {
 
