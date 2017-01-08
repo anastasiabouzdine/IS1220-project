@@ -6,25 +6,33 @@ our solution to meet them. We also described how this
 \emph{implementation} was conducted effectively throughout the code
 and what \emph{testing} methods have been used to ensure stability
 and correctness.
+How the two user interfaces have been built has then been described
+as well as the results brought by combining those to the core system.
 
-See who did what in the appendix~\ref{app:who_did_what}.
+As we are writting those last lines of the project, we wonder what
+could be done as further work.
+Considering that we implemented \emph{serialization} of the core
+in both interfaces in order to efficiently remember the state
+of all users, orders and any other thing related to the core,
+we might consider some security related problems that might
+appear when extending the solution to be multi-user.
+In this case, it will indeed be necessary to consider a safer
+way to serialize the data so that nothing can be lost even
+if bad handling or system crashes happens.
 
-% advantages/limitations of your solution
-% why we did not use test driven development
-% what about one test for each class
+Speaking of multi-user system, this is also something our system
+might need to include.
+This will need multithreading programming and thus reorganise
+the classes to allow multiple users to be logged in at the same
+time, all of this considering that information has to be
+confidential and securely stored. 
 
-The reader probably noted the absence of a \emph{results} section.
-This is justified by the fact that the scenarios have less importance
-since they are already done by \textsc{JUnit} tests. Actual results are more
-reprentative as soon as the
-user interface will be implemented.
-This leads us to the second part of the project which will
-consist of implementing a \texttt{command line user interface} and 
-an associated \texttt{graphical user interface} to use the \MyFoodora~system.
-
-The way we see the realisation of CLUI and GUI now, is to apply a specific combination of core and user methods for each CLUI command and its arguments.
-Once the CLUI is implemented, the next part is about linking
-information between actions on the graphical interface to the command line.
-
+Finally, we can consider extensions of the functions of the system itself
+such as being able to serve drinks or adding a payement system.
+As we designed our solution following well known design patterns,
+those extensions will appear to be relatively easy to implement.
+Crawling through the web, we realised that those patterns were something
+important in the software engineering world and we are glad this
+project has let us the chance to understand it practically.
 
 % section conclusion (end)
