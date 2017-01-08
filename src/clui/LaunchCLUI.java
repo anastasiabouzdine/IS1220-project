@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import parsers.ParseCommands;
 
 /**
- * @author john
- *
+ * Launches the command line user interface.
+ * 
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
  */
 public class LaunchCLUI {
 	

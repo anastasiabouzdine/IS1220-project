@@ -33,9 +33,6 @@ public class CLUIOneCommandsTest {
 		}
 
 	}
-	
-	public static void main(String[] args) {
-		
-	}
+
 
 }

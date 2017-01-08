@@ -144,6 +144,10 @@ public class ManagerFrame extends UserFrame {
 	/*************************************************/
 	// fill functions
 
+	/**
+	 * Fill and empty the user manage panel.
+	 * @param string input string that can be remove/activate/deactivate
+	 */
 	public void fillUserManagePanelRemove(String string) {
 		if (string.equals("remove")) {
 			fillPanelRemoveUsers();
@@ -799,7 +803,7 @@ public class ManagerFrame extends UserFrame {
 			switch (choice) {
 
 			case "add":
-				StartFrame.manager = instance;
+				StartFrame.setManager(instance);
 				StartFrame.getRadio_manager().setVisible(true);
 				StartFrame.getHome_button().setVisible(false);
 				StartFrame.getRegister_panel_info().add(goBackfromAddUserButton);

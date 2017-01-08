@@ -23,7 +23,8 @@ report/auxFile/*
 report/report.pdf
 model/
 Group23_Project_IS1220_part1_DeWasseige_VonPlaten/
-*.zip
+Group23_Project_IS1220_part1_DeWasseige_VonPlaten.zip
+Group23_Project_IS1220_part2_DeWasseige_VonPlaten/
 
 #biblatex
 *.bbl

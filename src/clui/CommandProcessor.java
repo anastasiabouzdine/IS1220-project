@@ -27,6 +27,13 @@ import restaurantSetUp.Meal;
 import restaurantSetUp.Starter;
 import users.*;
 
+/**
+ * The <code>CommandProcessor</code> class allows to process a given command
+ * and use the its core instance to perform related actions on it.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class CommandProcessor {
 	private Core core;
 

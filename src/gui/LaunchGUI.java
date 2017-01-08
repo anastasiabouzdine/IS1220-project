@@ -15,18 +15,13 @@ import exceptions.AlreadyUsedUsernameException;
  */
 public class LaunchGUI {
 
-	/**
-	 * @throws AWTException
-	 * @throws AlreadyUsedUsernameException
-	 *******************************************************/
-
 	public static void popUpOkWindow(String message) {
-			Object[] options = { "OK" };
+		Object[] options = { "OK" };
 		JOptionPane.showOptionDialog(null, message, "Attention", JOptionPane.PLAIN_MESSAGE,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 	}
 
-	/* Launch */
+	
 	public static void main(String[] args) throws AWTException, AlreadyUsedUsernameException {
 
 		StartFrame gui = StartFrame.getInstance();

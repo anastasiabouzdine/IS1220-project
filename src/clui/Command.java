@@ -2,6 +2,20 @@ package clui;
 
 import java.util.Arrays;
 
+
+/**
+ * The <code>Command</code> class allows to represent a command for the
+ * command line.
+ * 
+ * It consists of a name and a list of string representing the arguments.
+ * This allows the interpretor and processor to easily
+ * communicate between themselves and with the real user.
+ * 
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
+
 public class Command {
 	private String name;
 	private int nb_args;

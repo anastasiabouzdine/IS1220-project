@@ -12,16 +12,17 @@ import users.Customer;
 import users.Manager;
 import users.User;
 
+/**
+ * Test class that has robots to click through the GUI.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ *
+ */
 public class StartFrameTest {
 
 
-	/**
-	 * Test class that has robots to click through the GUI.
-	 * 
-	 * @author John de Wasseige
-	 * @author Patrick von Platen
-	 *
-	 */
+	
 	public static void checkIfClickGoToButtonsWork() throws AWTException {
 
 		boolean goToLoginButton = false;

@@ -74,7 +74,7 @@ public abstract class UserFrame {
 	private int currentSettingShow = 0;
 
 	/**
-	 * @param user 
+	 * @param user the user of the current frame
 	 * @return a UserFrame meaning an object of the class itself
 	 */
 	public abstract UserFrame getInstance(User user);
@@ -205,10 +205,11 @@ public abstract class UserFrame {
 	/**
 	 * initialize the welcome panel
 	 * 
+	 * @param user the user of the panel
 	 * @param color1 the color of the inner panel 
 	 * @param color2 the color of the outer panel which is different for every user
 	 * @param welcomeText text to welcome the user 
-	 * @param messages of the message box
+	 * @param new_messages of the message box
 	 */
 	public void fillWelcomePanel(User user, Color color1, Color color2, String welcomeText, String new_messages) {
 		welcome_panel.setBackground(color1);
@@ -317,10 +318,11 @@ public abstract class UserFrame {
 	/**
 	 * initialize the frame that will be shown
 	 * 
+	 * @param user the user
 	 * @param color1 the color of the inner panel 
 	 * @param color2 the color of the outer panel which is different for every user
 	 * @param welcomeText text to welcome the user 
-	 * @param messages of the message box
+	 * @param messageBox of the message box
 	 */
 	public void initGUI(User user, Color color1, Color color2, String welcomeText, String messageBox) {
 		setFrame(new JFrame("Welcome " + user.getName()));

@@ -8,6 +8,15 @@ import java.util.Scanner;
 
 import parsers.ParseCommands;
 
+/**
+ * The <code>CommandLine</code> class allows to interact with the user and
+ * parse input from the console or a file into <code>Command</code> objects.
+ * 
+ * Those commands will then be processed by the command processor.
+ * 
+ * @author John de Wasseige
+ * @author Patrick von Platen
+ */
 public class CommandLine {
 	private HashMap<String, Integer> command_hm = new HashMap<String, Integer>();
 	private ArrayList<Command> command_list = new ArrayList<Command>();
