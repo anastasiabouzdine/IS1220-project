@@ -10,8 +10,8 @@ Lastly, we will discuss how we tested the \GUI~and how it should be used.
 \subsubsection{General design} % (fold)
 \label{ssub:general_design}
 
-The \lstinline|gui|~package includes the following classes: 
-\StFra,k\UserF,k\RestF,k\ManagF,k\CourF,k\CustF,k\lstinline|DisplayMealDish|,k\lstinline|LaunchGUI|~and 
+The \lstinline|gui|~package includes the following classes
+\StFra, \UserF, \CourF, \RestF, \ManagF,  \CustF, \lstinline|DisplayMealDish|, \lstinline|LaunchGUI| and 
 \lstinline|StartFrameTest|. 
 \lstinline|LaunchGUI| is there only to launch the gui (open the first frame), whereas 
 \lstinline|StartFrameTest| takes care of testing some functionality.
@@ -19,7 +19,7 @@ The \lstinline|gui|~package includes the following classes:
 We decides to build the \GUI~on two frames: One used for the registration and the loggin of a user
  (implemented via \StFra)
 and the one for all functionality a user has as soon as he is logged in (implemented via  
-\UserF, \RestF, \ManagF, \CourF, \CustF and \lstinline|DisplayMealDish|). 
+\UserF, \RestF, \ManagF, \CourF, \CustF~and \lstinline|DisplayMealDish|). 
 
 To better understand how the frames are connected and how they are put in place by the classes, 
 please take a closer look at figure~\ref{fig:start2user_uml} and figure~\ref{fig:userframe2users_uml}.
@@ -40,7 +40,7 @@ frame.
 
 Next, we want to take a closer look of how we designed a clear and efficient structure for the 
 different user's functionality by using \emph{nested classes}. Since each user can execute 
-different functions, we decided to equip both the abstract \UserF~with some basic action classes to 
+different functions, we decided to equip both the abstract \lstinline|UserFrame| with some basic action classes to 
 call setters and getters that are the same for all users as well as the user frames with more 
 individualized action classes. These action classes provide action objects that were added to the 
 respective menu bars of each user class frame and will execute their \textit{action} when clicked on. 
@@ -51,8 +51,8 @@ Every user frame has the basic menu items: Settings and Information as well as p
 individual ones. Clicking on a functional menu button will therefore trigger the functionality and 
 execute the funtion. This design firstly gives a very clear overview of which functionality can be 
 added to which menu bar item and is a very efficient way to handle many, but easy functionalities in 
-a frame which is the case for our users (displaying and setting personal date as well as adding and 
-removing dishes f.e.).
+a frame which is the case for our users (e.g. displaying and setting personal date as well as adding and 
+removing dishes).
 
 % subsubsection handling_of_the_gui (end)
 \subsubsection{Handiness and Error handling} % (fold)
@@ -60,7 +60,8 @@ removing dishes f.e.).
 
 We tried to make the \GUI~as user friendly as possible by using a consistent and structured design 
 and giving instructions when needed as partly already described above in 
-section~\ref{ssub:general_design}. For that we will use buttons for the navigation in \StFra~as it 
+section~\ref{ssub:general_design}. For that we will use buttons for the navigation in
+\lstinline|StartFrame| as it 
 has only two basic functionalities: log in and register. In the different user frames we also use 
 buttons for basic navigation and the menu bar to execute the respective functionalities. 
 For each menu bar action we added a little discription appearing when the mouse is held over the item 
@@ -82,11 +83,11 @@ instructions) and adapted for the different exceptions that can pop up.
 Finally, we will explain how we tested and why we tested this way. 
 When starting the \GUI~we weren't sure how we could test since all the correctness of the different 
 functions was already tested in the first part of the project. Since it is not possible to test 
-whether clicking on a button makes appear a certain frame or panel with \lstinline|JUnit|~tests, we 
+whether clicking on a button makes appear a certain frame or panel with \textsc{JUnit} tests, we 
 found a way to implement so called \emph{bots} that will take control over mouse and be programmed to 
 move on a certain position on the screen and click a button there. We implemented some tests for the 
 \StFra~in the beginning to log in and register users, but we quickly realised that these tests will 
-not be consistent if the layout of the frame changes (f.e. a button moving to a different position) 
+not be consistent if the layout of the frame changes (e.g. a button moving to a different position) 
 and that there are to many possibilities to test. That is why, we decided to do most of the testing 
 by hand afterwards. All the tests we implemented in the beginning can be found in 
 \lstinline|StartFrameTest|~and you are invited to use them.

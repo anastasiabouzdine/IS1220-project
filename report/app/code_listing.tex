@@ -298,63 +298,56 @@ public void placeNewOrder(Order order){
 \begin{lstlisting}[caption=Strategy pattern to log in user.,
    label=lst:login_user_GUI] 
 private class LoginButton implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
+  public void actionPerformed(ActionEvent e) {
 
-			core.logIn(username, new String(code));
-			User current_user = core.getCurrent_user();
+  	core.logIn(username, new String(code));
+    	User current_user = core.getCurrent_user();
 
-			if (current_user instanceof Courier) {
-				setCurrentLogInUser(new CourierFrame());
-			} else if (current_user instanceof Customer) {
-				setCurrentLogInUser(new CustomerFrame());
-			} else if (current_user instanceof Manager) {
-				setCurrentLogInUser(new ManagerFrame());
-			} else if (current_user instanceof Restaurant) {
-				setCurrentLogInUser(new RestaurantFrame());
-			}
-			currentLogInUser.getInstance(current_user);
-			
-		}
-	}
+  	if (current_user instanceof Courier) {
+    		setCurrentLogInUser(new CourierFrame());
+    	} else if (current_user instanceof Customer) {
+    		setCurrentLogInUser(new CustomerFrame());
+    	} else if (current_user instanceof Manager) {
+    		setCurrentLogInUser(new ManagerFrame());
+    	} else if (current_user instanceof Restaurant) {
+    		setCurrentLogInUser(new RestaurantFrame());
+    	}
+    	currentLogInUser.getInstance(current_user);
+    	
+    }
+}
 \end{lstlisting}
 
 %%%%%%%%%%%%%%%%% NESTED CLASS RESTAURANT FRAME %%%%%%%%%%%%%%%%%
 \begin{lstlisting}[caption=Nested action classes in restaurant.,
    label=lst:nested_class_rest] 
 private class RestActionAddRemove extends AbstractAction {
-
-		...
-		public RestActionAddRemove(String choice, String desc, Restaurant rest) {
-			super(choice);
-			...
-		}
-		public void actionPerformed(ActionEvent e) {
-			switch (choice) {
-
-			case "add meal":
-				... write code for add meal here ...
-				
-				break;
-			case "remove meal":
-				... 
-
-				break;
-			case "add starter":
-
-				...
-
-				break;
-			case "add main dish":
-
-				...
-
-				break;
-				...
-			}
-			...
-			setCurrentPanel(addRemovePanel);
-		}
-	}
+  ...
+  public RestActionAddRemove(String choice, String desc, Restaurant rest) {
+  	super(choice);
+  	...
+  }
+  public void actionPerformed(ActionEvent e) {
+    switch (choice) {
+        
+    case "add meal":
+    	... write code for add meal here ...
+    	break;
+    case "remove meal":
+    	... 
+      break;
+    case "add starter":  
+      ...
+      break;
+    case "add main dish":    
+      ...
+      break;
+      ...
+    }
+    ...
+    setCurrentPanel(addRemovePanel);
+  }
+}
 \end{lstlisting}
 
 \lstset{basicstyle=\rm\small\ttfamily}
