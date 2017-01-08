@@ -1,20 +1,66 @@
 \section{Results} % (fold)
 \label{sec:results}
+We are now at the part of the report where it becomes necessary to somehow
+``prove'' that the patterns, the implementation of the core and the interfaces,
+backed up by the test, and all of what has been described in the previous sections 
+lead to satisfaying \emph{results} and can be effectively used as a concrete product.
 
-% speak of the defensive part of the interfaces
-  % case insensitive for the CLUI commands
-  % try catch for number format
-  % bad user automatically handled by the core
-  
-% Error messages and CLUI. The CLUI must handle all possible types of errors, i.e. syntax errors while typing in a command, and misuse errors, like for example trying to order a meal which is not contained in the menu, or modifying a meal that is not in the menu, etc.
+As we described in the testing section (page~\pageref{sec:testing}), the functions of
+the core lead to satisfying results using diversified \textsc{JUnit} tests for each
+``non-trivial'' class.
+Now that the user interfaces are implemented, it seems important to emphasize
+what \emph{results} we achieve using them.
+One has to mention, as described previously in the interfaces section, 
+that using \textsc{JUnit} tests for either of them was not something efficient
+nor practical.
+Because no output are given by the interfaces, contrary to the methods of the core,
+using \texttt{assert} methods becomes useless.
+
+Once we had finished with implementing both interfaces, we felt a need for a way
+to keep the \emph{state of the interfaces in memory}, as otherwise we had to repeat
+the same commands every now and then.
+Using what we learned in class, we decided to \emph{serialize} the \Core~instance
+of both interfaces.
+Therefore, every class related in someway to the core implement the \lstinline|Serializable|
+interfaces and were assigned a \lstinline|private static final long serialVersionUID|.
+An auxilary folder named \texttt{ser\_files} has been created in order to store
+both the state of both interfaces.
+During the opening (resp. closing) of those, the core is generated
+(resp. saved) using an \lstinline|ObjectInputStream| object to read (resp. write)
+the state of the previous (resp. current) core.
+Note that the logged in manager is able to \emph{reset} the core.
 
 
 
 % implement Serializable and backup in ser_files folder
 % reset, stop
 
+The \emph{command line user interface} produces expected results and handles
+various kinds of exceptions.
+In order to verify that the command line interpreter can effectively be used,
+one can run the \lstinline|LaunchGUI.java| file and type some commands in.
+More precisely, one can execute the \lstinline|runTest| command on
+the file \texttt{testScenario1.txt} contained in the \texttt{eval folder}.
+It basically test every command that the CLUI can handle and prints
+of the \emph{use case scenario} results on the terminal.
+If the reader wonders about what happens when bad input is given,
+a quick look at the \lstinline|CLUIOneCommandsTest| class will be usefull.
+The latter scans the \texttt{oneCommand} folder contained in the \texttt{eval}
+folder and executes each \texttt{.txt} file, each of those only using
+a single command with various mistakes.
+Note that this has been done for the six first methods but then we realised
+that error handling was done is the same way for the other commands
+so that it wasn't necessary to have one for each.
 
-\input{src/clui-tests.tex}
-
+Regarding the \emph{graphical user interface}, the best way to check what
+result it achieves, is to watch the following
+video\footnote{Enjoy it in HD with sound turned on!}
+we made that contains a screencast of a typical use case scenario.
+\begin{center}
+  \url{https://www.youtube.com/watch?v=CAPAvpEz2vc}
+\end{center}
+One will notice that more functions, which aren't in the \textsc{clui},
+such as simulating profit or (de)activating users, have been implemented
+and that errors handling was considered with attention. 
 
 % section results (end)

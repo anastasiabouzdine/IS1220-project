@@ -1,8 +1,8 @@
 \subsection{What differs from requirements ?} % (fold)
 \label{sub:what_differs_from_requirements}
 
-\paragraph{Meal creation in commandline} % (fold)
-\label{par:meal_creation_in_commandline}
+\paragraph{Meal creation} % (fold)
+\label{par:meal_creation}
 The first command line command which has been subject to a change
 was the \lstinline|createMeal| command. Its new form is
 \lstinline|createMeal <mealName> <mealType>|
@@ -12,10 +12,10 @@ This prevents the system from failing in case the \lstinline|addDish2Meal|
 is never called after this one.
 The restaurant will immediately know which type of dishes he has to add
 to the meal in order to stay consistent with the mealtype he gave. 
-% paragraph meal_creation_in_commandline (end)
+% paragraph meal_creation (end)
 
-\paragraph{Order creation in commandline} % (fold)
-\label{par:order_creation_in_commandline}
+\paragraph{Order creation} % (fold)
+\label{par:order_creation}
 Then, we changed the \lstinline|createOrder| command. Its new form is
 \lstinline|createOrder <restaurantName>|.
 This is justified by the fact that naming an order by the customer
@@ -28,7 +28,7 @@ An order isn't restricted to a certain amount of dishes
 or meals and thus a logged in customer will only
 have to handle (create, add items to it and then end it)
 the \emph{current order}.
-% paragraph order_creation_in_commandline (end)
+% paragraph order_creation (end)
 
 \paragraph{Adding an item to order with a quantity} % (fold)
 \label{par:add_an_item_to_order_with_a_quantity}
