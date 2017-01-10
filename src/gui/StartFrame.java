@@ -738,8 +738,7 @@ public class StartFrame {
 			User current_user = core.getCurrent_user();
 			
 			if (current_user == null) {
-				popUpOkWindow("Wrong password or username! If you have forgotten your password or username, "
-						+ "\n please write a mail to john.de-wasseige@student.ecp.fr.");
+				popUpOkWindow("Wrong peassword or username! Try again.");
 			} else {
 
 				if (current_user instanceof Courier) {
