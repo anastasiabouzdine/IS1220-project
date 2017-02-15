@@ -60,7 +60,7 @@ public class CommandLine {
 			return s + " command executed.";
 		}
 		String[] input = s.trim().split(" ");
-		if (input[0].equals("runtest")) {
+		if (input[0].equals("runTest")) {
 
 			launchFromFile("./eval/" + (input[1].replaceAll("\"+","")));
 			return "";
